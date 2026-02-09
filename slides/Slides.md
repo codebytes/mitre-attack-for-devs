@@ -110,10 +110,9 @@ flowchart LR
 
 ---
 
-<!-- _class: columns -->
-
 ## OWASP vs ATT&CK
 
+<div class="columns">
 <div>
 
 ### OWASP
@@ -131,6 +130,7 @@ flowchart LR
 - **Approach**: Detection-oriented
 - **Scope**: Full attack lifecycle
 
+</div>
 </div>
 
 
@@ -517,27 +517,22 @@ const config = {
 ## Good Secrets Management - Python & C\#
 
 ```python
-# PYTHON - GOOD: T1552 prevention
+# PYTHON: T1552 prevention with Azure Key Vault
 import os
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
 
-# T1552 Prevention: Environment variables + Key Vault
-DATABASE_URL = os.environ.get('DATABASE_URL')
 credential = DefaultAzureCredential()
-client = SecretClient(vault_url=os.environ.get('KEY_VAULT_URL'), credential=credential)
+client = SecretClient(vault_url=os.environ['KEY_VAULT_URL'], credential=credential)
 API_KEY = client.get_secret("api-key").value
 ```
 
 ```csharp
-// C# - GOOD: T1552 prevention
+// C#: T1552 prevention with Azure Key Vault
 public class SecureConfig
 {
     private readonly IConfiguration _config;
-    
     public SecureConfig(IConfiguration config) => _config = config;
-    
-    // T1552 Prevention: Azure Key Vault integration
     public string ConnectionString => _config["KeyVault:ConnectionString"];
     public string ApiKey => _config["KeyVault:ApiKey"];
 }
@@ -1037,20 +1032,32 @@ flowchart LR
 
 ## Implementation Roadmap
 
+<div class="columns3">
+<div>
+
 ### Phase 1: Foundation
-- Map current features to ATT&CK techniques
-- Implement secure logging with technique IDs
-- Add basic behavioral analytics
+- Map features to ATT&CK techniques
+- Secure logging with technique IDs
+- Basic behavioral analytics
+
+</div>
+<div>
 
 ### Phase 2: Detection
-- Build anomaly detection for high-risk techniques
-- Create automated response workflows
-- Integrate with SIEM/security tools
+- Anomaly detection for high-risk techniques
+- Automated response workflows
+- SIEM integration
+
+</div>
+<div>
 
 ### Phase 3: Advanced
-- Implement honey tokens and deception
-- Add threat intelligence correlation
-- Build security dashboards and metrics
+- Honey tokens and deception
+- Threat intelligence correlation
+- Security dashboards
+
+</div>
+</div>
 
 ---
 
