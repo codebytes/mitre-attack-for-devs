@@ -795,7 +795,6 @@ class PackageValidator:
 flowchart TD
     A[Developer] --> B[Dependency Request]
     B --> C{Package Registry}
-    
     C --> D[Integrity Check]
     D --> E{Hash Valid?}
     E -->|No| F[Block Installation]
@@ -803,15 +802,8 @@ flowchart TD
     G --> H{Clean?}
     H -->|No| F
     H -->|Yes| I[Install Package]
-    
     F --> J[Log T1195.001 Event]
     I --> K[Runtime Monitoring]
-    
-    subgraph "T1195 Prevention"
-        D
-        G
-        K
-    end
 </div>
 
 
@@ -935,7 +927,7 @@ class ExfiltrationDetector {
 <div class="mermaid">
 graph TD
     A[User Request] --> B[Authentication]
-    B --> C[Authorization]  
+    B --> C[Authorization]
     C --> D[Data Access Monitor]
     D --> E{Anomaly Detected?}
     E -->|Yes| F[T1213 Alert]
@@ -945,18 +937,11 @@ graph TD
     I -->|Yes| J[T1567 Alert]
     I -->|No| K[Rate Limit Check]
     K --> L{Exceeded?}
-    L -->|Yes| M[T1020 Alert] 
+    L -->|Yes| M[T1020 Alert]
     L -->|No| N[Send Response]
-    
-    F --> O[Block/Throttle]
+    F --> O[Block / Throttle]
     J --> O
     M --> O
-    
-    subgraph "Data Protection"
-        D
-        H
-        K
-    end
 </div>
 
 
@@ -975,23 +960,13 @@ graph TD
 <div class="mermaid">
 flowchart TD
     A[Identify Application Feature] --> B[Map to ATT&CK Techniques]
-    B --> C[Assess Risk & Impact]  
+    B --> C[Assess Risk & Impact]
     C --> D[Design Detection Controls]
     D --> E[Implement Monitoring]
     E --> F[Create Response Playbooks]
     F --> G[Test Against Techniques]
     G --> H[Monitor & Iterate]
     H --> B
-    
-    subgraph "Continuous Process"
-        B
-        C
-        D
-        E
-        F
-        G
-        H
-    end
 </div>
 
 
@@ -1029,35 +1004,19 @@ flowchart TD
 
 <div class="mermaid">
 graph TB
-    subgraph "Application Layer"
-        A1[Input Validation] --> A2[Authentication] 
-        A2 --> A3[Session Management]
-        A3 --> A4[Authorization]
-        A4 --> A5[Data Access Controls]
-    end
-    
-    subgraph "Detection Layer"
-        B1[Behavioral Analytics] --> B2[Anomaly Detection]
-        B2 --> B3[Technique Correlation] 
-        B3 --> B4[Threat Intelligence]
-    end
-    
-    subgraph "Response Layer"
-        C1[Automated Blocking] --> C2[Alert Generation]
-        C2 --> C3[Investigation Workflows]
-        C3 --> C4[Remediation Actions]
-    end
-    
+    A1[Input Validation] --> A2[Authentication]
+    A2 --> A3[Session Management]
+    A3 --> A4[Authorization]
+    A4 --> A5[Data Access Controls]
+    A5 --> B1[Behavioral Analytics]
+    B1 --> B2[Anomaly Detection]
+    B2 --> B3[Technique Correlation]
+    B3 --> B4[Threat Intelligence]
+    B4 --> C1[Automated Blocking]
+    C1 --> C2[Alert Generation]
+    C2 --> C3[Investigation Workflows]
+    C3 --> C4[Remediation Actions]
     A1 --> B1
-    A5 --> B1
-    B4 --> C1
-    
-    subgraph "ATT&CK Coverage"
-        D1[T1078, T1110] --> A2
-        D2[T1185, T1098] --> A3
-        D3[T1213, T1020] --> A5
-        D4[T1070, T1027] --> B2
-    end
 </div>
 
 ---
@@ -1066,31 +1025,12 @@ graph TB
 
 <div class="mermaid">
 flowchart LR
-    subgraph "OWASP Prevention"
-        A[Secure Coding]
-        B[Vulnerability Testing] 
-        C[Security Reviews]
-    end
-    
-    subgraph "ATT&CK Detection"  
-        D[Behavioral Monitoring]
-        E[Technique Correlation]
-        F[Threat Hunting]
-    end
-    
-    subgraph "Combined Workflow"
-        G[Secure by Design]
-        H[Monitor by Behavior] 
-        I[Respond by Intelligence]
-    end
-    
-    A --> G
-    D --> G
-    B --> H
-    E --> H
-    C --> I
-    F --> I
-    
+    A[Secure Coding] --> G[Secure by Design]
+    D[Behavioral Monitoring] --> G
+    B[Vulnerability Testing] --> H[Monitor by Behavior]
+    E[Technique Correlation] --> H
+    C[Security Reviews] --> I[Respond by Intelligence]
+    F[Threat Hunting] --> I
     G --> H --> I
 </div>
 
