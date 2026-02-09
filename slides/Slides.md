@@ -121,17 +121,15 @@ flowchart LR
 - **Perspective**: "What breaks"
 - **Approach**: Prevention-first
 - **Scope**: Application layer
-- **Mindset**: Defensive
 
 </div>
 <div>
 
 ### MITRE ATT&CK
-- **Focus**: Adversary behavior  
+- **Focus**: Adversary behavior
 - **Perspective**: "What attackers do"
 - **Approach**: Detection-oriented
 - **Scope**: Full attack lifecycle
-- **Mindset**: Adversarial
 
 </div>
 
@@ -516,7 +514,7 @@ const config = {
 
 ---
 
-## Good Secrets Management - All Languages
+## Good Secrets Management - Python & C\#
 
 ```python
 # PYTHON - GOOD: T1552 prevention
@@ -544,6 +542,10 @@ public class SecureConfig
     public string ApiKey => _config["KeyVault:ApiKey"];
 }
 ```
+
+---
+
+## Good Secrets Management - JavaScript
 
 ```javascript
 // JAVASCRIPT - GOOD: T1552 prevention
@@ -691,17 +693,15 @@ public class SecureLogger
 ## Immutable Logging Architecture
 
 <div class="mermaid">
-graph TD
+graph LR
     A[Application] --> B[Secure Logger]
     B --> C[Hash Validation]
     C --> D[Local Buffer]
     D --> E[Encrypted Storage]
     D --> F[External SIEM]
-    D --> G[Blockchain Ledger]
-    E --> H[Tamper Detection]
-    F --> H
-    G --> H
-    H --> I[Alert Security Team]
+    E --> G[Tamper Detection]
+    F --> G
+    G --> H[Alert Security Team]
 </div>
 
 
@@ -797,13 +797,11 @@ flowchart TD
     B --> C{Package Registry}
     C --> D[Integrity Check]
     D --> E{Hash Valid?}
-    E -->|No| F[Block Installation]
+    E -->|No| F[Block & Log T1195.001]
     E -->|Yes| G[Vulnerability Scan]
     G --> H{Clean?}
     H -->|No| F
-    H -->|Yes| I[Install Package]
-    F --> J[Log T1195.001 Event]
-    I --> K[Runtime Monitoring]
+    H -->|Yes| I[Install & Monitor]
 </div>
 
 
@@ -926,22 +924,16 @@ class ExfiltrationDetector {
 
 <div class="mermaid">
 graph TD
-    A[User Request] --> B[Authentication]
-    B --> C[Authorization]
-    C --> D[Data Access Monitor]
-    D --> E{Anomaly Detected?}
-    E -->|Yes| F[T1213 Alert]
-    E -->|No| G[Execute Query]
-    G --> H[Response Size Check]
-    H --> I{Bulk Transfer?}
-    I -->|Yes| J[T1567 Alert]
-    I -->|No| K[Rate Limit Check]
-    K --> L{Exceeded?}
-    L -->|Yes| M[T1020 Alert]
-    L -->|No| N[Send Response]
-    F --> O[Block / Throttle]
-    J --> O
-    M --> O
+    A[User Request] --> B[Auth & Authorization]
+    B --> C[Data Access Monitor]
+    C --> D{Anomaly?}
+    D -->|Yes| E[Alert & Block]
+    D -->|No| F[Execute Query]
+    F --> G{Bulk Transfer?}
+    G -->|Yes| E
+    G -->|No| H{Rate Exceeded?}
+    H -->|Yes| E
+    H -->|No| I[Send Response]
 </div>
 
 
@@ -959,14 +951,12 @@ graph TD
 
 <div class="mermaid">
 flowchart TD
-    A[Identify Application Feature] --> B[Map to ATT&CK Techniques]
+    A[Identify Feature] --> B[Map to ATT&CK Techniques]
     B --> C[Assess Risk & Impact]
-    C --> D[Design Detection Controls]
-    D --> E[Implement Monitoring]
-    E --> F[Create Response Playbooks]
-    F --> G[Test Against Techniques]
-    G --> H[Monitor & Iterate]
-    H --> B
+    C --> D[Design Detections]
+    D --> E[Implement & Monitor]
+    E --> F[Test & Iterate]
+    F --> B
 </div>
 
 
@@ -1003,20 +993,15 @@ flowchart TD
 ## Defense in Depth Architecture
 
 <div class="mermaid">
-graph TB
+graph LR
     A1[Input Validation] --> A2[Authentication]
-    A2 --> A3[Session Management]
-    A3 --> A4[Authorization]
-    A4 --> A5[Data Access Controls]
-    A5 --> B1[Behavioral Analytics]
+    A2 --> A3[Authorization]
+    A3 --> A4[Data Access Controls]
+    A4 --> B1[Behavioral Analytics]
     B1 --> B2[Anomaly Detection]
-    B2 --> B3[Technique Correlation]
-    B3 --> B4[Threat Intelligence]
-    B4 --> C1[Automated Blocking]
-    C1 --> C2[Alert Generation]
-    C2 --> C3[Investigation Workflows]
-    C3 --> C4[Remediation Actions]
-    A1 --> B1
+    B2 --> B3[Threat Intelligence]
+    B3 --> C1[Automated Blocking]
+    C1 --> C2[Alert & Remediation]
 </div>
 
 ---
@@ -1052,20 +1037,20 @@ flowchart LR
 
 ## Implementation Roadmap
 
-### Phase 1 (Weeks 1-4): Foundation
-- ✅ Map current features to ATT&CK techniques
-- ✅ Implement secure logging with technique IDs
-- ✅ Add basic behavioral analytics
+### Phase 1: Foundation
+- Map current features to ATT&CK techniques
+- Implement secure logging with technique IDs
+- Add basic behavioral analytics
 
-### Phase 2 (Weeks 5-8): Detection
-- ✅ Build anomaly detection for high-risk techniques
-- ✅ Create automated response workflows
-- ✅ Integrate with SIEM/security tools
+### Phase 2: Detection
+- Build anomaly detection for high-risk techniques
+- Create automated response workflows
+- Integrate with SIEM/security tools
 
-### Phase 3 (Weeks 9-12): Advanced
-- ✅ Implement honey tokens and deception
-- ✅ Add threat intelligence correlation
-- ✅ Build security dashboards and metrics
+### Phase 3: Advanced
+- Implement honey tokens and deception
+- Add threat intelligence correlation
+- Build security dashboards and metrics
 
 ---
 
@@ -1128,11 +1113,10 @@ flowchart LR
 ## Links
 
 - **[MITRE ATT&CK Framework](https://attack.mitre.org/)** - Main knowledge base
-- **[ATT&CK for Enterprise](https://attack.mitre.org/matrices/enterprise/)** - Enterprise technique matrix  
+- **[ATT&CK Enterprise Matrix](https://attack.mitre.org/matrices/enterprise/)** - Technique matrix
 - **[ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/)** - Coverage visualization
-- **[OWASP Developer Guide](https://owasp.org/www-project-developer-guide/)** - Secure development practices
-- **[ATT&CK Evaluations](https://attackevals.mitre-engenuity.org/)** - Vendor capability assessments
-- **[D3FEND](https://d3fend.mitre.org/)** - Defensive countermeasure knowledge base
+- **[OWASP Developer Guide](https://owasp.org/www-project-developer-guide/)** - Secure development
+- **[D3FEND](https://d3fend.mitre.org/)** - Defensive countermeasures
 
 </div>
 <div>
