@@ -1,67 +1,49 @@
-# Marp Slides Template
+# MITRE ATT&CK for Developers — Beyond OWASP
 
-[Use this template!](https://github.com/codebytes/marp-slides-template/generate)
+This repository contains the slide deck, demos, and additional resources for the "MITRE ATT&CK for Developers — Beyond OWASP" talk by Chris Ayers, Senior Software Engineer at Microsoft. The talk bridges the gap between threat intelligence and practical development, showing how to apply adversarial thinking to your code.
 
-Create a Marp presentation site that can be built and published on [GitHub Pages] using this minimal template. The site features:
+## Slides
 
-- Marp integration
-- A GitHub Pages / Actions workflow for build and publish ([See a preview](http://chris-ayers.com/marp-slides-template/))
-- A DevContainer/CodeSpace configuration with Marp and Markdown preview extensions
-- Chrome installation for PDF and PowerPoint slide creation on Linux
+You can access the slides for the talk at [https://chris-ayers.com/mitre-attack-for-devs/](https://chris-ayers.com/mitre-attack-for-devs/).
 
-## Customization
+## Repository Content
 
-Feel free to customize the sites created with this template as you like!
+This repository provides insights, code samples, and demonstrations for applying the MITRE ATT&CK framework to application development. Topics covered include:
 
-## Getting Started
+- Understanding the MITRE ATT&CK framework and its 14 tactics
+- How ATT&CK complements OWASP — vulnerabilities vs. adversary behavior
+- Practical code examples mapping ATT&CK techniques to real development scenarios
+- Detection and defense patterns for common attack techniques
+- Supply chain security, credential access, and data exfiltration defenses
+- Building an adversary-informed development workflow
 
-1. Click "[use this template]" to create a new site.
-2. Update the content of `slides/Slides.md` with your own presentation.
+## Code Samples
 
-## Custom Themes
+The `samples/` directory contains educational code samples in three languages, each demonstrating attack techniques and corresponding defenses mapped to ATT&CK technique IDs:
 
-This template includes four custom themes in the `slides/themes` folder:
-
-- custom
-- custom-default (based on the built-in default theme)
-- custom-gaia (based on the built-in gaia theme)
-- custom-uncover (based on the built-in uncover theme)
-
-To use a custom theme, edit the relevant css file and add its reference in the front matter of `Slides.md`. For example, to use `custom-default` add the following to the `Slides.md` front matter:
-
-```markdown
----
-marp: true
-theme: custom-default
----
-```
-
-For additional themes, add them to the devcontainer and follow the [Marp custom theme documentation](https://marpit.marp.app/theme-css).
-
-## Publishing on GitHub Pages
-
-1. In your GitHub repo, navigate to `Settings` > `Pages` > `Build and deployment`.
-2. Select `Source`: `GitHub Actions`.
-3. If any Actions failed, go to the `Actions` tab and click on `Re-run jobs`.
-
-## Local Build and Preview
-
-1. Install [Visual Studio Code](https://code.visualstudio.com/).
-2. Install the [Marp for VS Code extension](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode).
-3. Open `slides/Slides.md` in VS Code.
-
-## Licensing and Attribution
-
-This repository is licensed under the [MIT License]. Reuse or extend the code as you wish, but include the original license. The deployment GitHub Actions workflow is based on GitHub's starter workflows.
+- **[Python](./samples/python/)** — Credential stuffing detection, command injection, unsafe deserialization, tamper-evident logging, data access monitoring, secrets scanning
+- **[.NET/C#](./samples/dotnet/)** — Command injection, session security, tamper-evident logging, secrets management, web shell detection
+- **[JavaScript](./samples/javascript/)** — SQL injection, session security, credential stuffing detection, supply chain verification, data exfiltration detection, secrets detection
 
 ## Resources
 
-- [Use this template](https://github.com/codebytes/marp-slides-template/generate)
+- [MITRE ATT&CK Enterprise Matrix](https://attack.mitre.org/matrices/enterprise/)
+- [MITRE ATT&CK Techniques](https://attack.mitre.org/techniques/enterprise/)
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+- [MITRE D3FEND](https://d3fend.mitre.org/)
+- [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/)
+- [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)
 
-- GitHub Pages: [https://docs.github.com/en/pages](https://docs.github.com/en/pages)
+## Connect with Chris Ayers
 
-- CommonMark markdown syntax: [https://commonmark.org/help/](https://commonmark.org/help/)
+Feel free to connect with Chris Ayers on social media and visit his blog for more information on security and other topics:
 
-- Marp Official Repository: [https://github.com/marp-team/marp](https://github.com/marp-team/marp)
-- Marp Official Documentation: [https://marpit.marp.app/markdown](https://marpit.marp.app/markdown)
-- Marp for VS Code Documentation: [https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode)
+- BlueSky: [@chris-ayers.com](https://bsky.app/profile/chris-ayers.com)
+- LinkedIn: [chris-l-ayers](https://linkedin.com/in/chris-l-ayers/)
+- Blog: [https://chris-ayers.com/](https://chris-ayers.com/)
+- GitHub: [Codebytes](https://github.com/codebytes)
+- Mastodon: [@Chrisayers@hachyderm.io](https://hachyderm.io/@Chrisayers)
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
