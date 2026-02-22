@@ -1,0 +1,22 @@
+{
+  "universe_usage_history": [
+    {
+      "assignment_id": "mitre-attack-2026-02-22",
+      "universe": "The Usual Suspects",
+      "timestamp": "2026-02-22T03:12:51Z"
+    }
+  ],
+  "assignment_cast_snapshots": {
+    "mitre-attack-2026-02-22": {
+      "universe": "The Usual Suspects",
+      "agent_map": {
+        "kobayashi": "Kobayashi",
+        "fenster": "Fenster",
+        "mcmanus": "McManus",
+        "hockney": "Hockney",
+        "keaton": "Keaton"
+      },
+      "created_at": "2026-02-22T03:12:51Z"
+    }
+  }
+}

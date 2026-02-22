@@ -1,0 +1,39 @@
+{
+  "agents": {
+    "kobayashi": {
+      "persistent_name": "Kobayashi",
+      "universe": "The Usual Suspects",
+      "created_at": "2026-02-22T03:12:51Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "fenster": {
+      "persistent_name": "Fenster",
+      "universe": "The Usual Suspects",
+      "created_at": "2026-02-22T03:12:51Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "mcmanus": {
+      "persistent_name": "McManus",
+      "universe": "The Usual Suspects",
+      "created_at": "2026-02-22T03:12:51Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "hockney": {
+      "persistent_name": "Hockney",
+      "universe": "The Usual Suspects",
+      "created_at": "2026-02-22T03:12:51Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "keaton": {
+      "persistent_name": "Keaton",
+      "universe": "The Usual Suspects",
+      "created_at": "2026-02-22T03:12:51Z",
+      "legacy_named": false,
+      "status": "active"
+    }
+  }
+}
