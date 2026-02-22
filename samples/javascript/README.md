@@ -92,6 +92,54 @@ node secrets-detection.js
 # Creates sample vulnerable file and scans for secrets
 ```
 
+### 7. Authentication Monitoring (`auth-monitoring.js`)
+**ATT&CK Technique:** [T1078 - Valid Accounts](https://attack.mitre.org/techniques/T1078/)
+
+Demonstrates:
+- Behavioral authentication monitoring
+- Impossible travel detection (geolocation anomalies)
+- Device fingerprint tracking
+- Risk-based authentication decisions
+- Privilege escalation monitoring
+- Anomalous resource access detection
+
+```bash
+node auth-monitoring.js
+# Shows detection of valid account misuse through behavioral analysis
+```
+
+### 8. Password Spray Detection (`password-spray-detection.js`)
+**ATT&CK Technique:** [T1110.003 - Password Spraying](https://attack.mitre.org/techniques/T1110/003/)
+
+Demonstrates:
+- Cross-account password pattern detection
+- Distributed spray attack detection (multiple IPs)
+- Slow-and-low spray detection
+- Progressive delays and IP blocking
+- IP reputation tracking
+- Timing analysis for bot detection
+
+```bash
+node password-spray-detection.js
+# Simulates password spray attacks and shows detection mechanisms
+```
+
+### 9. Data Integrity Verification (`data-integrity.js`)
+**ATT&CK Technique:** [T1565 - Data Manipulation](https://attack.mitre.org/techniques/T1565/)
+
+Demonstrates:
+- HMAC-based record integrity verification
+- Tamper-evident audit trails
+- Mass modification detection
+- High-sensitivity field monitoring
+- Modification velocity tracking
+- Audit trail integrity verification
+
+```bash
+node data-integrity.js
+# Shows data tampering detection and integrity verification
+```
+
 ## 🎯 Key Features
 
 All samples include:
@@ -153,10 +201,13 @@ console.log(result);
 | T1190 | Exploit Public-Facing Application | `sql-injection.js` |
 | T1185 | Browser Session Hijacking | `session-security.js` |
 | T1110.004 | Credential Stuffing | `credential-stuffing-detection.js` |
+| T1110.003 | Password Spraying | `password-spray-detection.js` |
 | T1195.001 | Compromise Software Dependencies | `supply-chain-verification.js` |
 | T1567 | Exfiltration Over Web Service | `data-exfiltration-detection.js` |
 | T1020 | Automated Exfiltration | `data-exfiltration-detection.js` |
 | T1552 | Unsecured Credentials | `secrets-detection.js` |
+| T1078 | Valid Accounts | `auth-monitoring.js` |
+| T1565 | Data Manipulation | `data-integrity.js` |
 
 ## 🎓 Learning Resources
 

@@ -108,6 +108,60 @@ Scans source code and configuration files for hardcoded credentials, API keys, p
 python3 secrets_scanner.py
 ```
 
+### 7. `auth_monitoring.py`
+**MITRE ATT&CK Technique:** T1078 - Valid Accounts
+
+Demonstrates authentication monitoring to detect misuse of valid credentials through behavioral analysis and anomaly detection.
+
+**Key Features:**
+- Impossible travel detection (geolocation anomalies)
+- Device fingerprint tracking
+- Behavioral baseline modeling
+- Privilege escalation monitoring
+- Risk-based step-up authentication
+- Anomalous resource access detection
+
+**Run:**
+```bash
+python3 auth_monitoring.py
+```
+
+### 8. `password_spray_detection.py`
+**MITRE ATT&CK Technique:** T1110.003 - Password Spraying
+
+Detects password spray attacks where attackers try one common password across many accounts to bypass per-account rate limiting.
+
+**Key Features:**
+- Cross-account password pattern detection
+- Distributed attack detection (multiple IPs)
+- Slow-and-low spray detection
+- IP reputation tracking
+- Progressive delays and lockouts
+- Spray velocity monitoring
+
+**Run:**
+```bash
+python3 password_spray_detection.py
+```
+
+### 9. `data_integrity.py`
+**MITRE ATT&CK Technique:** T1565 - Data Manipulation
+
+Implements data integrity verification to detect and prevent unauthorized data modifications using HMAC signatures and audit trails.
+
+**Key Features:**
+- HMAC-based record integrity verification
+- Tamper-evident audit trails
+- Mass modification detection
+- Field-level change tracking
+- High-sensitivity field monitoring
+- Change velocity analysis
+
+**Run:**
+```bash
+python3 data_integrity.py
+```
+
 ## Requirements
 
 All samples use **only Python standard library** - no external dependencies required. Compatible with Python 3.7+.
