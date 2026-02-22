@@ -818,6 +818,538 @@ samples/
 
 **Rationale**:
 - For a "deep dive research project," incomplete coverage is misleading
+
+---
+
+# Decision: Speaker Note Conventions for Marp Presentations
+
+**Date:** 2026-02-22  
+**Author:** McManus (Content Dev)  
+**Status:** Established
+
+## Summary
+
+Speaker notes for Marp slide decks use HTML comment syntax and follow specific content and placement conventions.
+
+## Context
+
+The MITRE ATT&CK for Developers presentation deck lacked speaker notes, making it difficult for presenters to deliver consistently or for other speakers to pick up the deck. For a 60-75 minute technical deep-dive, comprehensive speaker notes are essential for pacing, transitions, and audience engagement.
+
+## Conventions Established
+
+### Placement
+- Speaker notes go **after slide content** but **before the `---` separator**
+- Format: `<!-- Speaker notes content here -->`
+- Multi-line notes are supported and preferred
+
+### Content Guidelines
+- **Length**: 2-5 sentences per slide
+- **Coverage**: 
+  - Key talking points for the presenter
+  - Transition cues ("This leads us to...", "Building on that...")
+  - Real-world anecdotes or examples to mention
+  - Timing guidance for important slides ("Spend 2-3 minutes here")
+  - Audience engagement prompts ("Ask the audience...", "Show of hands...")
+
+### Slide-Type Specific Guidance
+- **Code slides**: Explain what to highlight, what to walk through line by line
+- **Diagram slides**: Describe the flow to narrate
+- **Section header slides**: Set up what's coming next
+- **Intro/bio slides**: Mention audience warm-up points
+- **Closing slides**: Wrap-up talking points and calls to action
+- **Concept slides**: Provide analogies and context
+
+### Style
+- Write in presenter's voice (direct, conversational)
+- Include explicit timing and emphasis cues
+- Provide context that helps presenters who know security but may not have memorized every ATT&CK technique
+- Balance technical depth with accessibility
+
+## Rationale
+
+1. **Consistency**: Enables multiple presenters to deliver the same content with consistent messaging
+2. **Pacing**: Helps manage a 60-75 minute presentation across 71+ slides
+3. **Engagement**: Prompts for audience interaction prevent monotony
+4. **Transitions**: Explicit cues create smooth flow between sections
+5. **Confidence**: Detailed notes give presenters confidence to deliver complex technical material
+
+## Examples
+
+### Good Example (Code Slide)
+```markdown
+## Vulnerable Code: SQL Injection (T1190)
+
+[code block]
+
+<!-- 
+Classic SQL injection vulnerability. We're taking user input and directly concatenating it into a SQL query—no validation, no parameterization. The attack payload at the bottom shows how an attacker sends "1 OR 1=1--" to dump the entire users table. This enables T1190: Exploit Public-Facing Application. We've all seen this in training, but it's still the number one web app vulnerability in the wild. Let's see the fix.
+-->
+```
+
+### Good Example (Section Header)
+```markdown
+# <!-- fit --> Initial Access & Credential Attacks
+
+<!-- 
+First tactic: Initial Access. How do attackers get in? Through your front door—public-facing applications, stolen credentials, brute force attacks, and phishing. This is the most critical phase to defend because stopping them here prevents everything downstream. Let's look at the techniques.
+-->
+```
+
+## Team Impact
+
+- Presentations can be delivered by multiple team members with consistent quality
+- New speakers can onboard to the deck quickly
+- Conference organizers receive presentation-ready material
+- Speaker notes serve as mini-documentation of security concepts
+
+## Related Decisions
+
+- See `.ai-team/agents/mcmanus/history.md` for full slide deck analysis
+- Marp conventions documented in project custom instructions
+
+---
+
+# Decision: MITRE ATT&CK for Developers — BUILD ORDER
+
+**Author:** Kobayashi (Lead / Architect)  
+**Date:** 2026-02-22  
+**Status:** READY FOR TEAM EXECUTION  
+
+## Overview
+
+Based on **Fenster's attack research**, **Keaton's accuracy audit**, and **McManus's slide analysis**, this document prioritizes the work into **7 sequential builds** that unblock downstream work and maximize impact per effort.
+
+**Key Principle:** Fix critical clarity issues first, then close coverage gaps, then expand to full tactic coverage.
+
+## BUILD PRIORITY MATRIX
+
+| # | Task | Who | Effort | Blocker? | Dependency | Timeline |
+|---|------|-----|--------|----------|------------|----------|
+| **1** | Fix OWASP-ATT&CK mapping clarity in slides | McManus | 1h | YES | None | Day 1 |
+| **2** | Add speaker notes to all 71 slides | McManus | 6h | YES | Task #1 | Day 1–2 |
+| **3** | Add 3 critical code samples (T1078, T1110, T1565) | Fenster | 4h | NO | Task #2 | Day 2 |
+| **4** | Expand Reconnaissance tactic (1→3 slides + code) | McManus | 3h | NO | Task #1 | Day 2 |
+| **5** | Expand Resource Development tactic (1→2 slides + code) | McManus | 2h | NO | Task #1 | Day 2 |
+| **6** | Expand Command & Control tactic (1→2 slides + code) | Fenster | 2h | NO | Task #3 | Day 3 |
+| **7** | Add recap slides + speaker validation + final export | McManus | 3h | NO | All above | Day 3 |
+
+**Total Team Effort:** 21 hours  
+**Estimated Timeline:** 3 days (parallel work possible)  
+**Success Metrics:** 14/14 tactics covered, 100% speaker notes, Keaton audit grade: A
+
+## TASK DETAILS
+
+### **TASK #1: Fix OWASP-ATT&CK Mapping Clarity** 
+**Owner:** McManus (Content Dev)  
+**Effort:** 1 hour  
+**Why First:** Critical clarity issue (Keaton Issue #2). Blocks speaker notes.
+
+**What to do:**
+1. Open `slides/Slides.md`, find "OWASP & MITRE ATT&CK Comparison" section (~line 150–200)
+2. Add introductory paragraph before the mapping table:
+   ```markdown
+   > **Key Distinction:** OWASP Top 10 describes *vulnerabilities* (what can break). 
+   > MITRE ATT&CK describes *techniques* (how attackers operate). A single vulnerability 
+   > can enable multiple techniques. For example, SQL injection (OWASP A03) can lead to 
+   > T1190 (Exploit Public-Facing Application) OR T1213 (Data Collection) depending on 
+   > attacker intent.
+   ```
+3. Revise mapping table entries:
+   - Move T1078 from "Broken Access Control" → "Identification & Authentication Failures" (correct tactic relationship)
+   - Add footnote to T1059: "Command injection (OWASP A03) can *enable* T1059 execution"
+4. Validate against Fenster's mapping section (decisions.md line reference to be added)
+
+**Inputs:** Keaton audit, Fenster mapping (decisions.md)  
+**Output:** Updated `slides/Slides.md` with clarified mapping  
+**Validation:** Keaton re-review of mapping section
+
+---
+
+### **TASK #2: Add Speaker Notes to All 71 Slides**
+**Owner:** McManus (Content Dev)  
+**Effort:** 6 hours  
+**Why:** Blocking item for live delivery. Keaton/McManus both flagged absence.
+
+**What to do:**
+1. For each slide, add `<!-- SPEAKER NOTES: ... -->` HTML comment block covering:
+   - **What (What's the technique/concept?)**
+   - **Why (Why should developers care? Business + technical impact)**
+   - **Real-world example (Actual breach, CVE, or incident)**
+   - **Audience Q&A Talking Points (3–5 common questions + concise answers)**
+   - **Delivery Notes (Pacing, emphasis, pause points)**
+
+2. **Priority order** (do these first, then the rest):
+   - Initial Access slides (T1190, T1078, T1110)
+   - Execution slides (T1059, T1203)
+   - Persistence slides (T1185, T1505.003)
+   - Privilege Escalation slides (T1068, T1134)
+   - **Then**: Credential Access, Defense Evasion, Discovery, Supply Chain, Lateral Movement, Collection/Exfil, Impact, Closing
+
+3. **Template for each slide:**
+   ```markdown
+   <!-- 
+   SPEAKER NOTES: [Technique Name]
+   
+   What:
+   - [Technique definition in 1–2 sentences]
+   
+   Why:
+   - Developer impact: [what can break]
+   - Business impact: [what attackers gain]
+   
+   Real-World Example:
+   - [Actual incident: Year, Company, Technique ID]
+   - Link: [CVE or reference]
+   
+   Audience Q&A:
+   - Q: "How do I know if I'm vulnerable?"
+     A: [Practical detection steps]
+   - Q: "What's the fastest fix?"
+     A: [Quick win + comprehensive solution]
+   
+   Delivery:
+   - Time: 2 min (for code-heavy), 1 min (for overview)
+   - Pause after: [key vulnerability shown]
+   - Emphasize: [most important defense]
+   -->
+   ```
+
+**Inputs:** McManus analysis, Fenster attack research (for real-world examples)  
+**Output:** `slides/Slides.md` with 71 speaker note blocks  
+**Validation:** Chris reviews for tone, timing; delivery test on 3 slides
+
+---
+
+### **TASK #3: Add 3 Critical Code Samples (Coverage Gaps)**
+**Owner:** Fenster (Security Researcher)  
+**Effort:** 4 hours  
+**Why:** Closes Keaton's 3 major coverage gaps. Enable Task #4–7.
+
+**What to do:** Create 3 new code samples + corresponding README entries:
+
+#### **3a. Authentication Monitoring (T1078 - Valid Accounts)**
+**File:** `samples/python/authentication_monitoring.py`
+
+**Content:**
+- Baseline authentication behavior tracking (login time, location, device fingerprint)
+- Anomalous login detection (unusual geolocation, device change, off-hours)
+- Automatic session invalidation on suspicious activity
+- Real-world: Use geolocation API + device fingerprinting library
+
+**Vulnerable scenario:** No monitoring → attackers use compromised account indefinitely  
+**Defended scenario:** Baseline + alerts → detect T1078 within minutes
+
+**Sample lines:** 100–150 lines  
+**Input source:** Fenster's T1078 section in attack-research.md (lines 169–174)
+
+---
+
+#### **3b. Credential Stuffing Detection Enhanced (T1110 Broader Scope)**
+**File:** `samples/python/password_spray_detection.py`
+
+**Content:**
+- Expand beyond credential stuffing to password spraying (many accounts, few passwords)
+- Dictionary attack detection (common password patterns)
+- Distributed brute force detection (rate-limiting per IP + account)
+- Velocity-based triggers (attempts per minute across accounts)
+
+**Vulnerable scenario:** Standard rate limiting on login endpoint → attackers spray from botnets  
+**Defended scenario:** Distributed attack detection + CAPTCHA + account lockout → T1110 blocked
+
+**Sample lines:** 120–150 lines  
+**Input source:** Fenster's T1110 section (lines 197–202)
+
+---
+
+#### **3c. Data Integrity Verification (T1565 - Data Manipulation)**
+**File:** `samples/javascript/data_integrity_verification.js`
+
+**Content:**
+- HMAC-based integrity verification for sensitive database records
+- Soft delete with audit trail (for T1485 - Data Destruction)
+- Change detection: compare record hash before/after modification
+- Alerting on unexpected data changes
+- Real-world: E-commerce order amounts, user privilege fields, configuration values
+
+**Vulnerable scenario:** No integrity checks → attackers modify order amounts undetected  
+**Defended scenario:** HMAC verification → detect modification immediately
+
+**Sample lines:** 150–180 lines  
+**Input source:** Fenster's T1565 section (lines 218–223)
+
+---
+
+**Deliverables:**
+- 3 new files in `samples/{python,javascript}/`
+- Updated `samples/python/README.md` + `samples/javascript/README.md` with 3 new entries
+- Each sample includes:
+  - Vulnerable code (what attackers exploit)
+  - Defended code (detection + mitigation)
+  - Detailed comments linking to T-code + OWASP
+  - Real-world scenario description
+
+**Validation:** Keaton re-tests code samples. All 3 achieve "ACCURATE" rating.
+
+---
+
+### **TASK #4: Expand Reconnaissance Tactic (1→3 Slides + Code)**
+**Owner:** McManus (Content Dev)  
+**Effort:** 3 hours  
+**Why:** Close Keaton/McManus gap on Reconnaissance. Expands deck from 71→74 slides.
+
+**What to do:** Add 3 new slides after current Slide 57 (Reconnaissance/C2/Resource Dev brief):
+
+#### **Slide X1: Reconnaissance Techniques Overview**
+Content:
+- Table of 3 key techniques: T1592 (Gather Victim Host Info), T1595 (Active Scanning), T1589 (Gather Victim Identity Info)
+- Developer role: Reduce information leakage through error messages, API responses, metadata
+
+**Slide X2: Vulnerable Code — Verbose Error Messages (T1592)**
+Content:
+```
+# VULNERABLE - Stack trace leaks framework version, OS details
+except Exception as e:
+    return {"error": str(e), "traceback": traceback.format_exc()}
+```
+
+**Slide X3: Defended Code — Generic Errors**
+Content:
+```
+# DEFENDED - Generic response, internal logging
+except Exception as e:
+    logger.error(f"Operation failed: {e}")
+    return {"error": "Internal server error", "code": "ERR_500"}
+```
+
+**Input source:** Fenster's TA0043 section (lines 11–19)
+
+---
+
+### **TASK #5: Expand Resource Development Tactic (1→2 Slides + Code)**
+**Owner:** McManus (Content Dev)  
+**Effort:** 2 hours  
+**Why:** Close gap on Resource Development. Adds 2 slides (71→73).
+
+**What to do:** Add 2 new slides:
+
+#### **Slide Y1: Resource Development Techniques Overview**
+Content:
+- T1583 (Acquire Infrastructure), T1587 (Develop Capabilities), T1608 (Stage Capabilities)
+- Developer role: Detect when your services are being weaponized (compromised accounts, API abuse)
+
+#### **Slide Y2: Code Example — Webhook Signature Verification (T1587/T1608)**
+Content:
+```
+# VULNERABLE - Accept webhook without verifying sender
+@app.post("/webhook")
+def webhook_receiver(payload):
+    execute_action(payload)  # Could be malicious
+
+# DEFENDED - Verify HMAC-SHA256 signature
+import hmac, hashlib
+
+def verify_webhook(payload, signature):
+    expected = hmac.new(SECRET_KEY, payload, hashlib.sha256).hexdigest()
+    return hmac.compare_digest(signature, expected)
+
+@app.post("/webhook")
+def webhook_receiver(payload, signature):
+    if not verify_webhook(payload, signature):
+        return {"error": "Invalid signature"}, 403
+    execute_action(payload)
+```
+
+**Input source:** Fenster's TA0042 section (lines 21–29)
+
+---
+
+### **TASK #6: Expand Command & Control Tactic (1→2 Slides + Code)**
+**Owner:** Fenster (Security Researcher)  
+**Effort:** 2 hours  
+**Why:** Close gap on C2. Adds 2 slides (71→73).
+
+**What to do:** Add 2 new slides:
+
+#### **Slide Z1: Command & Control Techniques Overview**
+Content:
+- T1071 (Application Layer Protocol), T1572 (Protocol Tunneling), T1573 (Encrypted Channel)
+- Developer role: Detect C2 communications hidden in normal traffic (beaconing, unusual patterns)
+- Diagram: Network traffic analysis workflow (Mermaid)
+
+#### **Slide Z2: Code Example — Detecting C2 Beaconing (T1071)**
+Content:
+```
+# Detect C2 beaconing: regular API calls to external endpoint
+# DETECTION CODE:
+def detect_c2_beaconing(api_logs, threshold_interval=300):
+    """Alert if outbound API calls are suspiciously regular"""
+    intervals = []
+    for i in range(1, len(api_logs)):
+        delta = api_logs[i].timestamp - api_logs[i-1].timestamp
+        intervals.append(delta)
+    
+    # Check if intervals are suspiciously consistent (±10 sec)
+    avg_interval = sum(intervals) / len(intervals)
+    variance = sum((x - avg_interval)**2 for x in intervals) / len(intervals)
+    
+    if variance < 100 and avg_interval == threshold_interval:
+        return {"alert": "C2_BEACONING", "interval": avg_interval}
+```
+
+**Input source:** Fenster's TA0011 section (lines 121–129)
+
+---
+
+### **TASK #7: Add Recap Slides + Final Validation**
+**Owner:** McManus (Content Dev)  
+**Effort:** 3 hours  
+**Why:** Narrative closure. Ties everything together. Final validation before presentation.
+
+**What to do:**
+
+#### **New Slide: "Technique Coverage Map"**
+Content:
+- Mermaid heatmap showing:
+  - Which tactics have code examples (GREEN)
+  - Which have diagrams (BLUE)
+  - Which are high-priority for developers (RED)
+- Emphasize: 14/14 tactics now covered
+
+#### **New Slide: "What We Didn't Cover (But You Should Know)"**
+Content:
+- Brief table of 4 tactics less developer-relevant (e.g., Resource Development mostly attacker-controlled)
+- Pointer to MITRE docs for deeper study
+
+#### **New Slide: "Your Next Steps" (Call-to-Action)**
+Content:
+- Week 1: Pick one technique + implement monitoring
+- Week 2: Threat model your top 3 services using ATT&CK
+- Week 3+: Run through defense checklist (from slides/checklists/)
+- Ongoing: Subscribe to MITRE updates, ATT&CK Navigator
+
+#### **Final Steps:**
+1. **Validate Marp rendering:** Export to HTML + PDF
+2. **Verify all images load:** `portrait.png`, `owl.png`
+3. **Check Mermaid rendering:** All 10+ diagrams render correctly
+4. **Test speaker notes:** Open in Marp presenter view, test timing
+5. **Get Chris signoff:** Review final deck for tone, messaging, pacing
+
+**Deliverables:**
+- 3 new recap/closure slides
+- `slides/Slides.md` updated with full content
+- `slides/Slides.pdf` export (test artifact)
+- Updated `.ai-team/agents/kobayashi/history.md` with learnings
+
+---
+
+## EXECUTION ROADMAP
+
+### **Day 1 (Parallel Possible)**
+- ✅ **Morning:** McManus completes Task #1 (OWASP mapping clarity fix)
+- ✅ **Morning:** Fenster preps code sample stubs for Task #3
+- ✅ **Afternoon:** McManus begins Task #2 (speaker notes — Phase 1: Initial Access + Execution)
+
+### **Day 2 (Parallel)**
+- ✅ **Morning:** McManus continues Task #2 (Phase 2: Persistence + Privilege Escalation)
+- ✅ **Morning:** Fenster implements Task #3 code samples (3 files + READMEs)
+- ✅ **Afternoon:** McManus completes Task #2
+- ✅ **Afternoon:** McManus starts Task #4 (Reconnaissance expansion)
+
+### **Day 3 (Parallel → Sequential)**
+- ✅ **Morning:** McManus completes Task #4 + Task #5 (Recon + Resource Dev)
+- ✅ **Morning:** Fenster completes Task #6 (C2 expansion)
+- ✅ **Afternoon:** McManus starts Task #7 (recap slides + validation)
+- ✅ **Afternoon:** Keaton spot-checks samples (Task #3)
+- ✅ **EOD:** Chris reviews final deck
+
+### **Signoff**
+- [ ] Keaton: Code sample audit (Task #3) → Grade: A
+- [ ] McManus: Speaker notes quality check → Complete
+- [ ] Chris: Deck review + approval → Ready for presentation
+
+---
+
+## INPUTS & ARTIFACTS
+
+**Available Inputs:**
+- `slides/Slides.md` (current 71 slides, 1530 lines)
+- `.ai-team/agents/fenster/attack-research.md` (44KB reference)
+- `.ai-team/agents/keaton/accuracy-audit.md` (7 findings + recommendations)
+- `.ai-team/agents/mcmanus/slide-analysis.md` (gap analysis)
+- `samples/{python,dotnet,javascript}/` (existing code structure)
+
+**Outputs:**
+- Updated `slides/Slides.md` (~2200 lines, 80–85 slides, full coverage)
+- 3 new code samples (authentication, password spray, data integrity)
+- Updated README files
+- 100% speaker notes coverage
+- PDF export for distribution
+- Updated `.ai-team/agents/kobayashi/history.md` with lessons learned
+
+---
+
+## SUCCESS CRITERIA
+
+| Criterion | Owner | Target | Validation |
+|-----------|-------|--------|------------|
+| OWASP-ATT&CK mapping clarified | McManus | Zero ambiguity on vulnerability vs. technique | Keaton re-review |
+| Speaker notes complete | McManus | 100% of slides (71+) have notes | Delivery test (3 slides) |
+| 3 critical samples added | Fenster | T1078, T1110, T1565 all have working code | Keaton audit = "ACCURATE" |
+| Reconnaissance fully covered | McManus | 3 slides + code = A-level coverage | Keaton matrix update |
+| Resource Dev fully covered | McManus | 2 slides + code = B-level coverage | Keaton matrix update |
+| C2 fully covered | Fenster | 2 slides + detection code | Keaton matrix update |
+| 14/14 tactics covered | McManus | No tactic gaps remain | Final audit |
+| Final validation | McManus | Marp → PDF export passes all checks | PDF renders cleanly |
+
+---
+
+## RISK MITIGATION
+
+| Risk | Probability | Impact | Mitigation |
+|------|-------------|--------|-----------|
+| Speaker notes take >6 hours | Medium | Blocks Task #2 completion | Break into 2 parallel phases |
+| Code samples have bugs | Low | Keaton audit fails | Fenster tests locally before commit |
+| Slide deck exceeds 85 slides | Low | Delivery > 75 min | Condense less impactful sections |
+| Marp export fails (image paths) | Low | PDF unrenderable | Test on Day 1; use relative paths |
+| Chris requests major rewrites | Medium | Timeline slip | Lock slide content by EOD Day 2 |
+
+---
+
+## DECISION CHECKPOINTS
+
+**BEFORE TASK #2:** Confirm OWASP mapping is correct (McManus + Keaton sign-off)  
+**BEFORE TASK #4:** Confirm Task #3 code samples pass audit (Keaton sign-off)  
+**BEFORE TASK #7:** Confirm all 6 prior tasks complete (Kobayashi checkpoint)  
+**FINAL SIGNOFF:** Chris approves deck + speaker notes for live delivery
+
+---
+
+## NOTES FOR THE TEAM
+
+1. **McManus** is the critical path. Ensure she has uninterrupted time for speaker notes (Task #2). This is the most time-consuming work.
+2. **Fenster's code samples** (Task #3) should follow Keaton's audit pattern: vulnerable code first, then defended code, with clear comments.
+3. **Slides should expand to 80–85 total** (from current 71). Each tactic gets 3–5 slides minimum. This is already planned in the architecture.
+4. **Speaker notes are non-negotiable.** Chris will need these for confident delivery. Include real-world examples, not just framework definitions.
+5. **Keaton's audit findings** are steering this work. Trust her classification of severity. The OWASP-ATT&CK mapping (Issue #2) is critical and must be fixed first.
+
+---
+
+## SUCCESS VISION
+
+After this 3-day sprint:
+- ✅ Slides: 85 slides covering 14/14 tactics, 100% speaker notes, professional Marp export
+- ✅ Code: 3 new samples (T1078, T1110, T1565) validated by Keaton
+- ✅ Clarity: OWASP vs. ATT&CK distinction crystal clear; no student confusion
+- ✅ Delivery: Chris can present confidently with full speaker notes and real-world examples
+- ✅ Grade: Keaton upgrades audit from A- → **A**
+
+This becomes a **reference-grade deep-dive resource** that Chris can reuse for multiple audiences and the team can maintain/extend over time.
+
+---
+
+**Document Owner:** Kobayashi  
+**Status:** READY FOR TEAM EXECUTION  
+**Next Step:** Chris confirms team availability + starts Day 1
 - Missing tactics leave audience with gaps when implementing defenses
 - Reconnaissance and Resource Development, while "less developer-focused," are critical for threat modeling
 - Creates a reusable reference for all 14 tactics

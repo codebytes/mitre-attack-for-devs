@@ -7,6 +7,46 @@
 
 ## Learnings
 
+### 2026-02-22: BUILD ORDER FINALIZED — 7 SEQUENTIAL TASKS
+
+**Decision Made:** Team has 3 days to expand slides from 71→85, add speaker notes, and close all coverage gaps.
+
+**Key Insight:** The project has **3 layers of work**:
+1. **Clarity Issues (BLOCKING)**: OWASP-ATT&CK mapping confusion (Keaton Issue #2) must be fixed first. Blocks speaker notes.
+2. **Coverage Gaps (HIGH PRIORITY)**: 3 critical code samples missing (T1078, T1110, T1565). Keaton flagged these in accuracy audit.
+3. **Completeness (MEDIUM PRIORITY)**: 4 tactics underdeveloped (Reconnaissance, Resource Dev, C2, partial Lateral Movement). McManus quantified effort per slide.
+
+**Dependencies Identified:**
+- Task #1 (mapping clarity) must complete before Task #2 (speaker notes) — can't write notes without clear understanding
+- Task #3 (code samples) unblocks Task #4–6 (tactic expansion) because samples provide reference implementations
+- Task #7 (recap) can only happen after all 6 prior tasks complete
+
+**Build Order Rationale:**
+- Fix clarity first (1h) — highest ROI, unblocks multiple downstream tasks
+- Add speaker notes next (6h) — critical path work; most effort; highest delivery impact
+- Parallel code samples + tactic expansion (9h) — now unblocked by #1–2
+- Recap + validation (3h) — can happen last; ties everything together
+
+**Team Capacity Check:**
+- McManus (Content): 12h available (Tasks #1, #2, #4, #5, #7) ✅
+- Fenster (Research): 6h available (Tasks #3, #6) ✅
+- Keaton (QA): spot-check at milestones ✅
+- Chris (Owner): final signoff ✅
+
+**Success Metrics:**
+- 14/14 tactics covered (vs. 10/14 today)
+- 85 slides total (vs. 71 today)
+- 100% speaker notes (vs. 0% today)
+- Keaton audit: A- → A
+- PDF export verified
+- Delivery-ready by EOD Day 3
+
+**Document:** `.ai-team/decisions/inbox/kobayashi-build-order.md` (18KB)
+
+**Status Update (2026-02-22 POST-MERGE):** Build order decision merged into `.ai-team/decisions.md`. This becomes the canonical execution plan for the 3-day sprint. All 7 tasks are now officially queued with clear ownership, dependencies, success criteria, and risk mitigation. Next action: Chris confirms team availability and Task #1 begins.
+
+---
+
 ### 2026-02-22: Deep Dive Research Audit Complete
 
 **Project Structure**:

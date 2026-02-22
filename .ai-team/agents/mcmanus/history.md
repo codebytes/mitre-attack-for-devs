@@ -28,3 +28,19 @@
 - **Closure Problem**: The deck ends at slide 71 (Questions?) without a recap of what was covered, what wasn't, or explicit next steps. For long-form presentations, recap + roadmap slides significantly improve retention and action items.
 
 - **Delivery Timing**: At 71 slides with 28+ code examples and 7 Mermaid diagrams, this is a 60–75 minute presentation if well-paced. Speaker notes help manage pacing.
+
+### Speaker Notes Addition (2026-02-22)
+
+- **Speaker Note Conventions Established**: Speaker notes use HTML comment syntax (`<!-- -->`) placed after slide content but before the `---` separator. Each note provides 2-5 sentences covering key talking points, transitions, real-world context, timing guidance, and audience engagement prompts.
+
+- **Note Content Strategy**: For code slides, notes explain what to highlight and walk through. For diagram slides, notes describe the narrative flow. For section headers, notes set up what's coming. For concept slides, notes provide analogies and context. For closing slides, notes include wrap-up talking points and calls to action.
+
+- **Presenter Guidance Patterns**: Notes include explicit timing cues ("Spend 2-3 minutes here"), transition phrases ("This leads us to...", "Building on that..."), audience engagement prompts ("Ask the audience...", "Show of hands..."), and emphasis markers for critical concepts that need reinforcement.
+
+- **Technical Depth Calibration**: Speaker notes translate dense technical concepts into presenter-friendly language, providing analogies and real-world examples to illustrate abstract ATT&CK techniques. This helps presenters who understand security but may not have memorized every technique ID and name.
+
+- **Comprehensive Coverage**: Added speaker notes to all 71+ slides including title slide, bio, agenda, concept explanations, code examples (both vulnerable and defended), diagrams, section transitions, implementation guidance, resources, and closing Q&A. Every slide now has delivery guidance.
+
+## Team Decisions Affecting This Agent
+
+**Speaker Note Conventions Decision (2026-02-22):** Merged from decisions inbox into `.ai-team/decisions.md`. This decision establishes team standards for all future presentations and ensures consistent delivery across multiple speakers. Key impact: enables rapid onboarding of new presenters and ensures messaging consistency across venues.
