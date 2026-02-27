@@ -1636,3 +1636,20 @@ RESOURCES:
 **Approval**: McManus ✓  
 **Status**: Ready for implementation  
 **Version**: 1.0 (2026-02-22)
+
+
+---
+
+### 2026-02-27: User directive — model preference
+**By:** Chris Ayers (via Copilot)
+**What:** Always use Claude Opus 4.6 1m (`claude-opus-4.6-1m`) for all agent spawns
+**Why:** User request — captured for team memory
+
+
+---
+
+### 2026-02-28: Added MITRE organization overview slides before ATT&CK introduction
+**By:** McManus
+**What:** Inserted 3 new slides between the OWASP overview and "What is MITRE ATT&CK?" slide: (1) What is MITRE? — the corporation, FFRDCs, mission; (2) MITRE's Cybersecurity Ecosystem — Mermaid diagram showing CVE/CWE/CAPEC/ATT&CK/D3FEND/ATLAS relationships; (3) Why MITRE Matters for Developers — bridging organizational context to developer relevance.
+**Why:** The deck jumped from OWASP directly to ATT&CK with no context about MITRE itself or its broader ecosystem. Audiences unfamiliar with MITRE beyond ATT&CK miss the credibility and interconnection story. The new slides create a natural narrative arc: familiar standard (OWASP) → credible organization (MITRE) → ecosystem context → specific framework (ATT&CK). The Mermaid diagram showing framework relationships is especially valuable — it surfaces that developers already consume MITRE data (CVEs, CWEs) through existing tools.
+

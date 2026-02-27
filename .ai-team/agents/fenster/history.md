@@ -54,3 +54,5 @@
 - Training foundation for developer security education
 
 **Maintenance:** Document should be updated quarterly as ATT&CK framework evolves (new techniques, deprecated techniques, updated mitigations).
+
+📌 Team update (2026-02-27): Always use 'claude-opus-4.6-1m' model for all agent spawns — decided by Chris Ayers (Copilot)

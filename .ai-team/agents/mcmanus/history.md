@@ -44,3 +44,15 @@
 ## Team Decisions Affecting This Agent
 
 **Speaker Note Conventions Decision (2026-02-22):** Merged from decisions inbox into `.ai-team/decisions.md`. This decision establishes team standards for all future presentations and ensures consistent delivery across multiple speakers. Key impact: enables rapid onboarding of new presenters and ensures messaging consistency across venues.
+
+### MITRE Overview Slides Addition (2026-02-28)
+
+- **Slide Insertion Pattern**: New contextual slides inserted between existing conceptual slides (OWASP → MITRE org → MITRE ecosystem → Why devs care → ATT&CK specifically). This progressive disclosure pattern — organization → ecosystem → relevance → specific framework — works well for audiences unfamiliar with MITRE beyond ATT&CK.
+
+- **Mermaid Diagram for Framework Relationships**: Used a top-down flowchart with relationship labels between MITRE frameworks (CVE, CWE, CAPEC, ATT&CK, D3FEND, ATLAS). Color-coded by category: red accent for ATT&CK (primary focus), green for defensive (D3FEND), orange for vulnerability/weakness (CVE/CWE), purple for emerging (ATLAS). Dark backgrounds match custom-default theme aesthetic.
+
+- **Speaker Note Depth Calibration for Context Slides**: For organizational/ecosystem overview slides, speaker notes should provide historical context, analogies to things developers already use (Dependabot → CVE, Snyk → CWE), and explicit "why should you care" framing. These bridge slides need more persuasion than technical slides.
+
+- **Slide Count Impact**: Three new slides added (lines 81–137 in Slides.md). Total deck now approximately 74+ slides. At ~1 minute per context slide, adds roughly 3 minutes to delivery time — well within buffer for a 60-75 minute presentation.
+
+📌 Team update (2026-02-27): Always use 'claude-opus-4.6-1m' model for all agent spawns — decided by Chris Ayers (Copilot)

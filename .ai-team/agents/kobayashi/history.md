@@ -74,3 +74,5 @@
 - Code samples: `samples/{python,dotnet,javascript}/`
 
 <!-- Append new learnings below. Each entry is something lasting about the project. -->
+
+📌 Team update (2026-02-27): Always use 'claude-opus-4.6-1m' model for all agent spawns — decided by Chris Ayers (Copilot)
