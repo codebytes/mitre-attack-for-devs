@@ -1,86 +1,167 @@
-"""Generate .drawio XML files for all mermaid diagrams in Slides.md"""
+"""Generate .drawio.svg files with rendered SVG for all diagrams in Slides.md"""
 import html
-import uuid
-import zlib
-import base64
-from urllib.parse import quote
+import math
+
 
 class DrawioBuilder:
-    def __init__(self):
+    def __init__(self, bg="#1a1a2e"):
         self._id = 1
-        self.cells = []
-        self.cells.append('<mxCell id="0" />')
-        self.cells.append('<mxCell id="1" parent="0" />')
+        self.bg = bg
+        self.nodes = {}
+        self.groups = {}
+        self.edges = []
 
     def _next_id(self):
         self._id += 1
         return str(self._id)
 
-    def add_node(self, label, x, y, w=160, h=60, fill="#0f3460", stroke="#333333", font_color="#ffffff", rounded=True, shape=None):
+    def add_node(self, label, x, y, w=160, h=60, fill="#0f3460", stroke="#333333",
+                 font_color="#ffffff", rounded=True, shape=None):
         nid = self._next_id()
-        style = f"whiteSpace=wrap;html=1;fillColor={fill};strokeColor={stroke};fontColor={font_color};fontSize=13;fontStyle=1;"
-        if rounded:
-            style = "rounded=1;" + style
-        if shape == "diamond":
-            style = f"rhombus;whiteSpace=wrap;html=1;fillColor={fill};strokeColor={stroke};fontColor={font_color};fontSize=12;fontStyle=1;"
-        self.cells.append(
-            f'<mxCell id="{nid}" value="{html.escape(label)}" style="{style}" vertex="1" parent="1">'
-            f'<mxGeometry x="{x}" y="{y}" width="{w}" height="{h}" as="geometry" />'
-            f'</mxCell>'
-        )
+        self.nodes[nid] = dict(label=label, x=x, y=y, w=w, h=h, fill=fill,
+                               stroke=stroke, font_color=font_color, rounded=rounded, shape=shape)
         return nid
 
-    def add_group(self, label, x, y, w, h, fill="#1a1a2e", stroke="#333333", font_color="#aaaaaa"):
+    def add_group(self, label, x, y, w, h, fill="#1a1a2e", stroke="#444444", font_color="#999999"):
         gid = self._next_id()
-        style = f"rounded=1;whiteSpace=wrap;html=1;fillColor={fill};strokeColor={stroke};fontColor={font_color};fontSize=14;fontStyle=1;verticalAlign=top;spacingTop=5;dashed=1;opacity=60;"
-        self.cells.append(
-            f'<mxCell id="{gid}" value="{html.escape(label)}" style="{style}" vertex="1" parent="1">'
-            f'<mxGeometry x="{x}" y="{y}" width="{w}" height="{h}" as="geometry" />'
-            f'</mxCell>'
-        )
+        self.groups[gid] = dict(label=label, x=x, y=y, w=w, h=h, fill=fill,
+                                stroke=stroke, font_color=font_color)
         return gid
 
     def add_edge(self, src, tgt, label="", color="#888888", dashed=False, thick=False):
-        eid = self._next_id()
-        sw = "3" if thick else "2"
-        dash = "1" if dashed else "0"
-        style = f"endArrow=block;endFill=1;strokeColor={color};strokeWidth={sw};dashed={dash};fontColor=#cccccc;fontSize=11;"
-        self.cells.append(
-            f'<mxCell id="{eid}" value="{html.escape(label)}" style="{style}" edge="1" source="{src}" target="{tgt}" parent="1">'
-            f'<mxGeometry relative="1" as="geometry" />'
-            f'</mxCell>'
-        )
-        return eid
+        self.edges.append(dict(src=src, tgt=tgt, label=label, color=color,
+                               dashed=dashed, thick=thick))
 
-    def build_xml(self, page_w=1200, page_h=800):
-        cells_xml = "\n        ".join(self.cells)
-        return f'''<mxfile host="app.diagrams.net" agent="drawio-generator" version="24.0.0">
-  <diagram name="Page-1" id="diagram-1">
-    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="{page_w}" pageHeight="{page_h}" math="0" shadow="0" background="#1a1a2e">
-      <root>
-        {cells_xml}
-      </root>
-    </mxGraphModel>
-  </diagram>
-</mxfile>'''
+    def _center(self, nid):
+        n = self.nodes[nid]
+        return n['x'] + n['w'] / 2, n['y'] + n['h'] / 2
 
-    def save(self, path):
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(self.build_xml())
+    def _edge_points(self, src_id, tgt_id):
+        sx, sy = self._center(src_id)
+        tx, ty = self._center(tgt_id)
+        s, t = self.nodes[src_id], self.nodes[tgt_id]
+        dx, dy = tx - sx, ty - sy
+        dist = math.hypot(dx, dy) or 1
+        ndx, ndy = dx / dist, dy / dist
+        # Source exit
+        if abs(ndx) * s['h'] > abs(ndy) * s['w']:
+            r = (s['w'] / 2) / abs(ndx) if ndx else 0
+        else:
+            r = (s['h'] / 2) / abs(ndy) if ndy else 0
+        x1, y1 = sx + ndx * r, sy + ndy * r
+        # Target entry
+        nx2, ny2 = -ndx, -ndy
+        if abs(nx2) * t['h'] > abs(ny2) * t['w']:
+            r2 = (t['w'] / 2) / abs(nx2) if nx2 else 0
+        else:
+            r2 = (t['h'] / 2) / abs(ny2) if ny2 else 0
+        x2, y2 = tx + nx2 * r2, ty + ny2 * r2
+        return x1, y1, x2, y2
+
+    def _render(self):
+        parts = []
+        marker_colors = set()
+
+        # Groups (behind everything)
+        for g in self.groups.values():
+            parts.append(
+                f'  <rect x="{g["x"]}" y="{g["y"]}" width="{g["w"]}" height="{g["h"]}" '
+                f'rx="10" ry="10" fill="{g["fill"]}" fill-opacity="0.5" '
+                f'stroke="{g["stroke"]}" stroke-width="1.5" stroke-dasharray="8,4" />')
+            parts.append(
+                f'  <text x="{g["x"] + g["w"]/2}" y="{g["y"] + 22}" text-anchor="middle" '
+                f'font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" '
+                f'font-weight="600" fill="{g["font_color"]}" letter-spacing="0.5">'
+                f'{html.escape(g["label"])}</text>')
+
+        # Edges
+        for e in self.edges:
+            marker_colors.add(e['color'])
+            sw = 3 if e['thick'] else 2
+            dash = ' stroke-dasharray="8,4"' if e['dashed'] else ''
+            x1, y1, x2, y2 = self._edge_points(e['src'], e['tgt'])
+            dx, dy = x2 - x1, y2 - y1
+            d = math.hypot(dx, dy) or 1
+            x2a, y2a = x2 - (dx / d) * 10, y2 - (dy / d) * 10
+            mid = f'ah{e["color"][1:]}'
+            parts.append(
+                f'  <line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2a:.1f}" y2="{y2a:.1f}" '
+                f'stroke="{e["color"]}" stroke-width="{sw}" stroke-linecap="round"{dash} '
+                f'marker-end="url(#{mid})" />')
+            if e['label']:
+                mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+                # Label background pill
+                parts.append(
+                    f'  <rect x="{mx - 16}" y="{my - 14}" width="32" height="18" rx="9" '
+                    f'fill="{self.bg}" fill-opacity="0.85" />')
+                parts.append(
+                    f'  <text x="{mx:.1f}" y="{my - 2:.1f}" text-anchor="middle" '
+                    f'font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11" '
+                    f'font-weight="700" fill="{e["color"]}">{html.escape(e["label"])}</text>')
+
+        # Nodes
+        for n in self.nodes.values():
+            cx, cy = n['x'] + n['w'] / 2, n['y'] + n['h'] / 2
+            if n['shape'] == 'diamond':
+                pts = f"{cx},{n['y']} {n['x']+n['w']},{cy} {cx},{n['y']+n['h']} {n['x']},{cy}"
+                # shadow
+                pts_s = f"{cx},{n['y']+3} {n['x']+n['w']+2},{cy+3} {cx},{n['y']+n['h']+3} {n['x']-2},{cy+3}"
+                parts.append(f'  <polygon points="{pts_s}" fill="black" fill-opacity="0.3" />')
+                parts.append(
+                    f'  <polygon points="{pts}" fill="{n["fill"]}" '
+                    f'stroke="{n["stroke"]}" stroke-width="2.5" />')
+            else:
+                rx = "10" if n['rounded'] else "2"
+                # Drop shadow
+                parts.append(
+                    f'  <rect x="{n["x"]+2}" y="{n["y"]+3}" width="{n["w"]}" height="{n["h"]}" '
+                    f'rx="{rx}" ry="{rx}" fill="black" fill-opacity="0.25" />')
+                parts.append(
+                    f'  <rect x="{n["x"]}" y="{n["y"]}" width="{n["w"]}" height="{n["h"]}" '
+                    f'rx="{rx}" ry="{rx}" fill="{n["fill"]}" '
+                    f'stroke="{n["stroke"]}" stroke-width="2.5" />')
+            # Text
+            label = n['label'].replace('&amp;', '&')
+            lines = label.split('\n')
+            line_h = 17
+            total = len(lines) * line_h
+            sy = cy - total / 2 + 13
+            for i, ln in enumerate(lines):
+                parts.append(
+                    f'  <text x="{cx}" y="{sy + i * line_h}" text-anchor="middle" '
+                    f'font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" '
+                    f'font-weight="700" fill="{n["font_color"]}">'
+                    f'{html.escape(ln)}</text>')
+
+        return parts, marker_colors
 
     def save_as_drawio_svg(self, path):
-        xml = self.build_xml()
-        encoded_content = html.escape(xml, quote=True)
-        # Create minimal SVG wrapper with embedded draw.io content
+        all_items = list(self.nodes.values()) + list(self.groups.values())
+        pad = 25
+        min_x = min(n['x'] for n in all_items) - pad
+        min_y = min(n['y'] for n in all_items) - pad
+        max_x = max(n['x'] + n['w'] for n in all_items) + pad
+        max_y = max(n['y'] + n['h'] for n in all_items) + pad
+        vw, vh = max_x - min_x, max_y - min_y
+
+        shapes, marker_colors = self._render()
+
+        defs = []
+        for c in marker_colors:
+            mid = f'ah{c[1:]}'
+            defs.append(
+                f'    <marker id="{mid}" viewBox="0 0 10 10" refX="9" refY="5" '
+                f'markerWidth="7" markerHeight="7" orient="auto-start-auto">'
+                f'<path d="M 0 1 L 8 5 L 0 9 z" fill="{c}" /></marker>')
+
         svg = f'''<?xml version="1.0" encoding="UTF-8"?>
-<!-- Do not edit this file with editors other than draw.io -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     version="1.1" width="1px" height="1px" viewBox="-0.5 -0.5 1 1"
-     content="{encoded_content}"
-     style="background-color: #1a1a2e;">
-  <defs/>
-  <g/>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+     width="{vw}" height="{vh}" viewBox="{min_x} {min_y} {vw} {vh}">
+  <defs>
+{chr(10).join(defs)}
+  </defs>
+  <rect x="{min_x}" y="{min_y}" width="{vw}" height="{vh}" fill="{self.bg}" rx="12" ry="12" />
+{chr(10).join(shapes)}
 </svg>'''
         with open(path, "w", encoding="utf-8") as f:
             f.write(svg)
