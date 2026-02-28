@@ -106,3 +106,27 @@ These must be consolidated. Keep one, cross-reference the other.
 **Front-loading:** 19 slides before "Let's Think Like Attackers" transition. Heavy but mitigated by Mermaid diagrams. Acceptable.
 
 **Overall Rating:** 4/5 — strong deck, excellent code samples, solid speaker notes. Fix the redundancy, correct the summary table, and verify T1185.
+
+---
+
+### 2026-02-28: Deck Review Issues — All Resolved
+
+**Resolution Status:** All 7 issues from 2026-02-27 review have been resolved:
+
+1. ✅ **User Enumeration Redundancy** — McManus consolidated: kept detailed version in Discovery (T1087), replaced Reconnaissance example with distinct T1589 pattern (password reset enumeration) with cross-reference.
+
+2. ✅ **"What We Covered" Table** — Added Supply Chain row (`T1195, T1195.001 | Dependency verification, integrity validation`). Updated speaker note from "The only tactic we didn't deep-dive is Supply Chain" to "all 14 tactics."
+
+3. ✅ **Agenda Count** — Updated line 44 from "11 Technique Categories" to "13 Tactic Categories." Updated speaker note.
+
+4. ✅ **T1046 Name** — Corrected from "Network Service Scanning" to "Network Service Discovery."
+
+5. ✅ **DEMOS Placeholder** — Replaced with proper transition slide.
+
+6. ✅ **T1185 → T1539 (Fenster verified)** — Confirmed change needed. T1185 = browser process injection; T1539 = cookie theft. Applied 16 corrections across content, code comments, and summary tables.
+
+7. ✅ **SSRF T1090/T1572 → T1190 (Fenster verified)** — Confirmed change needed. SSRF is application exploitation (T1190), not C2 evasion. Applied 1 correction to OWASP mapping table.
+
+**Session Log:** `.ai-team/log/2026-02-28-deck-review-fixes.md`
+
+**Decisions Merged:** Full Deck Review findings + Attack Chain Color Standards consolidated into `.ai-team/decisions.md`.

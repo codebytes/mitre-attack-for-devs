@@ -83,10 +83,27 @@
 
 - **Placeholder Slides Are Liabilities**: A bare "# DEMOS" slide with a vague speaker note adds nothing. Converted to a "Live Demo" transition slide with specific demo scenarios (SQL injection, credential stuffing, web shell upload) and a graceful skip path. Every slide must earn its place in the deck.
 
-### Fenster Technique ID Corrections (2025-07-17)
+### Fenster Technique ID Corrections (2025-07-17) — Applied (2026-02-28)
 
-- **T1185 vs T1539 Distinction**: T1185 (Browser Session Hijacking) describes man-in-the-browser attacks — adversary malware injecting into a browser process to pivot through authenticated sessions. T1539 (Steal Web Session Cookie) describes cookie theft and replay — XSS-based exfiltration, insecure cookie flags, session fixation. Our session management slides teach cookie security, not browser process injection, so T1539 is the correct mapping. Applied 16 replacements across slide content, code comments, speaker notes, and summary tables.
+- **T1185 vs T1539 Distinction**: T1185 (Browser Session Hijacking) describes man-in-the-browser attacks — adversary malware injecting into a browser process to pivot through authenticated sessions. T1539 (Steal Web Session Cookie) describes cookie theft and replay — XSS-based exfiltration, insecure cookie flags, session fixation. Session management slides teach cookie security, not browser process injection, so T1539 is the correct mapping. Applied 16 replacements across slide content, code comments, speaker notes, and summary tables.
 
 - **SSRF ATT&CK Mapping Precision**: SSRF was mapped to T1090 (Proxy) + T1572 (Protocol Tunneling) — both are C2 evasion techniques. The correct mapping is T1190 (Exploit Public-Facing Application) because SSRF is an application exploitation technique. ATT&CK mapping should reflect what the adversary *does* (exploits a public-facing app), not the incidental mechanic (server acts as proxy). Changed in the OWASP-to-ATT&CK mapping table.
 
 - **Cross-Reference Technique IDs Against Framework**: When assigning ATT&CK technique IDs, always verify against attack.mitre.org. Conceptual similarity ("session hijacking" sounds like it should be T1185) can lead to incorrect mappings. The technique description, not the name, determines the correct ID.
+
+### Attack Chain Diagram Color Standards (2026-02-28)
+
+- **Color Palette for Attack Chains**: Established consistent color-coded gradient for all attack chain flowchart diagrams to reinforce ATT&CK tactic progression:
+  - Red (#e74c3c): Initial Access / Exploit — attack entry points
+  - Orange (#e67e22): Execution — command execution, script injection
+  - Yellow (#f39c12): Credential Access — credential theft, brute force
+  - Green (#2ecc71): Lateral Movement / Valid Accounts — privilege expansion, lateral moves
+  - Blue (#3498db): Discovery — reconnaissance, enumeration
+  - Purple (#9b59b6): Collection / Manipulation — data gathering, tampering
+  - Dark (#1a1a2e with #e94560 stroke): Impact / Exfiltration — final stage impacts
+
+- **Crooked Line Arrows**: Use red (#e94560) linkStyle for highlighting the recursive attack cycle concept, showing how real attacks loop back rather than following linear kill chain progression.
+
+- **Rationale**: Visual consistency helps audiences build intuition — they learn to associate colors with ATT&CK tactic categories. Cohesive with custom-default theme's dark aesthetic. All existing attack chain diagrams in the deck already comply with this palette.
+
+- **Application**: All future attack chain slides must follow this palette. This is now the team standard for visualization consistency.

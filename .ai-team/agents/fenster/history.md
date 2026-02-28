@@ -74,3 +74,15 @@
 - Always cross-reference the actual MITRE ATT&CK technique pages when reviewing T-codes — the technique names can be misleading without reading the full description.
 
 **Output:** `.ai-team/decisions/inbox/fenster-technique-id-verification.md` — full findings with line-by-line correction table for McManus.
+
+---
+
+### 2026-02-28: Technique ID Corrections Applied
+
+**Status:** Both technique ID findings have been merged into `.ai-team/decisions.md` and applied to the deck by McManus.
+
+**Applied Changes:**
+- T1185 → T1539: 16 replacements across slide content (lines 630, 634, 642, 651–653, 675, 682–691, 697, 1927, 2125, 2135)
+- SSRF T1090/T1572 → T1190: 1 replacement in OWASP mapping table (line 386)
+
+**Decision Record:** Consolidated into "Full Deck Review — Issues Requiring Resolution" (section: Important Issues — Technique ID Corrections)
