@@ -107,3 +107,13 @@
 - **Rationale**: Visual consistency helps audiences build intuition — they learn to associate colors with ATT&CK tactic categories. Cohesive with custom-default theme's dark aesthetic. All existing attack chain diagrams in the deck already comply with this palette.
 
 - **Application**: All future attack chain slides must follow this palette. This is now the team standard for visualization consistency.
+
+### OWASP Top 10 Slide Addition (2025-07-17)
+
+- **Slide Placement**: Inserted the OWASP Top 10 2025 list slide between "What is OWASP?" (intro) and "What is MITRE?" slides. This follows the progressive disclosure pattern: introduce the organization → show the actual framework content → transition to the next concept. The existing OWASP slide mentions the Top 10 in passing ("Broken Access Control, Cryptographic Failures, Injection, etc.") — the new slide makes it concrete and scannable.
+
+- **Two-Column Layout for Lists**: Used `<div class="columns">` to split the 10 items into two columns (A01–A05 left, A06–A10 right). This keeps the slide scannable at a glance without shrinking font size. For numbered lists of 8+ items, two-column layout is strongly preferred over a single tall list.
+
+- **Speaker Note as Narrative Bridge**: The speaker note does three things: (1) establishes this is the current 2025 list and that it updates periodically, (2) connects to audience experience ("you've probably patched most of these"), and (3) sets up the OWASP-to-MITRE pivot ("OWASP tells you what can go wrong, MITRE tells you how attackers exploit it"). Transition slides between frameworks need this kind of bridging language.
+
+- **Slide Count Impact**: One new slide added. Adds roughly 1 minute to delivery time — the speaker should let the audience scan the list briefly before talking through highlights.

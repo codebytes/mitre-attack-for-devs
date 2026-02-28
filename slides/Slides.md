@@ -78,6 +78,35 @@ OWASP is the industry standard most of you already know. It's a community-driven
 
 ---
 
+## OWASP Top 10 — 2025
+
+<div class="columns">
+<div>
+
+1. **A01** — Broken Access Control
+2. **A02** — Cryptographic Failures
+3. **A03** — Injection
+4. **A04** — Insecure Design
+5. **A05** — Security Misconfiguration
+
+</div>
+<div>
+
+6. **A06** — Vulnerable & Outdated Components
+7. **A07** — Identification & Authentication Failures
+8. **A08** — Software & Data Integrity Failures
+9. **A09** — Security Logging & Monitoring Failures
+10. **A10** — Server-Side Request Forgery (SSRF)
+
+</div>
+</div>
+
+<!-- 
+This is the OWASP Top 10 for 2025 — the current list. It updates roughly every 3-4 years based on real-world vulnerability data. If you've been building web apps for a while, most of these should look familiar — broken access control has been near the top for years, injection is a perennial classic. Scan through these — you've probably patched or prevented most of them at some point. Now here's the shift we're going to make today: OWASP tells you *what can go wrong*. Next, we'll look at how MITRE tells you *how attackers actually exploit these* — the techniques, the chains, the full adversary playbook.
+-->
+
+---
+
 ## What is MITRE?
 
 - **The MITRE Corporation**: Not-for-profit organization founded in **1958**
@@ -95,27 +124,31 @@ Before we dive into ATT&CK specifically, let's talk about MITRE the organization
 ## MITRE's Cybersecurity Ecosystem
 
 <div class="mermaid">
-flowchart TD
-    MITRE["🏛️ MITRE Corporation"]
-    MITRE --> CVE["**CVE**<br/>Common Vulnerabilities<br/>& Exposures"]
-    MITRE --> CWE["**CWE**<br/>Common Weakness<br/>Enumeration"]
-    MITRE --> CAPEC["**CAPEC**<br/>Common Attack Pattern<br/>Enumeration"]
-    MITRE --> ATTACK["**ATT&CK**<br/>Adversary Tactics<br/>& Techniques"]
-    MITRE --> D3FEND["**D3FEND**<br/>Defensive<br/>Techniques"]
-    MITRE --> ATLAS["**ATLAS**<br/>AI/ML Threat<br/>Landscape"]
-
-    CWE -->|"weaknesses exploited by"| CVE
-    CAPEC -->|"patterns map to"| ATTACK
-    ATTACK -->|"countered by"| D3FEND
-    ATTACK -->|"extended for AI by"| ATLAS
-
-    style MITRE fill:#1a1a2e,stroke:#e94560,color:#fff
-    style ATTACK fill:#0f3460,stroke:#e94560,color:#fff
-    style D3FEND fill:#0f3460,stroke:#16a085,color:#fff
-    style CVE fill:#0f3460,stroke:#e67e22,color:#fff
-    style CWE fill:#0f3460,stroke:#e67e22,color:#fff
-    style CAPEC fill:#0f3460,stroke:#e67e22,color:#fff
-    style ATLAS fill:#0f3460,stroke:#9b59b6,color:#fff
+flowchart LR
+subgraph Offense
+CVE[CVE - Vulnerabilities]
+CWE[CWE - Weaknesses]
+CAPEC[CAPEC - Attack Patterns]
+end
+subgraph Core
+ATTACK[ATTACK - Adversary Behavior]
+end
+subgraph Defense
+D3FEND[D3FEND - Countermeasures]
+ATLAS[ATLAS - AI/ML Threats]
+end
+CWE --> CVE
+CWE --> CAPEC
+CAPEC --> ATTACK
+CVE --> ATTACK
+ATTACK --> D3FEND
+ATTACK --> ATLAS
+style ATTACK fill:#0f3460,stroke:#e94560,color:#fff
+style D3FEND fill:#0f3460,stroke:#16a085,color:#fff
+style ATLAS fill:#0f3460,stroke:#9b59b6,color:#fff
+style CVE fill:#0f3460,stroke:#e67e22,color:#fff
+style CWE fill:#0f3460,stroke:#e67e22,color:#fff
+style CAPEC fill:#0f3460,stroke:#e67e22,color:#fff
 </div>
 
 <!-- 
@@ -383,7 +416,7 @@ This quote sums it up perfectly. OWASP prevents vulnerabilities—you patch the 
 | Security Misconfiguration | T1552 (Unsecured Credentials), T1082 (System Info Discovery) |
 | Cryptographic Failures | T1555 (Credentials from Password Stores), T1565 (Data Manipulation) |
 | Identification & Authentication Failures | T1087 (Account Discovery), T1110 (Brute Force) |
-| Server-Side Request Forgery | T1090 (Proxy), T1572 (Protocol Tunneling) |
+| Server-Side Request Forgery | T1190 (Exploit Public-Facing Application) |
 
 > **Note**: OWASP categories describe *vulnerabilities* (weaknesses in code), while ATT&CK techniques describe *adversary behaviors* (what attackers do). A single vulnerability may enable multiple techniques, and a single technique may exploit multiple vulnerabilities.
 
@@ -627,11 +660,11 @@ Tactic three: Persistence. Attackers want to maintain access even after reboots,
 | Technique ID | Name | Description |
 |--------------|------|-------------|
 | T1098 | Account Manipulation | Modifying user accounts for persistence |
-| T1185 | Browser Session Hijacking | Stealing and reusing session tokens |
+| T1539 | Steal Web Session Cookie | Stealing and reusing session tokens |
 | T1505.003 | Web Shell | Server-side persistence mechanisms |
 
 <!-- 
-Three persistence techniques. T1098: account manipulation where attackers create backdoor accounts or modify existing ones. T1185: session hijacking by stealing cookies or tokens. T1505.003: web shells uploaded to the server for persistent remote access. We'll focus heavily on session security since it's directly in your control as a developer.
+Three persistence techniques. T1098: account manipulation where attackers create backdoor accounts or modify existing ones. T1539: stealing session cookies or tokens. T1505.003: web shells uploaded to the server for persistent remote access. We'll focus heavily on session security since it's directly in your control as a developer.
 -->
 
 ---
@@ -639,7 +672,7 @@ Three persistence techniques. T1098: account manipulation where attackers create
 ## Vulnerable Session Management
 
 ```javascript
-// VULNERABLE - Weak session security enables T1185
+// VULNERABLE - Weak session security enables T1539
 const express = require('express');
 const session = require('express-session');
 
@@ -648,9 +681,9 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: false,        // T1185: No HTTPS requirement
-        httpOnly: false,      // T1185: XSS vulnerable
-        maxAge: 24 * 60 * 60 * 1000  // T1185: Long expiration
+        secure: false,        // T1539: No HTTPS requirement
+        httpOnly: false,      // T1539: XSS vulnerable
+        maxAge: 24 * 60 * 60 * 1000  // T1539: Long expiration
     }
 }));
 
@@ -672,29 +705,29 @@ Terrible session management that enables multiple attacks. Hardcoded secret mean
 ## Defended Session Management
 
 ```javascript
-// DEFENDED - Secure session handling prevents T1185
+// DEFENDED - Secure session handling prevents T1539
 const crypto = require('crypto');
 
 app.use(session({
     secret: process.env.SESSION_SECRET,  // T1552 Prevention: Environment variable
     resave: false,
     saveUninitialized: false,
-    rolling: true,  // T1185 Prevention: Session rotation
+    rolling: true,  // T1539 Prevention: Session rotation
     cookie: {
-        secure: true,     // T1185 Prevention: HTTPS only
-        httpOnly: true,   // T1185 Prevention: XSS protection
-        maxAge: 15 * 60 * 1000,  // T1185 Prevention: Short expiration
+        secure: true,     // T1539 Prevention: HTTPS only
+        httpOnly: true,   // T1539 Prevention: XSS protection
+        maxAge: 15 * 60 * 1000,  // T1539 Prevention: Short expiration
         sameSite: 'strict'       // CSRF protection
     }
 }));
 
-// T1185 Prevention: Session fingerprinting
+// T1539 Prevention: Session fingerprinting
 function validateSession(req, res, next) {
     if (!req.session.user) return res.status(401).send('Unauthorized');
     
     const fingerprint = generateFingerprint(req);
     if (req.session.fingerprint !== fingerprint) {
-        req.session.destroy();  // T1185 Detection: Session hijacking
+        req.session.destroy();  // T1539 Detection: Session cookie replay
         return res.status(401).send('Session security violation');
     }
     next();
@@ -1925,7 +1958,7 @@ flowchart TD
 |---------------------|------------------|------------|
 | User Login | T1078, T1110, T1566, T1087 | High |
 | Password Reset | T1566, T1078, T1087 | High |
-| Session Management | T1185, T1098, T1134 | High |
+| Session Management | T1539, T1098, T1134 | High |
 | File Upload | T1505.003, T1190 | High |
 | API Endpoints | T1087, T1046, T1213, T1499 | Medium |
 | Data Export | T1567, T1020, T1030 | High |
@@ -2124,7 +2157,7 @@ Transparency about scope. We focused on Enterprise ATT&CK for application develo
 
 ### Recommendation for most applications:
 1. **T1078 (Valid Accounts)** - Authentication monitoring
-2. **T1185 (Session Hijacking)** - Session security  
+2. **T1539 (Steal Web Session Cookie)** - Session security  
 3. **T1213 (Data Collection)** - Data access anomalies
 
 ### Why these first:
@@ -2134,7 +2167,7 @@ Transparency about scope. We focused on Enterprise ATT&CK for application develo
 - **Foundation** for expanding coverage
 
 <!-- 
-Don't try to implement all 200+ techniques at once. Start with these three: T1078 Valid Accounts monitoring, T1185 Session Hijacking prevention, and T1213 Data Collection anomaly detection. Why? They appear in almost every successful breach. They're relatively straightforward to implement with the patterns we've shown today. They provide immediate detection value. And they build the foundation—logging infrastructure, behavioral baselines, response workflows—that you'll reuse for other techniques. Master these three, then expand systematically based on your threat model.
+Don't try to implement all 200+ techniques at once. Start with these three: T1078 Valid Accounts monitoring, T1539 Steal Web Session Cookie prevention, and T1213 Data Collection anomaly detection. Why? They appear in almost every successful breach. They're relatively straightforward to implement with the patterns we've shown today. They provide immediate detection value. And they build the foundation—logging infrastructure, behavioral baselines, response workflows—that you'll reuse for other techniques. Master these three, then expand systematically based on your threat model.
 -->
 
 ---
@@ -2204,6 +2237,10 @@ That's it! Let's open it up for questions. Ask about anything—specific techniq
 
 <!-- Needed for mermaid, can be anywhere in file except frontmatter -->
 <script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: true });
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.12.3/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: false });
+  document.querySelectorAll('.mermaid').forEach(el => {
+    el.textContent = el.textContent.replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&');
+  });
+  await mermaid.run();
 </script>
