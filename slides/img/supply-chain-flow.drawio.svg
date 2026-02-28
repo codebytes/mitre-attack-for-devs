@@ -2,12 +2,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
      width="460" height="690" viewBox="75 -5 460 690">
   <defs>
-    <marker id="ah9b59b6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#9b59b6" /></marker>
-    <marker id="ah1abc9c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#1abc9c" /></marker>
     <marker id="ah3498db" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#3498db" /></marker>
     <marker id="ahe67e22" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e67e22" /></marker>
-    <marker id="ahe74c3c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e74c3c" /></marker>
     <marker id="ah2ecc71" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#2ecc71" /></marker>
+    <marker id="ah1abc9c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#1abc9c" /></marker>
+    <marker id="ah9b59b6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#9b59b6" /></marker>
+    <marker id="ahe74c3c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e74c3c" /></marker>
   </defs>
   <rect x="75" y="-5" width="460" height="690" fill="#1a1a2e" rx="12" ry="12" />
   <line x1="430.0" y1="70.0" x2="430.0" y2="90.0" stroke="#3498db" stroke-width="2" stroke-linecap="round" marker-end="url(#ah3498db)" />

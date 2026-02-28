@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-     width="1280" height="260" viewBox="-5 75 1280 260">
+     width="905" height="215" viewBox="-5 -5 905 215">
   <defs>
-    <marker id="ahe94560" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e94560" /></marker>
     <marker id="ahcccccc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#cccccc" /></marker>
+    <marker id="ahe94560" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e94560" /></marker>
   </defs>
-  <rect x="-5" y="75" width="1280" height="260" fill="#1a1a2e" rx="12" ry="12" />
-  <line x1="170.0" y1="130.0" x2="190.0" y2="130.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="350.0" y1="130.0" x2="370.0" y2="130.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="530.0" y1="130.0" x2="550.0" y2="130.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="743.0" y1="160.0" x2="536.2" y2="246.2" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="530.0" y1="280.0" x2="550.0" y2="280.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="710.0" y1="280.0" x2="730.0" y2="280.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="890.0" y1="280.0" x2="910.0" y2="280.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="1070.0" y1="280.0" x2="1090.0" y2="280.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="560.0" y1="130.0" x2="540.0" y2="130.0" stroke="#e94560" stroke-width="3" stroke-linecap="round" marker-end="url(#ahe94560)" />
-  <line x1="710.0" y1="130.0" x2="730.0" y2="130.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="740.0" y1="130.0" x2="540.0" y2="130.0" stroke="#e94560" stroke-width="3" stroke-linecap="round" marker-end="url(#ahe94560)" />
-  <rect x="22" y="103" width="150" height="60" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="20" y="100" width="150" height="60" rx="10" ry="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" />
-  <text x="95.0" y="126.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Initial</text>
-  <text x="95.0" y="143.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Access</text>
-  <rect x="202" y="103" width="150" height="60" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="200" y="100" width="150" height="60" rx="10" ry="10" fill="#e67e22" stroke="#d35400" stroke-width="2.5" />
-  <text x="275.0" y="134.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Execution</text>
-  <rect x="382" y="103" width="150" height="60" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="380" y="100" width="150" height="60" rx="10" ry="10" fill="#3498db" stroke="#2980b9" stroke-width="2.5" />
-  <text x="455.0" y="134.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Discovery</text>
-  <rect x="562" y="103" width="150" height="60" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="560" y="100" width="150" height="60" rx="10" ry="10" fill="#f39c12" stroke="#e67e22" stroke-width="2.5" />
-  <text x="635.0" y="126.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Credential</text>
-  <text x="635.0" y="143.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Access</text>
-  <rect x="742" y="103" width="150" height="60" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="740" y="100" width="150" height="60" rx="10" ry="10" fill="#2ecc71" stroke="#27ae60" stroke-width="2.5" />
-  <text x="815.0" y="126.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Lateral</text>
-  <text x="815.0" y="143.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Movement</text>
-  <rect x="382" y="253" width="150" height="60" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="380" y="250" width="150" height="60" rx="10" ry="10" fill="#3498db" stroke="#2980b9" stroke-width="2.5" />
-  <text x="455.0" y="276.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Discovery</text>
-  <text x="455.0" y="293.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">(new segment)</text>
-  <rect x="562" y="253" width="150" height="60" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="560" y="250" width="150" height="60" rx="10" ry="10" fill="#f39c12" stroke="#e67e22" stroke-width="2.5" />
-  <text x="635.0" y="276.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Credential</text>
-  <text x="635.0" y="293.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Access</text>
-  <rect x="742" y="253" width="150" height="60" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="740" y="250" width="150" height="60" rx="10" ry="10" fill="#2ecc71" stroke="#27ae60" stroke-width="2.5" />
-  <text x="815.0" y="276.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Lateral</text>
-  <text x="815.0" y="293.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Movement</text>
-  <rect x="922" y="253" width="150" height="60" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="920" y="250" width="150" height="60" rx="10" ry="10" fill="#9b59b6" stroke="#8e44ad" stroke-width="2.5" />
-  <text x="995.0" y="284.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Collection</text>
-  <rect x="1102" y="253" width="150" height="60" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="1100" y="250" width="150" height="60" rx="10" ry="10" fill="#1a1a2e" stroke="#e94560" stroke-width="2.5" />
-  <text x="1175.0" y="284.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Exfiltration</text>
+  <rect x="-5" y="-5" width="905" height="215" fill="#1a1a2e" rx="12" ry="12" />
+  <line x1="150.0" y1="47.5" x2="155.0" y2="47.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
+  <line x1="295.0" y1="47.5" x2="300.0" y2="47.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
+  <line x1="440.0" y1="47.5" x2="445.0" y2="47.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
+  <line x1="600.0" y1="63.9" x2="304.7" y2="138.6" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
+  <line x1="295.0" y1="157.5" x2="300.0" y2="157.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
+  <line x1="440.0" y1="157.5" x2="445.0" y2="157.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
+  <line x1="585.0" y1="157.5" x2="590.0" y2="157.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
+  <line x1="730.0" y1="157.5" x2="735.0" y2="157.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
+  <line x1="455.0" y1="47.5" x2="450.0" y2="47.5" stroke="#e94560" stroke-width="3" stroke-linecap="round" marker-end="url(#ahe94560)" />
+  <line x1="585.0" y1="47.5" x2="590.0" y2="47.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
+  <line x1="600.0" y1="47.5" x2="450.0" y2="47.5" stroke="#e94560" stroke-width="3" stroke-linecap="round" marker-end="url(#ahe94560)" />
+  <rect x="22" y="23" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
+  <rect x="20" y="20" width="130" height="55" rx="10" ry="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" />
+  <text x="85.0" y="43.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Initial</text>
+  <text x="85.0" y="60.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Access</text>
+  <rect x="167" y="23" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
+  <rect x="165" y="20" width="130" height="55" rx="10" ry="10" fill="#e67e22" stroke="#d35400" stroke-width="2.5" />
+  <text x="230.0" y="52.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Execution</text>
+  <rect x="312" y="23" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
+  <rect x="310" y="20" width="130" height="55" rx="10" ry="10" fill="#3498db" stroke="#2980b9" stroke-width="2.5" />
+  <text x="375.0" y="52.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Discovery</text>
+  <rect x="457" y="23" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
+  <rect x="455" y="20" width="130" height="55" rx="10" ry="10" fill="#f39c12" stroke="#e67e22" stroke-width="2.5" />
+  <text x="520.0" y="43.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Credential</text>
+  <text x="520.0" y="60.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Access</text>
+  <rect x="602" y="23" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
+  <rect x="600" y="20" width="130" height="55" rx="10" ry="10" fill="#2ecc71" stroke="#27ae60" stroke-width="2.5" />
+  <text x="665.0" y="43.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Lateral</text>
+  <text x="665.0" y="60.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Movement</text>
+  <rect x="167" y="133" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
+  <rect x="165" y="130" width="130" height="55" rx="10" ry="10" fill="#3498db" stroke="#2980b9" stroke-width="2.5" />
+  <text x="230.0" y="153.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Discovery</text>
+  <text x="230.0" y="170.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">(new segment)</text>
+  <rect x="312" y="133" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
+  <rect x="310" y="130" width="130" height="55" rx="10" ry="10" fill="#f39c12" stroke="#e67e22" stroke-width="2.5" />
+  <text x="375.0" y="153.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Credential</text>
+  <text x="375.0" y="170.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Access</text>
+  <rect x="457" y="133" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
+  <rect x="455" y="130" width="130" height="55" rx="10" ry="10" fill="#2ecc71" stroke="#27ae60" stroke-width="2.5" />
+  <text x="520.0" y="153.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Lateral</text>
+  <text x="520.0" y="170.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Movement</text>
+  <rect x="602" y="133" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
+  <rect x="600" y="130" width="130" height="55" rx="10" ry="10" fill="#9b59b6" stroke="#8e44ad" stroke-width="2.5" />
+  <text x="665.0" y="162.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Collection</text>
+  <rect x="747" y="133" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
+  <rect x="745" y="130" width="130" height="55" rx="10" ry="10" fill="#1a1a2e" stroke="#e94560" stroke-width="2.5" />
+  <text x="810.0" y="162.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Exfiltration</text>
 </svg>

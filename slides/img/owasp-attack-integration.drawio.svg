@@ -2,13 +2,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
      width="550" height="500" viewBox="-5 15 550 500">
   <defs>
-    <marker id="ah9b59b6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#9b59b6" /></marker>
-    <marker id="ah1abc9c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#1abc9c" /></marker>
     <marker id="ah3498db" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#3498db" /></marker>
     <marker id="ahe67e22" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e67e22" /></marker>
-    <marker id="ahe74c3c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e74c3c" /></marker>
-    <marker id="ah2ecc71" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#2ecc71" /></marker>
     <marker id="ahc0392b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#c0392b" /></marker>
+    <marker id="ah2ecc71" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#2ecc71" /></marker>
+    <marker id="ah1abc9c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#1abc9c" /></marker>
+    <marker id="ah9b59b6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#9b59b6" /></marker>
+    <marker id="ahe74c3c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e74c3c" /></marker>
   </defs>
   <rect x="-5" y="15" width="550" height="500" fill="#1a1a2e" rx="12" ry="12" />
   <line x1="170.0" y1="74.4" x2="340.1" y2="95.6" stroke="#2ecc71" stroke-width="2" stroke-linecap="round" marker-end="url(#ah2ecc71)" />

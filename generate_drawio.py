@@ -138,11 +138,11 @@ class DrawioBuilder:
     def save_as_drawio_svg(self, path):
         all_items = list(self.nodes.values()) + list(self.groups.values())
         pad = 25
-        min_x = min(n['x'] for n in all_items) - pad
-        min_y = min(n['y'] for n in all_items) - pad
-        max_x = max(n['x'] + n['w'] for n in all_items) + pad
-        max_y = max(n['y'] + n['h'] for n in all_items) + pad
-        vw, vh = max_x - min_x, max_y - min_y
+        min_x = int(min(n['x'] for n in all_items) - pad)
+        min_y = int(min(n['y'] for n in all_items) - pad)
+        max_x = int(max(n['x'] + n['w'] for n in all_items) + pad)
+        max_y = int(max(n['y'] + n['h'] for n in all_items) + pad)
+        vw, vh = int(max_x - min_x), int(max_y - min_y)
 
         shapes, marker_colors = self._render()
 
@@ -192,29 +192,32 @@ def diagram_01_ecosystem():
 
 def diagram_02_14tactics():
     b = DrawioBuilder()
-    # Pre-Attack
-    b.add_group("Pre-Attack", 20, 20, 300, 100)
-    a = b.add_node("Reconnaissance", 40, 40, 120, 60, fill="#2c3e50", stroke="#3498db")
-    br = b.add_node("Resource\nDevelopment", 180, 40, 120, 60, fill="#2c3e50", stroke="#3498db")
-    # Get In
-    b.add_group("Get In", 340, 20, 540, 100)
-    c = b.add_node("Initial\nAccess", 360, 40, 110, 60, fill="#c0392b", stroke="#e74c3c")
-    d = b.add_node("Execution", 490, 40, 110, 60, fill="#c0392b", stroke="#e74c3c")
-    e = b.add_node("Persistence", 620, 40, 110, 60, fill="#c0392b", stroke="#e74c3c")
-    f = b.add_node("Privilege\nEscalation", 750, 40, 110, 60, fill="#c0392b", stroke="#e74c3c")
-    # Stay In
-    b.add_group("Stay In", 20, 150, 540, 100)
-    g = b.add_node("Defense\nEvasion", 40, 170, 110, 60, fill="#d35400", stroke="#e67e22")
-    h = b.add_node("Credential\nAccess", 170, 170, 110, 60, fill="#d35400", stroke="#e67e22")
-    i = b.add_node("Discovery", 300, 170, 110, 60, fill="#d35400", stroke="#e67e22")
-    j = b.add_node("Lateral\nMovement", 430, 170, 110, 60, fill="#d35400", stroke="#e67e22")
-    # Act
-    b.add_group("Act", 580, 150, 540, 100)
-    k = b.add_node("Collection", 600, 170, 110, 60, fill="#8e44ad", stroke="#9b59b6")
-    l = b.add_node("Command &amp;\nControl", 730, 170, 110, 60, fill="#8e44ad", stroke="#9b59b6")
-    m = b.add_node("Exfiltration", 860, 170, 110, 60, fill="#8e44ad", stroke="#9b59b6")
-    n = b.add_node("Impact", 990, 170, 110, 60, fill="#8e44ad", stroke="#9b59b6")
-    # Edges
+    # 2x2 grid: Pre-Attack + Get In on top, Stay In + Act on bottom
+    # Row 1
+    b.add_group("Pre-Attack", 20, 20, 280, 110)
+    a = b.add_node("Reconnaissance", 35, 45, 120, 60, fill="#2c3e50", stroke="#3498db")
+    br = b.add_node("Resource\nDevelopment", 165, 45, 120, 60, fill="#2c3e50", stroke="#3498db")
+
+    b.add_group("Get In", 320, 20, 540, 110)
+    c = b.add_node("Initial\nAccess", 335, 45, 120, 60, fill="#c0392b", stroke="#e74c3c")
+    d = b.add_node("Execution", 465, 45, 120, 60, fill="#c0392b", stroke="#e74c3c")
+    e = b.add_node("Persistence", 595, 45, 120, 60, fill="#c0392b", stroke="#e74c3c")
+    f = b.add_node("Privilege\nEscalation", 725, 45, 120, 60, fill="#c0392b", stroke="#e74c3c")
+
+    # Row 2
+    b.add_group("Stay In", 20, 160, 540, 110)
+    g = b.add_node("Defense\nEvasion", 35, 185, 120, 60, fill="#d35400", stroke="#e67e22")
+    h = b.add_node("Credential\nAccess", 165, 185, 120, 60, fill="#d35400", stroke="#e67e22")
+    i = b.add_node("Discovery", 295, 185, 120, 60, fill="#d35400", stroke="#e67e22")
+    j = b.add_node("Lateral\nMovement", 425, 185, 120, 60, fill="#d35400", stroke="#e67e22")
+
+    b.add_group("Act", 580, 160, 540, 110)
+    k = b.add_node("Collection", 595, 185, 120, 60, fill="#8e44ad", stroke="#9b59b6")
+    l = b.add_node("Command &amp;\nControl", 725, 185, 120, 60, fill="#8e44ad", stroke="#9b59b6")
+    m = b.add_node("Exfiltration", 855, 185, 120, 60, fill="#8e44ad", stroke="#9b59b6")
+    n = b.add_node("Impact", 985, 185, 120, 60, fill="#8e44ad", stroke="#9b59b6")
+
+    # Edges within groups
     b.add_edge(a, br, color="#3498db")
     b.add_edge(c, d, color="#e74c3c")
     b.add_edge(d, e, color="#e74c3c")
@@ -225,6 +228,7 @@ def diagram_02_14tactics():
     b.add_edge(k, l, color="#9b59b6")
     b.add_edge(l, m, color="#9b59b6")
     b.add_edge(m, n, color="#9b59b6")
+    # Cross-group transitions
     b.add_edge(br, c, color="#ffffff")
     b.add_edge(f, g, color="#ffffff")
     b.add_edge(j, k, color="#ffffff")
@@ -232,7 +236,7 @@ def diagram_02_14tactics():
 
 def diagram_03_attack_chain():
     b = DrawioBuilder()
-    sx = 20
+    # 2 rows of 3 instead of 1 row of 6
     nodes = [
         ("T1195\nSupply Chain\nCompromise", "#e74c3c", "#c0392b"),
         ("T1059\nExecution", "#e67e22", "#d35400"),
@@ -243,7 +247,9 @@ def diagram_03_attack_chain():
     ]
     nids = []
     for i, (label, fill, stroke) in enumerate(nodes):
-        nid = b.add_node(label, sx + i * 170, 60, 150, 70, fill=fill, stroke=stroke)
+        col = i % 3
+        row = i // 3
+        nid = b.add_node(label, 20 + col * 190, 20 + row * 120, 170, 80, fill=fill, stroke=stroke)
         nids.append(nid)
     for i in range(len(nids) - 1):
         b.add_edge(nids[i], nids[i + 1], color="#cccccc")
@@ -251,6 +257,7 @@ def diagram_03_attack_chain():
 
 def diagram_04_ransomware_chain():
     b = DrawioBuilder()
+    # Horizontal zigzag: 2 rows of 4 and 3
     nodes = [
         ("T1190\nUnrestricted\nFile Upload", "#e74c3c", "#c0392b"),
         ("T1505.003\nWeb Shell\nDeployed", "#e74c3c", "#c0392b"),
@@ -261,9 +268,10 @@ def diagram_04_ransomware_chain():
         ("T1485\nRansomware\nDeployment", "#1a1a2e", "#e94560"),
     ]
     nids = []
-    cx = 350
     for i, (label, fill, stroke) in enumerate(nodes):
-        nid = b.add_node(label, cx, 20 + i * 90, 160, 70, fill=fill, stroke=stroke)
+        col = i % 4
+        row = i // 4
+        nid = b.add_node(label, 20 + col * 190, 20 + row * 120, 170, 80, fill=fill, stroke=stroke)
         nids.append(nid)
     for i in range(len(nids) - 1):
         b.add_edge(nids[i], nids[i + 1], color="#cccccc")
@@ -271,23 +279,24 @@ def diagram_04_ransomware_chain():
 
 def diagram_05_crooked_line():
     b = DrawioBuilder()
+    # 2 rows, tighter spacing
+    w, h, gap = 130, 55, 145
     nodes_data = [
-        ("Initial\nAccess", 20, 100, "#e74c3c", "#c0392b"),
-        ("Execution", 200, 100, "#e67e22", "#d35400"),
-        ("Discovery", 380, 100, "#3498db", "#2980b9"),
-        ("Credential\nAccess", 560, 100, "#f39c12", "#e67e22"),
-        ("Lateral\nMovement", 740, 100, "#2ecc71", "#27ae60"),
-        ("Discovery\n(new segment)", 380, 250, "#3498db", "#2980b9"),
-        ("Credential\nAccess", 560, 250, "#f39c12", "#e67e22"),
-        ("Lateral\nMovement", 740, 250, "#2ecc71", "#27ae60"),
-        ("Collection", 920, 250, "#9b59b6", "#8e44ad"),
-        ("Exfiltration", 1100, 250, "#1a1a2e", "#e94560"),
+        ("Initial\nAccess",         20,        20, "#e74c3c", "#c0392b"),
+        ("Execution",               20+gap,    20, "#e67e22", "#d35400"),
+        ("Discovery",               20+gap*2,  20, "#3498db", "#2980b9"),
+        ("Credential\nAccess",      20+gap*3,  20, "#f39c12", "#e67e22"),
+        ("Lateral\nMovement",       20+gap*4,  20, "#2ecc71", "#27ae60"),
+        ("Discovery\n(new segment)",20+gap,   130, "#3498db", "#2980b9"),
+        ("Credential\nAccess",      20+gap*2, 130, "#f39c12", "#e67e22"),
+        ("Lateral\nMovement",       20+gap*3, 130, "#2ecc71", "#27ae60"),
+        ("Collection",              20+gap*4, 130, "#9b59b6", "#8e44ad"),
+        ("Exfiltration",            20+gap*5, 130, "#1a1a2e", "#e94560"),
     ]
     nids = []
     for label, x, y, fill, stroke in nodes_data:
-        nid = b.add_node(label, x, y, 150, 60, fill=fill, stroke=stroke)
+        nid = b.add_node(label, x, y, w, h, fill=fill, stroke=stroke)
         nids.append(nid)
-    # Linear connections
     b.add_edge(nids[0], nids[1], color="#cccccc")
     b.add_edge(nids[1], nids[2], color="#cccccc")
     b.add_edge(nids[2], nids[3], color="#cccccc")
@@ -296,22 +305,23 @@ def diagram_05_crooked_line():
     b.add_edge(nids[6], nids[7], color="#cccccc")
     b.add_edge(nids[7], nids[8], color="#cccccc")
     b.add_edge(nids[8], nids[9], color="#cccccc")
-    # Loop-back edges (the "crooked" part)
-    b.add_edge(nids[3], nids[2], color="#e94560", thick=True)  # Credential Access -> Discovery
-    b.add_edge(nids[3], nids[4], color="#cccccc")  # Credential Access -> Lateral Movement
-    b.add_edge(nids[4], nids[2], color="#e94560", thick=True)  # Lateral Movement -> Discovery (loop)
+    b.add_edge(nids[3], nids[2], color="#e94560", thick=True)
+    b.add_edge(nids[3], nids[4], color="#cccccc")
+    b.add_edge(nids[4], nids[2], color="#e94560", thick=True)
     return b
 
 def diagram_06_immutable_logging():
     b = DrawioBuilder()
-    app = b.add_node("Application", 20, 120, 140, 60, fill="#2c3e50", stroke="#3498db")
-    logger = b.add_node("Secure Logger", 200, 120, 140, 60, fill="#27ae60", stroke="#2ecc71")
-    hashv = b.add_node("Hash\nValidation", 380, 120, 140, 60, fill="#2980b9", stroke="#3498db")
-    buf = b.add_node("Local Buffer", 560, 120, 140, 60, fill="#8e44ad", stroke="#9b59b6")
-    enc = b.add_node("Encrypted\nStorage", 740, 40, 140, 60, fill="#d35400", stroke="#e67e22")
-    siem = b.add_node("External\nSIEM", 740, 200, 140, 60, fill="#d35400", stroke="#e67e22")
-    tamper = b.add_node("Tamper\nDetection", 920, 120, 140, 60, fill="#c0392b", stroke="#e74c3c")
-    alert = b.add_node("Alert\nSecurity Team", 1100, 120, 140, 60, fill="#e74c3c", stroke="#c0392b")
+    # Compact 2-row layout
+    w, h = 130, 55
+    app = b.add_node("Application", 20, 20, w, h, fill="#2c3e50", stroke="#3498db")
+    logger = b.add_node("Secure Logger", 180, 20, w, h, fill="#27ae60", stroke="#2ecc71")
+    hashv = b.add_node("Hash\nValidation", 340, 20, w, h, fill="#2980b9", stroke="#3498db")
+    buf = b.add_node("Local Buffer", 500, 20, w, h, fill="#8e44ad", stroke="#9b59b6")
+    enc = b.add_node("Encrypted\nStorage", 180, 120, w, h, fill="#d35400", stroke="#e67e22")
+    siem = b.add_node("External\nSIEM", 340, 120, w, h, fill="#d35400", stroke="#e67e22")
+    tamper = b.add_node("Tamper\nDetection", 500, 120, w, h, fill="#c0392b", stroke="#e74c3c")
+    alert = b.add_node("Alert\nSecurity Team", 660, 70, w, h, fill="#e74c3c", stroke="#c0392b")
     b.add_edge(app, logger, color="#3498db")
     b.add_edge(logger, hashv, color="#2ecc71")
     b.add_edge(hashv, buf, color="#3498db")
@@ -371,23 +381,32 @@ def diagram_08_data_flow():
 
 def diagram_09_threat_modeling():
     b = DrawioBuilder()
-    cx = 350
-    ident = b.add_node("Identify Feature", cx, 20, 180, 50, fill="#2c3e50", stroke="#3498db")
-    mapn = b.add_node("Map to ATT&amp;CK\nTechniques", cx, 100, 180, 55, fill="#2980b9", stroke="#3498db")
-    assess = b.add_node("Assess Risk\n&amp; Impact", cx, 185, 180, 55, fill="#d35400", stroke="#e67e22")
-    design = b.add_node("Design\nDetections", cx, 270, 180, 55, fill="#8e44ad", stroke="#9b59b6")
-    impl = b.add_node("Implement\n&amp; Monitor", cx, 355, 180, 55, fill="#27ae60", stroke="#2ecc71")
-    test = b.add_node("Test &amp;\nIterate", cx, 440, 180, 55, fill="#e74c3c", stroke="#c0392b")
-    b.add_edge(ident, mapn, color="#3498db")
-    b.add_edge(mapn, assess, color="#3498db")
-    b.add_edge(assess, design, color="#e67e22")
-    b.add_edge(design, impl, color="#9b59b6")
-    b.add_edge(impl, test, color="#2ecc71")
-    b.add_edge(test, mapn, color="#e74c3c")  # cycle back
+    # Circular layout instead of tall vertical
+    import math as m
+    cx, cy, r = 300, 200, 160
+    items = [
+        ("Identify\nFeature",       "#2c3e50", "#3498db"),
+        ("Map to ATT&amp;CK\nTechniques",  "#2980b9", "#3498db"),
+        ("Assess Risk\n&amp; Impact",      "#d35400", "#e67e22"),
+        ("Design\nDetections",      "#8e44ad", "#9b59b6"),
+        ("Implement\n&amp; Monitor",       "#27ae60", "#2ecc71"),
+        ("Test &amp;\nIterate",            "#e74c3c", "#c0392b"),
+    ]
+    nids = []
+    for i, (label, fill, stroke) in enumerate(items):
+        angle = -m.pi/2 + i * (2 * m.pi / len(items))
+        x = cx + r * m.cos(angle) - 75
+        y = cy + r * m.sin(angle) - 30
+        nid = b.add_node(label, x, y, 150, 55, fill=fill, stroke=stroke)
+        nids.append(nid)
+    for i in range(len(nids)):
+        b.add_edge(nids[i], nids[(i + 1) % len(nids)],
+                   color=items[(i + 1) % len(items)][2])
     return b
 
 def diagram_10_defense_depth():
     b = DrawioBuilder()
+    # 3 rows of 3 with group labels
     nodes = [
         ("Input\nValidation", "#27ae60", "#2ecc71"),
         ("Authentication", "#2980b9", "#3498db"),
@@ -399,13 +418,21 @@ def diagram_10_defense_depth():
         ("Automated\nBlocking", "#2c3e50", "#3498db"),
         ("Alert &amp;\nRemediation", "#1a1a2e", "#e94560"),
     ]
-    # Prevention | Detection | Response labels
-    b.add_group("Prevention", 15, 10, 600, 110)
-    b.add_group("Detection", 635, 10, 460, 110)
-    b.add_group("Response", 1115, 10, 310, 110)
+    b.add_group("Prevention", 10, 10, 500, 110)
+    b.add_group("Detection", 10, 140, 500, 110)
+    b.add_group("Response", 530, 140, 340, 110)
     nids = []
     for i, (label, fill, stroke) in enumerate(nodes):
-        nid = b.add_node(label, 30 + i * 155, 40, 135, 60, fill=fill, stroke=stroke)
+        if i < 4:
+            x = 25 + i * 120
+            y = 40
+        elif i < 7:
+            x = 25 + (i - 4) * 160
+            y = 170
+        else:
+            x = 545 + (i - 7) * 160
+            y = 170
+        nid = b.add_node(label, x, y, 110, 55, fill=fill, stroke=stroke)
         nids.append(nid)
     for i in range(len(nids) - 1):
         b.add_edge(nids[i], nids[i + 1], color="#cccccc")
