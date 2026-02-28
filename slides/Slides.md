@@ -357,48 +357,42 @@ Here are the four main Initial Access techniques we'll address. T1190: exploitin
 
 ---
 
-## Vulnerable Code: SQL Injection (T1190)
+## SQL Injection (T1190) — Vulnerable → Defended
+
+<div class="columns">
+<div>
+
+### ❌ Vulnerable
 
 ```python
-# VULNERABLE - Direct string concatenation enables T1190
 @app.route('/users')
 def get_user():
     user_id = request.args.get('id')
     query = f"SELECT * FROM users WHERE id = {user_id}"
-    cursor.execute(query)  # T1190: SQL Injection vulnerability
+    cursor.execute(query)
     return cursor.fetchall()
-
 # Attack: /users?id=1 OR 1=1--
 ```
 
-<!-- 
-Classic SQL injection vulnerability. We're taking user input and directly concatenating it into a SQL query—no validation, no parameterization. The attack payload at the bottom shows how an attacker sends "1 OR 1=1--" to dump the entire users table. This enables T1190: Exploit Public-Facing Application. We've all seen this in training, but it's still the number one web app vulnerability in the wild. Let's see the fix.
--->
+</div>
+<div>
 
----
-
-## Defended Code: Parameterized Queries
+### ✅ Defended
 
 ```python
-# DEFENDED - Parameterized queries prevent T1190
 @app.route('/users')
 def get_user():
     user_id = request.args.get('id')
-    
-    # Input validation
     if not user_id.isdigit():
         return "Invalid input", 400
-        
-    # T1190 Prevention: Parameterized query
     query = "SELECT * FROM users WHERE id = ?"
     cursor.execute(query, (user_id,))
-    
-    # T1087 Prevention: Consistent responses
     result = cursor.fetchall()
-    if not result:
-        return "User not found", 404
-    return result[0]
+    return result[0] if result else ("Not found", 404)
 ```
+
+</div>
+</div>
 
 <!-- 
 Much better. Three defenses here: input validation to reject non-numeric IDs, parameterized queries that prevent SQL injection by treating input as data not code, and consistent error responses to prevent account enumeration (T1087). Notice the ATT&CK technique IDs in the comments—this helps security teams correlate code defenses with detection rules. One code change prevents multiple techniques. That's the power of ATT&CK-informed development.
@@ -456,55 +450,50 @@ Three execution techniques we'll cover. T1059: command injection where attackers
 
 ---
 
-## Vulnerable Code: Command Injection (T1059)
+## Command Injection (T1059) — Vulnerable → Defended
+
+<div class="columns">
+<div>
+
+### ❌ Vulnerable
 
 ```csharp
-// VULNERABLE - Direct command execution enables T1059
 [HttpPost]
 public IActionResult ProcessFile(string filename)
 {
-    // T1059: Command injection vulnerability
     var command = $"convert {filename} output.pdf";
-    var process = Process.Start("cmd.exe", $"/c {command}");
+    var process = Process.Start("cmd.exe",
+        $"/c {command}");
     process.WaitForExit();
-    
     return Ok("File processed");
 }
-
-// Attack payload: file.jpg; rm -rf / --
+// Attack: file.jpg; rm -rf / --
 ```
 
+</div>
+<div>
 
----
-
-## Defended Code: Command Allowlisting
+### ✅ Defended
 
 ```csharp
-// DEFENDED - Strict input validation and allowlisting
 [HttpPost]
 public IActionResult ProcessFile(string filename)
 {
-    // T1059 Prevention: Input validation
     if (!IsValidFilename(filename))
         return BadRequest("Invalid filename");
-        
-    // T1059 Prevention: Command allowlisting
-    var allowedCommands = new[] { "convert", "resize", "compress" };
-    var safeArgs = new[] { filename, "output.pdf" };
-    
-    var processInfo = new ProcessStartInfo
-    {
+    var processInfo = new ProcessStartInfo {
         FileName = "imagemagick.exe",
-        Arguments = string.Join(" ", safeArgs.Select(EscapeArg)),
+        Arguments = string.Join(" ",
+            safeArgs.Select(EscapeArg)),
         UseShellExecute = false
     };
-    
     using var process = Process.Start(processInfo);
-    process?.WaitForExit();
-    
     return Ok("File processed safely");
 }
 ```
+
+</div>
+</div>
 
 <!-- 
 Much safer. We validate filenames against expected patterns, allowlist commands so only known-safe operations are permitted, escape all arguments to prevent injection, and critically—UseShellExecute is false, meaning we're calling the binary directly without invoking a shell. No shell means no command chaining. This is defense in depth: validation, allowlisting, escaping, and architectural constraints all working together.
@@ -569,70 +558,44 @@ Three persistence techniques. T1098: account manipulation where attackers create
 
 ---
 
-## Vulnerable Session Management
+## Session Management — Vulnerable → Defended
+
+<div class="columns">
+<div>
+
+### ❌ Vulnerable
 
 ```javascript
-// VULNERABLE - Weak session security enables T1539
-const express = require('express');
-const session = require('express-session');
-
 app.use(session({
-    secret: 'hardcoded-secret',  // T1552: Hardcoded secret
-    resave: false,
-    saveUninitialized: false,
+    secret: 'hardcoded-secret',
     cookie: {
-        secure: false,        // T1539: No HTTPS requirement
-        httpOnly: false,      // T1539: XSS vulnerable
-        maxAge: 24 * 60 * 60 * 1000  // T1539: Long expiration
+        secure: false,
+        httpOnly: false,
+        maxAge: 24 * 60 * 60 * 1000
     }
 }));
-
-// No session validation or rotation
-app.get('/api/data', (req, res) => {
-    if (req.session.user) {
-        return res.json(getData(req.session.user));
-    }
-    res.status(401).send('Unauthorized');
-});
 ```
 
-<!-- 
-Terrible session management that enables multiple attacks. Hardcoded secret means anyone who reads the code can forge sessions. Secure: false allows session cookies over HTTP where they can be intercepted. HttpOnly: false means JavaScript can steal the cookie via XSS. 24-hour expiration gives attackers a huge window. And there's no session validation or rotation. This code is a session hijacking playground. Let's fix every single one of these issues. Spend 2-3 minutes here walking through each vulnerability.
--->
+</div>
+<div>
 
----
-
-## Defended Session Management
+### ✅ Defended
 
 ```javascript
-// DEFENDED - Secure session handling prevents T1539
-const crypto = require('crypto');
-
 app.use(session({
-    secret: process.env.SESSION_SECRET,  // T1552 Prevention: Environment variable
-    resave: false,
-    saveUninitialized: false,
-    rolling: true,  // T1539 Prevention: Session rotation
+    secret: process.env.SESSION_SECRET,
+    rolling: true,
     cookie: {
-        secure: true,     // T1539 Prevention: HTTPS only
-        httpOnly: true,   // T1539 Prevention: XSS protection
-        maxAge: 15 * 60 * 1000,  // T1539 Prevention: Short expiration
-        sameSite: 'strict'       // CSRF protection
+        secure: true,
+        httpOnly: true,
+        maxAge: 15 * 60 * 1000,
+        sameSite: 'strict'
     }
 }));
-
-// T1539 Prevention: Session fingerprinting
-function validateSession(req, res, next) {
-    if (!req.session.user) return res.status(401).send('Unauthorized');
-    
-    const fingerprint = generateFingerprint(req);
-    if (req.session.fingerprint !== fingerprint) {
-        req.session.destroy();  // T1539 Detection: Session cookie replay
-        return res.status(401).send('Session security violation');
-    }
-    next();
-}
 ```
+
+</div>
+</div>
 
 <!-- 
 Now we're talking. Secret from environment variables, not code. Secure: true requires HTTPS. HttpOnly: true prevents XSS cookie theft. Short 15-minute expiration limits hijacking window. Rolling sessions regenerate IDs on activity. SameSite: strict blocks CSRF. And critically—session fingerprinting. We hash the user agent and IP at login, then validate it on every request. If the fingerprint changes, we destroy the session and alert. This is detection meeting prevention. Beautiful defense in depth.
@@ -709,47 +672,45 @@ Three privilege escalation techniques. T1068: exploiting broken access control l
 
 ---
 
-## Vulnerable Code: IDOR (T1068)
+## IDOR (T1068) — Vulnerable → Defended
+
+<div class="columns">
+<div>
+
+### ❌ Vulnerable
 
 ```python
-# VULNERABLE - No authorization check enables T1068
 @app.route('/api/users/<user_id>/profile')
 def get_profile(user_id):
-    # T1068: Any authenticated user can access any profile
-    profile = db.query("SELECT * FROM profiles WHERE user_id = ?", (user_id,))
+    profile = db.query(
+        "SELECT * FROM profiles WHERE user_id = ?",
+        (user_id,))
     return jsonify(profile)
-
-# Attack: GET /api/users/admin/profile (with any valid session)
+# Attack: GET /api/users/admin/profile
 ```
 
-<!-- 
-Classic Insecure Direct Object Reference—IDOR. The endpoint checks if you're authenticated, but not if you're authorized to access that specific profile. Any logged-in user can read any other user's profile by changing the user_id in the URL. This is T1068. The attack example shows accessing the admin profile. IDOR is everywhere—think order histories, medical records, financial data. Let's fix it properly.
--->
+</div>
+<div>
 
----
-
-## Defended Code: Authorization Checks
+### ✅ Defended
 
 ```python
-# DEFENDED - Proper authorization prevents T1068
 @app.route('/api/users/<user_id>/profile')
 @login_required
 def get_profile(user_id):
     current_user = get_current_user()
-    
-    # T1068 Prevention: Verify resource ownership
-    if user_id != current_user.id and not current_user.has_role('admin'):
-        log_technique('T1068', {'user': current_user.id, 'target': user_id})
+    if user_id != current_user.id \
+            and not current_user.has_role('admin'):
+        log_technique('T1068', {'target': user_id})
         return jsonify({'error': 'Forbidden'}), 403
-    
-    # T1548 Prevention: Verify role hasn't been tampered
-    if not verify_role_integrity(current_user):
-        revoke_session(current_user)
-        return jsonify({'error': 'Session invalidated'}), 401
-        
-    profile = db.query("SELECT * FROM profiles WHERE user_id = ?", (user_id,))
+    profile = db.query(
+        "SELECT * FROM profiles WHERE user_id = ?",
+        (user_id,))
     return jsonify(profile)
 ```
+
+</div>
+</div>
 
 <!-- 
 Proper authorization. We check if the current user owns the resource or has admin privileges. If neither, we log the attempt with technique ID and return 403 Forbidden. We also verify role integrity against the database to prevent token manipulation attacks. Notice we log the technique ID—this feeds your SIEM. Authorization must be explicit and checked on every sensitive operation. Never trust the URL parameter or client-side state.
@@ -813,89 +774,41 @@ Three credential access techniques. T1552: unsecured credentials like hardcoded 
 
 ---
 
-## Bad Secrets Management - All Languages
+## Secrets Management (T1552) — Bad → Good
+
+<div class="columns">
+<div>
+
+### ❌ Bad
 
 ```python
-# PYTHON - BAD: T1552 vulnerability
-DATABASE_URL = "postgres://user:<YOUR_PASSWORD>@localhost/mydb"  # Hardcoded
-API_KEY = "<YOUR_API_KEY>"  # In source code
+# T1552 vulnerability
+DATABASE_URL = "postgres://user:P@ssw0rd@localhost/mydb"
+API_KEY = "sk-1234567890abcdef"
 ```
 
-```csharp
-// C# - BAD: T1552 vulnerability  
-public class Config
-{
-    public static string ConnectionString = "Server=.;Database=MyApp;User Id=sa;Password=<YOUR_PASSWORD>;";  // Hardcoded
-    public static string ApiKey = "Bearer abc123def456";  // In source code
-}
-```
+</div>
+<div>
 
-```javascript
-// JAVASCRIPT - BAD: T1552 vulnerability
-const config = {
-    dbPassword: '<YOUR_PASSWORD>',  // Hardcoded
-    jwtSecret: '<YOUR_JWT_SECRET>',  // In source code
-    apiKey: '<YOUR_API_KEY>'  // Version controlled
-};
-```
-
-
----
-
-## Good Secrets Management - Python & C\#
+### ✅ Good
 
 ```python
-# PYTHON: T1552 prevention with Azure Key Vault
-import os
+# T1552 prevention with Azure Key Vault
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
 
 credential = DefaultAzureCredential()
-client = SecretClient(vault_url=os.environ['KEY_VAULT_URL'], credential=credential)
+client = SecretClient(
+    vault_url=os.environ['KEY_VAULT_URL'],
+    credential=credential)
 API_KEY = client.get_secret("api-key").value
 ```
 
-```csharp
-// C#: T1552 prevention with Azure Key Vault
-public class SecureConfig
-{
-    private readonly IConfiguration _config;
-    public SecureConfig(IConfiguration config) => _config = config;
-    public string ConnectionString => _config["KeyVault:ConnectionString"];
-    public string ApiKey => _config["KeyVault:ApiKey"];
-}
-```
+</div>
+</div>
 
 <!-- 
-Proper secrets management using Azure Key Vault. Python example uses DefaultAzureCredential which automatically handles managed identity or local credentials. C# example leverages ASP.NET Core configuration providers to fetch secrets from Key Vault. No secrets in code. No secrets in config files. Secrets live in a vault with access auditing, rotation policies, and encryption at rest. Use AWS Secrets Manager, HashiCorp Vault, Google Secret Manager—doesn't matter which, just use one.
--->
-
----
-
-## Good Secrets Management - JavaScript
-
-```javascript
-// JAVASCRIPT - GOOD: T1552 prevention
-require('dotenv').config();
-const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
-
-class SecureConfig {
-    constructor() {
-        this.secretClient = new SecretManagerServiceClient();
-    }
-    
-    // T1552 Prevention: Google Secret Manager
-    async getSecret(name) {
-        const [version] = await this.secretClient.accessSecretVersion({
-            name: `projects/${process.env.PROJECT_ID}/secrets/${name}/versions/latest`
-        });
-        return version.payload.data.toString();
-    }
-}
-```
-
-<!-- 
-JavaScript example using Google Secret Manager. Pattern's the same: authenticate with a service account or workload identity, fetch secrets from a managed service at runtime. Notice the dotenv call at the top—that's for local development only with non-sensitive config. Never commit .env files with actual secrets. Add them to .gitignore immediately. Production should always use a secrets management service.
+Proper secrets management using Azure Key Vault. Python example uses DefaultAzureCredential which automatically handles managed identity or local credentials. No secrets in code. No secrets in config files. Secrets live in a vault with access auditing, rotation policies, and encryption at rest. Use AWS Secrets Manager, HashiCorp Vault, Google Secret Manager—doesn't matter which, just use one.
 -->
 
 ---
@@ -1068,50 +981,43 @@ Three discovery techniques. T1087: account enumeration—figuring out which user
 
 ---
 
-## Vulnerable Code: User Enumeration (T1087)
+## User Enumeration (T1087) — Vulnerable → Defended
+
+<div class="columns">
+<div>
+
+### ❌ Vulnerable
 
 ```python
-# VULNERABLE - Different responses reveal valid accounts (T1087)
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.json['username']
-    password = request.json['password']
-    
     user = db.find_user(username)
     if not user:
-        return jsonify({'error': 'User not found'}), 404   # T1087: Reveals valid usernames
-    
+        return jsonify({'error': 'User not found'}), 404
     if not verify_password(password, user.password_hash):
-        return jsonify({'error': 'Wrong password'}), 401   # T1087: Confirms user exists
-
-# Attack: Enumerate users by checking 404 vs 401 responses
+        return jsonify({'error': 'Wrong password'}), 401
+# 404 vs 401 reveals valid usernames
 ```
 
+</div>
+<div>
 
----
-
-## Defended Code: Consistent Responses
+### ✅ Defended
 
 ```python
-# DEFENDED - Consistent error responses prevent T1087
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.json['username']
-    password = request.json['password']
-    
     user = db.find_user(username)
-    
-    # T1087 Prevention: Same response for all failure cases
-    if not user or not verify_password(password, user.password_hash):
-        # T1087 Prevention: Constant-time comparison even when user doesn't exist
+    if not user or not verify_password(
+            password, user.password_hash):
         if not user:
-            verify_password(password, DUMMY_HASH)  # Prevent timing attacks
-        
-        log_failed_login(username)  # Log for detection, not exposed to user
+            verify_password(password, DUMMY_HASH)
         return jsonify({'error': 'Invalid credentials'}), 401
-    
     return create_session(user)
 ```
+
+</div>
+</div>
 
 <!-- 
 Perfect. Same error message and status code for all failure cases—user not found or wrong password, doesn't matter. We even verify against a dummy hash when the user doesn't exist to prevent timing attacks. Attackers can't tell the difference between invalid user and wrong password. We log internally for detection but reveal nothing to the attacker. This is information hiding done right.
@@ -1287,56 +1193,48 @@ Three lateral movement techniques. T1021: abusing insecure service-to-service co
 
 ---
 
-## Vulnerable: Insecure Service-to-Service (T1021)
+## Service-to-Service Auth (T1021) — Vulnerable → Defended
+
+<div class="columns">
+<div>
+
+### ❌ Vulnerable
 
 ```python
-# VULNERABLE - No inter-service authentication enables T1021
 @app.route('/api/internal/user-data')
 def get_user_data():
     user_id = request.args.get('user_id')
-    # T1021: Any service (or attacker) can call this endpoint
-    # T1550: No token scoping - one token works everywhere
+    # Any service or attacker can call this
     return jsonify(db.get_user(user_id))
 ```
 
 ```javascript
-// VULNERABLE - Shared secret across all services
-const response = await fetch('http://user-service/api/internal/user-data', {
-    headers: { 'Authorization': `Bearer ${SHARED_API_KEY}` }  // T1550: Same key everywhere
+// Shared secret across all services
+const response = await fetch(url, {
+    headers: { 'Authorization': `Bearer ${SHARED_API_KEY}` }
 });
 ```
 
-<!-- 
-Terrible service-to-service security. The Python service accepts requests from anyone with no authentication—any compromised service or attacker who reaches the internal network can call it. The JavaScript service uses a shared API key across all services. If one service is compromised, the key is stolen, and the attacker can impersonate any service. This is T1021 and T1550 in action. Let's implement zero-trust.
--->
+</div>
+<div>
 
----
-
-## Defended: Zero-Trust Service Communication
+### ✅ Defended
 
 ```python
-# DEFENDED - mTLS + scoped tokens prevent T1021/T1550
-from flask import Flask
-import jwt
-
 @app.route('/api/internal/user-data')
 def get_user_data():
-    # T1021 Prevention: Verify mutual TLS client certificate
     client_cert = request.environ.get('SSL_CLIENT_CERT')
-    if not verify_service_identity(client_cert, allowed=['order-service']):
-        log_technique('T1021', {'source': request.remote_addr})
-        return jsonify({'error': 'Unauthorized service'}), 403
-    
-    # T1550 Prevention: Validate scoped service token
+    if not verify_service_identity(client_cert,
+            allowed=['order-service']):
+        return jsonify({'error': 'Unauthorized'}), 403
     token = request.headers.get('X-Service-Token')
-    claims = validate_service_token(token, required_scope='read:user-data')
-    
-    # T1563 Prevention: Short-lived tokens (5 min max)
-    if claims['exp'] - claims['iat'] > 300:
-        return jsonify({'error': 'Token lifetime too long'}), 403
-    
+    claims = validate_service_token(token,
+        required_scope='read:user-data')
     return jsonify(db.get_user(request.args.get('user_id')))
 ```
+
+</div>
+</div>
 
 <!-- 
 Zero-trust service communication. Mutual TLS verifies both sides of the connection with certificates—we allowlist which services can call this endpoint. Scoped tokens with specific permissions limit what a compromised service can do. Short-lived tokens expire after 5 minutes maximum, limiting the damage window. This is defense in depth: identity verification, authorization scoping, and time-bounding. Implement service meshes like Istio or Linkerd to enforce this automatically.
@@ -1502,50 +1400,44 @@ Four impact techniques. T1499: application-layer DoS like regular expression att
 
 ---
 
-## Vulnerable Code: ReDoS (T1499.004)
+## ReDoS (T1499.004) — Vulnerable → Defended
+
+<div class="columns">
+<div>
+
+### ❌ Vulnerable
 
 ```javascript
-// VULNERABLE - Regular expression DoS enables T1499.004
 app.post('/api/validate-email', (req, res) => {
     const email = req.body.email;
-    // T1499.004: Catastrophic backtracking with crafted input
     const emailRegex = /^([a-zA-Z0-9]+\.)*[a-zA-Z0-9]+@([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}$/;
-    
-    if (emailRegex.test(email)) {  // Can hang for minutes with malicious input
+    if (emailRegex.test(email)) {
         return res.json({ valid: true });
     }
     return res.json({ valid: false });
 });
-
-// Attack payload: "aaaaaaaaaaaaaaaaaaaaaaaa@" (causes exponential backtracking)
 ```
 
+</div>
+<div>
 
----
-
-## Defended Code: Input Limits & Safe Patterns
+### ✅ Defended
 
 ```javascript
-// DEFENDED - Input validation and safe regex prevent T1499.004
 app.post('/api/validate-email', (req, res) => {
     const email = req.body.email;
-    
-    // T1499 Prevention: Input length limit
-    if (!email || email.length > 254) {
+    if (!email || email.length > 254)
         return res.status(400).json({ error: 'Invalid input' });
-    }
-    
-    // T1499.004 Prevention: Non-backtracking validation
     const safeEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!safeEmailRegex.test(email)) {
+    if (!safeEmailRegex.test(email))
         return res.status(400).json({ valid: false });
-    }
-    
-    // T1499 Prevention: Timeout wrapper for complex validation
     const result = runWithTimeout(() => additionalValidation(email), 100);
     return res.json({ valid: result });
 });
 ```
+
+</div>
+</div>
 
 <!-- 
 Perfect defense against ReDoS. Input length validation rejects inputs over 254 characters, the RFC maximum for email addresses. The regex is simple with no nested quantifiers—no catastrophic backtracking possible. And we wrap any additional validation in a timeout function that kills execution after 100ms. Three layers of protection against denial of service. Always audit your regexes for backtracking vulnerabilities, and always enforce input limits.
@@ -1616,64 +1508,43 @@ Three reconnaissance techniques. T1592: gathering host info from verbose error p
 
 ---
 
-## Vulnerable: Information Leakage (T1592)
+## Information Leakage (T1592) — Vulnerable → Defended
+
+<div class="columns">
+<div>
+
+### ❌ Vulnerable
 
 ```python
-# VULNERABLE - Verbose errors enable T1592 reconnaissance
 @app.errorhandler(Exception)
 def handle_error(error):
-    # T1592: Exposes framework, version, file paths, and stack trace
     return jsonify({
         'error': str(error),
-        'type': type(error).__name__,
         'traceback': traceback.format_exc(),
         'server': f'Flask/{flask.__version__}',
         'python': sys.version
     }), 500
-
-# T1589: Password reset reveals whether account exists
-@app.route('/reset-password', methods=['POST'])
-def reset_password():
-    email = request.json['email']
-    user = db.find_user_by_email(email)
-    if not user:
-        return jsonify({'error': 'No account found for this email'}), 404  # Reveals valid emails!
-    send_reset_link(user)
-    return jsonify({'message': 'We sent a reset link to your email'}), 200  # Confirms account exists!
 ```
 
-<!-- 
-Two vulnerable patterns. The error handler exposes everything: stack traces, framework version, Python version, file paths—attackers love this. It's a T1592 goldmine. The password reset form is worse for T1589: "No account found" versus "We sent a reset link" lets attackers enumerate valid email addresses before even attempting credential attacks. These are easy fixes with high security impact.
--->
+</div>
+<div>
 
----
-
-## Defended: Minimal Information Disclosure
+### ✅ Defended
 
 ```python
-# DEFENDED - Generic errors prevent T1592 reconnaissance
 @app.errorhandler(Exception)
 def handle_error(error):
     error_id = uuid.uuid4().hex[:8]
-    # Log full details internally, return nothing to attacker
-    app.logger.error(f"[{error_id}] {type(error).__name__}: {error}",
+    app.logger.error(f"[{error_id}] {error}",
                      exc_info=True)
     return jsonify({
         'error': 'An unexpected error occurred',
-        'reference': error_id  # For support, not debugging
+        'reference': error_id
     }), 500
-
-# T1589 Prevention: Identical responses prevent email enumeration
-@app.route('/reset-password', methods=['POST'])
-def reset_password():
-    email = request.json.get('email', '')
-    user = db.find_user_by_email(email)
-    if user:
-        send_reset_link(user)
-    time.sleep(random.uniform(0.2, 0.5))  # Timing attack prevention
-    # T1589 Prevention: Same response whether account exists or not
-    return jsonify({'message': 'If an account exists, a reset link has been sent'}), 200
 ```
+
+</div>
+</div>
 
 <!-- 
 Defended versions. The error handler logs everything internally with a reference ID but returns only a generic message and the reference. Attackers get nothing useful. The password reset endpoint returns the same "If an account exists" message regardless of whether the email is registered—no enumeration possible. The random delay prevents timing attacks where attackers measure response time to distinguish existing from non-existing accounts. Simple changes, massive security improvement.
