@@ -1653,3 +1653,140 @@ RESOURCES:
 **What:** Inserted 3 new slides between the OWASP overview and "What is MITRE ATT&CK?" slide: (1) What is MITRE? — the corporation, FFRDCs, mission; (2) MITRE's Cybersecurity Ecosystem — Mermaid diagram showing CVE/CWE/CAPEC/ATT&CK/D3FEND/ATLAS relationships; (3) Why MITRE Matters for Developers — bridging organizational context to developer relevance.
 **Why:** The deck jumped from OWASP directly to ATT&CK with no context about MITRE itself or its broader ecosystem. Audiences unfamiliar with MITRE beyond ATT&CK miss the credibility and interconnection story. The new slides create a natural narrative arc: familiar standard (OWASP) → credible organization (MITRE) → ecosystem context → specific framework (ATT&CK). The Mermaid diagram showing framework relationships is especially valuable — it surfaces that developers already consume MITRE data (CVEs, CWEs) through existing tools.
 
+---
+
+# Decision: Full Deck Review — Issues Requiring Resolution
+
+**Date:** 2026-02-27  
+**Author:** Kobayashi  
+**Status:** Complete — all issues resolved by McManus & Fenster  
+**Triggered by:** Comprehensive slide deck review
+
+---
+
+## Critical Issues (Fixed)
+
+### 1. User Enumeration Content Redundancy
+**Discovery section** (T1087, lines 1148-1195) and **Reconnaissance section** (T1589, lines 1719-1779) both demonstrate the same vulnerability: login endpoint returning different errors for "user not found" vs "wrong password." The code patterns are nearly identical.
+
+**Resolution:** McManus replaced the login example in Reconnaissance with a different T1589 pattern and added cross-reference to Discovery section.
+
+**Status:** ✅ FIXED
+
+### 2. "What We Covered" Table Missing Supply Chain
+The summary table (line 2080) listed 13 tactics but omitted Supply Chain, which has a full 6-slide section. The speaker note falsely claimed "The only tactic we didn't deep-dive is Supply Chain."
+
+**Resolution:** McManus added a Supply Chain row (`T1195, T1195.001 | Dependency verification, integrity validation`) and updated the speaker note to say "all 14 tactics."
+
+**Status:** ✅ FIXED
+
+### 3. Agenda Slide Says "11" — Should Be "13"
+Line 44: "11 Technique Categories Across the Kill Chain." The deck now covers 13 tactics. Speaker note also said "11 tactic categories."
+
+**Resolution:** McManus updated to "13 Tactic Categories Across the Kill Chain" and updated speaker note.
+
+**Status:** ✅ FIXED
+
+### 4. T1046 Name Mismatch
+Listed as "Network Service Scanning" (line 1139) but official ATT&CK name is "Network Service Discovery."
+
+**Resolution:** McManus corrected the name in the slide.
+
+**Status:** ✅ FIXED
+
+### 5. DEMOS Placeholder
+Unresolved placeholder text in deck.
+
+**Resolution:** McManus removed/replaced the placeholder.
+
+**Status:** ✅ FIXED
+
+---
+
+## Important Issues — Technique ID Corrections (Fenster Verification)
+
+### Issue 6: T1185 vs T1539 for Session Cookie Theft
+
+**Kobayashi's Flag:** T1185 (Browser Session Hijacking) may be incorrect for session cookie theft examples.
+
+**Fenster's Verification:** YES, change required. T1185 describes man-in-the-browser attacks (process injection). Session cookie theft is T1539 (Steal Web Session Cookie).
+
+**Corrections Required (16 replacements):**
+- Line 630: Comment and table reference
+- Lines 634, 642, 651–653, 675, 682–691, 697: Comments in code examples
+- Lines 1927, 2125, 2135: "What We Covered" table and speaker notes
+
+**Resolution:** McManus applied all 16 replacements.
+
+**Status:** ✅ FIXED
+
+### Issue 7: SSRF → ATT&CK Mapping
+
+**Kobayashi's Flag:** T1090/T1572 mapping may be conceptually weak for SSRF.
+
+**Fenster's Verification:** YES, change required. SSRF is exploiting a public-facing application (T1190), not a C2 proxy/tunneling technique. T1090/T1572 describe hiding adversary communication, not application exploitation.
+
+**Corrections Required (1 replacement):**
+- Line 386: `T1090 (Proxy), T1572 (Protocol Tunneling)` → `T1190 (Exploit Public-Facing Application)`
+
+**Resolution:** McManus applied the correction.
+
+**Status:** ✅ FIXED
+
+---
+
+## Observations (No Action Required)
+
+- **Front-loading (19 slides before code):** Acceptable given the Mermaid diagrams keep it visual.
+- **Resource Development and C2 sections are thin (2 slides each):** Expected—limited developer-level control.
+- **Attack chain and Crooked Line placement:** Rhetorically sound.
+- **Speaker notes quality:** Consistently strong.
+
+---
+
+## Overall Assessment
+
+**Rating: 4/5**
+
+The deck delivers on its "Beyond OWASP" promise. All critical issues have been resolved. The deck is presentation-ready.
+
+---
+
+---
+
+# Decision: Attack Chain Diagram Color Standards
+
+**Date:** 2026-02-28  
+**Author:** McManus  
+**Status:** Complete — standard defined for all future attack chain diagrams
+
+---
+
+## Standard Color Palette
+
+All attack chain flowchart diagrams use consistent color-coded gradient to indicate attack progression:
+
+| Color | Hex | ATT&CK Association | Usage |
+|-------|-----|-------------------|-------|
+| Red | #e74c3c | Initial Access / Exploit | Attack entry points |
+| Orange | #e67e22 | Execution | Command execution, script injection |
+| Yellow | #f39c12 | Credential Access | Credential theft, brute force |
+| Green | #2ecc71 | Lateral Movement / Valid Accounts | Privilege expansion, lateral moves |
+| Blue | #3498db | Discovery | Reconnaissance, enumeration |
+| Purple | #9b59b6 | Collection / Manipulation | Data gathering, tampering |
+| Dark (#1a1a2e with #e94560 stroke) | #1a1a2e / #e94560 | Impact / Exfiltration | Final stage impacts |
+
+**Crooked Line Looping Arrows:** Use red (#e94560) linkStyle for highlighting the recursive attack cycle concept.
+
+---
+
+## Rationale
+
+Visual consistency across attack chain diagrams helps the audience build intuition — they learn to associate colors with ATT&CK tactic categories. This also keeps diagram styles cohesive with the custom-default theme's dark aesthetic.
+
+---
+
+## Application
+
+All future attack chain slides must follow this palette. Existing diagrams in the deck already comply.
+

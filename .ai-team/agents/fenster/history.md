@@ -56,3 +56,21 @@
 **Maintenance:** Document should be updated quarterly as ATT&CK framework evolves (new techniques, deprecated techniques, updated mitigations).
 
 📌 Team update (2026-02-27): Always use 'claude-opus-4.6-1m' model for all agent spawns — decided by Chris Ayers (Copilot)
+
+### 2025-07-17: Technique ID Verification (Kobayashi Review)
+
+**Task:** Verified two technique ID issues flagged in Kobayashi's deck review.
+
+**Findings:**
+
+1. **T1185 → T1539 (CONFIRMED CHANGE NEEDED):** The slide deck used T1185 (Browser Session Hijacking) for session cookie theft scenarios. T1185 is specifically about man-in-the-browser attacks — adversaries injecting into browser processes to pivot through authenticated sessions (Cobalt Strike browser pivoting, Dridex, etc.). The slides describe cookie theft via XSS, insecure flags, and session replay — this maps to T1539 (Steal Web Session Cookie). 16 occurrences across the deck need correction.
+
+2. **SSRF mapping T1090/T1572 → T1190 (CONFIRMED CHANGE NEEDED):** The OWASP-to-ATT&CK mapping table mapped SSRF to T1090 (Proxy) and T1572 (Protocol Tunneling). Both are Command & Control techniques about hiding adversary communications. SSRF is an exploitation technique — it maps to T1190 (Exploit Public-Facing Application). MITRE's own T1190 docs cite web app vulnerabilities including SSRF as examples.
+
+**Key Learnings:**
+- T1185 vs T1539 is a common confusion point. T1185 = browser process injection/pivoting (post-exploitation, requires malware). T1539 = cookie theft and replay (can be enabled by application-level flaws like missing httpOnly/secure flags).
+- ATT&CK mapping should reflect what the adversary is *doing* (the technique), not the incidental *effect* of the exploit. SSRF makes a server act like a proxy, but the technique is exploitation of a public-facing app.
+- CISA's mapping best practices: map to observed initial behavior and intent, not downstream mechanics.
+- Always cross-reference the actual MITRE ATT&CK technique pages when reviewing T-codes — the technique names can be misleading without reading the full description.
+
+**Output:** `.ai-team/decisions/inbox/fenster-technique-id-verification.md` — full findings with line-by-line correction table for McManus.

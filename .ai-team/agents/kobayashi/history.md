@@ -76,3 +76,33 @@
 <!-- Append new learnings below. Each entry is something lasting about the project. -->
 
 📌 Team update (2026-02-27): Always use 'claude-opus-4.6-1m' model for all agent spawns — decided by Chris Ayers (Copilot)
+
+---
+
+### 2026-02-27: Full Deck Review — 101 Slides, Structural Issues Identified
+
+**Deck State:** slides/Slides.md is now ~2207 lines, ~101 slides covering 13 of 14 ATT&CK tactics.
+
+**Key Structural Finding:** User enumeration vulnerability (login returning different errors for "user not found" vs "wrong password") is taught twice:
+- Discovery section (T1087, lines 1148-1195): vulnerable + defended login code
+- Reconnaissance section (T1589, lines 1719-1779): nearly identical vulnerable + defended login code
+These must be consolidated. Keep one, cross-reference the other.
+
+**Agenda Inconsistency:** Slide says "11 Technique Categories" but deck now covers 13 tactics. Speaker note references "11 tactic categories." Must update to reflect actual content.
+
+**"What We Covered" Table Error:** Table on line 2080 omits Supply Chain entirely, and speaker note claims "The only tactic we didn't deep-dive is Supply Chain" — but Supply Chain has a full 6-slide section (lines 1235-1352). Table needs a 14th row for Supply Chain; speaker note needs correction.
+
+**T1059.006 Reference:** "What We Covered" table lists T1059.006 (Python) under Execution, but slides only demonstrate T1059 generally. Either add Python-specific content or remove the sub-technique reference.
+
+**Technique ID Flag for Fenster:** T1185 (Browser Session Hijacking) used in Persistence section for session cookie theft — in modern ATT&CK, T1185 specifically describes man-in-the-browser attacks; session cookie theft is T1539 (Steal Web Session Cookie). Needs Fenster verification.
+
+**T1046 Naming:** Listed as "Network Service Scanning" but official ATT&CK name is "Network Service Discovery."
+
+**Section Balance:**
+- Strong (5-6 slides): Initial Access, Execution, Persistence, Priv Esc, Cred Access, Supply Chain, Collection/Exfil, Impact
+- Thin (2-3 slides): Lateral Movement, Reconnaissance, Resource Development, C2
+- Resource Dev and C2 only show defended code, no vulnerable-defended pairs
+
+**Front-loading:** 19 slides before "Let's Think Like Attackers" transition. Heavy but mitigated by Mermaid diagrams. Acceptable.
+
+**Overall Rating:** 4/5 — strong deck, excellent code samples, solid speaker notes. Fix the redundancy, correct the summary table, and verify T1185.
