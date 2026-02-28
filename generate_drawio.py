@@ -31,11 +31,23 @@ class DiagramBuilder:
         self._cell_id = 1
         self._cells = ['<mxCell id="0" />', '<mxCell id="1" parent="0" />']
         self._node_map = {}  # graphviz id -> mxCell id
-        self._cluster_id = 0
+        self._clusters = []  # (graphviz_cluster_name, label, cid)
 
     def _next_id(self):
         self._cell_id += 1
         return str(self._cell_id)
+
+    def cluster(self, name, label, color="#555555"):
+        """Register a cluster for draw.io group tracking. Returns a graphviz subgraph context."""
+        cid = self._next_id()
+        gv_name = f"cluster_{name}"
+        self._clusters.append((gv_name, label, cid))
+        style = f"rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor={color};fontColor=#999999;fontSize=14;fontStyle=1;verticalAlign=top;spacingTop=5;dashed=1;strokeWidth=1.5;"
+        lbl = html.escape(label)
+        self._cells.append(
+            f'<mxCell id="{cid}" value="{lbl}" style="{style}" vertex="1" parent="1">'
+            f'<mxGeometry x="__X_{gv_name}__" y="__Y_{gv_name}__" width="__W_{gv_name}__" height="__H_{gv_name}__" as="geometry" /></mxCell>')
+        return self.g.subgraph(name=gv_name)
 
     def node(self, nid, label, graph=None, **kwargs):
         target = graph if graph is not None else self.g
@@ -72,47 +84,44 @@ class DiagramBuilder:
         return self.g.subgraph(**kwargs)
 
     def _parse_node_positions(self, svg_content):
-        """Extract node bounding boxes from Graphviz SVG output."""
+        """Extract node and cluster bounding boxes from Graphviz SVG output."""
         import xml.etree.ElementTree as ET
         positions = {}
-        # Strip doctype to avoid XML parser issues
         clean = re.sub(r'<!DOCTYPE[^>]*>', '', svg_content)
         clean = re.sub(r'<\?xml[^>]*\?>', '', clean)
         try:
             root = ET.fromstring(clean)
         except ET.ParseError:
             return positions
-        ns = {'svg': 'http://www.w3.org/2000/svg'}
-        # Find all node groups
+
+        def _extract_bbox(g_elem):
+            """Get bounding box from path or polygon in a <g> element."""
+            for tag in ['path', 'polygon']:
+                elem = g_elem.find(f'{{http://www.w3.org/2000/svg}}{tag}')
+                if elem is not None:
+                    attr = 'd' if tag == 'path' else 'points'
+                    raw = elem.get(attr, '')
+                    coords = [float(x) for x in re.findall(r'[-+]?\d*\.?\d+', raw)]
+                    if len(coords) >= 4:
+                        xs, ys = coords[0::2], coords[1::2]
+                        return {
+                            'x': round(min(xs), 1), 'y': round(min(ys), 1),
+                            'w': round(max(xs) - min(xs), 1),
+                            'h': round(max(ys) - min(ys), 1),
+                        }
+            return None
+
         for g_elem in root.iter('{http://www.w3.org/2000/svg}g'):
             cls = g_elem.get('class', '')
-            if cls != 'node':
+            if cls not in ('node', 'cluster'):
                 continue
             title_elem = g_elem.find('{http://www.w3.org/2000/svg}title')
             if title_elem is None or not title_elem.text:
                 continue
             nid = title_elem.text.strip()
-            # Get bounding box from path or polygon 'd' attribute
-            path_elem = g_elem.find('{http://www.w3.org/2000/svg}path')
-            poly_elem = g_elem.find('{http://www.w3.org/2000/svg}polygon')
-            coords = []
-            if path_elem is not None:
-                d = path_elem.get('d', '')
-                coords = [float(x) for x in re.findall(r'[-+]?\d*\.?\d+', d)]
-            elif poly_elem is not None:
-                pts = poly_elem.get('points', '')
-                coords = [float(x) for x in re.findall(r'[-+]?\d*\.?\d+', pts)]
-            if len(coords) >= 4:
-                xs = coords[0::2]
-                ys = coords[1::2]
-                x_min, x_max = min(xs), max(xs)
-                y_min, y_max = min(ys), max(ys)
-                positions[nid] = {
-                    'x': round(x_min, 1),
-                    'y': round(y_min, 1),
-                    'w': round(x_max - x_min, 1),
-                    'h': round(y_max - y_min, 1),
-                }
+            bbox = _extract_bbox(g_elem)
+            if bbox:
+                positions[nid] = bbox
         return positions
 
     def _build_drawio_xml(self, positions):
@@ -154,19 +163,16 @@ class DiagramBuilder:
 # ── Diagram 1: MITRE Cybersecurity Ecosystem ──
 def diagram_01_ecosystem(outdir):
     b = DiagramBuilder("ecosystem")
-    with b.g.subgraph(name="cluster_offense") as c:
-        c.attr(label="Offense", style="dashed,rounded", color="#555555",
-               fontcolor="#999999", penwidth="1.5")
+    with b.cluster("offense", "Offense") as c:
+        c.attr(label="Offense", style="dashed,rounded", color="#555555", fontcolor="#999999", penwidth="1.5")
         b.node("CVE", "CVE\nVulnerabilities", graph=c, fillcolor="#0f3460", color="#e67e22")
         b.node("CWE", "CWE\nWeaknesses", graph=c, fillcolor="#0f3460", color="#e67e22")
         b.node("CAPEC", "CAPEC\nAttack Patterns", graph=c, fillcolor="#0f3460", color="#e67e22")
-    with b.g.subgraph(name="cluster_core") as c:
-        c.attr(label="Core", style="dashed,rounded", color="#555555",
-               fontcolor="#999999", penwidth="1.5")
+    with b.cluster("core", "Core") as c:
+        c.attr(label="Core", style="dashed,rounded", color="#555555", fontcolor="#999999", penwidth="1.5")
         b.node("ATTACK", "ATT&CK\nAdversary Behavior", graph=c, fillcolor="#0f3460", color="#e94560")
-    with b.g.subgraph(name="cluster_defense") as c:
-        c.attr(label="Defense", style="dashed,rounded", color="#555555",
-               fontcolor="#999999", penwidth="1.5")
+    with b.cluster("defense", "Defense") as c:
+        c.attr(label="Defense", style="dashed,rounded", color="#555555", fontcolor="#999999", penwidth="1.5")
         b.node("D3FEND", "D3FEND\nCountermeasures", graph=c, fillcolor="#0f3460", color="#16a085")
         b.node("ATLAS", "ATLAS\nAI/ML Threats", graph=c, fillcolor="#0f3460", color="#9b59b6")
     b.edge("CWE", "CVE", color="#e67e22")
@@ -192,9 +198,8 @@ def diagram_02_14tactics(outdir):
     ]
     prev_last = None
     for label, color, nodes in phases:
-        with b.g.subgraph(name=f"cluster_{label.replace(' ','')}") as c:
-            c.attr(label=label, style="dashed,rounded", color="#555555",
-                   fontcolor="#999999", penwidth="1.5")
+        with b.cluster(label.replace(' ',''), label) as c:
+            c.attr(label=label, style="dashed,rounded", color="#555555", fontcolor="#999999", penwidth="1.5")
             for i, (nid, nlabel) in enumerate(nodes):
                 b.node(nid, nlabel, graph=c, fillcolor=color, color=color)
             for i in range(len(nodes) - 1):
@@ -369,22 +374,19 @@ def diagram_09_threat_modeling(outdir):
 # ── Diagram 10: Defense in Depth ──
 def diagram_10_defense_depth(outdir):
     b = DiagramBuilder("defense", direction="TB", ranksep="0.4")
-    with b.g.subgraph(name="cluster_prevent") as c:
-        c.attr(label="Prevention", style="dashed,rounded", color="#555555",
-               fontcolor="#999999", penwidth="1.5")
+    with b.cluster("prevent", "Prevention") as c:
+        c.attr(label="Prevention", style="dashed,rounded", color="#555555", fontcolor="#999999", penwidth="1.5")
         b.node("IV", "Input\nValidation", graph=c, fillcolor="#27ae60", color="#2ecc71")
         b.node("AUTHN", "Authentication", graph=c, fillcolor="#2980b9", color="#3498db")
         b.node("AUTHZ", "Authorization", graph=c, fillcolor="#8e44ad", color="#9b59b6")
         b.node("DAC", "Data Access\nControls", graph=c, fillcolor="#d35400", color="#e67e22")
-    with b.g.subgraph(name="cluster_detect") as c:
-        c.attr(label="Detection", style="dashed,rounded", color="#555555",
-               fontcolor="#999999", penwidth="1.5")
+    with b.cluster("detect", "Detection") as c:
+        c.attr(label="Detection", style="dashed,rounded", color="#555555", fontcolor="#999999", penwidth="1.5")
         b.node("BA", "Behavioral\nAnalytics", graph=c, fillcolor="#c0392b", color="#e74c3c")
         b.node("AD", "Anomaly\nDetection", graph=c, fillcolor="#e74c3c", color="#c0392b")
         b.node("TI", "Threat\nIntelligence", graph=c, fillcolor="#f39c12", color="#e67e22")
-    with b.g.subgraph(name="cluster_respond") as c:
-        c.attr(label="Response", style="dashed,rounded", color="#555555",
-               fontcolor="#999999", penwidth="1.5")
+    with b.cluster("respond", "Response") as c:
+        c.attr(label="Response", style="dashed,rounded", color="#555555", fontcolor="#999999", penwidth="1.5")
         b.node("AB", "Automated\nBlocking", graph=c, fillcolor="#2c3e50", color="#3498db")
         b.node("AR", "Alert &\nRemediation", graph=c, fillcolor="#1a1a2e", color="#e94560")
     edges = [("IV","AUTHN"),("AUTHN","AUTHZ"),("AUTHZ","DAC"),
