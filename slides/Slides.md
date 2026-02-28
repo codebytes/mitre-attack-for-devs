@@ -364,14 +364,14 @@ Here are the four main Initial Access techniques we'll address. T1190: exploitin
 
 ### ❌ Vulnerable
 
-<img src="img/code/code-01.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-01.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-<img src="img/code/code-02.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-02.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -384,7 +384,7 @@ Much better. Three defenses here: input validation to reject non-numeric IDs, pa
 
 ## Credential Stuffing Detection (T1110.004)
 
-<img src="img/code/code-03.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-03.png" alt="javascript code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 
 ---
@@ -418,14 +418,14 @@ Three execution techniques we'll cover. T1059: command injection where attackers
 
 ### ❌ Vulnerable
 
-<img src="img/code/code-04.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-04.png" alt="csharp code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-<img src="img/code/code-05.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-05.png" alt="csharp code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -438,7 +438,7 @@ Much safer. We validate filenames against expected patterns, allowlist commands 
 
 ## Unsafe Deserialization (T1203)
 
-<img src="img/code/code-06.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-06.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 <!-- 
 Unsafe deserialization—one of the most dangerous vulnerabilities. The top example uses Python's pickle library to deserialize untrusted data. Pickle can execute arbitrary code during deserialization. An attacker sends a malicious payload and boom—remote code execution. This is T1203. The defended version uses JSON, which is data-only, and validates against a schema. Never use pickle, Marshal, or native serialization on untrusted input. Use safe formats like JSON and validate rigorously.
@@ -475,14 +475,14 @@ Three persistence techniques. T1098: account manipulation where attackers create
 
 ### ❌ Vulnerable
 
-<img src="img/code/code-07.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-07.png" alt="javascript code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-<img src="img/code/code-08.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-08.png" alt="javascript code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -495,7 +495,7 @@ Now we're talking. Secret from environment variables, not code. Secure: true req
 
 ## Web Shell Detection (T1505.003)
 
-<img src="img/code/code-09.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-09.png" alt="csharp code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 <!-- 
 Web shell prevention and detection. We're validating file extensions against an allowlist, but also scanning file contents for malicious patterns like eval, exec, PHP tags, and script tags. Web shells are common persistence mechanisms—attackers upload a backdoor file then use it for remote command execution. This code won't catch obfuscated shells, but it stops the easy stuff. For production, integrate with anti-malware scanning services. Log everything with technique IDs for threat intelligence.
@@ -532,14 +532,14 @@ Three privilege escalation techniques. T1068: exploiting broken access control l
 
 ### ❌ Vulnerable
 
-<img src="img/code/code-10.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-10.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-<img src="img/code/code-11.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-11.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -552,7 +552,7 @@ Proper authorization. We check if the current user owns the resource or has admi
 
 ## Token Manipulation Prevention (T1134)
 
-<img src="img/code/code-12.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-12.png" alt="javascript code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 <!-- 
 JWT security done right. We enforce the signing algorithm to prevent the "none" algorithm attack. We validate issuer and audience to prevent token reuse across services. And critically—we verify the role claim in the JWT against the database. JWTs are cryptographically signed but not encrypted; attackers can read the claims. So we validate claims server-side against authoritative sources. Don't trust the token alone; always verify against your database.
@@ -589,14 +589,14 @@ Three credential access techniques. T1552: unsecured credentials like hardcoded 
 
 ### ❌ Bad
 
-<img src="img/code/code-13.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-13.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Good
 
-<img src="img/code/code-14.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-14.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -609,7 +609,7 @@ Proper secrets management using Azure Key Vault. Python example uses DefaultAzur
 
 ## Secrets Scanner Implementation
 
-<img src="img/code/code-15.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-15.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 <!-- 
 Automated secrets detection scanner you can integrate into CI/CD pipelines. It uses regex patterns to find common secret formats—passwords, API keys, private keys. When it finds a match, it logs the file, line number, and technique ID. Integrate this into pre-commit hooks or CI pipelines to block commits with secrets. In production, use tools like TruffleHog, GitGuardian, or GitHub Secret Scanning. Prevention is better than remediation.
@@ -641,14 +641,14 @@ Three defense evasion techniques. T1027: obfuscating malicious content to evade 
 
 ## Log Injection Attack (T1070)
 
-<img src="img/code/code-16.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-16.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 
 ---
 
 ## Tamper-Evident Logging (T1070 Prevention)
 
-<img src="img/code/code-17.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-17.png" alt="csharp code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 <!-- 
 Blockchain-inspired tamper-evident logging. Each log entry includes a hash of the previous entry, creating a chain. If an attacker deletes or modifies a log, the chain breaks and tampering is immediately detectable. We sanitize input to prevent log injection, write to immutable storage like S3 with object locking, and send to an external SIEM in real-time. Three layers of protection. This is how you build forensically sound logging systems.
@@ -695,14 +695,14 @@ Three discovery techniques. T1087: account enumeration—figuring out which user
 
 ### ❌ Vulnerable
 
-<img src="img/code/code-18.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-18.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-<img src="img/code/code-19.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-19.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -715,7 +715,7 @@ Perfect. Same error message and status code for all failure cases—user not fou
 
 ## API Endpoint Discovery Prevention (T1046)
 
-<img src="img/code/code-20.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-20.png" alt="javascript code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 <!-- 
 Three defenses against API discovery and information disclosure. Disable x-powered-by header to prevent server fingerprinting. Use a global error handler that logs full details internally but returns generic messages to clients—no stack traces, no implementation details. Add rate limiting to slow down endpoint enumeration attempts. These are Express.js examples but the patterns apply to any framework. Don't help attackers map your attack surface.
@@ -759,7 +759,7 @@ Real-world supply chain attacks. Event-stream had 8 million downloads before som
 
 ## Dependency Verification - All Ecosystems
 
-<img src="img/code/code-21.png" alt="bash code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-21.png" alt="bash code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 <!-- 
 Command-line tools for every major ecosystem. NPM: run audit regularly, use npm ci in CI/CD to enforce lockfiles. Python: require hashes to prevent substitution attacks, use pip-audit and bandit for vulnerability and code scanning. .NET: check for vulnerable packages including transitive dependencies, verify package signatures. These commands should be in your CI pipeline and run on every build. Automate supply chain security.
@@ -769,7 +769,7 @@ Command-line tools for every major ecosystem. NPM: run audit regularly, use npm 
 
 ## Package Integrity Validation
 
-<img src="img/code/code-22.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-22.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 <!-- 
 Custom package integrity validator. It reads the lockfile, computes hashes of installed packages, and compares them to expected values. If there's a mismatch, it logs a T1195.001 security event and rejects the package. This catches substitution attacks and tampered dependencies. Lockfiles are your friend—they pin exact versions and hashes. Always commit lockfiles and always validate against them.
@@ -816,16 +816,16 @@ Three lateral movement techniques. T1021: abusing insecure service-to-service co
 
 ### ❌ Vulnerable
 
-<img src="img/code/code-23.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-23.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
-<img src="img/code/code-24.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-24.png" alt="javascript code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-<img src="img/code/code-25.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-25.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -860,7 +860,7 @@ Three collection and exfiltration techniques. T1213: accessing bulk data from da
 
 ## Data Access Anomaly Detection
 
-<img src="img/code/code-26.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-26.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 <!-- 
 Behavioral anomaly detection for data access. We build baselines for each user—how many records do they typically access? Which tables? At what time of day? Then we calculate anomaly scores using Z-scores for statistical deviation. High anomaly score triggers logging and step-up authentication—ask for MFA before allowing the query. This catches insider threats and compromised accounts trying to exfiltrate data. Spend 2-3 minutes here; this is advanced detection logic.
@@ -870,7 +870,7 @@ Behavioral anomaly detection for data access. We build baselines for each user�
 
 ## API Rate Limiting with Exfil Detection
 
-<img src="img/code/code-27.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-27.png" alt="javascript code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 <!-- 
 Exfiltration detection through data transfer monitoring. We track response sizes per user over a sliding one-hour window. If a user transfers more than 100MB in an hour, we log a T1567 event and block further requests. This catches automated exfiltration scripts that rapidly pull data. Adjust the threshold based on your application's normal behavior—for a file sharing app, 100MB might be normal; for a CRM, it's highly suspicious.
@@ -915,14 +915,14 @@ Four impact techniques. T1499: application-layer DoS like regular expression att
 
 ### ❌ Vulnerable
 
-<img src="img/code/code-28.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-28.png" alt="javascript code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-<img src="img/code/code-29.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-29.png" alt="javascript code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -935,7 +935,7 @@ Perfect defense against ReDoS. Input length validation rejects inputs over 254 c
 
 ## Data Integrity Protection (T1565)
 
-<img src="img/code/code-30.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-30.png" alt="csharp code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 <!-- 
 Data integrity protection against manipulation and destruction. HMAC hashes prove data hasn't been tampered with—store the hash alongside the data and verify on every read. Use timing-safe comparison to prevent timing attacks. For deletion, use soft deletes with full audit trails instead of hard deletes. This prevents T1485 data destruction and provides forensic evidence. If attackers manipulate or delete data, you'll know who, when, and what. This is critical for regulated industries and incident response.
@@ -972,14 +972,14 @@ Three reconnaissance techniques. T1592: gathering host info from verbose error p
 
 ### ❌ Vulnerable
 
-<img src="img/code/code-31.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-31.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-<img src="img/code/code-32.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-32.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -1000,7 +1000,7 @@ Tactic twelve: Resource Development. Attackers build infrastructure before strik
 
 ## Defended: Webhook Source Verification (T1583/T1584)
 
-<img src="img/code/code-33.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-33.png" alt="javascript code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 <!-- 
 Webhook verification prevents attackers from using compromised infrastructure to inject malicious data into your systems. We check timestamp freshness to prevent replay attacks—reject anything older than 5 minutes. Then verify HMAC signatures using pre-shared secrets specific to each source. Timing-safe comparison prevents attackers from using response timing to guess valid signatures. Always verify webhook sources: GitHub, Stripe, Twilio—they all support signature verification. If they don't support it, don't trust it.
@@ -1018,7 +1018,7 @@ Tactic thirteen: Command and Control. Once inside, attackers need to communicate
 
 ## Defended: C2 Beaconing Detection (T1071/T1572)
 
-<img src="img/code/code-34.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-34.png" alt="python code" style="max-width: 900px; width: auto; max-height: 70%; margin: 0 auto; display: block;" />
 
 <!-- 
 C2 beaconing detection using statistical analysis. Malware calls home at regular intervals—even with jitter, the timing pattern is detectably regular compared to human behavior. We calculate the coefficient of variation of connection intervals. Low CV—below 15%—indicates highly regular timing, which is a C2 hallmark. Real users are chaotic and random; bots are predictable. When detected, we log the event with ATT&CK technique ID and block the destination. Deploy this on your application's outbound connection monitoring. Adjust the jitter threshold based on your false positive tolerance.
