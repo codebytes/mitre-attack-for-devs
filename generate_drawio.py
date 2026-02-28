@@ -37,8 +37,9 @@ class DiagramBuilder:
         self._cell_id += 1
         return str(self._cell_id)
 
-    def node(self, nid, label, **kwargs):
-        self.g.node(nid, label, **kwargs)
+    def node(self, nid, label, graph=None, **kwargs):
+        target = graph if graph is not None else self.g
+        target.node(nid, label, **kwargs)
         fill = kwargs.get("fillcolor", "#0f3460")
         stroke = kwargs.get("color", "#333333")
         shape = kwargs.get("shape", "box")
@@ -48,9 +49,10 @@ class DiagramBuilder:
         if shape == "diamond":
             style = f"rhombus;whiteSpace=wrap;html=1;fillColor={fill};strokeColor={stroke};fontColor=#ffffff;fontSize=12;"
         lbl = html.escape(label.replace("\n", "<br>"))
+        # Geometry placeholder — will be updated after Graphviz renders
         self._cells.append(
             f'<mxCell id="{cid}" value="{lbl}" style="{style}" vertex="1" parent="1">'
-            f'<mxGeometry x="0" y="0" width="160" height="60" as="geometry" /></mxCell>')
+            f'<mxGeometry x="__X_{nid}__" y="__Y_{nid}__" width="__W_{nid}__" height="__H_{nid}__" as="geometry" /></mxCell>')
 
     def edge(self, src, tgt, **kwargs):
         self.g.edge(src, tgt, **kwargs)
@@ -69,10 +71,62 @@ class DiagramBuilder:
     def subgraph(self, **kwargs):
         return self.g.subgraph(**kwargs)
 
-    def _build_drawio_xml(self):
-        cells = "".join(self._cells)
+    def _parse_node_positions(self, svg_content):
+        """Extract node bounding boxes from Graphviz SVG output."""
+        import xml.etree.ElementTree as ET
+        positions = {}
+        # Strip doctype to avoid XML parser issues
+        clean = re.sub(r'<!DOCTYPE[^>]*>', '', svg_content)
+        clean = re.sub(r'<\?xml[^>]*\?>', '', clean)
+        try:
+            root = ET.fromstring(clean)
+        except ET.ParseError:
+            return positions
+        ns = {'svg': 'http://www.w3.org/2000/svg'}
+        # Find all node groups
+        for g_elem in root.iter('{http://www.w3.org/2000/svg}g'):
+            cls = g_elem.get('class', '')
+            if cls != 'node':
+                continue
+            title_elem = g_elem.find('{http://www.w3.org/2000/svg}title')
+            if title_elem is None or not title_elem.text:
+                continue
+            nid = title_elem.text.strip()
+            # Get bounding box from path or polygon 'd' attribute
+            path_elem = g_elem.find('{http://www.w3.org/2000/svg}path')
+            poly_elem = g_elem.find('{http://www.w3.org/2000/svg}polygon')
+            coords = []
+            if path_elem is not None:
+                d = path_elem.get('d', '')
+                coords = [float(x) for x in re.findall(r'[-+]?\d*\.?\d+', d)]
+            elif poly_elem is not None:
+                pts = poly_elem.get('points', '')
+                coords = [float(x) for x in re.findall(r'[-+]?\d*\.?\d+', pts)]
+            if len(coords) >= 4:
+                xs = coords[0::2]
+                ys = coords[1::2]
+                x_min, x_max = min(xs), max(xs)
+                y_min, y_max = min(ys), max(ys)
+                positions[nid] = {
+                    'x': round(x_min, 1),
+                    'y': round(y_min, 1),
+                    'w': round(x_max - x_min, 1),
+                    'h': round(y_max - y_min, 1),
+                }
+        return positions
+
+    def _build_drawio_xml(self, positions):
+        cells_str = "".join(self._cells)
+        # Replace geometry placeholders with actual positions
+        for nid, pos in positions.items():
+            cells_str = cells_str.replace(f'__X_{nid}__', str(pos['x']))
+            cells_str = cells_str.replace(f'__Y_{nid}__', str(pos['y']))
+            cells_str = cells_str.replace(f'__W_{nid}__', str(pos['w']))
+            cells_str = cells_str.replace(f'__H_{nid}__', str(pos['h']))
+        # Clean any remaining placeholders for nodes not found
+        cells_str = re.sub(r'__[XYWH]_\w+__', '0', cells_str)
         return (f'<mxfile host="drawio-gen"><diagram name="Page-1" id="page1">'
-                f'<mxGraphModel><root>{cells}</root></mxGraphModel>'
+                f'<mxGraphModel><root>{cells_str}</root></mxGraphModel>'
                 f'</diagram></mxfile>')
 
     def save(self, outdir, name):
@@ -80,12 +134,13 @@ class DiagramBuilder:
         self.g.render(path, cleanup=True)
         svg_path = path + ".svg"
 
-        # Read rendered SVG and inject content attribute
+        # Read rendered SVG, extract node positions, build draw.io XML
         svg_content = open(svg_path, "r", encoding="utf-8").read()
-        drawio_xml = self._build_drawio_xml()
+        positions = self._parse_node_positions(svg_content)
+        drawio_xml = self._build_drawio_xml(positions)
         encoded = html.escape(drawio_xml, quote=True)
 
-        # Inject content attr into <svg> tag and set host attr
+        # Inject content attr into <svg> tag
         svg_content = re.sub(
             r'<svg\b',
             f'<svg host="drawio-gen" content="{encoded}"',
@@ -102,18 +157,18 @@ def diagram_01_ecosystem(outdir):
     with b.g.subgraph(name="cluster_offense") as c:
         c.attr(label="Offense", style="dashed,rounded", color="#555555",
                fontcolor="#999999", penwidth="1.5")
-        c.node("CVE", "CVE\nVulnerabilities", fillcolor="#0f3460", color="#e67e22")
-        c.node("CWE", "CWE\nWeaknesses", fillcolor="#0f3460", color="#e67e22")
-        c.node("CAPEC", "CAPEC\nAttack Patterns", fillcolor="#0f3460", color="#e67e22")
+        b.node("CVE", "CVE\nVulnerabilities", graph=c, fillcolor="#0f3460", color="#e67e22")
+        b.node("CWE", "CWE\nWeaknesses", graph=c, fillcolor="#0f3460", color="#e67e22")
+        b.node("CAPEC", "CAPEC\nAttack Patterns", graph=c, fillcolor="#0f3460", color="#e67e22")
     with b.g.subgraph(name="cluster_core") as c:
         c.attr(label="Core", style="dashed,rounded", color="#555555",
                fontcolor="#999999", penwidth="1.5")
-        c.node("ATTACK", "ATT&CK\nAdversary Behavior", fillcolor="#0f3460", color="#e94560")
+        b.node("ATTACK", "ATT&CK\nAdversary Behavior", graph=c, fillcolor="#0f3460", color="#e94560")
     with b.g.subgraph(name="cluster_defense") as c:
         c.attr(label="Defense", style="dashed,rounded", color="#555555",
                fontcolor="#999999", penwidth="1.5")
-        c.node("D3FEND", "D3FEND\nCountermeasures", fillcolor="#0f3460", color="#16a085")
-        c.node("ATLAS", "ATLAS\nAI/ML Threats", fillcolor="#0f3460", color="#9b59b6")
+        b.node("D3FEND", "D3FEND\nCountermeasures", graph=c, fillcolor="#0f3460", color="#16a085")
+        b.node("ATLAS", "ATLAS\nAI/ML Threats", graph=c, fillcolor="#0f3460", color="#9b59b6")
     b.edge("CWE", "CVE", color="#e67e22")
     b.edge("CWE", "CAPEC", color="#e67e22")
     b.edge("CAPEC", "ATTACK", color="#e94560")
@@ -141,7 +196,7 @@ def diagram_02_14tactics(outdir):
             c.attr(label=label, style="dashed,rounded", color="#555555",
                    fontcolor="#999999", penwidth="1.5")
             for i, (nid, nlabel) in enumerate(nodes):
-                c.node(nid, nlabel, fillcolor=color, color=color)
+                b.node(nid, nlabel, graph=c, fillcolor=color, color=color)
             for i in range(len(nodes) - 1):
                 b.edge(nodes[i][0], nodes[i + 1][0], color=color)
         if prev_last:
@@ -317,21 +372,21 @@ def diagram_10_defense_depth(outdir):
     with b.g.subgraph(name="cluster_prevent") as c:
         c.attr(label="Prevention", style="dashed,rounded", color="#555555",
                fontcolor="#999999", penwidth="1.5")
-        c.node("IV", "Input\nValidation", fillcolor="#27ae60", color="#2ecc71")
-        c.node("AUTHN", "Authentication", fillcolor="#2980b9", color="#3498db")
-        c.node("AUTHZ", "Authorization", fillcolor="#8e44ad", color="#9b59b6")
-        c.node("DAC", "Data Access\nControls", fillcolor="#d35400", color="#e67e22")
+        b.node("IV", "Input\nValidation", graph=c, fillcolor="#27ae60", color="#2ecc71")
+        b.node("AUTHN", "Authentication", graph=c, fillcolor="#2980b9", color="#3498db")
+        b.node("AUTHZ", "Authorization", graph=c, fillcolor="#8e44ad", color="#9b59b6")
+        b.node("DAC", "Data Access\nControls", graph=c, fillcolor="#d35400", color="#e67e22")
     with b.g.subgraph(name="cluster_detect") as c:
         c.attr(label="Detection", style="dashed,rounded", color="#555555",
                fontcolor="#999999", penwidth="1.5")
-        c.node("BA", "Behavioral\nAnalytics", fillcolor="#c0392b", color="#e74c3c")
-        c.node("AD", "Anomaly\nDetection", fillcolor="#e74c3c", color="#c0392b")
-        c.node("TI", "Threat\nIntelligence", fillcolor="#f39c12", color="#e67e22")
+        b.node("BA", "Behavioral\nAnalytics", graph=c, fillcolor="#c0392b", color="#e74c3c")
+        b.node("AD", "Anomaly\nDetection", graph=c, fillcolor="#e74c3c", color="#c0392b")
+        b.node("TI", "Threat\nIntelligence", graph=c, fillcolor="#f39c12", color="#e67e22")
     with b.g.subgraph(name="cluster_respond") as c:
         c.attr(label="Response", style="dashed,rounded", color="#555555",
                fontcolor="#999999", penwidth="1.5")
-        c.node("AB", "Automated\nBlocking", fillcolor="#2c3e50", color="#3498db")
-        c.node("AR", "Alert &\nRemediation", fillcolor="#1a1a2e", color="#e94560")
+        b.node("AB", "Automated\nBlocking", graph=c, fillcolor="#2c3e50", color="#3498db")
+        b.node("AR", "Alert &\nRemediation", graph=c, fillcolor="#1a1a2e", color="#e94560")
     edges = [("IV","AUTHN"),("AUTHN","AUTHZ"),("AUTHZ","DAC"),
              ("DAC","BA"),("BA","AD"),("AD","TI"),("TI","AB"),("AB","AR")]
     for s, t in edges:
