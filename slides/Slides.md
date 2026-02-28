@@ -123,33 +123,7 @@ Before we dive into ATT&CK specifically, let's talk about MITRE the organization
 
 ## MITRE's Cybersecurity Ecosystem
 
-<div class="mermaid">
-flowchart LR
-subgraph Offense
-CVE[CVE - Vulnerabilities]
-CWE[CWE - Weaknesses]
-CAPEC[CAPEC - Attack Patterns]
-end
-subgraph Core
-ATTACK[ATTACK - Adversary Behavior]
-end
-subgraph Defense
-D3FEND[D3FEND - Countermeasures]
-ATLAS[ATLAS - AI/ML Threats]
-end
-CWE --> CVE
-CWE --> CAPEC
-CAPEC --> ATTACK
-CVE --> ATTACK
-ATTACK --> D3FEND
-ATTACK --> ATLAS
-style ATTACK fill:#0f3460,stroke:#e94560,color:#fff
-style D3FEND fill:#0f3460,stroke:#16a085,color:#fff
-style ATLAS fill:#0f3460,stroke:#9b59b6,color:#fff
-style CVE fill:#0f3460,stroke:#e67e22,color:#fff
-style CWE fill:#0f3460,stroke:#e67e22,color:#fff
-style CAPEC fill:#0f3460,stroke:#e67e22,color:#fff
-</div>
+<img src="img/mitre-ecosystem.drawio.svg" alt="MITRE Cybersecurity Ecosystem" style="max-height: 80%; margin: 0 auto;" />
 
 <!-- 
 Here's the big picture—MITRE doesn't just maintain ATT&CK. They operate an entire ecosystem of cybersecurity frameworks that interlock. CVE catalogs specific vulnerabilities—the "this version of this library has this flaw" data you see in security advisories. CWE classifies the underlying weakness types—"what kind of coding mistake leads to vulnerabilities." CAPEC documents attack patterns at a higher abstraction level. ATT&CK is where we'll spend most of our time today—it maps adversary behavior. D3FEND is the defensive counterpart, cataloging countermeasures. And ATLAS extends the model into AI and machine learning threats. Notice the relationships: weaknesses lead to vulnerabilities, attack patterns map to ATT&CK techniques, and defenses counter those techniques. This ecosystem gives us a shared language across the entire security industry.
@@ -200,24 +174,7 @@ Let's break down ATT&CK's hierarchy. Tactics are the goals—"why" an attacker d
 
 ## The 14 ATT&CK Tactics
 
-<div class="mermaid">
-flowchart LR
-    subgraph "Pre-Attack"
-        A[Reconnaissance] --> B[Resource Development]
-    end
-    subgraph "Get In"
-        C[Initial Access] --> D[Execution] --> E[Persistence] --> F[Privilege Escalation]
-    end
-    subgraph "Stay In"
-        G[Defense Evasion] --> H[Credential Access] --> I[Discovery] --> J[Lateral Movement]
-    end
-    subgraph "Act"
-        K[Collection] --> L[Command and Control] --> M[Exfiltration] --> N[Impact]
-    end
-    B --> C
-    F --> G
-    J --> K
-</div>
+<img src="img/14-attack-tactics.drawio.svg" alt="The 14 ATT&CK Tactics" style="max-height: 80%; margin: 0 auto;" />
 
 <!-- 
 This diagram shows the 14 ATT&CK tactics in the typical attack lifecycle. Pre-Attack: reconnaissance and resource development—scoping you out, setting up infrastructure. Get In: initial access, execution, persistence, privilege escalation—establishing a foothold. Stay In: evading defenses, stealing credentials, discovering the environment, moving laterally across systems. Act: collecting data, maintaining command and control, exfiltrating information, and causing impact. Today we'll focus on the tactics developers can directly influence—roughly 10 of these 14. Spend a moment here; this is the mental model for everything that follows.
@@ -249,21 +206,7 @@ This is a critical distinction that trips people up. CVEs and ATT&CK live in dif
 - **Defenders must detect at every stage**, not just the entry point
 - A single missed detection = full compromise
 
-<div class="mermaid">
-flowchart LR
-    A["T1195<br/>Supply Chain<br/>Compromise"] --> B["T1059<br/>Execution"]
-    B --> C["T1552<br/>Unsecured<br/>Credentials"]
-    C --> D["T1078<br/>Valid Accounts"]
-    D --> E["T1098<br/>Account<br/>Manipulation"]
-    E --> F["T1567<br/>Exfiltration"]
-
-    style A fill:#e74c3c,stroke:#c0392b,color:#fff
-    style B fill:#e67e22,stroke:#d35400,color:#fff
-    style C fill:#f39c12,stroke:#e67e22,color:#fff
-    style D fill:#2ecc71,stroke:#27ae60,color:#fff
-    style E fill:#3498db,stroke:#2980b9,color:#fff
-    style F fill:#9b59b6,stroke:#8e44ad,color:#fff
-</div>
+<img src="img/attack-chain-supply.drawio.svg" alt="Attack Chain: Supply Chain Compromise" style="max-height: 80%; margin: 0 auto;" />
 
 <!-- 
 Here's where it gets real. Attackers don't use one technique and go home. This diagram shows a supply chain attack chain—based on actual threat intelligence. Step one: attacker publishes a malicious npm package with a typosquatted name. The post-install script executes a payload. That payload harvests AWS credentials from environment variables. Those stolen credentials give the attacker legitimate access to production. They create a backdoor IAM user for persistence. Then they exfiltrate customer data. Six techniques, six different tactics, one continuous attack. The key insight: if you only defend at the perimeter, you miss five out of six opportunities to detect this. Defense in depth means instrumenting detection at *every* stage.
@@ -273,23 +216,7 @@ Here's where it gets real. Attackers don't use one technique and go home. This d
 
 ## Real-World Attack Chain: From Upload to Ransomware
 
-<div class="mermaid">
-flowchart TD
-    A["T1190<br/>Unrestricted<br/>File Upload"] --> B["T1505.003<br/>Web Shell<br/>Deployed"]
-    B --> C["T1059<br/>Remote Command<br/>Execution"]
-    C --> D["T1552<br/>Extract DB<br/>Credentials"]
-    D --> E["T1078<br/>Direct Database<br/>Access"]
-    E --> F["T1565<br/>Data<br/>Manipulation"]
-    F --> G["T1485<br/>Ransomware<br/>Deployment"]
-
-    style A fill:#e74c3c,stroke:#c0392b,color:#fff
-    style B fill:#e74c3c,stroke:#c0392b,color:#fff
-    style C fill:#e67e22,stroke:#d35400,color:#fff
-    style D fill:#f39c12,stroke:#e67e22,color:#fff
-    style E fill:#2ecc71,stroke:#27ae60,color:#fff
-    style F fill:#9b59b6,stroke:#8e44ad,color:#fff
-    style G fill:#1a1a2e,stroke:#e94560,color:#fff
-</div>
+<img src="img/ransomware-chain.drawio.svg" alt="Real-World Attack Chain: From Upload to Ransomware" style="max-height: 80%; margin: 0 auto;" />
 
 <!-- 
 Here's another chain that's devastatingly common. An unrestricted file upload vulnerability lets an attacker upload a PHP web shell disguised as an image. That web shell gives remote command execution on the server. The attacker reads config files to extract database credentials. Now they have direct database access, bypassing all application-level authorization. They modify records—maybe inject malicious content, maybe escalate privileges. Final act: ransomware targeting backups and production data. Seven steps. A file upload validation check at step one stops all of it. That's the power of understanding attack chains—you can identify the cheapest, most impactful place to break the chain.
@@ -328,34 +255,7 @@ This is one of the most important mental model shifts in modern security. Lockhe
 
 ## The Crooked Line: A Real Attack Path
 
-<div class="mermaid">
-flowchart LR
-    A["Initial<br/>Access"] --> B["Execution"]
-    B --> C["Discovery"]
-    C --> D["Credential<br/>Access"]
-    D --> C
-    D --> E["Lateral<br/>Movement"]
-    E --> C
-    E --> F["Discovery<br/>(new segment)"]
-    F --> G["Credential<br/>Access"]
-    G --> H["Lateral<br/>Movement"]
-    H --> I["Collection"]
-    I --> J["Exfiltration"]
-
-    linkStyle 3 stroke:#e94560,stroke-width:3px
-    linkStyle 4 stroke:#e94560,stroke-width:3px
-
-    style A fill:#e74c3c,stroke:#c0392b,color:#fff
-    style B fill:#e67e22,stroke:#d35400,color:#fff
-    style C fill:#3498db,stroke:#2980b9,color:#fff
-    style D fill:#f39c12,stroke:#e67e22,color:#fff
-    style E fill:#2ecc71,stroke:#27ae60,color:#fff
-    style F fill:#3498db,stroke:#2980b9,color:#fff
-    style G fill:#f39c12,stroke:#e67e22,color:#fff
-    style H fill:#2ecc71,stroke:#27ae60,color:#fff
-    style I fill:#9b59b6,stroke:#8e44ad,color:#fff
-    style J fill:#1a1a2e,stroke:#e94560,color:#fff
-</div>
+<img src="img/crooked-line.drawio.svg" alt="The Crooked Line: A Real Attack Path" style="max-height: 80%; margin: 0 auto;" />
 
 <!-- 
 Here's the crooked line visualized. Look at those red arrows looping back—Discovery to Credential Access and back to Discovery, Lateral Movement looping back to Discovery again. The attacker compromises one machine, discovers the environment, steals credentials, uses those credentials to move laterally, discovers *more* of the environment, steals *more* credentials, moves again. It's a spiral, not a line. This is why ATT&CK uses a matrix instead of a linear chain—any tactic can follow any other tactic. Your detection strategy needs to account for this: don't just alert on initial access. Instrument discovery, credential access, and lateral movement patterns because attackers will cycle through them repeatedly before reaching their objective.
@@ -1138,17 +1038,7 @@ Blockchain-inspired tamper-evident logging. Each log entry includes a hash of th
 
 ## Immutable Logging Architecture
 
-<div class="mermaid">
-graph LR
-    A[Application] --> B[Secure Logger]
-    B --> C[Hash Validation]
-    C --> D[Local Buffer]
-    D --> E[Encrypted Storage]
-    D --> F[External SIEM]
-    E --> G[Tamper Detection]
-    F --> G
-    G --> H[Alert Security Team]
-</div>
+<img src="img/immutable-logging.drawio.svg" alt="Immutable Logging Architecture" style="max-height: 80%; margin: 0 auto;" />
 
 <!-- 
 Architecture diagram for immutable logging. Application logs flow through a secure logger that validates hashes, buffers locally for performance, writes to encrypted immutable storage, and sends to an external SIEM simultaneously. Tamper detection compares local and remote logs. If they diverge or the hash chain breaks, the security team is alerted immediately. This makes log tampering detectable and forensically recoverable. Spend a moment here—this is critical infrastructure for detection.
@@ -1367,18 +1257,7 @@ Custom package integrity validator. It reads the lockfile, computes hashes of in
 
 ## Supply Chain Security Flow
 
-<div class="mermaid">
-flowchart TD
-    A[Developer] --> B[Dependency Request]
-    B --> C{Package Registry}
-    C --> D[Integrity Check]
-    D --> E{Hash Valid?}
-    E -->|No| F[Block & Log T1195.001]
-    E -->|Yes| G[Vulnerability Scan]
-    G --> H{Clean?}
-    H -->|No| F
-    H -->|Yes| I[Install & Monitor]
-</div>
+<img src="img/supply-chain-flow.drawio.svg" alt="Supply Chain Security Flow" style="max-height: 80%; margin: 0 auto;" />
 
 <!-- 
 Supply chain security workflow. Dependency request goes to the package registry, then through integrity checking. If the hash doesn't match the lockfile, block and log. If it passes, run vulnerability scanning. If vulnerabilities are found, block. Only clean, verified packages get installed, and we continue monitoring for newly discovered vulnerabilities. This is defense in depth for dependencies. Every gate is a chance to catch an attack.
@@ -1595,19 +1474,7 @@ Exfiltration detection through data transfer monitoring. We track response sizes
 
 ## Data Flow Monitoring
 
-<div class="mermaid">
-graph TD
-    A[User Request] --> B[Auth & Authorization]
-    B --> C[Data Access Monitor]
-    C --> D{Anomaly?}
-    D -->|Yes| E[Alert & Block]
-    D -->|No| F[Execute Query]
-    F --> G{Bulk Transfer?}
-    G -->|Yes| E
-    G -->|No| H{Rate Exceeded?}
-    H -->|Yes| E
-    H -->|No| I[Send Response]
-</div>
+<img src="img/data-flow-monitoring.drawio.svg" alt="Data Flow Monitoring" style="max-height: 80%; margin: 0 auto;" />
 
 
 ---
@@ -1939,15 +1806,7 @@ Now let's talk about actually doing this in your organization. You've seen the t
 Threat modeling with ATT&CK is systematic and repeatable. You map features to techniques, assess risk, design detections, implement controls, and continuously test and iterate. This cycle never ends—new techniques emerge, your application evolves, and your defenses must adapt. This is the process loop for building security into your SDLC.
 -->
 
-<div class="mermaid">
-flowchart TD
-    A[Identify Feature] --> B[Map to ATT&CK Techniques]
-    B --> C[Assess Risk & Impact]
-    C --> D[Design Detections]
-    D --> E[Implement & Monitor]
-    E --> F[Test & Iterate]
-    F --> B
-</div>
+<img src="img/threat-modeling-cycle.drawio.svg" alt="ATT&CK-Informed Threat Modeling" style="max-height: 80%; margin: 0 auto;" />
 
 
 ---
@@ -1991,17 +1850,7 @@ Five key patterns for building detection into code. Behavioral analytics underst
 
 ## Defense in Depth Architecture
 
-<div class="mermaid">
-graph LR
-    A1[Input Validation] --> A2[Authentication]
-    A2 --> A3[Authorization]
-    A3 --> A4[Data Access Controls]
-    A4 --> B1[Behavioral Analytics]
-    B1 --> B2[Anomaly Detection]
-    B2 --> B3[Threat Intelligence]
-    B3 --> C1[Automated Blocking]
-    C1 --> C2[Alert & Remediation]
-</div>
+<img src="img/defense-in-depth.drawio.svg" alt="Defense in Depth Architecture" style="max-height: 80%; margin: 0 auto;" />
 
 <!-- 
 Defense in depth visualized as layers. Prevention layers on the left: input validation, authentication, authorization, data access controls. Detection layers in the middle: behavioral analytics, anomaly detection, threat intelligence correlation. Response layers on the right: automated blocking and alerting. Each layer provides redundancy. If one layer fails, others catch the attack. This is how resilient systems are built—multiple independent defenses working together.
@@ -2011,16 +1860,7 @@ Defense in depth visualized as layers. Prevention layers on the left: input vali
 
 ## OWASP + ATT&CK Integration
 
-<div class="mermaid">
-flowchart LR
-    A[Secure Coding] --> G[Secure by Design]
-    D[Behavioral Monitoring] --> G
-    B[Vulnerability Testing] --> H[Monitor by Behavior]
-    E[Technique Correlation] --> H
-    C[Security Reviews] --> I[Respond by Intelligence]
-    F[Threat Hunting] --> I
-    G --> H --> I
-</div>
+<img src="img/owasp-attack-integration.drawio.svg" alt="OWASP + ATT&CK Integration" style="max-height: 80%; margin: 0 auto;" />
 
 <!-- 
 Integrating OWASP and ATT&CK practices. OWASP secure coding plus ATT&CK behavioral monitoring equals secure by design. OWASP vulnerability testing plus technique correlation equals behavior-based monitoring. Security reviews plus threat hunting equals intelligence-driven response. These frameworks complement each other perfectly. Use both and you get complete coverage from prevention through detection to response.
@@ -2235,12 +2075,4 @@ Resources and contact info. The MITRE ATT&CK site is your primary reference—bo
 That's it! Let's open it up for questions. Ask about anything—specific techniques, implementation challenges, how to convince your security team, tooling recommendations, whatever's on your mind. And thank you for your time and attention. Building secure systems is hard work, but it's some of the most important work we do. You're making the internet safer. Keep at it!
 -->
 
-<!-- Needed for mermaid, can be anywhere in file except frontmatter -->
-<script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.12.3/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: false });
-  document.querySelectorAll('.mermaid').forEach(el => {
-    el.textContent = el.textContent.replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&');
-  });
-  await mermaid.run();
-</script>
+<!-- Diagrams are now .drawio.svg files in slides/img/ -->
