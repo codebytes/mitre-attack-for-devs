@@ -314,54 +314,18 @@
 <div class="columns">
 <div>
 <h3 id="%E2%9D%8C-vulnerable"><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Vulnerable</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/users&#x27;</span></span>)</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">get_user</span>():
-    user_id = request.args.get(<span class="hljs-string">&#x27;id&#x27;</span>)
-    query = <span class="hljs-string">f&quot;SELECT * FROM users WHERE id = <span class="hljs-subst">{user_id}</span>&quot;</span>
-    cursor.execute(query)
-    <span class="hljs-keyword">return</span> cursor.fetchall()
-<span class="hljs-comment"># Attack: /users?id=1 OR 1=1--</span>
-</code></pre>
+<img src="img/code/code-01.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 <div>
 <h3 id="%E2%9C%85-defended"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Defended</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/users&#x27;</span></span>)</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">get_user</span>():
-    user_id = request.args.get(<span class="hljs-string">&#x27;id&#x27;</span>)
-    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> user_id.isdigit():
-        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Invalid input&quot;</span>, <span class="hljs-number">400</span>
-    query = <span class="hljs-string">&quot;SELECT * FROM users WHERE id = ?&quot;</span>
-    cursor.execute(query, (user_id,))
-    result = cursor.fetchall()
-    <span class="hljs-keyword">return</span> result[<span class="hljs-number">0</span>] <span class="hljs-keyword">if</span> result <span class="hljs-keyword">else</span> (<span class="hljs-string">&quot;Not found&quot;</span>, <span class="hljs-number">404</span>)
-</code></pre>
+<img src="img/code/code-02.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 </div>
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="25" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="credential-stuffing-detection-t1110004">Credential Stuffing Detection (T1110.004)</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-javascript"><span class="hljs-comment">// T1110.004 Detection: Credential stuffing patterns</span>
-<span class="hljs-keyword">class</span> <span class="hljs-title class_">CredentialStuffingDetector</span> {
-    <span class="hljs-title function_">detectSuspiciousLogin</span>(<span class="hljs-params">loginData</span>) {
-        <span class="hljs-keyword">const</span> { username, ip, userAgent, timestamp } = loginData;
-        
-        <span class="hljs-comment">// Multiple accounts from same IP</span>
-        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">countAccountsFromIP</span>(ip) &gt; <span class="hljs-number">10</span>) {
-            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">logTechnique</span>(<span class="hljs-string">&quot;T1110.004&quot;</span>, { ip, <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;multiple_accounts&quot;</span> });
-            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-        }
-        
-        <span class="hljs-comment">// Rapid login attempts across accounts  </span>
-        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getRateFromIP</span>(ip) &gt; <span class="hljs-number">100</span>) {
-            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">logTechnique</span>(<span class="hljs-string">&quot;T1110.004&quot;</span>, { ip, <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;high_velocity&quot;</span> });
-            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-        }
-        
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-    }
-}
-</code></pre>
+<img src="img/code/code-03.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="26" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
@@ -403,66 +367,18 @@
 <div class="columns">
 <div>
 <h3 id="%E2%9D%8C-vulnerable-1"><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Vulnerable</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">[<span class="hljs-meta">HttpPost</span>]
-<span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">ProcessFile</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> filename</span>)</span>
-{
-    <span class="hljs-keyword">var</span> command = <span class="hljs-string">$&quot;convert <span class="hljs-subst">{filename}</span> output.pdf&quot;</span>;
-    <span class="hljs-keyword">var</span> process = Process.Start(<span class="hljs-string">&quot;cmd.exe&quot;</span>,
-        <span class="hljs-string">$&quot;/c <span class="hljs-subst">{command}</span>&quot;</span>);
-    process.WaitForExit();
-    <span class="hljs-keyword">return</span> Ok(<span class="hljs-string">&quot;File processed&quot;</span>);
-}
-<span class="hljs-comment">// Attack: file.jpg; rm -rf / --</span>
-</code></pre>
+<img src="img/code/code-04.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 <div>
 <h3 id="%E2%9C%85-defended-1"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Defended</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">[<span class="hljs-meta">HttpPost</span>]
-<span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">ProcessFile</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> filename</span>)</span>
-{
-    <span class="hljs-keyword">if</span> (!IsValidFilename(filename))
-        <span class="hljs-keyword">return</span> BadRequest(<span class="hljs-string">&quot;Invalid filename&quot;</span>);
-    <span class="hljs-keyword">var</span> processInfo = <span class="hljs-keyword">new</span> ProcessStartInfo {
-        FileName = <span class="hljs-string">&quot;imagemagick.exe&quot;</span>,
-        Arguments = <span class="hljs-built_in">string</span>.Join(<span class="hljs-string">&quot; &quot;</span>,
-            safeArgs.Select(EscapeArg)),
-        UseShellExecute = <span class="hljs-literal">false</span>
-    };
-    <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> process = Process.Start(processInfo);
-    <span class="hljs-keyword">return</span> Ok(<span class="hljs-string">&quot;File processed safely&quot;</span>);
-}
-</code></pre>
+<img src="img/code/code-05.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 </div>
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="29" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="29" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="unsafe-deserialization-t1203">Unsafe Deserialization (T1203)</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-comment"># VULNERABLE - Unsafe deserialization enables T1203</span>
-<span class="hljs-keyword">import</span> pickle
-
-<span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/api/data&#x27;</span>, methods=[<span class="hljs-string">&#x27;POST&#x27;</span>]</span>)</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">process_data</span>():
-    data = request.data
-    <span class="hljs-comment"># T1203: Unsafe deserialization vulnerability</span>
-    obj = pickle.loads(data)  <span class="hljs-comment"># Code execution risk</span>
-    <span class="hljs-keyword">return</span> process_object(obj)
-
-<span class="hljs-comment"># DEFENDED - Safe deserialization</span>
-<span class="hljs-keyword">import</span> json
-
-<span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/api/data&#x27;</span>, methods=[<span class="hljs-string">&#x27;POST&#x27;</span>]</span>)  </span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">process_data</span>():
-    <span class="hljs-keyword">try</span>:
-        <span class="hljs-comment"># T1203 Prevention: Safe JSON parsing</span>
-        data = json.loads(request.data)
-        <span class="hljs-comment"># Validate against schema</span>
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> validate_schema(data):
-            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Invalid data format&quot;</span>, <span class="hljs-number">400</span>
-        <span class="hljs-keyword">return</span> process_object(data)
-    <span class="hljs-keyword">except</span> json.JSONDecodeError:
-        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Invalid JSON&quot;</span>, <span class="hljs-number">400</span>
-</code></pre>
+<img src="img/code/code-06.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="30" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="30" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
@@ -504,72 +420,18 @@
 <div class="columns">
 <div>
 <h3 id="%E2%9D%8C-vulnerable-2"><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Vulnerable</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-javascript">app.<span class="hljs-title function_">use</span>(<span class="hljs-title function_">session</span>({
-    <span class="hljs-attr">secret</span>: <span class="hljs-string">&#x27;hardcoded-secret&#x27;</span>,
-    <span class="hljs-attr">cookie</span>: {
-        <span class="hljs-attr">secure</span>: <span class="hljs-literal">false</span>,
-        <span class="hljs-attr">httpOnly</span>: <span class="hljs-literal">false</span>,
-        <span class="hljs-attr">maxAge</span>: <span class="hljs-number">24</span> * <span class="hljs-number">60</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>
-    }
-}));
-</code></pre>
+<img src="img/code/code-07.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 <div>
 <h3 id="%E2%9C%85-defended-2"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Defended</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-javascript">app.<span class="hljs-title function_">use</span>(<span class="hljs-title function_">session</span>({
-    <span class="hljs-attr">secret</span>: process.<span class="hljs-property">env</span>.<span class="hljs-property">SESSION_SECRET</span>,
-    <span class="hljs-attr">rolling</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">cookie</span>: {
-        <span class="hljs-attr">secure</span>: <span class="hljs-literal">true</span>,
-        <span class="hljs-attr">httpOnly</span>: <span class="hljs-literal">true</span>,
-        <span class="hljs-attr">maxAge</span>: <span class="hljs-number">15</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>,
-        <span class="hljs-attr">sameSite</span>: <span class="hljs-string">&#x27;strict&#x27;</span>
-    }
-}));
-</code></pre>
+<img src="img/code/code-08.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 </div>
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="33" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="33" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="web-shell-detection-t1505003">Web Shell Detection (T1505.003)</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// T1505.003 Detection: Web shell upload monitoring</span>
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">FileUploadValidator</span>
-{
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">string</span>[] _suspiciousPatterns = {
-        <span class="hljs-string">&quot;eval(&quot;</span>, <span class="hljs-string">&quot;exec(&quot;</span>, <span class="hljs-string">&quot;system(&quot;</span>, <span class="hljs-string">&quot;passthru(&quot;</span>,
-        <span class="hljs-string">&quot;&lt;?php&quot;</span>, <span class="hljs-string">&quot;&lt;%&quot;</span>, <span class="hljs-string">&quot;&lt;script&quot;</span>, <span class="hljs-string">&quot;cmd.exe&quot;</span>
-    };
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">ValidateUpload</span>(<span class="hljs-params">IFormFile <span class="hljs-keyword">file</span></span>)</span>
-    {
-        <span class="hljs-comment">// T1505.003 Prevention: File extension validation</span>
-        <span class="hljs-keyword">var</span> allowedExtensions = <span class="hljs-keyword">new</span>[] { <span class="hljs-string">&quot;.jpg&quot;</span>, <span class="hljs-string">&quot;.png&quot;</span>, <span class="hljs-string">&quot;.pdf&quot;</span>, <span class="hljs-string">&quot;.docx&quot;</span> };
-        <span class="hljs-keyword">var</span> extension = Path.GetExtension(<span class="hljs-keyword">file</span>.FileName).ToLower();
-        
-        <span class="hljs-keyword">if</span> (!allowedExtensions.Contains(extension))
-        {
-            LogSecurityEvent(<span class="hljs-string">&quot;T1505.003&quot;</span>, <span class="hljs-string">$&quot;Suspicious extension: <span class="hljs-subst">{extension}</span>&quot;</span>);
-            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-        }
-        
-        <span class="hljs-comment">// T1505.003 Detection: Content scanning</span>
-        <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> StreamReader(<span class="hljs-keyword">file</span>.OpenReadStream());
-        <span class="hljs-keyword">var</span> content = reader.ReadToEnd();
-        
-        <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> pattern <span class="hljs-keyword">in</span> _suspiciousPatterns)
-        {
-            <span class="hljs-keyword">if</span> (content.Contains(pattern, StringComparison.OrdinalIgnoreCase))
-            {
-                LogSecurityEvent(<span class="hljs-string">&quot;T1505.003&quot;</span>, <span class="hljs-string">$&quot;Web shell pattern detected: <span class="hljs-subst">{pattern}</span>&quot;</span>);
-                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-            }
-        }
-        
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-    }
-}
-</code></pre>
+<img src="img/code/code-09.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="34" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="34" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
@@ -611,60 +473,18 @@
 <div class="columns">
 <div>
 <h3 id="%E2%9D%8C-vulnerable-3"><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Vulnerable</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/api/users/&lt;user_id&gt;/profile&#x27;</span></span>)</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">get_profile</span>(<span class="hljs-params">user_id</span>):
-    profile = db.query(
-        <span class="hljs-string">&quot;SELECT * FROM profiles WHERE user_id = ?&quot;</span>,
-        (user_id,))
-    <span class="hljs-keyword">return</span> jsonify(profile)
-<span class="hljs-comment"># Attack: GET /api/users/admin/profile</span>
-</code></pre>
+<img src="img/code/code-10.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 <div>
 <h3 id="%E2%9C%85-defended-3"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Defended</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/api/users/&lt;user_id&gt;/profile&#x27;</span></span>)</span>
-<span class="hljs-meta">@login_required</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">get_profile</span>(<span class="hljs-params">user_id</span>):
-    current_user = get_current_user()
-    <span class="hljs-keyword">if</span> user_id != current_user.<span class="hljs-built_in">id</span> \
-            <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> current_user.has_role(<span class="hljs-string">&#x27;admin&#x27;</span>):
-        log_technique(<span class="hljs-string">&#x27;T1068&#x27;</span>, {<span class="hljs-string">&#x27;target&#x27;</span>: user_id})
-        <span class="hljs-keyword">return</span> jsonify({<span class="hljs-string">&#x27;error&#x27;</span>: <span class="hljs-string">&#x27;Forbidden&#x27;</span>}), <span class="hljs-number">403</span>
-    profile = db.query(
-        <span class="hljs-string">&quot;SELECT * FROM profiles WHERE user_id = ?&quot;</span>,
-        (user_id,))
-    <span class="hljs-keyword">return</span> jsonify(profile)
-</code></pre>
+<img src="img/code/code-11.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 </div>
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="37" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="37" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="token-manipulation-prevention-t1134">Token Manipulation Prevention (T1134)</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-javascript"><span class="hljs-comment">// T1134 Prevention: Secure JWT with claims validation</span>
-<span class="hljs-keyword">const</span> jwt = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;jsonwebtoken&#x27;</span>);
-
-<span class="hljs-keyword">function</span> <span class="hljs-title function_">validateToken</span>(<span class="hljs-params">token</span>) {
-    <span class="hljs-keyword">try</span> {
-        <span class="hljs-keyword">const</span> decoded = jwt.<span class="hljs-title function_">verify</span>(token, process.<span class="hljs-property">env</span>.<span class="hljs-property">JWT_SECRET</span>, {
-            <span class="hljs-attr">algorithms</span>: [<span class="hljs-string">&#x27;HS256&#x27;</span>],       <span class="hljs-comment">// T1134: Prevent algorithm switching</span>
-            <span class="hljs-attr">issuer</span>: <span class="hljs-string">&#x27;myapp&#x27;</span>,             <span class="hljs-comment">// T1134: Validate issuer</span>
-            <span class="hljs-attr">audience</span>: <span class="hljs-string">&#x27;myapp-api&#x27;</span>        <span class="hljs-comment">// T1134: Validate audience</span>
-        });
-        
-        <span class="hljs-comment">// T1134 Prevention: Verify claims against database</span>
-        <span class="hljs-keyword">const</span> dbUser = <span class="hljs-title function_">getUserFromDB</span>(decoded.<span class="hljs-property">sub</span>);
-        <span class="hljs-keyword">if</span> (dbUser.<span class="hljs-property">role</span> !== decoded.<span class="hljs-property">role</span>) {
-            <span class="hljs-title function_">logTechnique</span>(<span class="hljs-string">&#x27;T1134&#x27;</span>, { <span class="hljs-attr">user</span>: decoded.<span class="hljs-property">sub</span>, <span class="hljs-attr">claimedRole</span>: decoded.<span class="hljs-property">role</span> });
-            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;Token claims mismatch&#x27;</span>);
-        }
-        
-        <span class="hljs-keyword">return</span> decoded;
-    } <span class="hljs-keyword">catch</span> (err) {
-        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;Invalid token&#x27;</span>);
-    }
-}
-</code></pre>
+<img src="img/code/code-12.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="38" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="38" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
@@ -706,62 +526,18 @@
 <div class="columns">
 <div>
 <h3 id="%E2%9D%8C-bad"><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Bad</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-comment"># T1552 vulnerability</span>
-DATABASE_URL = <span class="hljs-string">&quot;postgres://user:P@ssw0rd@localhost/mydb&quot;</span>
-API_KEY = <span class="hljs-string">&quot;sk-1234567890abcdef&quot;</span>
-</code></pre>
+<img src="img/code/code-13.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 <div>
 <h3 id="%E2%9C%85-good"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Good</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-comment"># T1552 prevention with Azure Key Vault</span>
-<span class="hljs-keyword">from</span> azure.keyvault.secrets <span class="hljs-keyword">import</span> SecretClient
-<span class="hljs-keyword">from</span> azure.identity <span class="hljs-keyword">import</span> DefaultAzureCredential
-
-credential = DefaultAzureCredential()
-client = SecretClient(
-    vault_url=os.environ[<span class="hljs-string">&#x27;KEY_VAULT_URL&#x27;</span>],
-    credential=credential)
-API_KEY = client.get_secret(<span class="hljs-string">&quot;api-key&quot;</span>).value
-</code></pre>
+<img src="img/code/code-14.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 </div>
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="41" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="41" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="secrets-scanner-implementation">Secrets Scanner Implementation</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-comment"># T1552 Prevention: Automated secrets detection</span>
-<span class="hljs-keyword">import</span> re
-<span class="hljs-keyword">import</span> os
-
-<span class="hljs-keyword">class</span> <span class="hljs-title class_">SecretsScanner</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
-        <span class="hljs-variable language_">self</span>.patterns = [
-            (<span class="hljs-string">r&#x27;password\s*=\s*[&quot;\&#x27;][^&quot;\&#x27;]{8,}[&quot;\&#x27;]&#x27;</span>, <span class="hljs-string">&#x27;Hardcoded Password&#x27;</span>),
-            (<span class="hljs-string">r&#x27;api[_-]?key\s*[=:]\s*[&quot;\&#x27;][^&quot;\&#x27;]{16,}[&quot;\&#x27;]&#x27;</span>, <span class="hljs-string">&#x27;API Key&#x27;</span>),
-            (<span class="hljs-string">r&#x27;sk-[a-zA-Z0-9]{32,}&#x27;</span>, <span class="hljs-string">&#x27;Secret Key&#x27;</span>),
-            (<span class="hljs-string">r&#x27;pk_live_[a-zA-Z0-9]{24,}&#x27;</span>, <span class="hljs-string">&#x27;Live API Key&#x27;</span>),
-            (<span class="hljs-string">r&#x27;-----BEGIN [A-Z ]+-----&#x27;</span>, <span class="hljs-string">&#x27;Private Key&#x27;</span>)
-        ]
-    
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">scan_file</span>(<span class="hljs-params">self, filepath</span>):
-        violations = []
-        <span class="hljs-keyword">try</span>:
-            <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(filepath, <span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-keyword">as</span> f:
-                content = f.read()
-                <span class="hljs-keyword">for</span> pattern, description <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.patterns:
-                    matches = re.finditer(pattern, content, re.IGNORECASE)
-                    <span class="hljs-keyword">for</span> <span class="hljs-keyword">match</span> <span class="hljs-keyword">in</span> matches:
-                        violations.append({
-                            <span class="hljs-string">&#x27;file&#x27;</span>: filepath,
-                            <span class="hljs-string">&#x27;line&#x27;</span>: content[:<span class="hljs-keyword">match</span>.start()].count(<span class="hljs-string">&#x27;\n&#x27;</span>) + <span class="hljs-number">1</span>,
-                            <span class="hljs-string">&#x27;type&#x27;</span>: description,
-                            <span class="hljs-string">&#x27;technique&#x27;</span>: <span class="hljs-string">&#x27;T1552&#x27;</span>
-                        })
-        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
-            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Error scanning <span class="hljs-subst">{filepath}</span>: <span class="hljs-subst">{e}</span>&quot;</span>)
-        
-        <span class="hljs-keyword">return</span> violations
-</code></pre>
+<img src="img/code/code-15.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="42" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="42" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
@@ -800,64 +576,12 @@ API_KEY = client.get_secret(<span class="hljs-string">&quot;api-key&quot;</span>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="44" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="44" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="log-injection-attack-t1070">Log Injection Attack (T1070)</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-comment"># VULNERABLE - Log injection enables T1070</span>
-<span class="hljs-keyword">import</span> logging
-
-logger = logging.getLogger(__name__)
-
-<span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/login&#x27;</span>, methods=[<span class="hljs-string">&#x27;POST&#x27;</span>]</span>)</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">login</span>():
-    username = request.json.get(<span class="hljs-string">&#x27;username&#x27;</span>)
-    password = request.json.get(<span class="hljs-string">&#x27;password&#x27;</span>)
-    
-    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> authenticate(username, password):
-        <span class="hljs-comment"># T1070: Log injection vulnerability</span>
-        logger.warning(<span class="hljs-string">f&quot;Failed login for user: <span class="hljs-subst">{username}</span>&quot;</span>)
-        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Invalid credentials&quot;</span>, <span class="hljs-number">401</span>
-    
-    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Login successful&quot;</span>
-
-<span class="hljs-comment"># Attack payload: &quot;admin\n[INFO] Successful login for admin&quot;</span>
-<span class="hljs-comment"># Creates fake success log entry</span>
-</code></pre>
+<img src="img/code/code-16.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="45" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="45" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="tamper-evident-logging-t1070-prevention">Tamper-Evident Logging (T1070 Prevention)</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// T1070 Prevention: Tamper-evident logging with hash chains</span>
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SecureLogger</span>
-{
-    <span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> _lastHash = <span class="hljs-string">&quot;genesis&quot;</span>;
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IConfiguration _config;
-    
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">LogSecurityEvent</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> technique, <span class="hljs-built_in">string</span> details</span>)</span>
-    {
-        <span class="hljs-keyword">var</span> logEntry = <span class="hljs-keyword">new</span> SecurityLogEntry
-        {
-            Timestamp = DateTime.UtcNow,
-            Technique = technique,
-            Details = SanitizeInput(details),  <span class="hljs-comment">// T1070 Prevention: Input sanitization</span>
-            PreviousHash = _lastHash
-        };
-        
-        <span class="hljs-comment">// T1070 Prevention: Cryptographic hash chain</span>
-        logEntry.Hash = ComputeHash(<span class="hljs-string">$&quot;<span class="hljs-subst">{logEntry.Timestamp}</span><span class="hljs-subst">{logEntry.Technique}</span><span class="hljs-subst">{logEntry.Details}</span><span class="hljs-subst">{_lastHash}</span>&quot;</span>);
-        _lastHash = logEntry.Hash;
-        
-        <span class="hljs-comment">// T1070 Prevention: Write to immutable storage</span>
-        WriteToImmutableStore(logEntry);
-        
-        <span class="hljs-comment">// T1070 Prevention: Send to external SIEM</span>
-        <span class="hljs-keyword">await</span> SendToSIEM(logEntry);
-    }
-    
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> <span class="hljs-title">SanitizeInput</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> input</span>)</span>
-    {
-        <span class="hljs-comment">// Remove newlines and control characters that could enable log injection</span>
-        <span class="hljs-keyword">return</span> Regex.Replace(input ?? <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-string">@&quot;[\r\n\t\f]&quot;</span>, <span class="hljs-string">&quot;_&quot;</span>);
-    }
-}
-</code></pre>
+<img src="img/code/code-17.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="46" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="46" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
@@ -904,60 +628,18 @@ logger = logging.getLogger(__name__)
 <div class="columns">
 <div>
 <h3 id="%E2%9D%8C-vulnerable-4"><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Vulnerable</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/login&#x27;</span>, methods=[<span class="hljs-string">&#x27;POST&#x27;</span>]</span>)</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">login</span>():
-    user = db.find_user(username)
-    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> user:
-        <span class="hljs-keyword">return</span> jsonify({<span class="hljs-string">&#x27;error&#x27;</span>: <span class="hljs-string">&#x27;User not found&#x27;</span>}), <span class="hljs-number">404</span>
-    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> verify_password(password, user.password_hash):
-        <span class="hljs-keyword">return</span> jsonify({<span class="hljs-string">&#x27;error&#x27;</span>: <span class="hljs-string">&#x27;Wrong password&#x27;</span>}), <span class="hljs-number">401</span>
-<span class="hljs-comment"># 404 vs 401 reveals valid usernames</span>
-</code></pre>
+<img src="img/code/code-18.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 <div>
 <h3 id="%E2%9C%85-defended-4"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Defended</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/login&#x27;</span>, methods=[<span class="hljs-string">&#x27;POST&#x27;</span>]</span>)</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">login</span>():
-    user = db.find_user(username)
-    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> user <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> verify_password(
-            password, user.password_hash):
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> user:
-            verify_password(password, DUMMY_HASH)
-        <span class="hljs-keyword">return</span> jsonify({<span class="hljs-string">&#x27;error&#x27;</span>: <span class="hljs-string">&#x27;Invalid credentials&#x27;</span>}), <span class="hljs-number">401</span>
-    <span class="hljs-keyword">return</span> create_session(user)
-</code></pre>
+<img src="img/code/code-19.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 </div>
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="50" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="50" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="api-endpoint-discovery-prevention-t1046">API Endpoint Discovery Prevention (T1046)</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-javascript"><span class="hljs-comment">// T1046 Prevention: Minimize information exposure</span>
-<span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);
-<span class="hljs-keyword">const</span> app = <span class="hljs-title function_">express</span>();
-
-<span class="hljs-comment">// T1046 Prevention: Remove server fingerprinting</span>
-app.<span class="hljs-title function_">disable</span>(<span class="hljs-string">&#x27;x-powered-by&#x27;</span>);
-
-<span class="hljs-comment">// T1082 Prevention: Custom error handler hides internals</span>
-app.<span class="hljs-title function_">use</span>(<span class="hljs-function">(<span class="hljs-params">err, req, res, next</span>) =&gt;</span> {
-    <span class="hljs-comment">// Log full details internally</span>
-    logger.<span class="hljs-title function_">error</span>({ err, <span class="hljs-attr">req</span>: req.<span class="hljs-property">path</span>, <span class="hljs-attr">technique</span>: <span class="hljs-string">&#x27;T1082&#x27;</span> });
-    
-    <span class="hljs-comment">// T1082 Prevention: Generic error to client</span>
-    res.<span class="hljs-title function_">status</span>(err.<span class="hljs-property">status</span> || <span class="hljs-number">500</span>).<span class="hljs-title function_">json</span>({
-        <span class="hljs-attr">error</span>: <span class="hljs-string">&#x27;An error occurred&#x27;</span>,
-        <span class="hljs-attr">requestId</span>: <span class="hljs-title function_">generateRequestId</span>()  <span class="hljs-comment">// For support correlation only</span>
-    });
-});
-
-<span class="hljs-comment">// T1046 Prevention: Rate limit API discovery</span>
-app.<span class="hljs-title function_">use</span>(<span class="hljs-string">&#x27;/api&#x27;</span>, <span class="hljs-title function_">rateLimit</span>({
-    <span class="hljs-attr">windowMs</span>: <span class="hljs-number">15</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>,
-    <span class="hljs-attr">max</span>: <span class="hljs-number">100</span>,
-    <span class="hljs-attr">message</span>: { <span class="hljs-attr">error</span>: <span class="hljs-string">&#x27;Too many requests&#x27;</span> }
-}));
-</code></pre>
+<img src="img/code/code-20.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="51" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="51" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
@@ -1001,56 +683,12 @@ app.<span class="hljs-title function_">use</span>(<span class="hljs-string">&#x2
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="54" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="54" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="dependency-verification---all-ecosystems">Dependency Verification - All Ecosystems</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash"><span class="hljs-comment"># NPM - T1195.001 Prevention</span>
-npm audit --audit-level high
-npm ci --only=production  <span class="hljs-comment"># Use lockfile exactly</span>
-npm install --package-lock-only  <span class="hljs-comment"># Generate lockfile without install</span>
-
-<span class="hljs-comment"># Python - T1195.001 Prevention  </span>
-pip install --require-hashes -r requirements.txt
-pip-audit  <span class="hljs-comment"># Vulnerability scanning</span>
-bandit -r .  <span class="hljs-comment"># Security static analysis</span>
-
-<span class="hljs-comment"># .NET - T1195.001 Prevention</span>
-dotnet list package --vulnerable --include-transitive
-dotnet nuget verify MyPackage.1.0.0.nupkg  <span class="hljs-comment"># Package signature verification</span>
-</code></pre>
+<img src="img/code/code-21.png" alt="bash code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="55" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="55" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="package-integrity-validation">Package Integrity Validation</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-comment"># T1195.001 Prevention: Package integrity validation</span>
-<span class="hljs-keyword">import</span> hashlib
-<span class="hljs-keyword">import</span> json
-
-<span class="hljs-keyword">class</span> <span class="hljs-title class_">PackageValidator</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, lockfile_path</span>):
-        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(lockfile_path) <span class="hljs-keyword">as</span> f:
-            <span class="hljs-variable language_">self</span>.lockfile = json.load(f)
-    
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">validate_package</span>(<span class="hljs-params">self, package_name, package_file</span>):
-        expected_hash = <span class="hljs-variable language_">self</span>.lockfile[<span class="hljs-string">&#x27;packages&#x27;</span>][package_name][<span class="hljs-string">&#x27;integrity&#x27;</span>]
-        
-        <span class="hljs-comment"># T1195.001 Detection: Hash verification</span>
-        actual_hash = <span class="hljs-variable language_">self</span>.compute_package_hash(package_file)
-        
-        <span class="hljs-keyword">if</span> actual_hash != expected_hash:
-            <span class="hljs-variable language_">self</span>.log_security_event(<span class="hljs-string">&#x27;T1195.001&#x27;</span>, {
-                <span class="hljs-string">&#x27;package&#x27;</span>: package_name,
-                <span class="hljs-string">&#x27;expected&#x27;</span>: expected_hash,
-                <span class="hljs-string">&#x27;actual&#x27;</span>: actual_hash,
-                <span class="hljs-string">&#x27;alert&#x27;</span>: <span class="hljs-string">&#x27;Package integrity violation detected&#x27;</span>
-            })
-            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
-            
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
-    
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_package_hash</span>(<span class="hljs-params">self, package_file</span>):
-        hasher = hashlib.sha512()
-        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(package_file, <span class="hljs-string">&#x27;rb&#x27;</span>) <span class="hljs-keyword">as</span> f:
-            hasher.update(f.read())
-        <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;sha512-<span class="hljs-subst">{hasher.hexdigest()}</span>&quot;</span>
-</code></pre>
+<img src="img/code/code-22.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="56" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="56" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
@@ -1097,31 +735,12 @@ dotnet nuget verify MyPackage.1.0.0.nupkg  <span class="hljs-comment"># Package 
 <div class="columns">
 <div>
 <h3 id="%E2%9D%8C-vulnerable-5"><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Vulnerable</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/api/internal/user-data&#x27;</span></span>)</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">get_user_data</span>():
-    user_id = request.args.get(<span class="hljs-string">&#x27;user_id&#x27;</span>)
-    <span class="hljs-comment"># Any service or attacker can call this</span>
-    <span class="hljs-keyword">return</span> jsonify(db.get_user(user_id))
-</code></pre>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-javascript"><span class="hljs-comment">// Shared secret across all services</span>
-<span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(url, {
-    <span class="hljs-attr">headers</span>: { <span class="hljs-string">&#x27;Authorization&#x27;</span>: <span class="hljs-string">`Bearer <span class="hljs-subst">${SHARED_API_KEY}</span>`</span> }
-});
-</code></pre>
+<img src="img/code/code-23.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
+<img src="img/code/code-24.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 <div>
 <h3 id="%E2%9C%85-defended-5"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Defended</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/api/internal/user-data&#x27;</span></span>)</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">get_user_data</span>():
-    client_cert = request.environ.get(<span class="hljs-string">&#x27;SSL_CLIENT_CERT&#x27;</span>)
-    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> verify_service_identity(client_cert,
-            allowed=[<span class="hljs-string">&#x27;order-service&#x27;</span>]):
-        <span class="hljs-keyword">return</span> jsonify({<span class="hljs-string">&#x27;error&#x27;</span>: <span class="hljs-string">&#x27;Unauthorized&#x27;</span>}), <span class="hljs-number">403</span>
-    token = request.headers.get(<span class="hljs-string">&#x27;X-Service-Token&#x27;</span>)
-    claims = validate_service_token(token,
-        required_scope=<span class="hljs-string">&#x27;read:user-data&#x27;</span>)
-    <span class="hljs-keyword">return</span> jsonify(db.get_user(request.args.get(<span class="hljs-string">&#x27;user_id&#x27;</span>)))
-</code></pre>
+<img src="img/code/code-25.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 </div>
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
@@ -1162,96 +781,12 @@ dotnet nuget verify MyPackage.1.0.0.nupkg  <span class="hljs-comment"># Package 
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="62" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="62" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="data-access-anomaly-detection">Data Access Anomaly Detection</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-comment"># T1213 Detection: Unusual data access patterns</span>
-<span class="hljs-keyword">class</span> <span class="hljs-title class_">DataAccessMonitor</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
-        <span class="hljs-variable language_">self</span>.user_baselines = {}
-        
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">check_access_pattern</span>(<span class="hljs-params">self, user_id, query, context</span>):
-        baseline = <span class="hljs-variable language_">self</span>.get_user_baseline(user_id)
-        current_access = {
-            <span class="hljs-string">&#x27;records_accessed&#x27;</span>: query.estimated_rows,
-            <span class="hljs-string">&#x27;tables_accessed&#x27;</span>: <span class="hljs-built_in">len</span>(query.tables),
-            <span class="hljs-string">&#x27;time_of_day&#x27;</span>: context.timestamp.hour,
-            <span class="hljs-string">&#x27;data_sensitivity&#x27;</span>: <span class="hljs-variable language_">self</span>.classify_sensitivity(query.tables)
-        }
-        
-        <span class="hljs-comment"># T1213 Detection: Statistical anomaly detection</span>
-        anomaly_score = <span class="hljs-variable language_">self</span>.calculate_anomaly_score(baseline, current_access)
-        
-        <span class="hljs-keyword">if</span> anomaly_score &gt; <span class="hljs-number">0.8</span>:  <span class="hljs-comment"># High anomaly</span>
-            <span class="hljs-variable language_">self</span>.log_technique(<span class="hljs-string">&#x27;T1213&#x27;</span>, {
-                <span class="hljs-string">&#x27;user&#x27;</span>: user_id,
-                <span class="hljs-string">&#x27;anomaly_score&#x27;</span>: anomaly_score,
-                <span class="hljs-string">&#x27;query&#x27;</span>: query.sanitized_sql,
-                <span class="hljs-string">&#x27;risk_factors&#x27;</span>: <span class="hljs-variable language_">self</span>.identify_risk_factors(current_access, baseline)
-            })
-            
-            <span class="hljs-comment"># T1213 Response: Require additional authentication</span>
-            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.require_step_up_auth(user_id)
-            
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
-        
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">calculate_anomaly_score</span>(<span class="hljs-params">self, baseline, current</span>):
-        <span class="hljs-comment"># Z-score based anomaly detection</span>
-        scores = []
-        <span class="hljs-keyword">for</span> metric <span class="hljs-keyword">in</span> [<span class="hljs-string">&#x27;records_accessed&#x27;</span>, <span class="hljs-string">&#x27;tables_accessed&#x27;</span>]:
-            z_score = <span class="hljs-built_in">abs</span>((current[metric] - baseline[metric][<span class="hljs-string">&#x27;mean&#x27;</span>]) / baseline[metric][<span class="hljs-string">&#x27;std&#x27;</span>])
-            scores.append(<span class="hljs-built_in">min</span>(z_score / <span class="hljs-number">3.0</span>, <span class="hljs-number">1.0</span>))  <span class="hljs-comment"># Normalize to 0-1</span>
-        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(scores)
-</code></pre>
+<img src="img/code/code-26.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="63" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="63" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="api-rate-limiting-with-exfil-detection">API Rate Limiting with Exfil Detection</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-javascript"><span class="hljs-comment">// T1567/T1020 Prevention: Exfiltration-aware rate limiting</span>
-<span class="hljs-keyword">class</span> <span class="hljs-title class_">ExfiltrationDetector</span> {
-    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) {
-        <span class="hljs-variable language_">this</span>.<span class="hljs-property">userTransferTracking</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>();
-    }
-    
-    <span class="hljs-keyword">async</span> <span class="hljs-title function_">checkDataTransfer</span>(<span class="hljs-params">userId, requestSize, responseSize</span>) {
-        <span class="hljs-keyword">const</span> now = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>();
-        <span class="hljs-keyword">const</span> windowMs = <span class="hljs-number">60</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>; <span class="hljs-comment">// 1 hour window</span>
-        
-        <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">userTransferTracking</span>.<span class="hljs-title function_">has</span>(userId)) {
-            <span class="hljs-variable language_">this</span>.<span class="hljs-property">userTransferTracking</span>.<span class="hljs-title function_">set</span>(userId, []);
-        }
-        
-        <span class="hljs-keyword">const</span> transfers = <span class="hljs-variable language_">this</span>.<span class="hljs-property">userTransferTracking</span>.<span class="hljs-title function_">get</span>(userId);
-        
-        <span class="hljs-comment">// Clean old transfers outside window</span>
-        <span class="hljs-keyword">const</span> recentTransfers = transfers.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">t</span> =&gt;</span> now - t.<span class="hljs-property">timestamp</span> &lt; windowMs);
-        
-        <span class="hljs-comment">// Add current transfer</span>
-        recentTransfers.<span class="hljs-title function_">push</span>({
-            <span class="hljs-attr">timestamp</span>: now,
-            responseSize,
-            <span class="hljs-attr">endpoint</span>: request.<span class="hljs-property">path</span>
-        });
-        
-        <span class="hljs-variable language_">this</span>.<span class="hljs-property">userTransferTracking</span>.<span class="hljs-title function_">set</span>(userId, recentTransfers);
-        
-        <span class="hljs-comment">// T1567/T1020 Detection: Bulk transfer analysis</span>
-        <span class="hljs-keyword">const</span> totalTransferred = recentTransfers.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, t</span>) =&gt;</span> sum + t.<span class="hljs-property">responseSize</span>, <span class="hljs-number">0</span>);
-        <span class="hljs-keyword">const</span> transferRate = totalTransferred / (windowMs / <span class="hljs-number">1000</span>); <span class="hljs-comment">// bytes per second</span>
-        
-        <span class="hljs-keyword">if</span> (totalTransferred &gt; <span class="hljs-number">100</span> * <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>) { <span class="hljs-comment">// 100MB in 1 hour</span>
-            <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">logSecurityEvent</span>(<span class="hljs-string">&#x27;T1567&#x27;</span>, {
-                userId,
-                totalTransferred,
-                transferRate,
-                <span class="hljs-attr">requestCount</span>: recentTransfers.<span class="hljs-property">length</span>,
-                <span class="hljs-attr">timeWindow</span>: <span class="hljs-string">&#x27;1h&#x27;</span>
-            });
-            
-            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">// Block request</span>
-        }
-        
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-    }
-}
-</code></pre>
+<img src="img/code/code-27.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="64" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="64" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
@@ -1303,66 +838,18 @@ dotnet nuget verify MyPackage.1.0.0.nupkg  <span class="hljs-comment"># Package 
 <div class="columns">
 <div>
 <h3 id="%E2%9D%8C-vulnerable-6"><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Vulnerable</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-javascript">app.<span class="hljs-title function_">post</span>(<span class="hljs-string">&#x27;/api/validate-email&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
-    <span class="hljs-keyword">const</span> email = req.<span class="hljs-property">body</span>.<span class="hljs-property">email</span>;
-    <span class="hljs-keyword">const</span> emailRegex = <span class="hljs-regexp">/^([a-zA-Z0-9]+\.)*[a-zA-Z0-9]+@([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}$/</span>;
-    <span class="hljs-keyword">if</span> (emailRegex.<span class="hljs-title function_">test</span>(email)) {
-        <span class="hljs-keyword">return</span> res.<span class="hljs-title function_">json</span>({ <span class="hljs-attr">valid</span>: <span class="hljs-literal">true</span> });
-    }
-    <span class="hljs-keyword">return</span> res.<span class="hljs-title function_">json</span>({ <span class="hljs-attr">valid</span>: <span class="hljs-literal">false</span> });
-});
-</code></pre>
+<img src="img/code/code-28.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 <div>
 <h3 id="%E2%9C%85-defended-6"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Defended</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-javascript">app.<span class="hljs-title function_">post</span>(<span class="hljs-string">&#x27;/api/validate-email&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
-    <span class="hljs-keyword">const</span> email = req.<span class="hljs-property">body</span>.<span class="hljs-property">email</span>;
-    <span class="hljs-keyword">if</span> (!email || email.<span class="hljs-property">length</span> &gt; <span class="hljs-number">254</span>)
-        <span class="hljs-keyword">return</span> res.<span class="hljs-title function_">status</span>(<span class="hljs-number">400</span>).<span class="hljs-title function_">json</span>({ <span class="hljs-attr">error</span>: <span class="hljs-string">&#x27;Invalid input&#x27;</span> });
-    <span class="hljs-keyword">const</span> safeEmailRegex = <span class="hljs-regexp">/^[^\s@]+@[^\s@]+\.[^\s@]+$/</span>;
-    <span class="hljs-keyword">if</span> (!safeEmailRegex.<span class="hljs-title function_">test</span>(email))
-        <span class="hljs-keyword">return</span> res.<span class="hljs-title function_">status</span>(<span class="hljs-number">400</span>).<span class="hljs-title function_">json</span>({ <span class="hljs-attr">valid</span>: <span class="hljs-literal">false</span> });
-    <span class="hljs-keyword">const</span> result = <span class="hljs-title function_">runWithTimeout</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">additionalValidation</span>(email), <span class="hljs-number">100</span>);
-    <span class="hljs-keyword">return</span> res.<span class="hljs-title function_">json</span>({ <span class="hljs-attr">valid</span>: result });
-});
-</code></pre>
+<img src="img/code/code-29.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 </div>
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="68" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="68" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="data-integrity-protection-t1565">Data Integrity Protection (T1565)</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// T1565 Prevention: Data integrity verification</span>
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">DataIntegrityService</span>
-{
-    <span class="hljs-comment">// T1565 Prevention: HMAC-based integrity verification</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> <span class="hljs-title">ComputeIntegrityHash</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> data</span>)</span>
-    {
-        <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> hmac = <span class="hljs-keyword">new</span> HMACSHA256(GetIntegrityKey());
-        <span class="hljs-keyword">var</span> hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
-        <span class="hljs-keyword">return</span> Convert.ToBase64String(hash);
-    }
-    
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">VerifyIntegrity</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> data, <span class="hljs-built_in">string</span> expectedHash</span>)</span>
-    {
-        <span class="hljs-keyword">var</span> actualHash = ComputeIntegrityHash(data);
-        <span class="hljs-comment">// T1565 Detection: Timing-safe comparison</span>
-        <span class="hljs-keyword">return</span> CryptographicOperations.FixedTimeEquals(
-            Encoding.UTF8.GetBytes(actualHash),
-            Encoding.UTF8.GetBytes(expectedHash));
-    }
-    
-    <span class="hljs-comment">// T1485 Prevention: Soft delete with audit trail</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">DeleteRecord</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> id, <span class="hljs-built_in">string</span> userId</span>)</span>
-    {
-        <span class="hljs-keyword">await</span> _db.ExecuteAsync(
-            <span class="hljs-string">&quot;UPDATE records SET deleted=1, deleted_by=@user, deleted_at=@time WHERE id=@id&quot;</span>,
-            <span class="hljs-keyword">new</span> { id, user = userId, time = DateTime.UtcNow });
-        
-        LogSecurityEvent(<span class="hljs-string">&quot;T1485&quot;</span>, <span class="hljs-string">$&quot;Record <span class="hljs-subst">{id}</span> soft-deleted by <span class="hljs-subst">{userId}</span>&quot;</span>);
-    }
-}
-</code></pre>
+<img src="img/code/code-30.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="69" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="69" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
@@ -1404,28 +891,11 @@ dotnet nuget verify MyPackage.1.0.0.nupkg  <span class="hljs-comment"># Package 
 <div class="columns">
 <div>
 <h3 id="%E2%9D%8C-vulnerable-7"><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Vulnerable</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-meta">@app.errorhandler(<span class="hljs-params">Exception</span>)</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">handle_error</span>(<span class="hljs-params">error</span>):
-    <span class="hljs-keyword">return</span> jsonify({
-        <span class="hljs-string">&#x27;error&#x27;</span>: <span class="hljs-built_in">str</span>(error),
-        <span class="hljs-string">&#x27;traceback&#x27;</span>: traceback.format_exc(),
-        <span class="hljs-string">&#x27;server&#x27;</span>: <span class="hljs-string">f&#x27;Flask/<span class="hljs-subst">{flask.__version__}</span>&#x27;</span>,
-        <span class="hljs-string">&#x27;python&#x27;</span>: sys.version
-    }), <span class="hljs-number">500</span>
-</code></pre>
+<img src="img/code/code-31.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 <div>
 <h3 id="%E2%9C%85-defended-7"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Defended</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-meta">@app.errorhandler(<span class="hljs-params">Exception</span>)</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">handle_error</span>(<span class="hljs-params">error</span>):
-    error_id = uuid.uuid4().<span class="hljs-built_in">hex</span>[:<span class="hljs-number">8</span>]
-    app.logger.error(<span class="hljs-string">f&quot;[<span class="hljs-subst">{error_id}</span>] <span class="hljs-subst">{error}</span>&quot;</span>,
-                     exc_info=<span class="hljs-literal">True</span>)
-    <span class="hljs-keyword">return</span> jsonify({
-        <span class="hljs-string">&#x27;error&#x27;</span>: <span class="hljs-string">&#x27;An unexpected error occurred&#x27;</span>,
-        <span class="hljs-string">&#x27;reference&#x27;</span>: error_id
-    }), <span class="hljs-number">500</span>
-</code></pre>
+<img src="img/code/code-32.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 </div>
 </div>
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
@@ -1436,37 +906,7 @@ dotnet nuget verify MyPackage.1.0.0.nupkg  <span class="hljs-comment"># Package 
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="73" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="73" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="defended-webhook-source-verification-t1583t1584">Defended: Webhook Source Verification (T1583/T1584)</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-javascript"><span class="hljs-comment">// DEFENDED - Verify webhook sources to prevent T1583/T1584 abuse</span>
-<span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;crypto&#x27;</span>);
-
-<span class="hljs-keyword">class</span> <span class="hljs-title class_">WebhookVerifier</span> {
-    <span class="hljs-title function_">constructor</span>(<span class="hljs-params">secrets</span>) {
-        <span class="hljs-variable language_">this</span>.<span class="hljs-property">secrets</span> = secrets; <span class="hljs-comment">// { &#x27;github&#x27;: &#x27;whsec_...&#x27;, &#x27;stripe&#x27;: &#x27;whsec_...&#x27; }</span>
-    }
-    
-    <span class="hljs-title function_">verify</span>(<span class="hljs-params">source, payload, signature, timestamp</span>) {
-        <span class="hljs-comment">// T1584 Prevention: Reject old webhooks (replay attack prevention)</span>
-        <span class="hljs-keyword">const</span> age = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>() / <span class="hljs-number">1000</span> - <span class="hljs-built_in">parseInt</span>(timestamp);
-        <span class="hljs-keyword">if</span> (age &gt; <span class="hljs-number">300</span>) { <span class="hljs-comment">// 5 minute tolerance</span>
-            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">logTechnique</span>(<span class="hljs-string">&#x27;T1584&#x27;</span>, { source, <span class="hljs-attr">reason</span>: <span class="hljs-string">&#x27;stale_webhook&#x27;</span>, age });
-            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-        }
-        
-        <span class="hljs-comment">// T1583 Prevention: Verify HMAC signature from known source</span>
-        <span class="hljs-keyword">const</span> secret = <span class="hljs-variable language_">this</span>.<span class="hljs-property">secrets</span>[source];
-        <span class="hljs-keyword">if</span> (!secret) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-        
-        <span class="hljs-keyword">const</span> expected = crypto.<span class="hljs-title function_">createHmac</span>(<span class="hljs-string">&#x27;sha256&#x27;</span>, secret)
-            .<span class="hljs-title function_">update</span>(<span class="hljs-string">`<span class="hljs-subst">${timestamp}</span>.<span class="hljs-subst">${payload}</span>`</span>)
-            .<span class="hljs-title function_">digest</span>(<span class="hljs-string">&#x27;hex&#x27;</span>);
-            
-        <span class="hljs-comment">// Timing-safe comparison prevents T1592 timing attacks</span>
-        <span class="hljs-keyword">return</span> crypto.<span class="hljs-title function_">timingSafeEqual</span>(
-            <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(signature), <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(expected)
-        );
-    }
-}
-</code></pre>
+<img src="img/code/code-33.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="74" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="74" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
@@ -1475,42 +915,7 @@ dotnet nuget verify MyPackage.1.0.0.nupkg  <span class="hljs-comment"># Package 
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="75" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="75" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">
 <h2 id="defended-c2-beaconing-detection-t1071t1572">Defended: C2 Beaconing Detection (T1071/T1572)</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-comment"># DEFENDED - Detect C2 beaconing patterns (T1071/T1572)</span>
-<span class="hljs-keyword">import</span> statistics
-<span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> defaultdict
-
-<span class="hljs-keyword">class</span> <span class="hljs-title class_">BeaconDetector</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, jitter_threshold=<span class="hljs-number">0.15</span></span>):
-        <span class="hljs-variable language_">self</span>.connections = defaultdict(<span class="hljs-built_in">list</span>)
-        <span class="hljs-variable language_">self</span>.jitter_threshold = jitter_threshold
-    
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">record_outbound</span>(<span class="hljs-params">self, destination, timestamp</span>):
-        <span class="hljs-variable language_">self</span>.connections[destination].append(timestamp)
-        
-        intervals = <span class="hljs-variable language_">self</span>.connections[destination]
-        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(intervals) &gt;= <span class="hljs-number">5</span>:
-            <span class="hljs-comment"># Calculate interval regularity (C2 hallmark)</span>
-            deltas = [intervals[i+<span class="hljs-number">1</span>] - intervals[i] 
-                      <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(intervals)-<span class="hljs-number">1</span>)]
-            
-            <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(deltas) &gt;= <span class="hljs-number">4</span>:
-                mean_delta = statistics.mean(deltas)
-                <span class="hljs-keyword">if</span> mean_delta &gt; <span class="hljs-number">0</span>:
-                    <span class="hljs-comment"># T1071 Detection: Low jitter = likely beaconing</span>
-                    cv = statistics.stdev(deltas) / mean_delta
-                    <span class="hljs-keyword">if</span> cv &lt; <span class="hljs-variable language_">self</span>.jitter_threshold:
-                        <span class="hljs-variable language_">self</span>.alert_c2({
-                            <span class="hljs-string">&#x27;technique&#x27;</span>: <span class="hljs-string">&#x27;T1071&#x27;</span>,
-                            <span class="hljs-string">&#x27;destination&#x27;</span>: destination,
-                            <span class="hljs-string">&#x27;beacon_interval&#x27;</span>: mean_delta,
-                            <span class="hljs-string">&#x27;jitter&#x27;</span>: cv,
-                            <span class="hljs-string">&#x27;confidence&#x27;</span>: <span class="hljs-number">1</span> - cv
-                        })
-    
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">alert_c2</span>(<span class="hljs-params">self, details</span>):
-        log_security_event(<span class="hljs-string">&#x27;C2_BEACON_DETECTED&#x27;</span>, details)
-        block_outbound(details[<span class="hljs-string">&#x27;destination&#x27;</span>])
-</code></pre>
+<img src="img/code/code-34.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 <footer>@Chris_L_Ayers - <a href="https://chris-ayers.com">https://chris-ayers.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="76" data-paginate="true" data-footer="@Chris_L_Ayers - https://chris-ayers.com" data-theme="custom-default" lang="POSIX" data-marpit-pagination="76" style="--paginate:true;--footer:@Chris_L_Ayers - https://chris-ayers.com;--theme:custom-default;" data-marpit-pagination-total="93">

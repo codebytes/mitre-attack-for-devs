@@ -364,32 +364,14 @@ Here are the four main Initial Access techniques we'll address. T1190: exploitin
 
 ### ❌ Vulnerable
 
-```python
-@app.route('/users')
-def get_user():
-    user_id = request.args.get('id')
-    query = f"SELECT * FROM users WHERE id = {user_id}"
-    cursor.execute(query)
-    return cursor.fetchall()
-# Attack: /users?id=1 OR 1=1--
-```
+<img src="img/code/code-01.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-```python
-@app.route('/users')
-def get_user():
-    user_id = request.args.get('id')
-    if not user_id.isdigit():
-        return "Invalid input", 400
-    query = "SELECT * FROM users WHERE id = ?"
-    cursor.execute(query, (user_id,))
-    result = cursor.fetchall()
-    return result[0] if result else ("Not found", 404)
-```
+<img src="img/code/code-02.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -402,28 +384,7 @@ Much better. Three defenses here: input validation to reject non-numeric IDs, pa
 
 ## Credential Stuffing Detection (T1110.004)
 
-```javascript
-// T1110.004 Detection: Credential stuffing patterns
-class CredentialStuffingDetector {
-    detectSuspiciousLogin(loginData) {
-        const { username, ip, userAgent, timestamp } = loginData;
-        
-        // Multiple accounts from same IP
-        if (this.countAccountsFromIP(ip) > 10) {
-            this.logTechnique("T1110.004", { ip, type: "multiple_accounts" });
-            return true;
-        }
-        
-        // Rapid login attempts across accounts  
-        if (this.getRateFromIP(ip) > 100) {
-            this.logTechnique("T1110.004", { ip, type: "high_velocity" });
-            return true;
-        }
-        
-        return false;
-    }
-}
-```
+<img src="img/code/code-03.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 
 ---
@@ -457,40 +418,14 @@ Three execution techniques we'll cover. T1059: command injection where attackers
 
 ### ❌ Vulnerable
 
-```csharp
-[HttpPost]
-public IActionResult ProcessFile(string filename)
-{
-    var command = $"convert {filename} output.pdf";
-    var process = Process.Start("cmd.exe",
-        $"/c {command}");
-    process.WaitForExit();
-    return Ok("File processed");
-}
-// Attack: file.jpg; rm -rf / --
-```
+<img src="img/code/code-04.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-```csharp
-[HttpPost]
-public IActionResult ProcessFile(string filename)
-{
-    if (!IsValidFilename(filename))
-        return BadRequest("Invalid filename");
-    var processInfo = new ProcessStartInfo {
-        FileName = "imagemagick.exe",
-        Arguments = string.Join(" ",
-            safeArgs.Select(EscapeArg)),
-        UseShellExecute = false
-    };
-    using var process = Process.Start(processInfo);
-    return Ok("File processed safely");
-}
-```
+<img src="img/code/code-05.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -503,32 +438,7 @@ Much safer. We validate filenames against expected patterns, allowlist commands 
 
 ## Unsafe Deserialization (T1203)
 
-```python
-# VULNERABLE - Unsafe deserialization enables T1203
-import pickle
-
-@app.route('/api/data', methods=['POST'])
-def process_data():
-    data = request.data
-    # T1203: Unsafe deserialization vulnerability
-    obj = pickle.loads(data)  # Code execution risk
-    return process_object(obj)
-
-# DEFENDED - Safe deserialization
-import json
-
-@app.route('/api/data', methods=['POST'])  
-def process_data():
-    try:
-        # T1203 Prevention: Safe JSON parsing
-        data = json.loads(request.data)
-        # Validate against schema
-        if not validate_schema(data):
-            return "Invalid data format", 400
-        return process_object(data)
-    except json.JSONDecodeError:
-        return "Invalid JSON", 400
-```
+<img src="img/code/code-06.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 <!-- 
 Unsafe deserialization—one of the most dangerous vulnerabilities. The top example uses Python's pickle library to deserialize untrusted data. Pickle can execute arbitrary code during deserialization. An attacker sends a malicious payload and boom—remote code execution. This is T1203. The defended version uses JSON, which is data-only, and validates against a schema. Never use pickle, Marshal, or native serialization on untrusted input. Use safe formats like JSON and validate rigorously.
@@ -565,34 +475,14 @@ Three persistence techniques. T1098: account manipulation where attackers create
 
 ### ❌ Vulnerable
 
-```javascript
-app.use(session({
-    secret: 'hardcoded-secret',
-    cookie: {
-        secure: false,
-        httpOnly: false,
-        maxAge: 24 * 60 * 60 * 1000
-    }
-}));
-```
+<img src="img/code/code-07.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-```javascript
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    rolling: true,
-    cookie: {
-        secure: true,
-        httpOnly: true,
-        maxAge: 15 * 60 * 1000,
-        sameSite: 'strict'
-    }
-}));
-```
+<img src="img/code/code-08.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -605,44 +495,7 @@ Now we're talking. Secret from environment variables, not code. Secure: true req
 
 ## Web Shell Detection (T1505.003)
 
-```csharp
-// T1505.003 Detection: Web shell upload monitoring
-public class FileUploadValidator
-{
-    private readonly string[] _suspiciousPatterns = {
-        "eval(", "exec(", "system(", "passthru(",
-        "<?php", "<%", "<script", "cmd.exe"
-    };
-
-    public bool ValidateUpload(IFormFile file)
-    {
-        // T1505.003 Prevention: File extension validation
-        var allowedExtensions = new[] { ".jpg", ".png", ".pdf", ".docx" };
-        var extension = Path.GetExtension(file.FileName).ToLower();
-        
-        if (!allowedExtensions.Contains(extension))
-        {
-            LogSecurityEvent("T1505.003", $"Suspicious extension: {extension}");
-            return false;
-        }
-        
-        // T1505.003 Detection: Content scanning
-        using var reader = new StreamReader(file.OpenReadStream());
-        var content = reader.ReadToEnd();
-        
-        foreach (var pattern in _suspiciousPatterns)
-        {
-            if (content.Contains(pattern, StringComparison.OrdinalIgnoreCase))
-            {
-                LogSecurityEvent("T1505.003", $"Web shell pattern detected: {pattern}");
-                return false;
-            }
-        }
-        
-        return true;
-    }
-}
-```
+<img src="img/code/code-09.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 <!-- 
 Web shell prevention and detection. We're validating file extensions against an allowlist, but also scanning file contents for malicious patterns like eval, exec, PHP tags, and script tags. Web shells are common persistence mechanisms—attackers upload a backdoor file then use it for remote command execution. This code won't catch obfuscated shells, but it stops the easy stuff. For production, integrate with anti-malware scanning services. Log everything with technique IDs for threat intelligence.
@@ -679,35 +532,14 @@ Three privilege escalation techniques. T1068: exploiting broken access control l
 
 ### ❌ Vulnerable
 
-```python
-@app.route('/api/users/<user_id>/profile')
-def get_profile(user_id):
-    profile = db.query(
-        "SELECT * FROM profiles WHERE user_id = ?",
-        (user_id,))
-    return jsonify(profile)
-# Attack: GET /api/users/admin/profile
-```
+<img src="img/code/code-10.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-```python
-@app.route('/api/users/<user_id>/profile')
-@login_required
-def get_profile(user_id):
-    current_user = get_current_user()
-    if user_id != current_user.id \
-            and not current_user.has_role('admin'):
-        log_technique('T1068', {'target': user_id})
-        return jsonify({'error': 'Forbidden'}), 403
-    profile = db.query(
-        "SELECT * FROM profiles WHERE user_id = ?",
-        (user_id,))
-    return jsonify(profile)
-```
+<img src="img/code/code-11.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -720,31 +552,7 @@ Proper authorization. We check if the current user owns the resource or has admi
 
 ## Token Manipulation Prevention (T1134)
 
-```javascript
-// T1134 Prevention: Secure JWT with claims validation
-const jwt = require('jsonwebtoken');
-
-function validateToken(token) {
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET, {
-            algorithms: ['HS256'],       // T1134: Prevent algorithm switching
-            issuer: 'myapp',             // T1134: Validate issuer
-            audience: 'myapp-api'        // T1134: Validate audience
-        });
-        
-        // T1134 Prevention: Verify claims against database
-        const dbUser = getUserFromDB(decoded.sub);
-        if (dbUser.role !== decoded.role) {
-            logTechnique('T1134', { user: decoded.sub, claimedRole: decoded.role });
-            throw new Error('Token claims mismatch');
-        }
-        
-        return decoded;
-    } catch (err) {
-        throw new Error('Invalid token');
-    }
-}
-```
+<img src="img/code/code-12.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 <!-- 
 JWT security done right. We enforce the signing algorithm to prevent the "none" algorithm attack. We validate issuer and audience to prevent token reuse across services. And critically—we verify the role claim in the JWT against the database. JWTs are cryptographically signed but not encrypted; attackers can read the claims. So we validate claims server-side against authoritative sources. Don't trust the token alone; always verify against your database.
@@ -781,28 +589,14 @@ Three credential access techniques. T1552: unsecured credentials like hardcoded 
 
 ### ❌ Bad
 
-```python
-# T1552 vulnerability
-DATABASE_URL = "postgres://user:P@ssw0rd@localhost/mydb"
-API_KEY = "sk-1234567890abcdef"
-```
+<img src="img/code/code-13.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Good
 
-```python
-# T1552 prevention with Azure Key Vault
-from azure.keyvault.secrets import SecretClient
-from azure.identity import DefaultAzureCredential
-
-credential = DefaultAzureCredential()
-client = SecretClient(
-    vault_url=os.environ['KEY_VAULT_URL'],
-    credential=credential)
-API_KEY = client.get_secret("api-key").value
-```
+<img src="img/code/code-14.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -815,40 +609,7 @@ Proper secrets management using Azure Key Vault. Python example uses DefaultAzur
 
 ## Secrets Scanner Implementation
 
-```python
-# T1552 Prevention: Automated secrets detection
-import re
-import os
-
-class SecretsScanner:
-    def __init__(self):
-        self.patterns = [
-            (r'password\s*=\s*["\'][^"\']{8,}["\']', 'Hardcoded Password'),
-            (r'api[_-]?key\s*[=:]\s*["\'][^"\']{16,}["\']', 'API Key'),
-            (r'sk-[a-zA-Z0-9]{32,}', 'Secret Key'),
-            (r'pk_live_[a-zA-Z0-9]{24,}', 'Live API Key'),
-            (r'-----BEGIN [A-Z ]+-----', 'Private Key')
-        ]
-    
-    def scan_file(self, filepath):
-        violations = []
-        try:
-            with open(filepath, 'r') as f:
-                content = f.read()
-                for pattern, description in self.patterns:
-                    matches = re.finditer(pattern, content, re.IGNORECASE)
-                    for match in matches:
-                        violations.append({
-                            'file': filepath,
-                            'line': content[:match.start()].count('\n') + 1,
-                            'type': description,
-                            'technique': 'T1552'
-                        })
-        except Exception as e:
-            print(f"Error scanning {filepath}: {e}")
-        
-        return violations
-```
+<img src="img/code/code-15.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 <!-- 
 Automated secrets detection scanner you can integrate into CI/CD pipelines. It uses regex patterns to find common secret formats—passwords, API keys, private keys. When it finds a match, it logs the file, line number, and technique ID. Integrate this into pre-commit hooks or CI pipelines to block commits with secrets. In production, use tools like TruffleHog, GitGuardian, or GitHub Secret Scanning. Prevention is better than remediation.
@@ -880,68 +641,14 @@ Three defense evasion techniques. T1027: obfuscating malicious content to evade 
 
 ## Log Injection Attack (T1070)
 
-```python
-# VULNERABLE - Log injection enables T1070
-import logging
-
-logger = logging.getLogger(__name__)
-
-@app.route('/login', methods=['POST'])
-def login():
-    username = request.json.get('username')
-    password = request.json.get('password')
-    
-    if not authenticate(username, password):
-        # T1070: Log injection vulnerability
-        logger.warning(f"Failed login for user: {username}")
-        return "Invalid credentials", 401
-    
-    return "Login successful"
-
-# Attack payload: "admin\n[INFO] Successful login for admin"
-# Creates fake success log entry
-```
+<img src="img/code/code-16.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 
 ---
 
 ## Tamper-Evident Logging (T1070 Prevention)
 
-```csharp
-// T1070 Prevention: Tamper-evident logging with hash chains
-public class SecureLogger
-{
-    private string _lastHash = "genesis";
-    private readonly IConfiguration _config;
-    
-    public void LogSecurityEvent(string technique, string details)
-    {
-        var logEntry = new SecurityLogEntry
-        {
-            Timestamp = DateTime.UtcNow,
-            Technique = technique,
-            Details = SanitizeInput(details),  // T1070 Prevention: Input sanitization
-            PreviousHash = _lastHash
-        };
-        
-        // T1070 Prevention: Cryptographic hash chain
-        logEntry.Hash = ComputeHash($"{logEntry.Timestamp}{logEntry.Technique}{logEntry.Details}{_lastHash}");
-        _lastHash = logEntry.Hash;
-        
-        // T1070 Prevention: Write to immutable storage
-        WriteToImmutableStore(logEntry);
-        
-        // T1070 Prevention: Send to external SIEM
-        await SendToSIEM(logEntry);
-    }
-    
-    private string SanitizeInput(string input)
-    {
-        // Remove newlines and control characters that could enable log injection
-        return Regex.Replace(input ?? "", @"[\r\n\t\f]", "_");
-    }
-}
-```
+<img src="img/code/code-17.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 <!-- 
 Blockchain-inspired tamper-evident logging. Each log entry includes a hash of the previous entry, creating a chain. If an attacker deletes or modifies a log, the chain breaks and tampering is immediately detectable. We sanitize input to prevent log injection, write to immutable storage like S3 with object locking, and send to an external SIEM in real-time. Three layers of protection. This is how you build forensically sound logging systems.
@@ -988,33 +695,14 @@ Three discovery techniques. T1087: account enumeration—figuring out which user
 
 ### ❌ Vulnerable
 
-```python
-@app.route('/login', methods=['POST'])
-def login():
-    user = db.find_user(username)
-    if not user:
-        return jsonify({'error': 'User not found'}), 404
-    if not verify_password(password, user.password_hash):
-        return jsonify({'error': 'Wrong password'}), 401
-# 404 vs 401 reveals valid usernames
-```
+<img src="img/code/code-18.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-```python
-@app.route('/login', methods=['POST'])
-def login():
-    user = db.find_user(username)
-    if not user or not verify_password(
-            password, user.password_hash):
-        if not user:
-            verify_password(password, DUMMY_HASH)
-        return jsonify({'error': 'Invalid credentials'}), 401
-    return create_session(user)
-```
+<img src="img/code/code-19.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -1027,33 +715,7 @@ Perfect. Same error message and status code for all failure cases—user not fou
 
 ## API Endpoint Discovery Prevention (T1046)
 
-```javascript
-// T1046 Prevention: Minimize information exposure
-const express = require('express');
-const app = express();
-
-// T1046 Prevention: Remove server fingerprinting
-app.disable('x-powered-by');
-
-// T1082 Prevention: Custom error handler hides internals
-app.use((err, req, res, next) => {
-    // Log full details internally
-    logger.error({ err, req: req.path, technique: 'T1082' });
-    
-    // T1082 Prevention: Generic error to client
-    res.status(err.status || 500).json({
-        error: 'An error occurred',
-        requestId: generateRequestId()  // For support correlation only
-    });
-});
-
-// T1046 Prevention: Rate limit API discovery
-app.use('/api', rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-    message: { error: 'Too many requests' }
-}));
-```
+<img src="img/code/code-20.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 <!-- 
 Three defenses against API discovery and information disclosure. Disable x-powered-by header to prevent server fingerprinting. Use a global error handler that logs full details internally but returns generic messages to clients—no stack traces, no implementation details. Add rate limiting to slow down endpoint enumeration attempts. These are Express.js examples but the patterns apply to any framework. Don't help attackers map your attack surface.
@@ -1097,21 +759,7 @@ Real-world supply chain attacks. Event-stream had 8 million downloads before som
 
 ## Dependency Verification - All Ecosystems
 
-```bash
-# NPM - T1195.001 Prevention
-npm audit --audit-level high
-npm ci --only=production  # Use lockfile exactly
-npm install --package-lock-only  # Generate lockfile without install
-
-# Python - T1195.001 Prevention  
-pip install --require-hashes -r requirements.txt
-pip-audit  # Vulnerability scanning
-bandit -r .  # Security static analysis
-
-# .NET - T1195.001 Prevention
-dotnet list package --vulnerable --include-transitive
-dotnet nuget verify MyPackage.1.0.0.nupkg  # Package signature verification
-```
+<img src="img/code/code-21.png" alt="bash code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 <!-- 
 Command-line tools for every major ecosystem. NPM: run audit regularly, use npm ci in CI/CD to enforce lockfiles. Python: require hashes to prevent substitution attacks, use pip-audit and bandit for vulnerability and code scanning. .NET: check for vulnerable packages including transitive dependencies, verify package signatures. These commands should be in your CI pipeline and run on every build. Automate supply chain security.
@@ -1121,39 +769,7 @@ Command-line tools for every major ecosystem. NPM: run audit regularly, use npm 
 
 ## Package Integrity Validation
 
-```python
-# T1195.001 Prevention: Package integrity validation
-import hashlib
-import json
-
-class PackageValidator:
-    def __init__(self, lockfile_path):
-        with open(lockfile_path) as f:
-            self.lockfile = json.load(f)
-    
-    def validate_package(self, package_name, package_file):
-        expected_hash = self.lockfile['packages'][package_name]['integrity']
-        
-        # T1195.001 Detection: Hash verification
-        actual_hash = self.compute_package_hash(package_file)
-        
-        if actual_hash != expected_hash:
-            self.log_security_event('T1195.001', {
-                'package': package_name,
-                'expected': expected_hash,
-                'actual': actual_hash,
-                'alert': 'Package integrity violation detected'
-            })
-            return False
-            
-        return True
-    
-    def compute_package_hash(self, package_file):
-        hasher = hashlib.sha512()
-        with open(package_file, 'rb') as f:
-            hasher.update(f.read())
-        return f"sha512-{hasher.hexdigest()}"
-```
+<img src="img/code/code-22.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 <!-- 
 Custom package integrity validator. It reads the lockfile, computes hashes of installed packages, and compares them to expected values. If there's a mismatch, it logs a T1195.001 security event and rejects the package. This catches substitution attacks and tampered dependencies. Lockfiles are your friend—they pin exact versions and hashes. Always commit lockfiles and always validate against them.
@@ -1200,38 +816,16 @@ Three lateral movement techniques. T1021: abusing insecure service-to-service co
 
 ### ❌ Vulnerable
 
-```python
-@app.route('/api/internal/user-data')
-def get_user_data():
-    user_id = request.args.get('user_id')
-    # Any service or attacker can call this
-    return jsonify(db.get_user(user_id))
-```
+<img src="img/code/code-23.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
-```javascript
-// Shared secret across all services
-const response = await fetch(url, {
-    headers: { 'Authorization': `Bearer ${SHARED_API_KEY}` }
-});
-```
+<img src="img/code/code-24.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-```python
-@app.route('/api/internal/user-data')
-def get_user_data():
-    client_cert = request.environ.get('SSL_CLIENT_CERT')
-    if not verify_service_identity(client_cert,
-            allowed=['order-service']):
-        return jsonify({'error': 'Unauthorized'}), 403
-    token = request.headers.get('X-Service-Token')
-    claims = validate_service_token(token,
-        required_scope='read:user-data')
-    return jsonify(db.get_user(request.args.get('user_id')))
-```
+<img src="img/code/code-25.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -1266,45 +860,7 @@ Three collection and exfiltration techniques. T1213: accessing bulk data from da
 
 ## Data Access Anomaly Detection
 
-```python
-# T1213 Detection: Unusual data access patterns
-class DataAccessMonitor:
-    def __init__(self):
-        self.user_baselines = {}
-        
-    def check_access_pattern(self, user_id, query, context):
-        baseline = self.get_user_baseline(user_id)
-        current_access = {
-            'records_accessed': query.estimated_rows,
-            'tables_accessed': len(query.tables),
-            'time_of_day': context.timestamp.hour,
-            'data_sensitivity': self.classify_sensitivity(query.tables)
-        }
-        
-        # T1213 Detection: Statistical anomaly detection
-        anomaly_score = self.calculate_anomaly_score(baseline, current_access)
-        
-        if anomaly_score > 0.8:  # High anomaly
-            self.log_technique('T1213', {
-                'user': user_id,
-                'anomaly_score': anomaly_score,
-                'query': query.sanitized_sql,
-                'risk_factors': self.identify_risk_factors(current_access, baseline)
-            })
-            
-            # T1213 Response: Require additional authentication
-            return self.require_step_up_auth(user_id)
-            
-        return True
-        
-    def calculate_anomaly_score(self, baseline, current):
-        # Z-score based anomaly detection
-        scores = []
-        for metric in ['records_accessed', 'tables_accessed']:
-            z_score = abs((current[metric] - baseline[metric]['mean']) / baseline[metric]['std'])
-            scores.append(min(z_score / 3.0, 1.0))  # Normalize to 0-1
-        return max(scores)
-```
+<img src="img/code/code-26.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 <!-- 
 Behavioral anomaly detection for data access. We build baselines for each user—how many records do they typically access? Which tables? At what time of day? Then we calculate anomaly scores using Z-scores for statistical deviation. High anomaly score triggers logging and step-up authentication—ask for MFA before allowing the query. This catches insider threats and compromised accounts trying to exfiltrate data. Spend 2-3 minutes here; this is advanced detection logic.
@@ -1314,55 +870,7 @@ Behavioral anomaly detection for data access. We build baselines for each user�
 
 ## API Rate Limiting with Exfil Detection
 
-```javascript
-// T1567/T1020 Prevention: Exfiltration-aware rate limiting
-class ExfiltrationDetector {
-    constructor() {
-        this.userTransferTracking = new Map();
-    }
-    
-    async checkDataTransfer(userId, requestSize, responseSize) {
-        const now = Date.now();
-        const windowMs = 60 * 60 * 1000; // 1 hour window
-        
-        if (!this.userTransferTracking.has(userId)) {
-            this.userTransferTracking.set(userId, []);
-        }
-        
-        const transfers = this.userTransferTracking.get(userId);
-        
-        // Clean old transfers outside window
-        const recentTransfers = transfers.filter(t => now - t.timestamp < windowMs);
-        
-        // Add current transfer
-        recentTransfers.push({
-            timestamp: now,
-            responseSize,
-            endpoint: request.path
-        });
-        
-        this.userTransferTracking.set(userId, recentTransfers);
-        
-        // T1567/T1020 Detection: Bulk transfer analysis
-        const totalTransferred = recentTransfers.reduce((sum, t) => sum + t.responseSize, 0);
-        const transferRate = totalTransferred / (windowMs / 1000); // bytes per second
-        
-        if (totalTransferred > 100 * 1024 * 1024) { // 100MB in 1 hour
-            await this.logSecurityEvent('T1567', {
-                userId,
-                totalTransferred,
-                transferRate,
-                requestCount: recentTransfers.length,
-                timeWindow: '1h'
-            });
-            
-            return false; // Block request
-        }
-        
-        return true;
-    }
-}
-```
+<img src="img/code/code-27.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 <!-- 
 Exfiltration detection through data transfer monitoring. We track response sizes per user over a sliding one-hour window. If a user transfers more than 100MB in an hour, we log a T1567 event and block further requests. This catches automated exfiltration scripts that rapidly pull data. Adjust the threshold based on your application's normal behavior—for a file sharing app, 100MB might be normal; for a CRM, it's highly suspicious.
@@ -1407,34 +915,14 @@ Four impact techniques. T1499: application-layer DoS like regular expression att
 
 ### ❌ Vulnerable
 
-```javascript
-app.post('/api/validate-email', (req, res) => {
-    const email = req.body.email;
-    const emailRegex = /^([a-zA-Z0-9]+\.)*[a-zA-Z0-9]+@([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}$/;
-    if (emailRegex.test(email)) {
-        return res.json({ valid: true });
-    }
-    return res.json({ valid: false });
-});
-```
+<img src="img/code/code-28.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-```javascript
-app.post('/api/validate-email', (req, res) => {
-    const email = req.body.email;
-    if (!email || email.length > 254)
-        return res.status(400).json({ error: 'Invalid input' });
-    const safeEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!safeEmailRegex.test(email))
-        return res.status(400).json({ valid: false });
-    const result = runWithTimeout(() => additionalValidation(email), 100);
-    return res.json({ valid: result });
-});
-```
+<img src="img/code/code-29.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -1447,38 +935,7 @@ Perfect defense against ReDoS. Input length validation rejects inputs over 254 c
 
 ## Data Integrity Protection (T1565)
 
-```csharp
-// T1565 Prevention: Data integrity verification
-public class DataIntegrityService
-{
-    // T1565 Prevention: HMAC-based integrity verification
-    public string ComputeIntegrityHash(string data)
-    {
-        using var hmac = new HMACSHA256(GetIntegrityKey());
-        var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
-        return Convert.ToBase64String(hash);
-    }
-    
-    public bool VerifyIntegrity(string data, string expectedHash)
-    {
-        var actualHash = ComputeIntegrityHash(data);
-        // T1565 Detection: Timing-safe comparison
-        return CryptographicOperations.FixedTimeEquals(
-            Encoding.UTF8.GetBytes(actualHash),
-            Encoding.UTF8.GetBytes(expectedHash));
-    }
-    
-    // T1485 Prevention: Soft delete with audit trail
-    public async Task DeleteRecord(string id, string userId)
-    {
-        await _db.ExecuteAsync(
-            "UPDATE records SET deleted=1, deleted_by=@user, deleted_at=@time WHERE id=@id",
-            new { id, user = userId, time = DateTime.UtcNow });
-        
-        LogSecurityEvent("T1485", $"Record {id} soft-deleted by {userId}");
-    }
-}
-```
+<img src="img/code/code-30.png" alt="csharp code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 <!-- 
 Data integrity protection against manipulation and destruction. HMAC hashes prove data hasn't been tampered with—store the hash alongside the data and verify on every read. Use timing-safe comparison to prevent timing attacks. For deletion, use soft deletes with full audit trails instead of hard deletes. This prevents T1485 data destruction and provides forensic evidence. If attackers manipulate or delete data, you'll know who, when, and what. This is critical for regulated industries and incident response.
@@ -1515,33 +972,14 @@ Three reconnaissance techniques. T1592: gathering host info from verbose error p
 
 ### ❌ Vulnerable
 
-```python
-@app.errorhandler(Exception)
-def handle_error(error):
-    return jsonify({
-        'error': str(error),
-        'traceback': traceback.format_exc(),
-        'server': f'Flask/{flask.__version__}',
-        'python': sys.version
-    }), 500
-```
+<img src="img/code/code-31.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 <div>
 
 ### ✅ Defended
 
-```python
-@app.errorhandler(Exception)
-def handle_error(error):
-    error_id = uuid.uuid4().hex[:8]
-    app.logger.error(f"[{error_id}] {error}",
-                     exc_info=True)
-    return jsonify({
-        'error': 'An unexpected error occurred',
-        'reference': error_id
-    }), 500
-```
+<img src="img/code/code-32.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 </div>
 </div>
@@ -1562,38 +1000,7 @@ Tactic twelve: Resource Development. Attackers build infrastructure before strik
 
 ## Defended: Webhook Source Verification (T1583/T1584)
 
-```javascript
-// DEFENDED - Verify webhook sources to prevent T1583/T1584 abuse
-const crypto = require('crypto');
-
-class WebhookVerifier {
-    constructor(secrets) {
-        this.secrets = secrets; // { 'github': 'whsec_...', 'stripe': 'whsec_...' }
-    }
-    
-    verify(source, payload, signature, timestamp) {
-        // T1584 Prevention: Reject old webhooks (replay attack prevention)
-        const age = Date.now() / 1000 - parseInt(timestamp);
-        if (age > 300) { // 5 minute tolerance
-            this.logTechnique('T1584', { source, reason: 'stale_webhook', age });
-            return false;
-        }
-        
-        // T1583 Prevention: Verify HMAC signature from known source
-        const secret = this.secrets[source];
-        if (!secret) return false;
-        
-        const expected = crypto.createHmac('sha256', secret)
-            .update(`${timestamp}.${payload}`)
-            .digest('hex');
-            
-        // Timing-safe comparison prevents T1592 timing attacks
-        return crypto.timingSafeEqual(
-            Buffer.from(signature), Buffer.from(expected)
-        );
-    }
-}
-```
+<img src="img/code/code-33.png" alt="javascript code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 <!-- 
 Webhook verification prevents attackers from using compromised infrastructure to inject malicious data into your systems. We check timestamp freshness to prevent replay attacks—reject anything older than 5 minutes. Then verify HMAC signatures using pre-shared secrets specific to each source. Timing-safe comparison prevents attackers from using response timing to guess valid signatures. Always verify webhook sources: GitHub, Stripe, Twilio—they all support signature verification. If they don't support it, don't trust it.
@@ -1611,43 +1018,7 @@ Tactic thirteen: Command and Control. Once inside, attackers need to communicate
 
 ## Defended: C2 Beaconing Detection (T1071/T1572)
 
-```python
-# DEFENDED - Detect C2 beaconing patterns (T1071/T1572)
-import statistics
-from collections import defaultdict
-
-class BeaconDetector:
-    def __init__(self, jitter_threshold=0.15):
-        self.connections = defaultdict(list)
-        self.jitter_threshold = jitter_threshold
-    
-    def record_outbound(self, destination, timestamp):
-        self.connections[destination].append(timestamp)
-        
-        intervals = self.connections[destination]
-        if len(intervals) >= 5:
-            # Calculate interval regularity (C2 hallmark)
-            deltas = [intervals[i+1] - intervals[i] 
-                      for i in range(len(intervals)-1)]
-            
-            if len(deltas) >= 4:
-                mean_delta = statistics.mean(deltas)
-                if mean_delta > 0:
-                    # T1071 Detection: Low jitter = likely beaconing
-                    cv = statistics.stdev(deltas) / mean_delta
-                    if cv < self.jitter_threshold:
-                        self.alert_c2({
-                            'technique': 'T1071',
-                            'destination': destination,
-                            'beacon_interval': mean_delta,
-                            'jitter': cv,
-                            'confidence': 1 - cv
-                        })
-    
-    def alert_c2(self, details):
-        log_security_event('C2_BEACON_DETECTED', details)
-        block_outbound(details['destination'])
-```
+<img src="img/code/code-34.png" alt="python code" style="width: 900px; max-height: 75%; margin: 0 auto; display: block;" />
 
 <!-- 
 C2 beaconing detection using statistical analysis. Malware calls home at regular intervals—even with jitter, the timing pattern is detectably regular compared to human behavior. We calculate the coefficient of variation of connection intervals. Low CV—below 15%—indicates highly regular timing, which is a C2 hallmark. Real users are chaotic and random; bots are predictable. When detected, we log the event with ATT&CK technique ID and block the destination. Deploy this on your application's outbound connection monitoring. Adjust the jitter threshold based on your false positive tolerance.
