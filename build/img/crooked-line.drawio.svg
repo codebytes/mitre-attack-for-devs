@@ -1,56 +1,145 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-     width="905" height="215" viewBox="-5 -5 905 215">
-  <defs>
-    <marker id="ahcccccc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#cccccc" /></marker>
-    <marker id="ahe94560" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e94560" /></marker>
-  </defs>
-  <rect x="-5" y="-5" width="905" height="215" fill="#1a1a2e" rx="12" ry="12" />
-  <line x1="150.0" y1="47.5" x2="155.0" y2="47.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="295.0" y1="47.5" x2="300.0" y2="47.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="440.0" y1="47.5" x2="445.0" y2="47.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="600.0" y1="63.9" x2="304.7" y2="138.6" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="295.0" y1="157.5" x2="300.0" y2="157.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="440.0" y1="157.5" x2="445.0" y2="157.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="585.0" y1="157.5" x2="590.0" y2="157.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="730.0" y1="157.5" x2="735.0" y2="157.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="455.0" y1="47.5" x2="450.0" y2="47.5" stroke="#e94560" stroke-width="3" stroke-linecap="round" marker-end="url(#ahe94560)" />
-  <line x1="585.0" y1="47.5" x2="590.0" y2="47.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="600.0" y1="47.5" x2="450.0" y2="47.5" stroke="#e94560" stroke-width="3" stroke-linecap="round" marker-end="url(#ahe94560)" />
-  <rect x="22" y="23" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="20" y="20" width="130" height="55" rx="10" ry="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" />
-  <text x="85.0" y="43.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Initial</text>
-  <text x="85.0" y="60.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Access</text>
-  <rect x="167" y="23" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="165" y="20" width="130" height="55" rx="10" ry="10" fill="#e67e22" stroke="#d35400" stroke-width="2.5" />
-  <text x="230.0" y="52.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Execution</text>
-  <rect x="312" y="23" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="310" y="20" width="130" height="55" rx="10" ry="10" fill="#3498db" stroke="#2980b9" stroke-width="2.5" />
-  <text x="375.0" y="52.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Discovery</text>
-  <rect x="457" y="23" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="455" y="20" width="130" height="55" rx="10" ry="10" fill="#f39c12" stroke="#e67e22" stroke-width="2.5" />
-  <text x="520.0" y="43.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Credential</text>
-  <text x="520.0" y="60.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Access</text>
-  <rect x="602" y="23" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="600" y="20" width="130" height="55" rx="10" ry="10" fill="#2ecc71" stroke="#27ae60" stroke-width="2.5" />
-  <text x="665.0" y="43.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Lateral</text>
-  <text x="665.0" y="60.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Movement</text>
-  <rect x="167" y="133" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="165" y="130" width="130" height="55" rx="10" ry="10" fill="#3498db" stroke="#2980b9" stroke-width="2.5" />
-  <text x="230.0" y="153.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Discovery</text>
-  <text x="230.0" y="170.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">(new segment)</text>
-  <rect x="312" y="133" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="310" y="130" width="130" height="55" rx="10" ry="10" fill="#f39c12" stroke="#e67e22" stroke-width="2.5" />
-  <text x="375.0" y="153.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Credential</text>
-  <text x="375.0" y="170.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Access</text>
-  <rect x="457" y="133" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="455" y="130" width="130" height="55" rx="10" ry="10" fill="#2ecc71" stroke="#27ae60" stroke-width="2.5" />
-  <text x="520.0" y="153.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Lateral</text>
-  <text x="520.0" y="170.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Movement</text>
-  <rect x="602" y="133" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="600" y="130" width="130" height="55" rx="10" ry="10" fill="#9b59b6" stroke="#8e44ad" stroke-width="2.5" />
-  <text x="665.0" y="162.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Collection</text>
-  <rect x="747" y="133" width="130" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="745" y="130" width="130" height="55" rx="10" ry="10" fill="#1a1a2e" stroke="#e94560" stroke-width="2.5" />
-  <text x="810.0" y="162.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Exfiltration</text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260124.0452)
+ -->
+<!-- Title: crooked Pages: 1 -->
+<svg width="1534pt" height="123pt"
+ viewBox="0.00 0.00 1534.00 123.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 93.88)">
+<title>crooked</title>
+<polygon fill="#1a1a2e" stroke="none" points="-28.8,28.8 -28.8,-93.88 1504.8,-93.88 1504.8,28.8 -28.8,28.8"/>
+<!-- IA -->
+<g id="node1" class="node">
+<title>IA</title>
+<path fill="#e74c3c" stroke="#e74c3c" stroke-width="2.5" d="M103.2,-65.08C103.2,-65.08 12,-65.08 12,-65.08 6,-65.08 0,-59.08 0,-53.08 0,-53.08 0,-33.08 0,-33.08 0,-27.08 6,-21.08 12,-21.08 12,-21.08 103.2,-21.08 103.2,-21.08 109.2,-21.08 115.2,-27.08 115.2,-33.08 115.2,-33.08 115.2,-53.08 115.2,-53.08 115.2,-59.08 109.2,-65.08 103.2,-65.08"/>
+<text xml:space="preserve" text-anchor="middle" x="57.6" y="-48.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Initial</text>
+<text xml:space="preserve" text-anchor="middle" x="57.6" y="-30.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Access</text>
+</g>
+<!-- EX -->
+<g id="node2" class="node">
+<title>EX</title>
+<path fill="#e67e22" stroke="#e67e22" stroke-width="2.5" d="M254.4,-64.68C254.4,-64.68 163.2,-64.68 163.2,-64.68 157.2,-64.68 151.2,-58.68 151.2,-52.68 151.2,-52.68 151.2,-33.48 151.2,-33.48 151.2,-27.48 157.2,-21.48 163.2,-21.48 163.2,-21.48 254.4,-21.48 254.4,-21.48 260.4,-21.48 266.4,-27.48 266.4,-33.48 266.4,-33.48 266.4,-52.68 266.4,-52.68 266.4,-58.68 260.4,-64.68 254.4,-64.68"/>
+<text xml:space="preserve" text-anchor="middle" x="208.8" y="-39.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Execution</text>
+</g>
+<!-- IA&#45;&gt;EX -->
+<g id="edge1" class="edge">
+<title>IA&#45;&gt;EX</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M116.28,-43.08C123.52,-43.08 130.97,-43.08 138.36,-43.08"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="138.24,-46.23 147.24,-43.08 138.24,-39.93 138.24,-46.23"/>
+</g>
+<!-- D1 -->
+<g id="node3" class="node">
+<title>D1</title>
+<path fill="#3498db" stroke="#3498db" stroke-width="2.5" d="M405.6,-64.68C405.6,-64.68 314.4,-64.68 314.4,-64.68 308.4,-64.68 302.4,-58.68 302.4,-52.68 302.4,-52.68 302.4,-33.48 302.4,-33.48 302.4,-27.48 308.4,-21.48 314.4,-21.48 314.4,-21.48 405.6,-21.48 405.6,-21.48 411.6,-21.48 417.6,-27.48 417.6,-33.48 417.6,-33.48 417.6,-52.68 417.6,-52.68 417.6,-58.68 411.6,-64.68 405.6,-64.68"/>
+<text xml:space="preserve" text-anchor="middle" x="360" y="-39.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Discovery</text>
+</g>
+<!-- EX&#45;&gt;D1 -->
+<g id="edge2" class="edge">
+<title>EX&#45;&gt;D1</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M267.48,-43.08C274.72,-43.08 282.17,-43.08 289.56,-43.08"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="289.44,-46.23 298.44,-43.08 289.44,-39.93 289.44,-46.23"/>
+</g>
+<!-- CA1 -->
+<g id="node4" class="node">
+<title>CA1</title>
+<path fill="#f39c12" stroke="#f39c12" stroke-width="2.5" d="M556.8,-65.08C556.8,-65.08 465.6,-65.08 465.6,-65.08 459.6,-65.08 453.6,-59.08 453.6,-53.08 453.6,-53.08 453.6,-33.08 453.6,-33.08 453.6,-27.08 459.6,-21.08 465.6,-21.08 465.6,-21.08 556.8,-21.08 556.8,-21.08 562.8,-21.08 568.8,-27.08 568.8,-33.08 568.8,-33.08 568.8,-53.08 568.8,-53.08 568.8,-59.08 562.8,-65.08 556.8,-65.08"/>
+<text xml:space="preserve" text-anchor="middle" x="511.2" y="-48.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Credential</text>
+<text xml:space="preserve" text-anchor="middle" x="511.2" y="-30.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Access</text>
+</g>
+<!-- D1&#45;&gt;CA1 -->
+<g id="edge3" class="edge">
+<title>D1&#45;&gt;CA1</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M418.68,-32.46C425.92,-32.24 433.37,-32.16 440.76,-32.23"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="440.58,-35.37 449.64,-32.4 440.71,-29.07 440.58,-35.37"/>
+</g>
+<!-- CA1&#45;&gt;D1 -->
+<g id="edge4" class="edge">
+<title>CA1&#45;&gt;D1</title>
+<path fill="none" stroke="#e94560" stroke-width="3" d="M452.67,-53.7C445.96,-53.9 439.06,-53.98 432.2,-53.94"/>
+<polygon fill="#e94560" stroke="#e94560" stroke-width="3" points="432.28,-50.79 423.22,-53.78 432.17,-57.09 432.28,-50.79"/>
+</g>
+<!-- LM1 -->
+<g id="node5" class="node">
+<title>LM1</title>
+<path fill="#2ecc71" stroke="#2ecc71" stroke-width="2.5" d="M708,-65.08C708,-65.08 616.8,-65.08 616.8,-65.08 610.8,-65.08 604.8,-59.08 604.8,-53.08 604.8,-53.08 604.8,-33.08 604.8,-33.08 604.8,-27.08 610.8,-21.08 616.8,-21.08 616.8,-21.08 708,-21.08 708,-21.08 714,-21.08 720,-27.08 720,-33.08 720,-33.08 720,-53.08 720,-53.08 720,-59.08 714,-65.08 708,-65.08"/>
+<text xml:space="preserve" text-anchor="middle" x="662.4" y="-48.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Lateral</text>
+<text xml:space="preserve" text-anchor="middle" x="662.4" y="-30.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Movement</text>
+</g>
+<!-- CA1&#45;&gt;LM1 -->
+<g id="edge5" class="edge">
+<title>CA1&#45;&gt;LM1</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M569.88,-43.08C577.12,-43.08 584.57,-43.08 591.96,-43.08"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="591.84,-46.23 600.84,-43.08 591.84,-39.93 591.84,-46.23"/>
+</g>
+<!-- LM1&#45;&gt;D1 -->
+<g id="edge6" class="edge">
+<title>LM1&#45;&gt;D1</title>
+<path fill="none" stroke="#e94560" stroke-width="3" d="M611.94,-19.97C598.26,-14.66 583.21,-9.78 568.8,-7.08 518.48,2.36 503.92,2.36 453.6,-7.08 443.11,-9.04 432.29,-12.16 421.9,-15.76"/>
+<polygon fill="#e94560" stroke="#e94560" stroke-width="3" points="421.11,-12.69 413.76,-18.77 423.29,-18.6 421.11,-12.69"/>
+</g>
+<!-- D2 -->
+<g id="node6" class="node">
+<title>D2</title>
+<path fill="#3498db" stroke="#3498db" stroke-width="2.5" d="M859.2,-65.08C859.2,-65.08 768,-65.08 768,-65.08 762,-65.08 756,-59.08 756,-53.08 756,-53.08 756,-33.08 756,-33.08 756,-27.08 762,-21.08 768,-21.08 768,-21.08 859.2,-21.08 859.2,-21.08 865.2,-21.08 871.2,-27.08 871.2,-33.08 871.2,-33.08 871.2,-53.08 871.2,-53.08 871.2,-59.08 865.2,-65.08 859.2,-65.08"/>
+<text xml:space="preserve" text-anchor="middle" x="813.6" y="-48.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Discovery</text>
+<text xml:space="preserve" text-anchor="middle" x="813.6" y="-30.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">(new segment)</text>
+</g>
+<!-- LM1&#45;&gt;D2 -->
+<g id="edge7" class="edge">
+<title>LM1&#45;&gt;D2</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M721.08,-43.08C728.32,-43.08 735.77,-43.08 743.16,-43.08"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="743.04,-46.23 752.04,-43.08 743.04,-39.93 743.04,-46.23"/>
+</g>
+<!-- CA2 -->
+<g id="node7" class="node">
+<title>CA2</title>
+<path fill="#f39c12" stroke="#f39c12" stroke-width="2.5" d="M1010.4,-65.08C1010.4,-65.08 919.2,-65.08 919.2,-65.08 913.2,-65.08 907.2,-59.08 907.2,-53.08 907.2,-53.08 907.2,-33.08 907.2,-33.08 907.2,-27.08 913.2,-21.08 919.2,-21.08 919.2,-21.08 1010.4,-21.08 1010.4,-21.08 1016.4,-21.08 1022.4,-27.08 1022.4,-33.08 1022.4,-33.08 1022.4,-53.08 1022.4,-53.08 1022.4,-59.08 1016.4,-65.08 1010.4,-65.08"/>
+<text xml:space="preserve" text-anchor="middle" x="964.8" y="-48.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Credential</text>
+<text xml:space="preserve" text-anchor="middle" x="964.8" y="-30.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Access</text>
+</g>
+<!-- D2&#45;&gt;CA2 -->
+<g id="edge8" class="edge">
+<title>D2&#45;&gt;CA2</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M872.28,-43.08C879.52,-43.08 886.97,-43.08 894.36,-43.08"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="894.24,-46.23 903.24,-43.08 894.24,-39.93 894.24,-46.23"/>
+</g>
+<!-- LM2 -->
+<g id="node8" class="node">
+<title>LM2</title>
+<path fill="#2ecc71" stroke="#2ecc71" stroke-width="2.5" d="M1161.6,-65.08C1161.6,-65.08 1070.4,-65.08 1070.4,-65.08 1064.4,-65.08 1058.4,-59.08 1058.4,-53.08 1058.4,-53.08 1058.4,-33.08 1058.4,-33.08 1058.4,-27.08 1064.4,-21.08 1070.4,-21.08 1070.4,-21.08 1161.6,-21.08 1161.6,-21.08 1167.6,-21.08 1173.6,-27.08 1173.6,-33.08 1173.6,-33.08 1173.6,-53.08 1173.6,-53.08 1173.6,-59.08 1167.6,-65.08 1161.6,-65.08"/>
+<text xml:space="preserve" text-anchor="middle" x="1116" y="-48.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Lateral</text>
+<text xml:space="preserve" text-anchor="middle" x="1116" y="-30.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Movement</text>
+</g>
+<!-- CA2&#45;&gt;LM2 -->
+<g id="edge9" class="edge">
+<title>CA2&#45;&gt;LM2</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M1023.48,-43.08C1030.72,-43.08 1038.17,-43.08 1045.56,-43.08"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="1045.44,-46.23 1054.44,-43.08 1045.44,-39.93 1045.44,-46.23"/>
+</g>
+<!-- COL -->
+<g id="node9" class="node">
+<title>COL</title>
+<path fill="#9b59b6" stroke="#9b59b6" stroke-width="2.5" d="M1312.8,-64.68C1312.8,-64.68 1221.6,-64.68 1221.6,-64.68 1215.6,-64.68 1209.6,-58.68 1209.6,-52.68 1209.6,-52.68 1209.6,-33.48 1209.6,-33.48 1209.6,-27.48 1215.6,-21.48 1221.6,-21.48 1221.6,-21.48 1312.8,-21.48 1312.8,-21.48 1318.8,-21.48 1324.8,-27.48 1324.8,-33.48 1324.8,-33.48 1324.8,-52.68 1324.8,-52.68 1324.8,-58.68 1318.8,-64.68 1312.8,-64.68"/>
+<text xml:space="preserve" text-anchor="middle" x="1267.2" y="-39.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Collection</text>
+</g>
+<!-- LM2&#45;&gt;COL -->
+<g id="edge10" class="edge">
+<title>LM2&#45;&gt;COL</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M1174.68,-43.08C1181.92,-43.08 1189.37,-43.08 1196.76,-43.08"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="1196.64,-46.23 1205.64,-43.08 1196.64,-39.93 1196.64,-46.23"/>
+</g>
+<!-- XF -->
+<g id="node10" class="node">
+<title>XF</title>
+<path fill="#1a1a2e" stroke="#e94560" stroke-width="2.5" d="M1464,-64.68C1464,-64.68 1372.8,-64.68 1372.8,-64.68 1366.8,-64.68 1360.8,-58.68 1360.8,-52.68 1360.8,-52.68 1360.8,-33.48 1360.8,-33.48 1360.8,-27.48 1366.8,-21.48 1372.8,-21.48 1372.8,-21.48 1464,-21.48 1464,-21.48 1470,-21.48 1476,-27.48 1476,-33.48 1476,-33.48 1476,-52.68 1476,-52.68 1476,-58.68 1470,-64.68 1464,-64.68"/>
+<text xml:space="preserve" text-anchor="middle" x="1418.4" y="-39.73" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Exfiltration</text>
+</g>
+<!-- COL&#45;&gt;XF -->
+<g id="edge11" class="edge">
+<title>COL&#45;&gt;XF</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M1325.88,-43.08C1333.12,-43.08 1340.57,-43.08 1347.96,-43.08"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="1347.84,-46.23 1356.84,-43.08 1347.84,-39.93 1347.84,-46.23"/>
+</g>
+</g>
 </svg>

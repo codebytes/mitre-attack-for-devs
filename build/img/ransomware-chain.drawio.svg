@@ -1,49 +1,105 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-     width="790" height="250" viewBox="-5 -5 790 250">
-  <defs>
-    <marker id="ahcccccc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#cccccc" /></marker>
-  </defs>
-  <rect x="-5" y="-5" width="790" height="250" fill="#1a1a2e" rx="12" ry="12" />
-  <line x1="190.0" y1="60.0" x2="200.0" y2="60.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="380.0" y1="60.0" x2="390.0" y2="60.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="570.0" y1="60.0" x2="580.0" y2="60.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="590.0" y1="77.9" x2="199.8" y2="160.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="190.0" y1="180.0" x2="200.0" y2="180.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="380.0" y1="180.0" x2="390.0" y2="180.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <rect x="22" y="23" width="170" height="80" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="20" y="20" width="170" height="80" rx="10" ry="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" />
-  <text x="105.0" y="47.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1190</text>
-  <text x="105.0" y="64.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Unrestricted</text>
-  <text x="105.0" y="81.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">File Upload</text>
-  <rect x="212" y="23" width="170" height="80" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="210" y="20" width="170" height="80" rx="10" ry="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" />
-  <text x="295.0" y="47.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1505.003</text>
-  <text x="295.0" y="64.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Web Shell</text>
-  <text x="295.0" y="81.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Deployed</text>
-  <rect x="402" y="23" width="170" height="80" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="400" y="20" width="170" height="80" rx="10" ry="10" fill="#e67e22" stroke="#d35400" stroke-width="2.5" />
-  <text x="485.0" y="47.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1059</text>
-  <text x="485.0" y="64.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Remote Command</text>
-  <text x="485.0" y="81.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Execution</text>
-  <rect x="592" y="23" width="170" height="80" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="590" y="20" width="170" height="80" rx="10" ry="10" fill="#f39c12" stroke="#e67e22" stroke-width="2.5" />
-  <text x="675.0" y="47.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1552</text>
-  <text x="675.0" y="64.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Extract DB</text>
-  <text x="675.0" y="81.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Credentials</text>
-  <rect x="22" y="143" width="170" height="80" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="20" y="140" width="170" height="80" rx="10" ry="10" fill="#2ecc71" stroke="#27ae60" stroke-width="2.5" />
-  <text x="105.0" y="167.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1078</text>
-  <text x="105.0" y="184.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Direct Database</text>
-  <text x="105.0" y="201.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Access</text>
-  <rect x="212" y="143" width="170" height="80" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="210" y="140" width="170" height="80" rx="10" ry="10" fill="#9b59b6" stroke="#8e44ad" stroke-width="2.5" />
-  <text x="295.0" y="167.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1565</text>
-  <text x="295.0" y="184.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Data</text>
-  <text x="295.0" y="201.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Manipulation</text>
-  <rect x="402" y="143" width="170" height="80" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="400" y="140" width="170" height="80" rx="10" ry="10" fill="#1a1a2e" stroke="#e94560" stroke-width="2.5" />
-  <text x="485.0" y="167.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1485</text>
-  <text x="485.0" y="184.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Ransomware</text>
-  <text x="485.0" y="201.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Deployment</text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260124.0452)
+ -->
+<!-- Title: ransomware Pages: 1 -->
+<svg width="182pt" height="750pt"
+ viewBox="0.00 0.00 182.00 750.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 720.8)">
+<title>ransomware</title>
+<polygon fill="#1a1a2e" stroke="none" points="-28.8,28.8 -28.8,-720.8 152.8,-720.8 152.8,28.8 -28.8,28.8"/>
+<!-- A -->
+<g id="node1" class="node">
+<title>A</title>
+<path fill="#e74c3c" stroke="#e74c3c" stroke-width="2.5" d="M107.6,-692C107.6,-692 16.4,-692 16.4,-692 10.4,-692 4.4,-686 4.4,-680 4.4,-680 4.4,-642 4.4,-642 4.4,-636 10.4,-630 16.4,-630 16.4,-630 107.6,-630 107.6,-630 113.6,-630 119.6,-636 119.6,-642 119.6,-642 119.6,-680 119.6,-680 119.6,-686 113.6,-692 107.6,-692"/>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-675.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1190</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-657.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Unrestricted</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-639.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">File Upload</text>
+</g>
+<!-- B -->
+<g id="node2" class="node">
+<title>B</title>
+<path fill="#e74c3c" stroke="#e74c3c" stroke-width="2.5" d="M107.6,-587C107.6,-587 16.4,-587 16.4,-587 10.4,-587 4.4,-581 4.4,-575 4.4,-575 4.4,-537 4.4,-537 4.4,-531 10.4,-525 16.4,-525 16.4,-525 107.6,-525 107.6,-525 113.6,-525 119.6,-531 119.6,-537 119.6,-537 119.6,-575 119.6,-575 119.6,-581 113.6,-587 107.6,-587"/>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-570.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1505.003</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-552.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Web Shell</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-534.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Deployed</text>
+</g>
+<!-- A&#45;&gt;B -->
+<g id="edge1" class="edge">
+<title>A&#45;&gt;B</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M62,-628.82C62,-619.74 62,-609.66 62,-600"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="65.15,-600.1 62,-591.1 58.85,-600.1 65.15,-600.1"/>
+</g>
+<!-- C -->
+<g id="node3" class="node">
+<title>C</title>
+<path fill="#e67e22" stroke="#e67e22" stroke-width="2.5" d="M112,-482C112,-482 12,-482 12,-482 6,-482 0,-476 0,-470 0,-470 0,-432 0,-432 0,-426 6,-420 12,-420 12,-420 112,-420 112,-420 118,-420 124,-426 124,-432 124,-432 124,-470 124,-470 124,-476 118,-482 112,-482"/>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-465.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1059</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-447.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Remote Command</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-429.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Execution</text>
+</g>
+<!-- B&#45;&gt;C -->
+<g id="edge2" class="edge">
+<title>B&#45;&gt;C</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M62,-523.82C62,-514.74 62,-504.66 62,-495"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="65.15,-495.1 62,-486.1 58.85,-495.1 65.15,-495.1"/>
+</g>
+<!-- D -->
+<g id="node4" class="node">
+<title>D</title>
+<path fill="#f39c12" stroke="#f39c12" stroke-width="2.5" d="M107.6,-377C107.6,-377 16.4,-377 16.4,-377 10.4,-377 4.4,-371 4.4,-365 4.4,-365 4.4,-327 4.4,-327 4.4,-321 10.4,-315 16.4,-315 16.4,-315 107.6,-315 107.6,-315 113.6,-315 119.6,-321 119.6,-327 119.6,-327 119.6,-365 119.6,-365 119.6,-371 113.6,-377 107.6,-377"/>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-360.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1552</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-342.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Extract DB</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-324.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Credentials</text>
+</g>
+<!-- C&#45;&gt;D -->
+<g id="edge3" class="edge">
+<title>C&#45;&gt;D</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M62,-418.82C62,-409.74 62,-399.66 62,-390"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="65.15,-390.1 62,-381.1 58.85,-390.1 65.15,-390.1"/>
+</g>
+<!-- E -->
+<g id="node5" class="node">
+<title>E</title>
+<path fill="#2ecc71" stroke="#2ecc71" stroke-width="2.5" d="M107.6,-272C107.6,-272 16.4,-272 16.4,-272 10.4,-272 4.4,-266 4.4,-260 4.4,-260 4.4,-222 4.4,-222 4.4,-216 10.4,-210 16.4,-210 16.4,-210 107.6,-210 107.6,-210 113.6,-210 119.6,-216 119.6,-222 119.6,-222 119.6,-260 119.6,-260 119.6,-266 113.6,-272 107.6,-272"/>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-255.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1078</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-237.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Direct Database</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-219.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Access</text>
+</g>
+<!-- D&#45;&gt;E -->
+<g id="edge4" class="edge">
+<title>D&#45;&gt;E</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M62,-313.82C62,-304.74 62,-294.66 62,-285"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="65.15,-285.1 62,-276.1 58.85,-285.1 65.15,-285.1"/>
+</g>
+<!-- F -->
+<g id="node6" class="node">
+<title>F</title>
+<path fill="#9b59b6" stroke="#9b59b6" stroke-width="2.5" d="M107.6,-167C107.6,-167 16.4,-167 16.4,-167 10.4,-167 4.4,-161 4.4,-155 4.4,-155 4.4,-117 4.4,-117 4.4,-111 10.4,-105 16.4,-105 16.4,-105 107.6,-105 107.6,-105 113.6,-105 119.6,-111 119.6,-117 119.6,-117 119.6,-155 119.6,-155 119.6,-161 113.6,-167 107.6,-167"/>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-150.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1565</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-132.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Data</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-114.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Manipulation</text>
+</g>
+<!-- E&#45;&gt;F -->
+<g id="edge5" class="edge">
+<title>E&#45;&gt;F</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M62,-208.82C62,-199.74 62,-189.66 62,-180"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="65.15,-180.1 62,-171.1 58.85,-180.1 65.15,-180.1"/>
+</g>
+<!-- G -->
+<g id="node7" class="node">
+<title>G</title>
+<path fill="#1a1a2e" stroke="#e94560" stroke-width="2.5" d="M107.6,-62C107.6,-62 16.4,-62 16.4,-62 10.4,-62 4.4,-56 4.4,-50 4.4,-50 4.4,-12 4.4,-12 4.4,-6 10.4,0 16.4,0 16.4,0 107.6,0 107.6,0 113.6,0 119.6,-6 119.6,-12 119.6,-12 119.6,-50 119.6,-50 119.6,-56 113.6,-62 107.6,-62"/>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-45.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1485</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-27.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Ransomware</text>
+<text xml:space="preserve" text-anchor="middle" x="62" y="-9.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Deployment</text>
+</g>
+<!-- F&#45;&gt;G -->
+<g id="edge6" class="edge">
+<title>F&#45;&gt;G</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M62,-103.82C62,-94.74 62,-84.66 62,-75"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="65.15,-75.1 62,-66.1 58.85,-75.1 65.15,-75.1"/>
+</g>
+</g>
 </svg>

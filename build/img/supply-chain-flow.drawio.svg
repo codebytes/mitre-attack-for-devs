@@ -1,63 +1,131 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-     width="460" height="690" viewBox="75 -5 460 690">
-  <defs>
-    <marker id="ah3498db" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#3498db" /></marker>
-    <marker id="ahe67e22" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e67e22" /></marker>
-    <marker id="ah2ecc71" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#2ecc71" /></marker>
-    <marker id="ah1abc9c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#1abc9c" /></marker>
-    <marker id="ah9b59b6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#9b59b6" /></marker>
-    <marker id="ahe74c3c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e74c3c" /></marker>
-  </defs>
-  <rect x="75" y="-5" width="460" height="690" fill="#1a1a2e" rx="12" ry="12" />
-  <line x1="430.0" y1="70.0" x2="430.0" y2="90.0" stroke="#3498db" stroke-width="2" stroke-linecap="round" marker-end="url(#ah3498db)" />
-  <line x1="430.0" y1="150.0" x2="430.0" y2="170.0" stroke="#3498db" stroke-width="2" stroke-linecap="round" marker-end="url(#ah3498db)" />
-  <line x1="430.0" y1="240.0" x2="430.0" y2="260.0" stroke="#9b59b6" stroke-width="2" stroke-linecap="round" marker-end="url(#ah9b59b6)" />
-  <line x1="430.0" y1="320.0" x2="430.0" y2="340.0" stroke="#e67e22" stroke-width="2" stroke-linecap="round" marker-end="url(#ahe67e22)" />
-  <line x1="350.0" y1="378.4" x2="270.0" y2="376.8" stroke="#e74c3c" stroke-width="2" stroke-linecap="round" marker-end="url(#ahe74c3c)" />
-  <rect x="289.0" y="363.5" width="32" height="18" rx="9" fill="#1a1a2e" fill-opacity="0.85" />
-  <text x="305.0" y="375.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11" font-weight="700" fill="#e74c3c">No</text>
-  <line x1="430.0" y1="410.0" x2="430.0" y2="430.0" stroke="#2ecc71" stroke-width="2" stroke-linecap="round" marker-end="url(#ah2ecc71)" />
-  <rect x="414.0" y="411.0" width="32" height="18" rx="9" fill="#1a1a2e" fill-opacity="0.85" />
-  <text x="430.0" y="423.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11" font-weight="700" fill="#2ecc71">Yes</text>
-  <line x1="430.0" y1="490.0" x2="430.0" y2="510.0" stroke="#2ecc71" stroke-width="2" stroke-linecap="round" marker-end="url(#ah2ecc71)" />
-  <line x1="387.1" y1="520.0" x2="223.9" y2="405.7" stroke="#e74c3c" stroke-width="2" stroke-linecap="round" marker-end="url(#ahe74c3c)" />
-  <rect x="285.42857142857144" y="446.0" width="32" height="18" rx="9" fill="#1a1a2e" fill-opacity="0.85" />
-  <text x="301.4" y="458.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11" font-weight="700" fill="#e74c3c">No</text>
-  <line x1="430.0" y1="580.0" x2="430.0" y2="600.0" stroke="#1abc9c" stroke-width="2" stroke-linecap="round" marker-end="url(#ah1abc9c)" />
-  <rect x="414.0" y="581.0" width="32" height="18" rx="9" fill="#1a1a2e" fill-opacity="0.85" />
-  <text x="430.0" y="593.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11" font-weight="700" fill="#1abc9c">Yes</text>
-  <rect x="352" y="23" width="160" height="50" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="350" y="20" width="160" height="50" rx="10" ry="10" fill="#2c3e50" stroke="#3498db" stroke-width="2.5" />
-  <text x="430.0" y="49.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Developer</text>
-  <rect x="352" y="103" width="160" height="50" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="350" y="100" width="160" height="50" rx="10" ry="10" fill="#2980b9" stroke="#3498db" stroke-width="2.5" />
-  <text x="430.0" y="121.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Dependency</text>
-  <text x="430.0" y="138.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Request</text>
-  <polygon points="430.0,183 512,213.0 430.0,243 348,213.0" fill="black" fill-opacity="0.3" />
-  <polygon points="430.0,180 510,210.0 430.0,240 350,210.0" fill="#8e44ad" stroke="#9b59b6" stroke-width="2.5" />
-  <text x="430.0" y="206.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Package</text>
-  <text x="430.0" y="223.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Registry</text>
-  <rect x="352" y="273" width="160" height="50" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="350" y="270" width="160" height="50" rx="10" ry="10" fill="#d35400" stroke="#e67e22" stroke-width="2.5" />
-  <text x="430.0" y="291.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Integrity</text>
-  <text x="430.0" y="308.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Check</text>
-  <polygon points="430.0,353 512,383.0 430.0,413 348,383.0" fill="black" fill-opacity="0.3" />
-  <polygon points="430.0,350 510,380.0 430.0,410 350,380.0" fill="#f39c12" stroke="#e67e22" stroke-width="2.5" />
-  <text x="430.0" y="384.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Hash Valid?</text>
-  <rect x="102" y="353" width="160" height="50" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="100" y="350" width="160" height="50" rx="10" ry="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" />
-  <text x="180.0" y="371.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Block &amp; Log</text>
-  <text x="180.0" y="388.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1195.001</text>
-  <rect x="352" y="443" width="160" height="50" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="350" y="440" width="160" height="50" rx="10" ry="10" fill="#27ae60" stroke="#2ecc71" stroke-width="2.5" />
-  <text x="430.0" y="461.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Vulnerability</text>
-  <text x="430.0" y="478.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Scan</text>
-  <polygon points="430.0,523 512,553.0 430.0,583 348,553.0" fill="black" fill-opacity="0.3" />
-  <polygon points="430.0,520 510,550.0 430.0,580 350,550.0" fill="#f39c12" stroke="#e67e22" stroke-width="2.5" />
-  <text x="430.0" y="554.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Clean?</text>
-  <rect x="352" y="613" width="160" height="50" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="350" y="610" width="160" height="50" rx="10" ry="10" fill="#16a085" stroke="#1abc9c" stroke-width="2.5" />
-  <text x="430.0" y="631.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Install &amp;</text>
-  <text x="430.0" y="648.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Monitor</text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260124.0452)
+ -->
+<!-- Title: supplychain Pages: 1 -->
+<svg width="324pt" height="808pt"
+ viewBox="0.00 0.00 324.00 808.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 779.4)">
+<title>supplychain</title>
+<polygon fill="#1a1a2e" stroke="none" points="-28.8,28.8 -28.8,-779.4 295,-779.4 295,28.8 -28.8,28.8"/>
+<!-- DEV -->
+<g id="node1" class="node">
+<title>DEV</title>
+<path fill="#2c3e50" stroke="#3498db" stroke-width="2.5" d="M133.2,-750.6C133.2,-750.6 42,-750.6 42,-750.6 36,-750.6 30,-744.6 30,-738.6 30,-738.6 30,-719.4 30,-719.4 30,-713.4 36,-707.4 42,-707.4 42,-707.4 133.2,-707.4 133.2,-707.4 139.2,-707.4 145.2,-713.4 145.2,-719.4 145.2,-719.4 145.2,-738.6 145.2,-738.6 145.2,-744.6 139.2,-750.6 133.2,-750.6"/>
+<text xml:space="preserve" text-anchor="middle" x="87.6" y="-725.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Developer</text>
+</g>
+<!-- DEP -->
+<g id="node2" class="node">
+<title>DEP</title>
+<path fill="#2980b9" stroke="#3498db" stroke-width="2.5" d="M133.2,-662.4C133.2,-662.4 42,-662.4 42,-662.4 36,-662.4 30,-656.4 30,-650.4 30,-650.4 30,-630.4 30,-630.4 30,-624.4 36,-618.4 42,-618.4 42,-618.4 133.2,-618.4 133.2,-618.4 139.2,-618.4 145.2,-624.4 145.2,-630.4 145.2,-630.4 145.2,-650.4 145.2,-650.4 145.2,-656.4 139.2,-662.4 133.2,-662.4"/>
+<text xml:space="preserve" text-anchor="middle" x="87.6" y="-646.05" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Dependency</text>
+<text xml:space="preserve" text-anchor="middle" x="87.6" y="-628.05" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Request</text>
+</g>
+<!-- DEV&#45;&gt;DEP -->
+<g id="edge1" class="edge">
+<title>DEV&#45;&gt;DEP</title>
+<path fill="none" stroke="#3498db" stroke-width="2" d="M87.6,-706.59C87.6,-697.16 87.6,-685.85 87.6,-675.31"/>
+<polygon fill="#3498db" stroke="#3498db" stroke-width="2" points="90.75,-675.49 87.6,-666.49 84.45,-675.49 90.75,-675.49"/>
+</g>
+<!-- REG -->
+<g id="node3" class="node">
+<title>REG</title>
+<path fill="#8e44ad" stroke="#9b59b6" stroke-width="2.5" d="M77.75,-566.55C77.75,-566.55 34.2,-536.25 34.2,-536.25 29.28,-532.83 29.28,-525.97 34.2,-522.55 34.2,-522.55 77.75,-492.25 77.75,-492.25 82.67,-488.83 92.53,-488.83 97.45,-492.25 97.45,-492.25 141,-522.55 141,-522.55 145.92,-525.97 145.92,-532.83 141,-536.25 141,-536.25 97.45,-566.55 97.45,-566.55 92.53,-569.97 82.67,-569.97 77.75,-566.55"/>
+<text xml:space="preserve" text-anchor="middle" x="87.6" y="-535.05" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Package</text>
+<text xml:space="preserve" text-anchor="middle" x="87.6" y="-517.05" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Registry</text>
+</g>
+<!-- DEP&#45;&gt;REG -->
+<g id="edge2" class="edge">
+<title>DEP&#45;&gt;REG</title>
+<path fill="none" stroke="#3498db" stroke-width="2" d="M87.6,-617.34C87.6,-608.3 87.6,-597.38 87.6,-586.38"/>
+<polygon fill="#3498db" stroke="#3498db" stroke-width="2" points="90.75,-586.52 87.6,-577.52 84.45,-586.52 90.75,-586.52"/>
+</g>
+<!-- INT -->
+<g id="node4" class="node">
+<title>INT</title>
+<path fill="#d35400" stroke="#e67e22" stroke-width="2.5" d="M133.2,-440.4C133.2,-440.4 42,-440.4 42,-440.4 36,-440.4 30,-434.4 30,-428.4 30,-428.4 30,-408.4 30,-408.4 30,-402.4 36,-396.4 42,-396.4 42,-396.4 133.2,-396.4 133.2,-396.4 139.2,-396.4 145.2,-402.4 145.2,-408.4 145.2,-408.4 145.2,-428.4 145.2,-428.4 145.2,-434.4 139.2,-440.4 133.2,-440.4"/>
+<text xml:space="preserve" text-anchor="middle" x="87.6" y="-424.05" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Integrity</text>
+<text xml:space="preserve" text-anchor="middle" x="87.6" y="-406.05" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Check</text>
+</g>
+<!-- REG&#45;&gt;INT -->
+<g id="edge3" class="edge">
+<title>REG&#45;&gt;INT</title>
+<path fill="none" stroke="#9b59b6" stroke-width="2" d="M87.6,-484.07C87.6,-473.9 87.6,-463.25 87.6,-453.59"/>
+<polygon fill="#9b59b6" stroke="#9b59b6" stroke-width="2" points="90.75,-453.62 87.6,-444.62 84.45,-453.62 90.75,-453.62"/>
+</g>
+<!-- HASH -->
+<g id="node5" class="node">
+<title>HASH</title>
+<path fill="#f39c12" stroke="#e67e22" stroke-width="2.5" d="M76.11,-347.95C76.11,-347.95 27.15,-333.25 27.15,-333.25 21.41,-331.53 21.41,-328.07 27.15,-326.35 27.15,-326.35 76.11,-311.65 76.11,-311.65 81.85,-309.93 93.35,-309.93 99.09,-311.65 99.09,-311.65 148.05,-326.35 148.05,-326.35 153.79,-328.07 153.79,-331.53 148.05,-333.25 148.05,-333.25 99.09,-347.95 99.09,-347.95 93.35,-349.67 81.85,-349.67 76.11,-347.95"/>
+<text xml:space="preserve" text-anchor="middle" x="87.6" y="-326.45" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Hash Valid?</text>
+</g>
+<!-- INT&#45;&gt;HASH -->
+<g id="edge4" class="edge">
+<title>INT&#45;&gt;HASH</title>
+<path fill="none" stroke="#e67e22" stroke-width="2" d="M87.6,-395.55C87.6,-386.11 87.6,-374.86 87.6,-364.4"/>
+<polygon fill="#e67e22" stroke="#e67e22" stroke-width="2" points="90.75,-364.67 87.6,-355.67 84.45,-364.67 90.75,-364.67"/>
+</g>
+<!-- BLOCK -->
+<g id="node6" class="node">
+<title>BLOCK</title>
+<path fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" d="M103.2,-44C103.2,-44 12,-44 12,-44 6,-44 0,-38 0,-32 0,-32 0,-12 0,-12 0,-6 6,0 12,0 12,0 103.2,0 103.2,0 109.2,0 115.2,-6 115.2,-12 115.2,-12 115.2,-32 115.2,-32 115.2,-38 109.2,-44 103.2,-44"/>
+<text xml:space="preserve" text-anchor="middle" x="57.6" y="-27.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Block &amp; Log</text>
+<text xml:space="preserve" text-anchor="middle" x="57.6" y="-9.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1195.001</text>
+</g>
+<!-- HASH&#45;&gt;BLOCK -->
+<g id="edge5" class="edge">
+<title>HASH&#45;&gt;BLOCK</title>
+<path fill="none" stroke="#e74c3c" stroke-width="2" d="M85.54,-307.78C80.42,-255.66 67.13,-120.11 60.9,-56.67"/>
+<polygon fill="#e74c3c" stroke="#e74c3c" stroke-width="2" points="64.07,-56.65 60.05,-48 57.8,-57.26 64.07,-56.65"/>
+<text xml:space="preserve" text-anchor="middle" x="80.79" y="-172.75" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11.00" fill="#cccccc">No</text>
+</g>
+<!-- VULN -->
+<g id="node7" class="node">
+<title>VULN</title>
+<path fill="#27ae60" stroke="#2ecc71" stroke-width="2.5" d="M216.2,-249.2C216.2,-249.2 125,-249.2 125,-249.2 119,-249.2 113,-243.2 113,-237.2 113,-237.2 113,-217.2 113,-217.2 113,-211.2 119,-205.2 125,-205.2 125,-205.2 216.2,-205.2 216.2,-205.2 222.2,-205.2 228.2,-211.2 228.2,-217.2 228.2,-217.2 228.2,-237.2 228.2,-237.2 228.2,-243.2 222.2,-249.2 216.2,-249.2"/>
+<text xml:space="preserve" text-anchor="middle" x="170.6" y="-232.85" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Vulnerability</text>
+<text xml:space="preserve" text-anchor="middle" x="170.6" y="-214.85" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Scan</text>
+</g>
+<!-- HASH&#45;&gt;VULN -->
+<g id="edge6" class="edge">
+<title>HASH&#45;&gt;VULN</title>
+<path fill="none" stroke="#2ecc71" stroke-width="2" d="M102.06,-311.28C113.81,-297.03 130.7,-276.56 144.77,-259.51"/>
+<polygon fill="#2ecc71" stroke="#2ecc71" stroke-width="2" points="147.02,-261.73 150.32,-252.78 142.16,-257.72 147.02,-261.73"/>
+<text xml:space="preserve" text-anchor="middle" x="141.94" y="-275.75" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11.00" fill="#cccccc">Yes</text>
+</g>
+<!-- CLEAN -->
+<g id="node8" class="node">
+<title>CLEAN</title>
+<path fill="#f39c12" stroke="#e67e22" stroke-width="2.5" d="M159.36,-141.99C159.36,-141.99 124.24,-128.81 124.24,-128.81 118.62,-126.71 118.62,-122.49 124.24,-120.39 124.24,-120.39 159.36,-107.21 159.36,-107.21 164.98,-105.11 176.22,-105.11 181.84,-107.21 181.84,-107.21 216.96,-120.39 216.96,-120.39 222.58,-122.49 222.58,-126.71 216.96,-128.81 216.96,-128.81 181.84,-141.99 181.84,-141.99 176.22,-144.09 164.98,-144.09 159.36,-141.99"/>
+<text xml:space="preserve" text-anchor="middle" x="170.6" y="-121.25" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Clean?</text>
+</g>
+<!-- VULN&#45;&gt;CLEAN -->
+<g id="edge7" class="edge">
+<title>VULN&#45;&gt;CLEAN</title>
+<path fill="none" stroke="#2ecc71" stroke-width="2" d="M170.6,-204.37C170.6,-191.19 170.6,-174.12 170.6,-159.24"/>
+<polygon fill="#2ecc71" stroke="#2ecc71" stroke-width="2" points="173.75,-159.41 170.6,-150.41 167.45,-159.41 173.75,-159.41"/>
+</g>
+<!-- CLEAN&#45;&gt;BLOCK -->
+<g id="edge8" class="edge">
+<title>CLEAN&#45;&gt;BLOCK</title>
+<path fill="none" stroke="#e74c3c" stroke-width="2" d="M153.44,-108.32C136.98,-93.67 111.68,-71.15 91.21,-52.92"/>
+<polygon fill="#e74c3c" stroke="#e74c3c" stroke-width="2" points="93.56,-50.8 84.74,-47.17 89.37,-55.5 93.56,-50.8"/>
+<text xml:space="preserve" text-anchor="middle" x="128.37" y="-70.55" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11.00" fill="#cccccc">No</text>
+</g>
+<!-- INST -->
+<g id="node9" class="node">
+<title>INST</title>
+<path fill="#16a085" stroke="#1abc9c" stroke-width="2.5" d="M254.2,-44C254.2,-44 163,-44 163,-44 157,-44 151,-38 151,-32 151,-32 151,-12 151,-12 151,-6 157,0 163,0 163,0 254.2,0 254.2,0 260.2,0 266.2,-6 266.2,-12 266.2,-12 266.2,-32 266.2,-32 266.2,-38 260.2,-44 254.2,-44"/>
+<text xml:space="preserve" text-anchor="middle" x="208.6" y="-27.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Install &amp;</text>
+<text xml:space="preserve" text-anchor="middle" x="208.6" y="-9.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Monitor</text>
+</g>
+<!-- CLEAN&#45;&gt;INST -->
+<g id="edge9" class="edge">
+<title>CLEAN&#45;&gt;INST</title>
+<path fill="none" stroke="#1abc9c" stroke-width="2" d="M177.75,-104.68C182.9,-91.03 190,-72.25 196.08,-56.14"/>
+<polygon fill="#1abc9c" stroke="#1abc9c" stroke-width="2" points="198.99,-57.35 199.22,-47.82 193.1,-55.13 198.99,-57.35"/>
+<text xml:space="preserve" text-anchor="middle" x="199.75" y="-70.55" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11.00" fill="#cccccc">Yes</text>
+</g>
+</g>
 </svg>

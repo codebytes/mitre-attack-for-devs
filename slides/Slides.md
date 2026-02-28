@@ -123,7 +123,7 @@ Before we dive into ATT&CK specifically, let's talk about MITRE the organization
 
 ## MITRE's Cybersecurity Ecosystem
 
-<img src="img/mitre-ecosystem.drawio.svg" alt="MITRE Cybersecurity Ecosystem" style="max-height: 80%; margin: 0 auto;" />
+<img src="img/mitre-ecosystem.drawio.svg" alt="MITRE Cybersecurity Ecosystem" style="width: 900px; max-height: 80%; margin: 0 auto; display: block;" />
 
 <!-- 
 Here's the big picture—MITRE doesn't just maintain ATT&CK. They operate an entire ecosystem of cybersecurity frameworks that interlock. CVE catalogs specific vulnerabilities—the "this version of this library has this flaw" data you see in security advisories. CWE classifies the underlying weakness types—"what kind of coding mistake leads to vulnerabilities." CAPEC documents attack patterns at a higher abstraction level. ATT&CK is where we'll spend most of our time today—it maps adversary behavior. D3FEND is the defensive counterpart, cataloging countermeasures. And ATLAS extends the model into AI and machine learning threats. Notice the relationships: weaknesses lead to vulnerabilities, attack patterns map to ATT&CK techniques, and defenses counter those techniques. This ecosystem gives us a shared language across the entire security industry.
@@ -174,7 +174,7 @@ Let's break down ATT&CK's hierarchy. Tactics are the goals—"why" an attacker d
 
 ## The 14 ATT&CK Tactics
 
-<img src="img/14-attack-tactics.drawio.svg" alt="The 14 ATT&CK Tactics" style="max-height: 80%; margin: 0 auto;" />
+<img src="img/14-attack-tactics.drawio.svg" alt="The 14 ATT&CK Tactics" style="width: 900px; max-height: 80%; margin: 0 auto; display: block;" />
 
 <!-- 
 This diagram shows the 14 ATT&CK tactics in the typical attack lifecycle. Pre-Attack: reconnaissance and resource development—scoping you out, setting up infrastructure. Get In: initial access, execution, persistence, privilege escalation—establishing a foothold. Stay In: evading defenses, stealing credentials, discovering the environment, moving laterally across systems. Act: collecting data, maintaining command and control, exfiltrating information, and causing impact. Today we'll focus on the tactics developers can directly influence—roughly 10 of these 14. Spend a moment here; this is the mental model for everything that follows.
@@ -206,7 +206,7 @@ This is a critical distinction that trips people up. CVEs and ATT&CK live in dif
 - **Defenders must detect at every stage**, not just the entry point
 - A single missed detection = full compromise
 
-<img src="img/attack-chain-supply.drawio.svg" alt="Attack Chain: Supply Chain Compromise" style="max-height: 80%; margin: 0 auto;" />
+<img src="img/attack-chain-supply.drawio.svg" alt="Attack Chain: Supply Chain Compromise" style="width: 900px; max-height: 80%; margin: 0 auto; display: block;" />
 
 <!-- 
 Here's where it gets real. Attackers don't use one technique and go home. This diagram shows a supply chain attack chain—based on actual threat intelligence. Step one: attacker publishes a malicious npm package with a typosquatted name. The post-install script executes a payload. That payload harvests AWS credentials from environment variables. Those stolen credentials give the attacker legitimate access to production. They create a backdoor IAM user for persistence. Then they exfiltrate customer data. Six techniques, six different tactics, one continuous attack. The key insight: if you only defend at the perimeter, you miss five out of six opportunities to detect this. Defense in depth means instrumenting detection at *every* stage.
@@ -216,7 +216,7 @@ Here's where it gets real. Attackers don't use one technique and go home. This d
 
 ## Real-World Attack Chain: From Upload to Ransomware
 
-<img src="img/ransomware-chain.drawio.svg" alt="Real-World Attack Chain: From Upload to Ransomware" style="max-height: 80%; margin: 0 auto;" />
+<img src="img/ransomware-chain.drawio.svg" alt="Real-World Attack Chain: From Upload to Ransomware" style="width: 900px; max-height: 80%; margin: 0 auto; display: block;" />
 
 <!-- 
 Here's another chain that's devastatingly common. An unrestricted file upload vulnerability lets an attacker upload a PHP web shell disguised as an image. That web shell gives remote command execution on the server. The attacker reads config files to extract database credentials. Now they have direct database access, bypassing all application-level authorization. They modify records—maybe inject malicious content, maybe escalate privileges. Final act: ransomware targeting backups and production data. Seven steps. A file upload validation check at step one stops all of it. That's the power of understanding attack chains—you can identify the cheapest, most impactful place to break the chain.
@@ -255,7 +255,7 @@ This is one of the most important mental model shifts in modern security. Lockhe
 
 ## The Crooked Line: A Real Attack Path
 
-<img src="img/crooked-line.drawio.svg" alt="The Crooked Line: A Real Attack Path" style="max-height: 80%; margin: 0 auto;" />
+<img src="img/crooked-line.drawio.svg" alt="The Crooked Line: A Real Attack Path" style="width: 900px; max-height: 80%; margin: 0 auto; display: block;" />
 
 <!-- 
 Here's the crooked line visualized. Look at those red arrows looping back—Discovery to Credential Access and back to Discovery, Lateral Movement looping back to Discovery again. The attacker compromises one machine, discovers the environment, steals credentials, uses those credentials to move laterally, discovers *more* of the environment, steals *more* credentials, moves again. It's a spiral, not a line. This is why ATT&CK uses a matrix instead of a linear chain—any tactic can follow any other tactic. Your detection strategy needs to account for this: don't just alert on initial access. Instrument discovery, credential access, and lateral movement patterns because attackers will cycle through them repeatedly before reaching their objective.
@@ -1038,7 +1038,7 @@ Blockchain-inspired tamper-evident logging. Each log entry includes a hash of th
 
 ## Immutable Logging Architecture
 
-<img src="img/immutable-logging.drawio.svg" alt="Immutable Logging Architecture" style="max-height: 80%; margin: 0 auto;" />
+<img src="img/immutable-logging.drawio.svg" alt="Immutable Logging Architecture" style="width: 900px; max-height: 80%; margin: 0 auto; display: block;" />
 
 <!-- 
 Architecture diagram for immutable logging. Application logs flow through a secure logger that validates hashes, buffers locally for performance, writes to encrypted immutable storage, and sends to an external SIEM simultaneously. Tamper detection compares local and remote logs. If they diverge or the hash chain breaks, the security team is alerted immediately. This makes log tampering detectable and forensically recoverable. Spend a moment here—this is critical infrastructure for detection.
@@ -1257,7 +1257,7 @@ Custom package integrity validator. It reads the lockfile, computes hashes of in
 
 ## Supply Chain Security Flow
 
-<img src="img/supply-chain-flow.drawio.svg" alt="Supply Chain Security Flow" style="max-height: 80%; margin: 0 auto;" />
+<img src="img/supply-chain-flow.drawio.svg" alt="Supply Chain Security Flow" style="width: 900px; max-height: 80%; margin: 0 auto; display: block;" />
 
 <!-- 
 Supply chain security workflow. Dependency request goes to the package registry, then through integrity checking. If the hash doesn't match the lockfile, block and log. If it passes, run vulnerability scanning. If vulnerabilities are found, block. Only clean, verified packages get installed, and we continue monitoring for newly discovered vulnerabilities. This is defense in depth for dependencies. Every gate is a chance to catch an attack.
@@ -1474,7 +1474,7 @@ Exfiltration detection through data transfer monitoring. We track response sizes
 
 ## Data Flow Monitoring
 
-<img src="img/data-flow-monitoring.drawio.svg" alt="Data Flow Monitoring" style="max-height: 80%; margin: 0 auto;" />
+<img src="img/data-flow-monitoring.drawio.svg" alt="Data Flow Monitoring" style="width: 900px; max-height: 80%; margin: 0 auto; display: block;" />
 
 
 ---
@@ -1806,7 +1806,7 @@ Now let's talk about actually doing this in your organization. You've seen the t
 Threat modeling with ATT&CK is systematic and repeatable. You map features to techniques, assess risk, design detections, implement controls, and continuously test and iterate. This cycle never ends—new techniques emerge, your application evolves, and your defenses must adapt. This is the process loop for building security into your SDLC.
 -->
 
-<img src="img/threat-modeling-cycle.drawio.svg" alt="ATT&CK-Informed Threat Modeling" style="max-height: 80%; margin: 0 auto;" />
+<img src="img/threat-modeling-cycle.drawio.svg" alt="ATT&CK-Informed Threat Modeling" style="width: 900px; max-height: 80%; margin: 0 auto; display: block;" />
 
 
 ---
@@ -1850,7 +1850,7 @@ Five key patterns for building detection into code. Behavioral analytics underst
 
 ## Defense in Depth Architecture
 
-<img src="img/defense-in-depth.drawio.svg" alt="Defense in Depth Architecture" style="max-height: 80%; margin: 0 auto;" />
+<img src="img/defense-in-depth.drawio.svg" alt="Defense in Depth Architecture" style="width: 900px; max-height: 80%; margin: 0 auto; display: block;" />
 
 <!-- 
 Defense in depth visualized as layers. Prevention layers on the left: input validation, authentication, authorization, data access controls. Detection layers in the middle: behavioral analytics, anomaly detection, threat intelligence correlation. Response layers on the right: automated blocking and alerting. Each layer provides redundancy. If one layer fails, others catch the attack. This is how resilient systems are built—multiple independent defenses working together.
@@ -1860,7 +1860,7 @@ Defense in depth visualized as layers. Prevention layers on the left: input vali
 
 ## OWASP + ATT&CK Integration
 
-<img src="img/owasp-attack-integration.drawio.svg" alt="OWASP + ATT&CK Integration" style="max-height: 80%; margin: 0 auto;" />
+<img src="img/owasp-attack-integration.drawio.svg" alt="OWASP + ATT&CK Integration" style="width: 900px; max-height: 80%; margin: 0 auto; display: block;" />
 
 <!-- 
 Integrating OWASP and ATT&CK practices. OWASP secure coding plus ATT&CK behavioral monitoring equals secure by design. OWASP vulnerability testing plus technique correlation equals behavior-based monitoring. Security reviews plus threat hunting equals intelligence-driven response. These frameworks complement each other perfectly. Use both and you get complete coverage from prevention through detection to response.

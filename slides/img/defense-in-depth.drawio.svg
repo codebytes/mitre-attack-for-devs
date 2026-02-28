@@ -1,56 +1,137 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-     width="910" height="290" viewBox="-15 -15 910 290">
-  <defs>
-    <marker id="ahcccccc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#cccccc" /></marker>
-  </defs>
-  <rect x="-15" y="-15" width="910" height="290" fill="#1a1a2e" rx="12" ry="12" />
-  <rect x="10" y="10" width="500" height="110" rx="10" ry="10" fill="#1a1a2e" fill-opacity="0.5" stroke="#444444" stroke-width="1.5" stroke-dasharray="8,4" />
-  <text x="260.0" y="32" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#999999" letter-spacing="0.5">Prevention</text>
-  <rect x="10" y="140" width="500" height="110" rx="10" ry="10" fill="#1a1a2e" fill-opacity="0.5" stroke="#444444" stroke-width="1.5" stroke-dasharray="8,4" />
-  <text x="260.0" y="162" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#999999" letter-spacing="0.5">Detection</text>
-  <rect x="530" y="140" width="340" height="110" rx="10" ry="10" fill="#1a1a2e" fill-opacity="0.5" stroke="#444444" stroke-width="1.5" stroke-dasharray="8,4" />
-  <text x="700.0" y="162" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#999999" letter-spacing="0.5">Response</text>
-  <line x1="135.0" y1="67.5" x2="135.0" y2="67.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="255.0" y1="67.5" x2="255.0" y2="67.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="375.0" y1="67.5" x2="375.0" y2="67.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="385.0" y1="87.4" x2="144.4" y2="174.2" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="135.0" y1="197.5" x2="175.0" y2="197.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="295.0" y1="197.5" x2="335.0" y2="197.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="455.0" y1="197.5" x2="535.0" y2="197.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="655.0" y1="197.5" x2="695.0" y2="197.5" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <rect x="27" y="43" width="110" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="25" y="40" width="110" height="55" rx="10" ry="10" fill="#27ae60" stroke="#2ecc71" stroke-width="2.5" />
-  <text x="80.0" y="63.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Input</text>
-  <text x="80.0" y="80.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Validation</text>
-  <rect x="147" y="43" width="110" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="145" y="40" width="110" height="55" rx="10" ry="10" fill="#2980b9" stroke="#3498db" stroke-width="2.5" />
-  <text x="200.0" y="72.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Authentication</text>
-  <rect x="267" y="43" width="110" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="265" y="40" width="110" height="55" rx="10" ry="10" fill="#8e44ad" stroke="#9b59b6" stroke-width="2.5" />
-  <text x="320.0" y="72.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Authorization</text>
-  <rect x="387" y="43" width="110" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="385" y="40" width="110" height="55" rx="10" ry="10" fill="#d35400" stroke="#e67e22" stroke-width="2.5" />
-  <text x="440.0" y="63.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Data Access</text>
-  <text x="440.0" y="80.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Controls</text>
-  <rect x="27" y="173" width="110" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="25" y="170" width="110" height="55" rx="10" ry="10" fill="#c0392b" stroke="#e74c3c" stroke-width="2.5" />
-  <text x="80.0" y="193.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Behavioral</text>
-  <text x="80.0" y="210.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Analytics</text>
-  <rect x="187" y="173" width="110" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="185" y="170" width="110" height="55" rx="10" ry="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" />
-  <text x="240.0" y="193.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Anomaly</text>
-  <text x="240.0" y="210.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Detection</text>
-  <rect x="347" y="173" width="110" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="345" y="170" width="110" height="55" rx="10" ry="10" fill="#f39c12" stroke="#e67e22" stroke-width="2.5" />
-  <text x="400.0" y="193.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Threat</text>
-  <text x="400.0" y="210.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Intelligence</text>
-  <rect x="547" y="173" width="110" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="545" y="170" width="110" height="55" rx="10" ry="10" fill="#2c3e50" stroke="#3498db" stroke-width="2.5" />
-  <text x="600.0" y="193.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Automated</text>
-  <text x="600.0" y="210.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Blocking</text>
-  <rect x="707" y="173" width="110" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="705" y="170" width="110" height="55" rx="10" ry="10" fill="#1a1a2e" stroke="#e94560" stroke-width="2.5" />
-  <text x="760.0" y="193.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Alert &amp;</text>
-  <text x="760.0" y="210.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Remediation</text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260124.0452)
+ -->
+<!-- Title: defense Pages: 1 -->
+<svg width="1342pt" height="144pt"
+ viewBox="0.00 0.00 1342.00 144.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 114.8)">
+<title>defense</title>
+<polygon fill="#1a1a2e" stroke="none" points="-28.8,28.8 -28.8,-114.8 1313.6,-114.8 1313.6,28.8 -28.8,28.8"/>
+<g id="clust1" class="cluster">
+<title>cluster_prevent</title>
+<path fill="#1a1a2e" stroke="#555555" stroke-width="1.5" stroke-dasharray="5,2" d="M20,-8C20,-8 543.8,-8 543.8,-8 549.8,-8 555.8,-14 555.8,-20 555.8,-20 555.8,-66 555.8,-66 555.8,-72 549.8,-78 543.8,-78 543.8,-78 20,-78 20,-78 14,-78 8,-72 8,-66 8,-66 8,-20 8,-20 8,-14 14,-8 20,-8"/>
+<text xml:space="preserve" text-anchor="middle" x="281.9" y="-61.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="#999999">Prevention</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_detect</title>
+<path fill="#1a1a2e" stroke="#555555" stroke-width="1.5" stroke-dasharray="5,2" d="M596.8,-8C596.8,-8 976.4,-8 976.4,-8 982.4,-8 988.4,-14 988.4,-20 988.4,-20 988.4,-66 988.4,-66 988.4,-72 982.4,-78 976.4,-78 976.4,-78 596.8,-78 596.8,-78 590.8,-78 584.8,-72 584.8,-66 584.8,-66 584.8,-20 584.8,-20 584.8,-14 590.8,-8 596.8,-8"/>
+<text xml:space="preserve" text-anchor="middle" x="786.6" y="-61.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="#999999">Detection</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_respond</title>
+<path fill="#1a1a2e" stroke="#555555" stroke-width="1.5" stroke-dasharray="5,2" d="M1029.4,-8C1029.4,-8 1264.8,-8 1264.8,-8 1270.8,-8 1276.8,-14 1276.8,-20 1276.8,-20 1276.8,-66 1276.8,-66 1276.8,-72 1270.8,-78 1264.8,-78 1264.8,-78 1029.4,-78 1029.4,-78 1023.4,-78 1017.4,-72 1017.4,-66 1017.4,-66 1017.4,-20 1017.4,-20 1017.4,-14 1023.4,-8 1029.4,-8"/>
+<text xml:space="preserve" text-anchor="middle" x="1147.1" y="-61.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="#999999">Response</text>
+</g>
+<!-- IV -->
+<g id="node1" class="node">
+<title>IV</title>
+<path fill="#27ae60" stroke="#2ecc71" stroke-width="2.5" d="M111.2,-52C111.2,-52 20,-52 20,-52 14,-52 8,-46 8,-40 8,-40 8,-20 8,-20 8,-14 14,-8 20,-8 20,-8 111.2,-8 111.2,-8 117.2,-8 123.2,-14 123.2,-20 123.2,-20 123.2,-40 123.2,-40 123.2,-46 117.2,-52 111.2,-52"/>
+<text xml:space="preserve" text-anchor="middle" x="65.6" y="-35.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Input</text>
+<text xml:space="preserve" text-anchor="middle" x="65.6" y="-17.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Validation</text>
+</g>
+<!-- AUTHN -->
+<g id="node2" class="node">
+<title>AUTHN</title>
+<path fill="#2980b9" stroke="#3498db" stroke-width="2.5" d="M255.4,-51.6C255.4,-51.6 164.2,-51.6 164.2,-51.6 158.2,-51.6 152.2,-45.6 152.2,-39.6 152.2,-39.6 152.2,-20.4 152.2,-20.4 152.2,-14.4 158.2,-8.4 164.2,-8.4 164.2,-8.4 255.4,-8.4 255.4,-8.4 261.4,-8.4 267.4,-14.4 267.4,-20.4 267.4,-20.4 267.4,-39.6 267.4,-39.6 267.4,-45.6 261.4,-51.6 255.4,-51.6"/>
+<text xml:space="preserve" text-anchor="middle" x="209.8" y="-26.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Authentication</text>
+</g>
+<!-- IV&#45;&gt;AUTHN -->
+<g id="edge1" class="edge">
+<title>IV&#45;&gt;AUTHN</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M124.44,-30C129.37,-30 134.39,-30 139.4,-30"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="138.99,-33.15 147.99,-30 138.99,-26.85 138.99,-33.15"/>
+</g>
+<!-- AUTHZ -->
+<g id="node3" class="node">
+<title>AUTHZ</title>
+<path fill="#8e44ad" stroke="#9b59b6" stroke-width="2.5" d="M399.6,-51.6C399.6,-51.6 308.4,-51.6 308.4,-51.6 302.4,-51.6 296.4,-45.6 296.4,-39.6 296.4,-39.6 296.4,-20.4 296.4,-20.4 296.4,-14.4 302.4,-8.4 308.4,-8.4 308.4,-8.4 399.6,-8.4 399.6,-8.4 405.6,-8.4 411.6,-14.4 411.6,-20.4 411.6,-20.4 411.6,-39.6 411.6,-39.6 411.6,-45.6 405.6,-51.6 399.6,-51.6"/>
+<text xml:space="preserve" text-anchor="middle" x="354" y="-26.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Authorization</text>
+</g>
+<!-- AUTHN&#45;&gt;AUTHZ -->
+<g id="edge2" class="edge">
+<title>AUTHN&#45;&gt;AUTHZ</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M268.64,-30C273.57,-30 278.59,-30 283.6,-30"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="283.19,-33.15 292.19,-30 283.19,-26.85 283.19,-33.15"/>
+</g>
+<!-- DAC -->
+<g id="node4" class="node">
+<title>DAC</title>
+<path fill="#d35400" stroke="#e67e22" stroke-width="2.5" d="M543.8,-52C543.8,-52 452.6,-52 452.6,-52 446.6,-52 440.6,-46 440.6,-40 440.6,-40 440.6,-20 440.6,-20 440.6,-14 446.6,-8 452.6,-8 452.6,-8 543.8,-8 543.8,-8 549.8,-8 555.8,-14 555.8,-20 555.8,-20 555.8,-40 555.8,-40 555.8,-46 549.8,-52 543.8,-52"/>
+<text xml:space="preserve" text-anchor="middle" x="498.2" y="-35.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Data Access</text>
+<text xml:space="preserve" text-anchor="middle" x="498.2" y="-17.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Controls</text>
+</g>
+<!-- AUTHZ&#45;&gt;DAC -->
+<g id="edge3" class="edge">
+<title>AUTHZ&#45;&gt;DAC</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M412.84,-30C417.77,-30 422.79,-30 427.8,-30"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="427.39,-33.15 436.39,-30 427.39,-26.85 427.39,-33.15"/>
+</g>
+<!-- BA -->
+<g id="node5" class="node">
+<title>BA</title>
+<path fill="#c0392b" stroke="#e74c3c" stroke-width="2.5" d="M688,-52C688,-52 596.8,-52 596.8,-52 590.8,-52 584.8,-46 584.8,-40 584.8,-40 584.8,-20 584.8,-20 584.8,-14 590.8,-8 596.8,-8 596.8,-8 688,-8 688,-8 694,-8 700,-14 700,-20 700,-20 700,-40 700,-40 700,-46 694,-52 688,-52"/>
+<text xml:space="preserve" text-anchor="middle" x="642.4" y="-35.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Behavioral</text>
+<text xml:space="preserve" text-anchor="middle" x="642.4" y="-17.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Analytics</text>
+</g>
+<!-- DAC&#45;&gt;BA -->
+<g id="edge4" class="edge">
+<title>DAC&#45;&gt;BA</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M557.04,-30C561.97,-30 566.99,-30 572,-30"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="571.59,-33.15 580.59,-30 571.59,-26.85 571.59,-33.15"/>
+</g>
+<!-- AD -->
+<g id="node6" class="node">
+<title>AD</title>
+<path fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" d="M832.2,-52C832.2,-52 741,-52 741,-52 735,-52 729,-46 729,-40 729,-40 729,-20 729,-20 729,-14 735,-8 741,-8 741,-8 832.2,-8 832.2,-8 838.2,-8 844.2,-14 844.2,-20 844.2,-20 844.2,-40 844.2,-40 844.2,-46 838.2,-52 832.2,-52"/>
+<text xml:space="preserve" text-anchor="middle" x="786.6" y="-35.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Anomaly</text>
+<text xml:space="preserve" text-anchor="middle" x="786.6" y="-17.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Detection</text>
+</g>
+<!-- BA&#45;&gt;AD -->
+<g id="edge5" class="edge">
+<title>BA&#45;&gt;AD</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M701.24,-30C706.17,-30 711.19,-30 716.2,-30"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="715.79,-33.15 724.79,-30 715.79,-26.85 715.79,-33.15"/>
+</g>
+<!-- TI -->
+<g id="node7" class="node">
+<title>TI</title>
+<path fill="#f39c12" stroke="#e67e22" stroke-width="2.5" d="M976.4,-52C976.4,-52 885.2,-52 885.2,-52 879.2,-52 873.2,-46 873.2,-40 873.2,-40 873.2,-20 873.2,-20 873.2,-14 879.2,-8 885.2,-8 885.2,-8 976.4,-8 976.4,-8 982.4,-8 988.4,-14 988.4,-20 988.4,-20 988.4,-40 988.4,-40 988.4,-46 982.4,-52 976.4,-52"/>
+<text xml:space="preserve" text-anchor="middle" x="930.8" y="-35.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Threat</text>
+<text xml:space="preserve" text-anchor="middle" x="930.8" y="-17.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Intelligence</text>
+</g>
+<!-- AD&#45;&gt;TI -->
+<g id="edge6" class="edge">
+<title>AD&#45;&gt;TI</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M845.44,-30C850.37,-30 855.39,-30 860.4,-30"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="859.99,-33.15 868.99,-30 859.99,-26.85 859.99,-33.15"/>
+</g>
+<!-- AB -->
+<g id="node8" class="node">
+<title>AB</title>
+<path fill="#2c3e50" stroke="#3498db" stroke-width="2.5" d="M1120.6,-52C1120.6,-52 1029.4,-52 1029.4,-52 1023.4,-52 1017.4,-46 1017.4,-40 1017.4,-40 1017.4,-20 1017.4,-20 1017.4,-14 1023.4,-8 1029.4,-8 1029.4,-8 1120.6,-8 1120.6,-8 1126.6,-8 1132.6,-14 1132.6,-20 1132.6,-20 1132.6,-40 1132.6,-40 1132.6,-46 1126.6,-52 1120.6,-52"/>
+<text xml:space="preserve" text-anchor="middle" x="1075" y="-35.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Automated</text>
+<text xml:space="preserve" text-anchor="middle" x="1075" y="-17.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Blocking</text>
+</g>
+<!-- TI&#45;&gt;AB -->
+<g id="edge7" class="edge">
+<title>TI&#45;&gt;AB</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M989.64,-30C994.57,-30 999.59,-30 1004.6,-30"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="1004.19,-33.15 1013.19,-30 1004.19,-26.85 1004.19,-33.15"/>
+</g>
+<!-- AR -->
+<g id="node9" class="node">
+<title>AR</title>
+<path fill="#1a1a2e" stroke="#e94560" stroke-width="2.5" d="M1264.8,-52C1264.8,-52 1173.6,-52 1173.6,-52 1167.6,-52 1161.6,-46 1161.6,-40 1161.6,-40 1161.6,-20 1161.6,-20 1161.6,-14 1167.6,-8 1173.6,-8 1173.6,-8 1264.8,-8 1264.8,-8 1270.8,-8 1276.8,-14 1276.8,-20 1276.8,-20 1276.8,-40 1276.8,-40 1276.8,-46 1270.8,-52 1264.8,-52"/>
+<text xml:space="preserve" text-anchor="middle" x="1219.2" y="-35.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Alert &amp;</text>
+<text xml:space="preserve" text-anchor="middle" x="1219.2" y="-17.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Remediation</text>
+</g>
+<!-- AB&#45;&gt;AR -->
+<g id="edge8" class="edge">
+<title>AB&#45;&gt;AR</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M1133.84,-30C1138.77,-30 1143.79,-30 1148.8,-30"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="1148.39,-33.15 1157.39,-30 1148.39,-26.85 1148.39,-33.15"/>
+</g>
+</g>
 </svg>

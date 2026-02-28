@@ -1,57 +1,123 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-     width="550" height="500" viewBox="-5 15 550 500">
-  <defs>
-    <marker id="ah3498db" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#3498db" /></marker>
-    <marker id="ahe67e22" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e67e22" /></marker>
-    <marker id="ahc0392b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#c0392b" /></marker>
-    <marker id="ah2ecc71" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#2ecc71" /></marker>
-    <marker id="ah1abc9c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#1abc9c" /></marker>
-    <marker id="ah9b59b6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#9b59b6" /></marker>
-    <marker id="ahe74c3c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e74c3c" /></marker>
-  </defs>
-  <rect x="-5" y="15" width="550" height="500" fill="#1a1a2e" rx="12" ry="12" />
-  <line x1="170.0" y1="74.4" x2="340.1" y2="95.6" stroke="#2ecc71" stroke-width="2" stroke-linecap="round" marker-end="url(#ah2ecc71)" />
-  <line x1="170.0" y1="136.7" x2="340.1" y2="118.0" stroke="#3498db" stroke-width="2" stroke-linecap="round" marker-end="url(#ah3498db)" />
-  <line x1="170.0" y1="234.4" x2="340.1" y2="255.6" stroke="#e67e22" stroke-width="2" stroke-linecap="round" marker-end="url(#ahe67e22)" />
-  <line x1="170.0" y1="296.7" x2="340.1" y2="278.0" stroke="#9b59b6" stroke-width="2" stroke-linecap="round" marker-end="url(#ah9b59b6)" />
-  <line x1="170.0" y1="394.4" x2="340.1" y2="415.6" stroke="#e74c3c" stroke-width="2" stroke-linecap="round" marker-end="url(#ahe74c3c)" />
-  <line x1="170.0" y1="456.7" x2="340.1" y2="438.0" stroke="#c0392b" stroke-width="2" stroke-linecap="round" marker-end="url(#ahc0392b)" />
-  <line x1="435.0" y1="135.0" x2="435.0" y2="230.0" stroke="#1abc9c" stroke-width="2" stroke-linecap="round" marker-end="url(#ah1abc9c)" />
-  <line x1="435.0" y1="295.0" x2="435.0" y2="390.0" stroke="#1abc9c" stroke-width="2" stroke-linecap="round" marker-end="url(#ah1abc9c)" />
-  <rect x="22" y="43" width="150" height="50" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="20" y="40" width="150" height="50" rx="10" ry="10" fill="#27ae60" stroke="#2ecc71" stroke-width="2.5" />
-  <text x="95.0" y="69.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Secure Coding</text>
-  <rect x="22" y="123" width="150" height="50" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="20" y="120" width="150" height="50" rx="10" ry="10" fill="#2980b9" stroke="#3498db" stroke-width="2.5" />
-  <text x="95.0" y="141.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Behavioral</text>
-  <text x="95.0" y="158.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Monitoring</text>
-  <rect x="22" y="203" width="150" height="50" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="20" y="200" width="150" height="50" rx="10" ry="10" fill="#d35400" stroke="#e67e22" stroke-width="2.5" />
-  <text x="95.0" y="221.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Vulnerability</text>
-  <text x="95.0" y="238.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Testing</text>
-  <rect x="22" y="283" width="150" height="50" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="20" y="280" width="150" height="50" rx="10" ry="10" fill="#8e44ad" stroke="#9b59b6" stroke-width="2.5" />
-  <text x="95.0" y="301.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Technique</text>
-  <text x="95.0" y="318.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Correlation</text>
-  <rect x="22" y="363" width="150" height="50" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="20" y="360" width="150" height="50" rx="10" ry="10" fill="#c0392b" stroke="#e74c3c" stroke-width="2.5" />
-  <text x="95.0" y="381.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Security</text>
-  <text x="95.0" y="398.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Reviews</text>
-  <rect x="22" y="443" width="150" height="50" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="20" y="440" width="150" height="50" rx="10" ry="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" />
-  <text x="95.0" y="461.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Threat</text>
-  <text x="95.0" y="478.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Hunting</text>
-  <rect x="352" y="83" width="170" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="350" y="80" width="170" height="55" rx="10" ry="10" fill="#16a085" stroke="#1abc9c" stroke-width="2.5" />
-  <text x="435.0" y="103.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Secure</text>
-  <text x="435.0" y="120.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">by Design</text>
-  <rect x="352" y="243" width="170" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="350" y="240" width="170" height="55" rx="10" ry="10" fill="#16a085" stroke="#1abc9c" stroke-width="2.5" />
-  <text x="435.0" y="263.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Monitor</text>
-  <text x="435.0" y="280.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">by Behavior</text>
-  <rect x="352" y="403" width="170" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="350" y="400" width="170" height="55" rx="10" ry="10" fill="#16a085" stroke="#1abc9c" stroke-width="2.5" />
-  <text x="435.0" y="423.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Respond by</text>
-  <text x="435.0" y="440.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Intelligence</text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260124.0452)
+ -->
+<!-- Title: owasp Pages: 1 -->
+<svg width="647pt" height="381pt"
+ viewBox="0.00 0.00 647.00 381.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 352.4)">
+<title>owasp</title>
+<polygon fill="#1a1a2e" stroke="none" points="-28.8,28.8 -28.8,-352.4 618.6,-352.4 618.6,28.8 -28.8,28.8"/>
+<!-- SC -->
+<g id="node1" class="node">
+<title>SC</title>
+<path fill="#27ae60" stroke="#2ecc71" stroke-width="2.5" d="M103.2,-323.6C103.2,-323.6 12,-323.6 12,-323.6 6,-323.6 0,-317.6 0,-311.6 0,-311.6 0,-292.4 0,-292.4 0,-286.4 6,-280.4 12,-280.4 12,-280.4 103.2,-280.4 103.2,-280.4 109.2,-280.4 115.2,-286.4 115.2,-292.4 115.2,-292.4 115.2,-311.6 115.2,-311.6 115.2,-317.6 109.2,-323.6 103.2,-323.6"/>
+<text xml:space="preserve" text-anchor="middle" x="57.6" y="-298.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Secure Coding</text>
+</g>
+<!-- SBD -->
+<g id="node7" class="node">
+<title>SBD</title>
+<path fill="#16a085" stroke="#1abc9c" stroke-width="2.5" d="M261.4,-284C261.4,-284 170.2,-284 170.2,-284 164.2,-284 158.2,-278 158.2,-272 158.2,-272 158.2,-252 158.2,-252 158.2,-246 164.2,-240 170.2,-240 170.2,-240 261.4,-240 261.4,-240 267.4,-240 273.4,-246 273.4,-252 273.4,-252 273.4,-272 273.4,-272 273.4,-278 267.4,-284 261.4,-284"/>
+<text xml:space="preserve" text-anchor="middle" x="215.8" y="-267.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Secure</text>
+<text xml:space="preserve" text-anchor="middle" x="215.8" y="-249.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">by Design</text>
+</g>
+<!-- SC&#45;&gt;SBD -->
+<g id="edge1" class="edge">
+<title>SC&#45;&gt;SBD</title>
+<path fill="none" stroke="#2ecc71" stroke-width="2" d="M116.32,-287.22C125.88,-284.77 135.87,-282.21 145.67,-279.7"/>
+<polygon fill="#2ecc71" stroke="#2ecc71" stroke-width="2" points="146.19,-282.82 154.12,-277.54 144.62,-276.72 146.19,-282.82"/>
+</g>
+<!-- BM -->
+<g id="node2" class="node">
+<title>BM</title>
+<path fill="#2980b9" stroke="#3498db" stroke-width="2.5" d="M103.2,-244C103.2,-244 12,-244 12,-244 6,-244 0,-238 0,-232 0,-232 0,-212 0,-212 0,-206 6,-200 12,-200 12,-200 103.2,-200 103.2,-200 109.2,-200 115.2,-206 115.2,-212 115.2,-212 115.2,-232 115.2,-232 115.2,-238 109.2,-244 103.2,-244"/>
+<text xml:space="preserve" text-anchor="middle" x="57.6" y="-227.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Behavioral</text>
+<text xml:space="preserve" text-anchor="middle" x="57.6" y="-209.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Monitoring</text>
+</g>
+<!-- BM&#45;&gt;SBD -->
+<g id="edge2" class="edge">
+<title>BM&#45;&gt;SBD</title>
+<path fill="none" stroke="#3498db" stroke-width="2" d="M116.32,-236.78C125.88,-239.23 135.87,-241.79 145.67,-244.3"/>
+<polygon fill="#3498db" stroke="#3498db" stroke-width="2" points="144.62,-247.28 154.12,-246.46 146.19,-241.18 144.62,-247.28"/>
+</g>
+<!-- VT -->
+<g id="node3" class="node">
+<title>VT</title>
+<path fill="#d35400" stroke="#e67e22" stroke-width="2.5" d="M261.4,-204C261.4,-204 170.2,-204 170.2,-204 164.2,-204 158.2,-198 158.2,-192 158.2,-192 158.2,-172 158.2,-172 158.2,-166 164.2,-160 170.2,-160 170.2,-160 261.4,-160 261.4,-160 267.4,-160 273.4,-166 273.4,-172 273.4,-172 273.4,-192 273.4,-192 273.4,-198 267.4,-204 261.4,-204"/>
+<text xml:space="preserve" text-anchor="middle" x="215.8" y="-187.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Vulnerability</text>
+<text xml:space="preserve" text-anchor="middle" x="215.8" y="-169.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Testing</text>
+</g>
+<!-- MBB -->
+<g id="node8" class="node">
+<title>MBB</title>
+<path fill="#16a085" stroke="#1abc9c" stroke-width="2.5" d="M419.6,-204C419.6,-204 328.4,-204 328.4,-204 322.4,-204 316.4,-198 316.4,-192 316.4,-192 316.4,-172 316.4,-172 316.4,-166 322.4,-160 328.4,-160 328.4,-160 419.6,-160 419.6,-160 425.6,-160 431.6,-166 431.6,-172 431.6,-172 431.6,-192 431.6,-192 431.6,-198 425.6,-204 419.6,-204"/>
+<text xml:space="preserve" text-anchor="middle" x="374" y="-187.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Monitor</text>
+<text xml:space="preserve" text-anchor="middle" x="374" y="-169.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">by Behavior</text>
+</g>
+<!-- VT&#45;&gt;MBB -->
+<g id="edge3" class="edge">
+<title>VT&#45;&gt;MBB</title>
+<path fill="none" stroke="#e67e22" stroke-width="2" d="M274.52,-182C283.87,-182 293.64,-182 303.23,-182"/>
+<polygon fill="#e67e22" stroke="#e67e22" stroke-width="2" points="303.23,-185.15 312.23,-182 303.23,-178.85 303.23,-185.15"/>
+</g>
+<!-- TC -->
+<g id="node4" class="node">
+<title>TC</title>
+<path fill="#8e44ad" stroke="#9b59b6" stroke-width="2.5" d="M261.4,-124C261.4,-124 170.2,-124 170.2,-124 164.2,-124 158.2,-118 158.2,-112 158.2,-112 158.2,-92 158.2,-92 158.2,-86 164.2,-80 170.2,-80 170.2,-80 261.4,-80 261.4,-80 267.4,-80 273.4,-86 273.4,-92 273.4,-92 273.4,-112 273.4,-112 273.4,-118 267.4,-124 261.4,-124"/>
+<text xml:space="preserve" text-anchor="middle" x="215.8" y="-107.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Technique</text>
+<text xml:space="preserve" text-anchor="middle" x="215.8" y="-89.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Correlation</text>
+</g>
+<!-- TC&#45;&gt;MBB -->
+<g id="edge4" class="edge">
+<title>TC&#45;&gt;MBB</title>
+<path fill="none" stroke="#9b59b6" stroke-width="2" d="M261.98,-125.14C279.15,-133.93 298.91,-144.05 316.96,-153.3"/>
+<polygon fill="#9b59b6" stroke="#9b59b6" stroke-width="2" points="315.51,-156.1 324.96,-157.39 318.38,-150.49 315.51,-156.1"/>
+</g>
+<!-- SR -->
+<g id="node5" class="node">
+<title>SR</title>
+<path fill="#c0392b" stroke="#e74c3c" stroke-width="2.5" d="M419.6,-124C419.6,-124 328.4,-124 328.4,-124 322.4,-124 316.4,-118 316.4,-112 316.4,-112 316.4,-92 316.4,-92 316.4,-86 322.4,-80 328.4,-80 328.4,-80 419.6,-80 419.6,-80 425.6,-80 431.6,-86 431.6,-92 431.6,-92 431.6,-112 431.6,-112 431.6,-118 425.6,-124 419.6,-124"/>
+<text xml:space="preserve" text-anchor="middle" x="374" y="-107.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Security</text>
+<text xml:space="preserve" text-anchor="middle" x="374" y="-89.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Reviews</text>
+</g>
+<!-- RBI -->
+<g id="node9" class="node">
+<title>RBI</title>
+<path fill="#16a085" stroke="#1abc9c" stroke-width="2.5" d="M577.8,-124C577.8,-124 486.6,-124 486.6,-124 480.6,-124 474.6,-118 474.6,-112 474.6,-112 474.6,-92 474.6,-92 474.6,-86 480.6,-80 486.6,-80 486.6,-80 577.8,-80 577.8,-80 583.8,-80 589.8,-86 589.8,-92 589.8,-92 589.8,-112 589.8,-112 589.8,-118 583.8,-124 577.8,-124"/>
+<text xml:space="preserve" text-anchor="middle" x="532.2" y="-107.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Respond by</text>
+<text xml:space="preserve" text-anchor="middle" x="532.2" y="-89.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Intelligence</text>
+</g>
+<!-- SR&#45;&gt;RBI -->
+<g id="edge5" class="edge">
+<title>SR&#45;&gt;RBI</title>
+<path fill="none" stroke="#e74c3c" stroke-width="2" d="M432.72,-102C442.07,-102 451.84,-102 461.43,-102"/>
+<polygon fill="#e74c3c" stroke="#e74c3c" stroke-width="2" points="461.43,-105.15 470.43,-102 461.43,-98.85 461.43,-105.15"/>
+</g>
+<!-- TH -->
+<g id="node6" class="node">
+<title>TH</title>
+<path fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" d="M419.6,-44C419.6,-44 328.4,-44 328.4,-44 322.4,-44 316.4,-38 316.4,-32 316.4,-32 316.4,-12 316.4,-12 316.4,-6 322.4,0 328.4,0 328.4,0 419.6,0 419.6,0 425.6,0 431.6,-6 431.6,-12 431.6,-12 431.6,-32 431.6,-32 431.6,-38 425.6,-44 419.6,-44"/>
+<text xml:space="preserve" text-anchor="middle" x="374" y="-27.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Threat</text>
+<text xml:space="preserve" text-anchor="middle" x="374" y="-9.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Hunting</text>
+</g>
+<!-- TH&#45;&gt;RBI -->
+<g id="edge6" class="edge">
+<title>TH&#45;&gt;RBI</title>
+<path fill="none" stroke="#c0392b" stroke-width="2" d="M420.18,-45.14C437.35,-53.93 457.11,-64.05 475.16,-73.3"/>
+<polygon fill="#c0392b" stroke="#c0392b" stroke-width="2" points="473.71,-76.1 483.16,-77.39 476.58,-70.49 473.71,-76.1"/>
+</g>
+<!-- SBD&#45;&gt;MBB -->
+<g id="edge7" class="edge">
+<title>SBD&#45;&gt;MBB</title>
+<path fill="none" stroke="#1abc9c" stroke-width="2" d="M261.98,-238.86C279.15,-230.07 298.91,-219.95 316.96,-210.7"/>
+<polygon fill="#1abc9c" stroke="#1abc9c" stroke-width="2" points="318.38,-213.51 324.96,-206.61 315.51,-207.9 318.38,-213.51"/>
+</g>
+<!-- MBB&#45;&gt;RBI -->
+<g id="edge8" class="edge">
+<title>MBB&#45;&gt;RBI</title>
+<path fill="none" stroke="#1abc9c" stroke-width="2" d="M420.18,-158.86C437.35,-150.07 457.11,-139.95 475.16,-130.7"/>
+<polygon fill="#1abc9c" stroke="#1abc9c" stroke-width="2" points="476.58,-133.51 483.16,-126.61 473.71,-127.9 476.58,-133.51"/>
+</g>
+</g>
 </svg>

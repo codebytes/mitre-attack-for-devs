@@ -1,42 +1,91 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-     width="477" height="425" viewBox="61 -15 477 425">
-  <defs>
-    <marker id="ah3498db" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#3498db" /></marker>
-    <marker id="ahe67e22" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#e67e22" /></marker>
-    <marker id="ahc0392b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#c0392b" /></marker>
-    <marker id="ah2ecc71" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#2ecc71" /></marker>
-    <marker id="ah9b59b6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#9b59b6" /></marker>
-  </defs>
-  <rect x="61" y="-15" width="477" height="425" fill="#1a1a2e" rx="12" ry="12" />
-  <line x1="347.6" y1="65.0" x2="382.3" y2="85.0" stroke="#3498db" stroke-width="2" stroke-linecap="round" marker-end="url(#ah3498db)" />
-  <line x1="438.6" y1="145.0" x2="438.6" y2="240.0" stroke="#e67e22" stroke-width="2" stroke-linecap="round" marker-end="url(#ahe67e22)" />
-  <line x1="390.9" y1="305.0" x2="356.3" y2="325.0" stroke="#9b59b6" stroke-width="2" stroke-linecap="round" marker-end="url(#ah9b59b6)" />
-  <line x1="252.4" y1="330.0" x2="217.7" y2="310.0" stroke="#2ecc71" stroke-width="2" stroke-linecap="round" marker-end="url(#ah2ecc71)" />
-  <line x1="161.4" y1="250.0" x2="161.4" y2="155.0" stroke="#c0392b" stroke-width="2" stroke-linecap="round" marker-end="url(#ahc0392b)" />
-  <line x1="209.1" y1="90.0" x2="243.7" y2="70.0" stroke="#3498db" stroke-width="2" stroke-linecap="round" marker-end="url(#ah3498db)" />
-  <rect x="227.0" y="13.0" width="150" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="225.0" y="10.0" width="150" height="55" rx="10" ry="10" fill="#2c3e50" stroke="#3498db" stroke-width="2.5" />
-  <text x="300.0" y="33.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Identify</text>
-  <text x="300.0" y="50.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Feature</text>
-  <rect x="365.56406460551017" y="93.0" width="150" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="363.56406460551017" y="90.0" width="150" height="55" rx="10" ry="10" fill="#2980b9" stroke="#3498db" stroke-width="2.5" />
-  <text x="438.56406460551017" y="113.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Map to ATT&amp;CK</text>
-  <text x="438.56406460551017" y="130.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Techniques</text>
-  <rect x="365.5640646055102" y="253.0" width="150" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="363.5640646055102" y="250.0" width="150" height="55" rx="10" ry="10" fill="#d35400" stroke="#e67e22" stroke-width="2.5" />
-  <text x="438.5640646055102" y="273.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Assess Risk</text>
-  <text x="438.5640646055102" y="290.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">&amp; Impact</text>
-  <rect x="227.0" y="333.0" width="150" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="225.0" y="330.0" width="150" height="55" rx="10" ry="10" fill="#8e44ad" stroke="#9b59b6" stroke-width="2.5" />
-  <text x="300.0" y="353.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Design</text>
-  <text x="300.0" y="370.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Detections</text>
-  <rect x="88.43593539448983" y="253.00000000000006" width="150" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="86.43593539448983" y="250.00000000000006" width="150" height="55" rx="10" ry="10" fill="#27ae60" stroke="#2ecc71" stroke-width="2.5" />
-  <text x="161.43593539448983" y="273.50000000000006" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Implement</text>
-  <text x="161.43593539448983" y="290.50000000000006" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">&amp; Monitor</text>
-  <rect x="88.43593539448975" y="93.00000000000011" width="150" height="55" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="86.43593539448975" y="90.00000000000011" width="150" height="55" rx="10" ry="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" />
-  <text x="161.43593539448975" y="113.50000000000011" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Test &amp;</text>
-  <text x="161.43593539448975" y="130.5000000000001" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Iterate</text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260124.0452)
+ -->
+<!-- Title: threat_model Pages: 1 -->
+<svg width="710pt" height="561pt"
+ viewBox="0.00 0.00 710.00 561.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 531.73)">
+<title>threat_model</title>
+<polygon fill="#1a1a2e" stroke="none" points="-28.8,28.8 -28.8,-531.73 680.94,-531.73 680.94,28.8 -28.8,28.8"/>
+<!-- ID -->
+<g id="node1" class="node">
+<title>ID</title>
+<path fill="#2c3e50" stroke="#3498db" stroke-width="2.5" d="M509.5,-50.4C509.5,-50.4 403.9,-50.4 403.9,-50.4 397.9,-50.4 391.9,-44.4 391.9,-38.4 391.9,-38.4 391.9,-12 391.9,-12 391.9,-6 397.9,0 403.9,0 403.9,0 509.5,0 509.5,0 515.5,0 521.5,-6 521.5,-12 521.5,-12 521.5,-38.4 521.5,-38.4 521.5,-44.4 515.5,-50.4 509.5,-50.4"/>
+<text xml:space="preserve" text-anchor="middle" x="456.7" y="-30.85" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Identify</text>
+<text xml:space="preserve" text-anchor="middle" x="456.7" y="-12.85" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Feature</text>
+</g>
+<!-- MAP -->
+<g id="node2" class="node">
+<title>MAP</title>
+<path fill="#2980b9" stroke="#3498db" stroke-width="2.5" d="M248.23,-50.4C248.23,-50.4 142.63,-50.4 142.63,-50.4 136.63,-50.4 130.63,-44.4 130.63,-38.4 130.63,-38.4 130.63,-12 130.63,-12 130.63,-6 136.63,0 142.63,0 142.63,0 248.23,0 248.23,0 254.23,0 260.23,-6 260.23,-12 260.23,-12 260.23,-38.4 260.23,-38.4 260.23,-44.4 254.23,-50.4 248.23,-50.4"/>
+<text xml:space="preserve" text-anchor="middle" x="195.43" y="-30.85" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Map to ATT&amp;CK</text>
+<text xml:space="preserve" text-anchor="middle" x="195.43" y="-12.85" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Techniques</text>
+</g>
+<!-- ID&#45;&gt;MAP -->
+<g id="edge1" class="edge">
+<title>ID&#45;&gt;MAP</title>
+<path fill="none" stroke="#3498db" stroke-width="2" d="M390.77,-25.2C355.04,-25.2 310.65,-25.2 273.23,-25.2"/>
+<polygon fill="#3498db" stroke="#3498db" stroke-width="2" points="273.37,-22.05 264.37,-25.2 273.37,-28.35 273.37,-22.05"/>
+</g>
+<!-- ASSESS -->
+<g id="node3" class="node">
+<title>ASSESS</title>
+<path fill="#d35400" stroke="#e67e22" stroke-width="2.5" d="M117.6,-276.67C117.6,-276.67 12,-276.67 12,-276.67 6,-276.67 0,-270.67 0,-264.67 0,-264.67 0,-238.27 0,-238.27 0,-232.27 6,-226.27 12,-226.27 12,-226.27 117.6,-226.27 117.6,-226.27 123.6,-226.27 129.6,-232.27 129.6,-238.27 129.6,-238.27 129.6,-264.67 129.6,-264.67 129.6,-270.67 123.6,-276.67 117.6,-276.67"/>
+<text xml:space="preserve" text-anchor="middle" x="64.8" y="-257.12" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Assess Risk</text>
+<text xml:space="preserve" text-anchor="middle" x="64.8" y="-239.12" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">&amp; Impact</text>
+</g>
+<!-- MAP&#45;&gt;ASSESS -->
+<g id="edge2" class="edge">
+<title>MAP&#45;&gt;ASSESS</title>
+<path fill="none" stroke="#3498db" stroke-width="2" d="M180.19,-51.6C156.89,-91.96 112.33,-169.14 85.93,-214.88"/>
+<polygon fill="#3498db" stroke="#3498db" stroke-width="2" points="83.23,-213.24 81.46,-222.61 88.69,-216.39 83.23,-213.24"/>
+</g>
+<!-- DESIGN -->
+<g id="node4" class="node">
+<title>DESIGN</title>
+<path fill="#8e44ad" stroke="#9b59b6" stroke-width="2.5" d="M248.23,-502.93C248.23,-502.93 142.63,-502.93 142.63,-502.93 136.63,-502.93 130.63,-496.93 130.63,-490.93 130.63,-490.93 130.63,-464.53 130.63,-464.53 130.63,-458.53 136.63,-452.53 142.63,-452.53 142.63,-452.53 248.23,-452.53 248.23,-452.53 254.23,-452.53 260.23,-458.53 260.23,-464.53 260.23,-464.53 260.23,-490.93 260.23,-490.93 260.23,-496.93 254.23,-502.93 248.23,-502.93"/>
+<text xml:space="preserve" text-anchor="middle" x="195.43" y="-483.38" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Design</text>
+<text xml:space="preserve" text-anchor="middle" x="195.43" y="-465.38" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Detections</text>
+</g>
+<!-- ASSESS&#45;&gt;DESIGN -->
+<g id="edge3" class="edge">
+<title>ASSESS&#45;&gt;DESIGN</title>
+<path fill="none" stroke="#e67e22" stroke-width="2" d="M80.04,-277.86C103.34,-318.23 147.9,-395.4 174.31,-441.14"/>
+<polygon fill="#e67e22" stroke="#e67e22" stroke-width="2" points="171.55,-442.66 178.78,-448.88 177,-439.51 171.55,-442.66"/>
+</g>
+<!-- IMPL -->
+<g id="node5" class="node">
+<title>IMPL</title>
+<path fill="#27ae60" stroke="#2ecc71" stroke-width="2.5" d="M509.5,-502.93C509.5,-502.93 403.9,-502.93 403.9,-502.93 397.9,-502.93 391.9,-496.93 391.9,-490.93 391.9,-490.93 391.9,-464.53 391.9,-464.53 391.9,-458.53 397.9,-452.53 403.9,-452.53 403.9,-452.53 509.5,-452.53 509.5,-452.53 515.5,-452.53 521.5,-458.53 521.5,-464.53 521.5,-464.53 521.5,-490.93 521.5,-490.93 521.5,-496.93 515.5,-502.93 509.5,-502.93"/>
+<text xml:space="preserve" text-anchor="middle" x="456.7" y="-483.38" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Implement</text>
+<text xml:space="preserve" text-anchor="middle" x="456.7" y="-465.38" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">&amp; Monitor</text>
+</g>
+<!-- DESIGN&#45;&gt;IMPL -->
+<g id="edge4" class="edge">
+<title>DESIGN&#45;&gt;IMPL</title>
+<path fill="none" stroke="#9b59b6" stroke-width="2" d="M261.36,-477.73C297.1,-477.73 341.48,-477.73 378.91,-477.73"/>
+<polygon fill="#9b59b6" stroke="#9b59b6" stroke-width="2" points="378.77,-480.88 387.77,-477.73 378.77,-474.58 378.77,-480.88"/>
+</g>
+<!-- TEST -->
+<g id="node6" class="node">
+<title>TEST</title>
+<path fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" d="M640.14,-276.67C640.14,-276.67 534.54,-276.67 534.54,-276.67 528.54,-276.67 522.54,-270.67 522.54,-264.67 522.54,-264.67 522.54,-238.27 522.54,-238.27 522.54,-232.27 528.54,-226.27 534.54,-226.27 534.54,-226.27 640.14,-226.27 640.14,-226.27 646.14,-226.27 652.14,-232.27 652.14,-238.27 652.14,-238.27 652.14,-264.67 652.14,-264.67 652.14,-270.67 646.14,-276.67 640.14,-276.67"/>
+<text xml:space="preserve" text-anchor="middle" x="587.34" y="-257.12" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Test &amp;</text>
+<text xml:space="preserve" text-anchor="middle" x="587.34" y="-239.12" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Iterate</text>
+</g>
+<!-- IMPL&#45;&gt;TEST -->
+<g id="edge5" class="edge">
+<title>IMPL&#45;&gt;TEST</title>
+<path fill="none" stroke="#2ecc71" stroke-width="2" d="M471.94,-451.33C495.25,-410.97 539.8,-333.79 566.21,-288.05"/>
+<polygon fill="#2ecc71" stroke="#2ecc71" stroke-width="2" points="568.91,-289.69 570.68,-280.32 563.45,-286.54 568.91,-289.69"/>
+</g>
+<!-- TEST&#45;&gt;ID -->
+<g id="edge6" class="edge">
+<title>TEST&#45;&gt;ID</title>
+<path fill="none" stroke="#e74c3c" stroke-width="2" d="M572.1,-225.07C548.79,-184.7 504.24,-107.53 477.83,-61.79"/>
+<polygon fill="#e74c3c" stroke="#e74c3c" stroke-width="2" points="480.59,-60.27 473.36,-54.05 475.13,-63.42 480.59,-60.27"/>
+</g>
+</g>
 </svg>

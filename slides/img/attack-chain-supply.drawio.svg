@@ -1,40 +1,88 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-     width="600" height="250" viewBox="-5 -5 600 250">
-  <defs>
-    <marker id="ahcccccc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-auto"><path d="M 0 1 L 8 5 L 0 9 z" fill="#cccccc" /></marker>
-  </defs>
-  <rect x="-5" y="-5" width="600" height="250" fill="#1a1a2e" rx="12" ry="12" />
-  <line x1="190.0" y1="60.0" x2="200.0" y2="60.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="380.0" y1="60.0" x2="390.0" y2="60.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="400.0" y1="86.8" x2="199.5" y2="150.1" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="190.0" y1="180.0" x2="200.0" y2="180.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <line x1="380.0" y1="180.0" x2="390.0" y2="180.0" stroke="#cccccc" stroke-width="2" stroke-linecap="round" marker-end="url(#ahcccccc)" />
-  <rect x="22" y="23" width="170" height="80" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="20" y="20" width="170" height="80" rx="10" ry="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2.5" />
-  <text x="105.0" y="47.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1195</text>
-  <text x="105.0" y="64.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Supply Chain</text>
-  <text x="105.0" y="81.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Compromise</text>
-  <rect x="212" y="23" width="170" height="80" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="210" y="20" width="170" height="80" rx="10" ry="10" fill="#e67e22" stroke="#d35400" stroke-width="2.5" />
-  <text x="295.0" y="56.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1059</text>
-  <text x="295.0" y="73.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Execution</text>
-  <rect x="402" y="23" width="170" height="80" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="400" y="20" width="170" height="80" rx="10" ry="10" fill="#f39c12" stroke="#e67e22" stroke-width="2.5" />
-  <text x="485.0" y="47.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1552</text>
-  <text x="485.0" y="64.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Unsecured</text>
-  <text x="485.0" y="81.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Credentials</text>
-  <rect x="22" y="143" width="170" height="80" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="20" y="140" width="170" height="80" rx="10" ry="10" fill="#2ecc71" stroke="#27ae60" stroke-width="2.5" />
-  <text x="105.0" y="176.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1078</text>
-  <text x="105.0" y="193.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Valid Accounts</text>
-  <rect x="212" y="143" width="170" height="80" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="210" y="140" width="170" height="80" rx="10" ry="10" fill="#3498db" stroke="#2980b9" stroke-width="2.5" />
-  <text x="295.0" y="167.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1098</text>
-  <text x="295.0" y="184.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Account</text>
-  <text x="295.0" y="201.5" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Manipulation</text>
-  <rect x="402" y="143" width="170" height="80" rx="10" ry="10" fill="black" fill-opacity="0.25" />
-  <rect x="400" y="140" width="170" height="80" rx="10" ry="10" fill="#9b59b6" stroke="#8e44ad" stroke-width="2.5" />
-  <text x="485.0" y="176.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">T1567</text>
-  <text x="485.0" y="193.0" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">Exfiltration</text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260124.0452)
+ -->
+<!-- Title: attack_chain Pages: 1 -->
+<svg width="964pt" height="120pt"
+ viewBox="0.00 0.00 964.00 120.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 90.8)">
+<title>attack_chain</title>
+<polygon fill="#1a1a2e" stroke="none" points="-28.8,28.8 -28.8,-90.8 935,-90.8 935,28.8 -28.8,28.8"/>
+<!-- T1195 -->
+<g id="node1" class="node">
+<title>T1195</title>
+<path fill="#e74c3c" stroke="#e74c3c" stroke-width="2.5" d="M103.2,-62C103.2,-62 12,-62 12,-62 6,-62 0,-56 0,-50 0,-50 0,-12 0,-12 0,-6 6,0 12,0 12,0 103.2,0 103.2,0 109.2,0 115.2,-6 115.2,-12 115.2,-12 115.2,-50 115.2,-50 115.2,-56 109.2,-62 103.2,-62"/>
+<text xml:space="preserve" text-anchor="middle" x="57.6" y="-45.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1195</text>
+<text xml:space="preserve" text-anchor="middle" x="57.6" y="-27.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Supply Chain</text>
+<text xml:space="preserve" text-anchor="middle" x="57.6" y="-9.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Compromise</text>
+</g>
+<!-- T1059 -->
+<g id="node2" class="node">
+<title>T1059</title>
+<path fill="#e67e22" stroke="#e67e22" stroke-width="2.5" d="M261.4,-53C261.4,-53 170.2,-53 170.2,-53 164.2,-53 158.2,-47 158.2,-41 158.2,-41 158.2,-21 158.2,-21 158.2,-15 164.2,-9 170.2,-9 170.2,-9 261.4,-9 261.4,-9 267.4,-9 273.4,-15 273.4,-21 273.4,-21 273.4,-41 273.4,-41 273.4,-47 267.4,-53 261.4,-53"/>
+<text xml:space="preserve" text-anchor="middle" x="215.8" y="-36.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1059</text>
+<text xml:space="preserve" text-anchor="middle" x="215.8" y="-18.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Execution</text>
+</g>
+<!-- T1195&#45;&gt;T1059 -->
+<g id="edge1" class="edge">
+<title>T1195&#45;&gt;T1059</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M116.32,-31C125.67,-31 135.44,-31 145.03,-31"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="145.03,-34.15 154.03,-31 145.03,-27.85 145.03,-34.15"/>
+</g>
+<!-- T1552 -->
+<g id="node3" class="node">
+<title>T1552</title>
+<path fill="#f39c12" stroke="#f39c12" stroke-width="2.5" d="M419.6,-62C419.6,-62 328.4,-62 328.4,-62 322.4,-62 316.4,-56 316.4,-50 316.4,-50 316.4,-12 316.4,-12 316.4,-6 322.4,0 328.4,0 328.4,0 419.6,0 419.6,0 425.6,0 431.6,-6 431.6,-12 431.6,-12 431.6,-50 431.6,-50 431.6,-56 425.6,-62 419.6,-62"/>
+<text xml:space="preserve" text-anchor="middle" x="374" y="-45.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1552</text>
+<text xml:space="preserve" text-anchor="middle" x="374" y="-27.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Unsecured</text>
+<text xml:space="preserve" text-anchor="middle" x="374" y="-9.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Credentials</text>
+</g>
+<!-- T1059&#45;&gt;T1552 -->
+<g id="edge2" class="edge">
+<title>T1059&#45;&gt;T1552</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M274.52,-31C283.87,-31 293.64,-31 303.23,-31"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="303.23,-34.15 312.23,-31 303.23,-27.85 303.23,-34.15"/>
+</g>
+<!-- T1078 -->
+<g id="node4" class="node">
+<title>T1078</title>
+<path fill="#2ecc71" stroke="#2ecc71" stroke-width="2.5" d="M577.8,-53C577.8,-53 486.6,-53 486.6,-53 480.6,-53 474.6,-47 474.6,-41 474.6,-41 474.6,-21 474.6,-21 474.6,-15 480.6,-9 486.6,-9 486.6,-9 577.8,-9 577.8,-9 583.8,-9 589.8,-15 589.8,-21 589.8,-21 589.8,-41 589.8,-41 589.8,-47 583.8,-53 577.8,-53"/>
+<text xml:space="preserve" text-anchor="middle" x="532.2" y="-36.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1078</text>
+<text xml:space="preserve" text-anchor="middle" x="532.2" y="-18.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Valid Accounts</text>
+</g>
+<!-- T1552&#45;&gt;T1078 -->
+<g id="edge3" class="edge">
+<title>T1552&#45;&gt;T1078</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M432.72,-31C442.07,-31 451.84,-31 461.43,-31"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="461.43,-34.15 470.43,-31 461.43,-27.85 461.43,-34.15"/>
+</g>
+<!-- T1098 -->
+<g id="node5" class="node">
+<title>T1098</title>
+<path fill="#3498db" stroke="#3498db" stroke-width="2.5" d="M736,-62C736,-62 644.8,-62 644.8,-62 638.8,-62 632.8,-56 632.8,-50 632.8,-50 632.8,-12 632.8,-12 632.8,-6 638.8,0 644.8,0 644.8,0 736,0 736,0 742,0 748,-6 748,-12 748,-12 748,-50 748,-50 748,-56 742,-62 736,-62"/>
+<text xml:space="preserve" text-anchor="middle" x="690.4" y="-45.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1098</text>
+<text xml:space="preserve" text-anchor="middle" x="690.4" y="-27.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Account</text>
+<text xml:space="preserve" text-anchor="middle" x="690.4" y="-9.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Manipulation</text>
+</g>
+<!-- T1078&#45;&gt;T1098 -->
+<g id="edge4" class="edge">
+<title>T1078&#45;&gt;T1098</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M590.92,-31C600.27,-31 610.04,-31 619.63,-31"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="619.63,-34.15 628.63,-31 619.63,-27.85 619.63,-34.15"/>
+</g>
+<!-- T1567 -->
+<g id="node6" class="node">
+<title>T1567</title>
+<path fill="#9b59b6" stroke="#9b59b6" stroke-width="2.5" d="M894.2,-53C894.2,-53 803,-53 803,-53 797,-53 791,-47 791,-41 791,-41 791,-21 791,-21 791,-15 797,-9 803,-9 803,-9 894.2,-9 894.2,-9 900.2,-9 906.2,-15 906.2,-21 906.2,-21 906.2,-41 906.2,-41 906.2,-47 900.2,-53 894.2,-53"/>
+<text xml:space="preserve" text-anchor="middle" x="848.6" y="-36.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">T1567</text>
+<text xml:space="preserve" text-anchor="middle" x="848.6" y="-18.65" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13.00" fill="white">Exfiltration</text>
+</g>
+<!-- T1098&#45;&gt;T1567 -->
+<g id="edge5" class="edge">
+<title>T1098&#45;&gt;T1567</title>
+<path fill="none" stroke="#cccccc" stroke-width="2" d="M749.12,-31C758.47,-31 768.24,-31 777.83,-31"/>
+<polygon fill="#cccccc" stroke="#cccccc" stroke-width="2" points="777.83,-34.15 786.83,-31 777.83,-27.85 777.83,-34.15"/>
+</g>
+</g>
 </svg>
