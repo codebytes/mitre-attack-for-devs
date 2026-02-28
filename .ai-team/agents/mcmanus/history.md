@@ -55,4 +55,30 @@
 
 - **Slide Count Impact**: Three new slides added (lines 81–137 in Slides.md). Total deck now approximately 74+ slides. At ~1 minute per context slide, adds roughly 3 minutes to delivery time — well within buffer for a 60-75 minute presentation.
 
+### CVE, Attack Chains, and Crooked Line Slides (2026-02-28)
+
+- **Insertion Point Pattern**: New concept slides inserted between "The 14 ATT&CK Tactics" diagram and "OWASP vs ATT&CK" comparison. This placement builds progressively: taxonomy → individual techniques → CVE relationship → chained attacks → non-linear reality → comparison. Each slide deepens the audience's mental model before moving to the next abstraction layer.
+
+- **Attack Chain Diagram Convention**: Used color-coded Mermaid flowcharts for attack chains with a gradient from red (initial access) through orange/yellow (mid-chain) to purple/dark (exfiltration/impact). This visual progression reinforces the temporal flow of an attack. Two chain examples shown: supply chain and file upload to ransomware — sourced from Fenster's attack-research.md chains 1 and 4.
+
+- **Crooked Line Visualization**: The looping-back arrows in Mermaid (`D --> C`, `E --> C`) with `linkStyle` highlighting in red (#e94560) effectively show the non-linear nature of real attacks. This is the "aha moment" slide — contrasts with the linear kill chain using a two-column layout for direct comparison before showing the diagram.
+
+- **CVE-to-ATT&CK Bridge**: Log4Shell (CVE-2021-44228) used as the canonical example of one CVE enabling multiple ATT&CK techniques (T1190, T1059, T1105). This example resonates with developers because most remember the Log4Shell incident. Speaker notes emphasize the "patch vs. detect" distinction — CVEs tell you what to fix, ATT&CK tells you what to watch for.
+
+- **Slide Count Impact**: Five new slides added. Total deck now approximately 79+ slides. At ~1-2 minutes per concept slide (more for diagram discussion), adds roughly 7-10 minutes. The crooked line slides in particular invite audience discussion and should be paced accordingly.
+
+- **Mermaid Color Palette Convention**: Established consistent color assignments across attack chain diagrams: red (#e74c3c) for initial access/exploit, orange (#e67e22) for execution, yellow (#f39c12) for credential-related, green (#2ecc71) for movement/access, blue (#3498db) for discovery, purple (#9b59b6) for collection/manipulation, dark (#1a1a2e) for final impact. Matches custom-default theme aesthetic.
+
 📌 Team update (2026-02-27): Always use 'claude-opus-4.6-1m' model for all agent spawns — decided by Chris Ayers (Copilot)
+
+### Kobayashi Review Fixes (2026-02-28)
+
+- **Duplicate Content Detection**: User enumeration (login "User not found" vs "Wrong password") was taught identically in both Discovery (T1087) and Reconnaissance (T1589) sections. When the same vulnerability pattern appears in multiple tactics, each section must use a *distinct example* to justify its existence. Discovery kept the login example; Reconnaissance was rewritten to use password reset form enumeration — a different but equally important T1589 vector.
+
+- **Summary Table Must Match Content**: The "What We Covered" recap table omitted Supply Chain despite a full 6-slide section covering T1195/T1195.001 with attack examples, CLI tools, integrity validation code, and a Mermaid flow diagram. Speaker notes compounded the error by claiming Supply Chain *wasn't* covered. Lesson: always rebuild summary tables from the actual slide structure, never from memory.
+
+- **Technique ID Precision**: T1059.006 (Python) was listed in the summary but no slide specifically teaches Python command injection — the Execution section uses C# for command injection and Python for deserialization (T1203). Changed to T1059 (general) + T1203 to match actual content. Always verify sub-technique references against the slides that teach them.
+
+- **Official ATT&CK Names Matter**: T1046 was labeled "Network Service Scanning" — the correct name is "Network Service Discovery." Always cross-reference technique names with attack.mitre.org. Audiences familiar with ATT&CK will notice incorrect names immediately.
+
+- **Placeholder Slides Are Liabilities**: A bare "# DEMOS" slide with a vague speaker note adds nothing. Converted to a "Live Demo" transition slide with specific demo scenarios (SQL injection, credential stuffing, web shell upload) and a graceful skip path. Every slide must earn its place in the deck.

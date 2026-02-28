@@ -41,12 +41,12 @@ Let me introduce myself briefly. I'm Chris Ayers, Senior Software Engineer at Mi
 - The Security Challenge for Developers
 - Understanding OWASP vs MITRE ATT&CK
 - ATT&CK Framework Deep Dive
-- 11 Technique Categories Across the Kill Chain
+- 13 Technique Categories Across the Kill Chain
 - Practical Implementation Strategies
 - Building ATT&CK-Aware Applications
 
 <!-- 
-Here's our roadmap for today. We'll start with the security challenge we all face, then compare OWASP and ATT&CK frameworks—they're complementary, not competitive. We'll do a deep dive into 11 tactic categories with real code examples in Python, C#, and JavaScript. This is going to be code-heavy and practical. We'll wrap up with implementation strategies you can use Monday morning. Expect about 60-75 minutes total, with demos interspersed throughout.
+Here's our roadmap for today. We'll start with the security challenge we all face, then compare OWASP and ATT&CK frameworks—they're complementary, not competitive. We'll do a deep dive into 13 tactic categories with real code examples in Python, C#, and JavaScript. This is going to be code-heavy and practical. We'll wrap up with implementation strategies you can use Monday morning. Expect about 60-75 minutes total, with demos interspersed throughout.
 -->
 
 ---
@@ -74,6 +74,66 @@ Let's level-set on the problem. Modern applications have massive attack surfaces
 
 <!-- 
 OWASP is the industry standard most of you already know. It's a community-driven effort that catalogs common vulnerabilities—the 2025 Top 10 includes classics like SQL injection, broken access control, and cryptographic failures. OWASP's strength is prevention: it tells you what vulnerabilities exist and how to fix them. Think of it as defensive architecture—"build it so it doesn't break." And that's incredibly valuable! But it's only half the picture.
+-->
+
+---
+
+## What is MITRE?
+
+- **The MITRE Corporation**: Not-for-profit organization founded in **1958**
+- **Mission**: Operates federally funded R&D centers (FFRDCs) for U.S. government
+- **Scope**: National security, aviation, healthcare, cybersecurity, and emerging tech
+- **Independence**: No commercial products — research-driven, vendor-neutral
+- **Impact**: Manages critical standards used across the entire security industry
+
+<!-- 
+Before we dive into ATT&CK specifically, let's talk about MITRE the organization. MITRE was founded in 1958—originally spun out of MIT's Lincoln Laboratory. They're a not-for-profit that operates federally funded research and development centers, or FFRDCs. That means they work directly with government agencies but remain independent—no commercial products, no vendor bias. They work across national security, aviation, healthcare, and of course cybersecurity. Why does this matter? Because when MITRE publishes a framework, it's backed by decades of research and real-world threat intelligence, not a sales pitch.
+-->
+
+---
+
+## MITRE's Cybersecurity Ecosystem
+
+<div class="mermaid">
+flowchart TD
+    MITRE["🏛️ MITRE Corporation"]
+    MITRE --> CVE["**CVE**<br/>Common Vulnerabilities<br/>& Exposures"]
+    MITRE --> CWE["**CWE**<br/>Common Weakness<br/>Enumeration"]
+    MITRE --> CAPEC["**CAPEC**<br/>Common Attack Pattern<br/>Enumeration"]
+    MITRE --> ATTACK["**ATT&CK**<br/>Adversary Tactics<br/>& Techniques"]
+    MITRE --> D3FEND["**D3FEND**<br/>Defensive<br/>Techniques"]
+    MITRE --> ATLAS["**ATLAS**<br/>AI/ML Threat<br/>Landscape"]
+
+    CWE -->|"weaknesses exploited by"| CVE
+    CAPEC -->|"patterns map to"| ATTACK
+    ATTACK -->|"countered by"| D3FEND
+    ATTACK -->|"extended for AI by"| ATLAS
+
+    style MITRE fill:#1a1a2e,stroke:#e94560,color:#fff
+    style ATTACK fill:#0f3460,stroke:#e94560,color:#fff
+    style D3FEND fill:#0f3460,stroke:#16a085,color:#fff
+    style CVE fill:#0f3460,stroke:#e67e22,color:#fff
+    style CWE fill:#0f3460,stroke:#e67e22,color:#fff
+    style CAPEC fill:#0f3460,stroke:#e67e22,color:#fff
+    style ATLAS fill:#0f3460,stroke:#9b59b6,color:#fff
+</div>
+
+<!-- 
+Here's the big picture—MITRE doesn't just maintain ATT&CK. They operate an entire ecosystem of cybersecurity frameworks that interlock. CVE catalogs specific vulnerabilities—the "this version of this library has this flaw" data you see in security advisories. CWE classifies the underlying weakness types—"what kind of coding mistake leads to vulnerabilities." CAPEC documents attack patterns at a higher abstraction level. ATT&CK is where we'll spend most of our time today—it maps adversary behavior. D3FEND is the defensive counterpart, cataloging countermeasures. And ATLAS extends the model into AI and machine learning threats. Notice the relationships: weaknesses lead to vulnerabilities, attack patterns map to ATT&CK techniques, and defenses counter those techniques. This ecosystem gives us a shared language across the entire security industry.
+-->
+
+---
+
+## Why MITRE Matters for Developers
+
+- **Shared vocabulary**: Security teams, SOCs, and developers speaking the same language
+- **Threat-informed development**: Design defenses against real adversary behavior
+- **CVE/CWE in your pipeline**: Dependency scanning tools already use MITRE standards
+- **ATT&CK in detection**: Your logging and telemetry feed ATT&CK-based detection rules
+- **Career impact**: Understanding MITRE frameworks bridges the dev ↔ security gap
+
+<!-- 
+So why should you, as a developer, care about all this? First, shared vocabulary. When your SOC team says "we detected T1190," you'll know they mean exploitation of a public-facing application—and you can immediately reason about which of your services might be affected. Second, the tools you already use—Dependabot, Snyk, Trivy—they all report CVEs and CWEs under the hood. You're already consuming MITRE data, you just might not realize it. Third, the logs and telemetry you emit from your applications feed directly into detection systems built on ATT&CK mappings. The better your observability, the faster threats get caught. And honestly? Understanding this ecosystem makes you dramatically more effective in cross-functional security conversations. It's a career differentiator.
 -->
 
 ---
@@ -128,6 +188,144 @@ flowchart LR
 
 <!-- 
 This diagram shows the 14 ATT&CK tactics in the typical attack lifecycle. Pre-Attack: reconnaissance and resource development—scoping you out, setting up infrastructure. Get In: initial access, execution, persistence, privilege escalation—establishing a foothold. Stay In: evading defenses, stealing credentials, discovering the environment, moving laterally across systems. Act: collecting data, maintaining command and control, exfiltrating information, and causing impact. Today we'll focus on the tactics developers can directly influence—roughly 10 of these 14. Spend a moment here; this is the mental model for everything that follows.
+-->
+
+---
+
+## CVEs and ATT&CK: The Connection
+
+- **CVE (Common Vulnerabilities and Exposures)**: Specific flaws in specific software
+- **ATT&CK Techniques**: How attackers *exploit* those flaws
+- **The relationship**: One CVE can enable multiple techniques; one technique can leverage many CVEs
+- **Example: Log4Shell (CVE-2021-44228)**
+  - T1190 — Exploit Public-Facing Application *(the entry point)*
+  - T1059 — Command and Scripting Interpreter *(arbitrary code execution)*
+  - T1105 — Ingress Tool Transfer *(downloading payloads)*
+- **For developers**: CVEs tell you *what to patch*; ATT&CK tells you *what attackers do next*
+
+<!-- 
+This is a critical distinction that trips people up. CVEs and ATT&CK live in different layers. A CVE is a specific flaw—"Log4j 2.x has a JNDI injection vulnerability." ATT&CK describes the *behavior* that flaw enables. Log4Shell is a single CVE, but it enabled at least three ATT&CK techniques: initial access through the vulnerable endpoint, code execution via JNDI callback, and tool transfer to download second-stage payloads. This is why patching alone isn't enough—you need to detect the *techniques* because the next CVE will enable the same attacker behaviors. Your Dependabot alerts give you CVEs; ATT&CK tells you what to monitor for when a zero-day drops before a patch exists.
+-->
+
+---
+
+## Attack Chains: Techniques in Sequence
+
+- Real attacks **chain multiple techniques** across tactics
+- Each step enables the next — compromise compounds
+- **Defenders must detect at every stage**, not just the entry point
+- A single missed detection = full compromise
+
+<div class="mermaid">
+flowchart LR
+    A["T1195<br/>Supply Chain<br/>Compromise"] --> B["T1059<br/>Execution"]
+    B --> C["T1552<br/>Unsecured<br/>Credentials"]
+    C --> D["T1078<br/>Valid Accounts"]
+    D --> E["T1098<br/>Account<br/>Manipulation"]
+    E --> F["T1567<br/>Exfiltration"]
+
+    style A fill:#e74c3c,stroke:#c0392b,color:#fff
+    style B fill:#e67e22,stroke:#d35400,color:#fff
+    style C fill:#f39c12,stroke:#e67e22,color:#fff
+    style D fill:#2ecc71,stroke:#27ae60,color:#fff
+    style E fill:#3498db,stroke:#2980b9,color:#fff
+    style F fill:#9b59b6,stroke:#8e44ad,color:#fff
+</div>
+
+<!-- 
+Here's where it gets real. Attackers don't use one technique and go home. This diagram shows a supply chain attack chain—based on actual threat intelligence. Step one: attacker publishes a malicious npm package with a typosquatted name. The post-install script executes a payload. That payload harvests AWS credentials from environment variables. Those stolen credentials give the attacker legitimate access to production. They create a backdoor IAM user for persistence. Then they exfiltrate customer data. Six techniques, six different tactics, one continuous attack. The key insight: if you only defend at the perimeter, you miss five out of six opportunities to detect this. Defense in depth means instrumenting detection at *every* stage.
+-->
+
+---
+
+## Real-World Attack Chain: From Upload to Ransomware
+
+<div class="mermaid">
+flowchart TD
+    A["T1190<br/>Unrestricted<br/>File Upload"] --> B["T1505.003<br/>Web Shell<br/>Deployed"]
+    B --> C["T1059<br/>Remote Command<br/>Execution"]
+    C --> D["T1552<br/>Extract DB<br/>Credentials"]
+    D --> E["T1078<br/>Direct Database<br/>Access"]
+    E --> F["T1565<br/>Data<br/>Manipulation"]
+    F --> G["T1485<br/>Ransomware<br/>Deployment"]
+
+    style A fill:#e74c3c,stroke:#c0392b,color:#fff
+    style B fill:#e74c3c,stroke:#c0392b,color:#fff
+    style C fill:#e67e22,stroke:#d35400,color:#fff
+    style D fill:#f39c12,stroke:#e67e22,color:#fff
+    style E fill:#2ecc71,stroke:#27ae60,color:#fff
+    style F fill:#9b59b6,stroke:#8e44ad,color:#fff
+    style G fill:#1a1a2e,stroke:#e94560,color:#fff
+</div>
+
+<!-- 
+Here's another chain that's devastatingly common. An unrestricted file upload vulnerability lets an attacker upload a PHP web shell disguised as an image. That web shell gives remote command execution on the server. The attacker reads config files to extract database credentials. Now they have direct database access, bypassing all application-level authorization. They modify records—maybe inject malicious content, maybe escalate privileges. Final act: ransomware targeting backups and production data. Seven steps. A file upload validation check at step one stops all of it. That's the power of understanding attack chains—you can identify the cheapest, most impactful place to break the chain.
+-->
+
+---
+
+## The "Crooked Line" — How Attacks Really Move
+
+<div class="columns">
+<div>
+
+### The Straight Line (Kill Chain)
+
+Recon → Weaponize → Deliver → Exploit → Install → C2 → Act
+
+*Linear. Predictable. Tidy.*
+
+</div>
+<div>
+
+### The Crooked Line (Reality)
+
+Attackers **loop**, **backtrack**, and **repeat** tactics as opportunities emerge.
+
+*Non-linear. Adaptive. Messy.*
+
+</div>
+</div>
+
+<!-- 
+This is one of the most important mental model shifts in modern security. Lockheed Martin's Cyber Kill Chain from 2011 was groundbreaking—it gave us a linear model: reconnaissance, weaponization, delivery, exploitation, installation, command and control, actions on objectives. Clean, neat, seven steps in a straight line. The problem? Real attackers don't read the playbook. They loop back. They do discovery, find credentials, do more discovery, move laterally, find more credentials, move again. ATT&CK was designed to capture this reality. The matrix isn't a left-to-right flow—it's a map of possibilities that attackers navigate opportunistically.
+-->
+
+---
+
+## The Crooked Line: A Real Attack Path
+
+<div class="mermaid">
+flowchart LR
+    A["Initial<br/>Access"] --> B["Execution"]
+    B --> C["Discovery"]
+    C --> D["Credential<br/>Access"]
+    D --> C
+    D --> E["Lateral<br/>Movement"]
+    E --> C
+    E --> F["Discovery<br/>(new segment)"]
+    F --> G["Credential<br/>Access"]
+    G --> H["Lateral<br/>Movement"]
+    H --> I["Collection"]
+    I --> J["Exfiltration"]
+
+    linkStyle 3 stroke:#e94560,stroke-width:3px
+    linkStyle 4 stroke:#e94560,stroke-width:3px
+
+    style A fill:#e74c3c,stroke:#c0392b,color:#fff
+    style B fill:#e67e22,stroke:#d35400,color:#fff
+    style C fill:#3498db,stroke:#2980b9,color:#fff
+    style D fill:#f39c12,stroke:#e67e22,color:#fff
+    style E fill:#2ecc71,stroke:#27ae60,color:#fff
+    style F fill:#3498db,stroke:#2980b9,color:#fff
+    style G fill:#f39c12,stroke:#e67e22,color:#fff
+    style H fill:#2ecc71,stroke:#27ae60,color:#fff
+    style I fill:#9b59b6,stroke:#8e44ad,color:#fff
+    style J fill:#1a1a2e,stroke:#e94560,color:#fff
+</div>
+
+<!-- 
+Here's the crooked line visualized. Look at those red arrows looping back—Discovery to Credential Access and back to Discovery, Lateral Movement looping back to Discovery again. The attacker compromises one machine, discovers the environment, steals credentials, uses those credentials to move laterally, discovers *more* of the environment, steals *more* credentials, moves again. It's a spiral, not a line. This is why ATT&CK uses a matrix instead of a linear chain—any tactic can follow any other tactic. Your detection strategy needs to account for this: don't just alert on initial access. Instrument discovery, credential access, and lateral movement patterns because attackers will cycle through them repeatedly before reaching their objective.
 -->
 
 ---
@@ -938,7 +1136,7 @@ Tactic seven: Discovery. Attackers need to understand their environment—who ar
 | Technique ID | Name | Description |
 |--------------|------|-------------|
 | T1087 | Account Discovery | Enumerating valid user accounts |
-| T1046 | Network Service Scanning | Discovering exposed API endpoints |
+| T1046 | Network Service Discovery | Discovering exposed API endpoints |
 | T1082 | System Information Discovery | Extracting system details from errors |
 
 <!-- 
@@ -1533,18 +1731,19 @@ def handle_error(error):
         'python': sys.version
     }), 500
 
-# T1589: Login reveals whether username exists
-@app.route('/login', methods=['POST'])
-def login():
-    user = db.find_user(request.json['username'])
+# T1589: Password reset reveals whether account exists
+@app.route('/reset-password', methods=['POST'])
+def reset_password():
+    email = request.json['email']
+    user = db.find_user_by_email(email)
     if not user:
-        return jsonify({'error': 'User not found'}), 404  # Username enumeration!
-    if not check_password(request.json['password'], user.password_hash):
-        return jsonify({'error': 'Invalid password'}), 401  # Confirms user exists!
+        return jsonify({'error': 'No account found for this email'}), 404  # Reveals valid emails!
+    send_reset_link(user)
+    return jsonify({'message': 'We sent a reset link to your email'}), 200  # Confirms account exists!
 ```
 
 <!-- 
-Two vulnerable patterns. The error handler exposes everything: stack traces, framework version, Python version, file paths—attackers love this. It's a T1592 goldmine. The login endpoint is even worse for T1589: "User not found" versus "Invalid password" lets attackers enumerate valid accounts before even attempting credential attacks. These are easy fixes with high security impact.
+Two vulnerable patterns. The error handler exposes everything: stack traces, framework version, Python version, file paths—attackers love this. It's a T1592 goldmine. The password reset form is worse for T1589: "No account found" versus "We sent a reset link" lets attackers enumerate valid email addresses before even attempting credential attacks. These are easy fixes with high security impact.
 -->
 
 ---
@@ -1564,20 +1763,20 @@ def handle_error(error):
         'reference': error_id  # For support, not debugging
     }), 500
 
-# T1589 Prevention: Identical responses prevent username enumeration
-@app.route('/login', methods=['POST'])
-def login():
-    user = db.find_user(request.json.get('username', ''))
-    valid = user and check_password(request.json.get('password', ''), 
-                                     user.password_hash if user else '')
-    if not valid:
-        time.sleep(random.uniform(0.1, 0.3))  # Timing attack prevention
-        return jsonify({'error': 'Invalid credentials'}), 401  # Same message always
-    return create_session(user)
+# T1589 Prevention: Identical responses prevent email enumeration
+@app.route('/reset-password', methods=['POST'])
+def reset_password():
+    email = request.json.get('email', '')
+    user = db.find_user_by_email(email)
+    if user:
+        send_reset_link(user)
+    time.sleep(random.uniform(0.2, 0.5))  # Timing attack prevention
+    # T1589 Prevention: Same response whether account exists or not
+    return jsonify({'message': 'If an account exists, a reset link has been sent'}), 200
 ```
 
 <!-- 
-Defended versions. The error handler logs everything internally with a reference ID but returns only a generic message and the reference. Attackers get nothing useful. The login endpoint returns the same "Invalid credentials" message whether the username or password is wrong—no enumeration possible. The random delay prevents timing attacks where attackers measure response time to distinguish "user not found" from "wrong password." Simple changes, massive security improvement.
+Defended versions. The error handler logs everything internally with a reference ID but returns only a generic message and the reference. Attackers get nothing useful. The password reset endpoint returns the same "If an account exists" message regardless of whether the email is registered—no enumeration possible. The random delay prevents timing attacks where attackers measure response time to distinguish existing from non-existing accounts. Simple changes, massive security improvement.
 -->
 
 ---
@@ -1685,10 +1884,10 @@ C2 beaconing detection using statistical analysis. Malware calls home at regular
 
 ---
 
-# DEMOS
+# <!-- fit --> Live Demo
 
 <!-- 
-Time for live demonstrations if we have time. This is where theory meets reality—running actual attacks against vulnerable code and showing the defenses in action. If we're running short on time, we'll skip to practical implementation. Either way, keep the energy up; we're in the home stretch!
+If time permits, demonstrate: SQL injection (T1190) against the vulnerable Python endpoint, then show the parameterized query defense. Follow with a credential stuffing simulation using the JavaScript detector, and a web shell upload attempt blocked by the C# file validator. Each demo reinforces the vulnerable-to-defended arc from the slides. If running short on time, skip ahead to Practical Implementation—the code samples are on GitHub for attendees to try on their own.
 -->
 
 ---
@@ -1884,7 +2083,7 @@ ATT&CK Navigator is your visualization tool. It's a web-based heatmap of the ent
 | Tactic | Techniques | Key Defense |
 |--------|-----------|-------------|
 | Initial Access | T1078, T1110, T1190 | Input validation, credential monitoring |
-| Execution | T1059, T1059.006 | Command allowlisting, safe deserialization |
+| Execution | T1059, T1203 | Command allowlisting, safe deserialization |
 | Persistence | T1505.003, T1098 | File integrity, account monitoring |
 | Privilege Escalation | T1068, T1134 | Least privilege, token validation |
 | Defense Evasion | T1070, T1027 | Tamper-evident logging |
@@ -1894,11 +2093,12 @@ ATT&CK Navigator is your visualization tool. It's a web-based heatmap of the ent
 | Collection & Exfil | T1213, T1567, T1020 | Behavioral analytics, rate limiting |
 | Impact | T1499, T1565, T1486 | Input limits, integrity checks |
 | Reconnaissance | T1592, T1595, T1589 | Generic errors, no info leakage |
+| Supply Chain | T1195, T1195.001 | Dependency verification, integrity validation |
 | Resource Dev | T1583, T1584 | Webhook verification |
 | Command & Control | T1071, T1572 | Beaconing detection, egress filtering |
 
 <!-- 
-Coverage summary—look how much ground we covered. 13 of 14 tactics with real code examples. 35+ techniques with both vulnerable and defended patterns. The only tactic we didn't deep-dive is Supply Chain—that's a full talk on its own, though we touched on it with dependency verification. Use this table as your reference guide. Map your application features to these techniques and start building detections. You now have the knowledge to make your applications significantly more resilient against real-world attacks.
+Coverage summary—look how much ground we covered. All 14 ATT&CK tactics with real code examples across Python, C#, and JavaScript. 35+ techniques with both vulnerable and defended patterns. Use this table as your reference guide. Map your application features to these techniques and start building detections. You now have the knowledge to make your applications significantly more resilient against real-world attacks.
 -->
 
 ---
