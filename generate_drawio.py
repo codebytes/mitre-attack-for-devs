@@ -31,7 +31,8 @@ class DiagramBuilder:
         self._cell_id = 1
         self._cells = ['<mxCell id="0" />', '<mxCell id="1" parent="0" />']
         self._node_map = {}  # graphviz id -> mxCell id
-        self._clusters = []  # (graphviz_cluster_name, label, cid)
+        self._clusters = []  # (graphviz_cluster_name, label, cid, [node_ids])
+        self._current_cluster = None
 
     def _next_id(self):
         self._cell_id += 1
@@ -41,17 +42,24 @@ class DiagramBuilder:
         """Register a cluster for draw.io group tracking. Returns a graphviz subgraph context."""
         cid = self._next_id()
         gv_name = f"cluster_{name}"
-        self._clusters.append((gv_name, label, cid))
+        self._clusters.append((gv_name, label, cid, []))  # last element: list of node ids
         style = f"rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor={color};fontColor=#999999;fontSize=14;fontStyle=1;verticalAlign=top;spacingTop=5;dashed=1;strokeWidth=1.5;"
         lbl = html.escape(label)
         self._cells.append(
             f'<mxCell id="{cid}" value="{lbl}" style="{style}" vertex="1" parent="1">'
             f'<mxGeometry x="__X_{gv_name}__" y="__Y_{gv_name}__" width="__W_{gv_name}__" height="__H_{gv_name}__" as="geometry" /></mxCell>')
+        self._current_cluster = gv_name
         return self.g.subgraph(name=gv_name)
 
     def node(self, nid, label, graph=None, **kwargs):
         target = graph if graph is not None else self.g
         target.node(nid, label, **kwargs)
+        # Track node in current cluster if inside a cluster context
+        if graph is not None and self._clusters:
+            for cl in self._clusters:
+                if cl[0] == self._current_cluster:
+                    cl[3].append(nid)
+                    break
         fill = kwargs.get("fillcolor", "#0f3460")
         stroke = kwargs.get("color", "#333333")
         shape = kwargs.get("shape", "box")
@@ -113,7 +121,7 @@ class DiagramBuilder:
 
         for g_elem in root.iter('{http://www.w3.org/2000/svg}g'):
             cls = g_elem.get('class', '')
-            if cls not in ('node', 'cluster'):
+            if cls != 'node':  # Only parse nodes, not clusters
                 continue
             title_elem = g_elem.find('{http://www.w3.org/2000/svg}title')
             if title_elem is None or not title_elem.text:
@@ -126,14 +134,27 @@ class DiagramBuilder:
 
     def _build_drawio_xml(self, positions):
         cells_str = "".join(self._cells)
-        # Replace geometry placeholders with actual positions
+        # Replace node geometry placeholders with actual positions
         for nid, pos in positions.items():
             cells_str = cells_str.replace(f'__X_{nid}__', str(pos['x']))
             cells_str = cells_str.replace(f'__Y_{nid}__', str(pos['y']))
             cells_str = cells_str.replace(f'__W_{nid}__', str(pos['w']))
             cells_str = cells_str.replace(f'__H_{nid}__', str(pos['h']))
-        # Clean any remaining placeholders for nodes not found
-        cells_str = re.sub(r'__[XYWH]_\w+__', '0', cells_str)
+        # Compute cluster bounds from child node positions (with padding)
+        pad = 15
+        for gv_name, label, cid, node_ids in self._clusters:
+            child_positions = [positions[nid] for nid in node_ids if nid in positions]
+            if child_positions:
+                cx = min(p['x'] for p in child_positions) - pad
+                cy = min(p['y'] for p in child_positions) - pad - 20  # extra for label
+                cw = max(p['x'] + p['w'] for p in child_positions) - cx + pad
+                ch = max(p['y'] + p['h'] for p in child_positions) - cy + pad
+                cells_str = cells_str.replace(f'__X_{gv_name}__', str(round(cx, 1)))
+                cells_str = cells_str.replace(f'__Y_{gv_name}__', str(round(cy, 1)))
+                cells_str = cells_str.replace(f'__W_{gv_name}__', str(round(cw, 1)))
+                cells_str = cells_str.replace(f'__H_{gv_name}__', str(round(ch, 1)))
+        # Clean any remaining placeholders
+        cells_str = re.sub(r'__[XYWH]_[\w]+__', '0', cells_str)
         return (f'<mxfile host="drawio-gen"><diagram name="Page-1" id="page1">'
                 f'<mxGraphModel><root>{cells_str}</root></mxGraphModel>'
                 f'</diagram></mxfile>')
