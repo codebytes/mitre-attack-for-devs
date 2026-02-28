@@ -186,7 +186,10 @@ def diagram_01_ecosystem(outdir):
 
 # ── Diagram 2: 14 ATT&CK Tactics ──
 def diagram_02_14tactics(outdir):
-    b = DiagramBuilder("tactics", ranksep="0.4", nodesep="0.3")
+    b = DiagramBuilder("tactics", ranksep="0.3", nodesep="0.2",
+                        size="10,6!", ratio="fill")
+    # Use smaller nodes to fit 14 items
+    b.g.attr("node", width="1.2", height="0.5", fontsize="11")
     phases = [
         ("Pre-Attack", "#3498db", [("RECON", "Reconnaissance"), ("RESDEV", "Resource\nDevelopment")]),
         ("Get In", "#e74c3c", [("IA", "Initial\nAccess"), ("EXEC", "Execution"),
