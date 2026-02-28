@@ -12,7 +12,8 @@ def make_graph(name, direction="LR", engine="dot", **kwargs):
     g = graphviz.Digraph(name, format="svg", engine=engine)
     attrs = dict(rankdir=direction, bgcolor=BG, pad="0.4", margin="0",
                  fontname=FONT, fontcolor="#999999", fontsize="13",
-                 style="rounded", nodesep="0.5", ranksep="0.6")
+                 style="rounded", nodesep="0.5", ranksep="0.6",
+                 size="10,5!", ratio="fill")
     attrs.update(kwargs)
     g.attr(**attrs)
     g.attr("node", shape="box", style="filled,rounded,bold",
@@ -59,7 +60,7 @@ def diagram_01_ecosystem(outdir):
 
 # ── Diagram 2: 14 ATT&CK Tactics ──
 def diagram_02_14tactics(outdir):
-    g = make_graph("tactics", ranksep="0.8")
+    g = make_graph("tactics", ranksep="0.4", nodesep="0.3")
     phases = [
         ("Pre-Attack", "#3498db", [("RECON", "Reconnaissance"), ("RESDEV", "Resource\nDevelopment")]),
         ("Get In", "#e74c3c", [("IA", "Initial\nAccess"), ("EXEC", "Execution"),
@@ -124,7 +125,7 @@ def diagram_04_ransomware(outdir):
 
 # ── Diagram 5: Crooked Line ──
 def diagram_05_crooked_line(outdir):
-    g = make_graph("crooked", nodesep="0.4", ranksep="0.5")
+    g = make_graph("crooked", nodesep="0.3", ranksep="0.4")
     data = [
         ("IA", "Initial\nAccess", "#e74c3c"),
         ("EX", "Execution", "#e67e22"),
@@ -247,7 +248,7 @@ def diagram_09_threat_modeling(outdir):
 
 # ── Diagram 10: Defense in Depth ──
 def diagram_10_defense_depth(outdir):
-    g = make_graph("defense", ranksep="0.4")
+    g = make_graph("defense", direction="TB", ranksep="0.4")
     with g.subgraph(name="cluster_prevent") as c:
         c.attr(label="Prevention", style="dashed,rounded", color="#555555",
                fontcolor="#999999", penwidth="1.5")
