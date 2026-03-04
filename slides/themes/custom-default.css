@@ -28,6 +28,15 @@ svg[id^="mermaid-"] {
   max-height: 540px; 
 }
 
+pre {
+  font-size: 0.58em;
+  line-height: 1.2;
+}
+
+pre code {
+  padding: 0.3em 0.6em;
+}
+
 table {
   font-size: 0.85em;
   line-height: 1.3;

