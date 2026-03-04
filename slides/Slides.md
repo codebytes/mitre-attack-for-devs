@@ -35,7 +35,7 @@ h2 { color: #00ff88; }
 <i class="fa-brands fa-mastodon"></i> Mastodon: [@Chrisayers@hachyderm.io](https://hachyderm.io/@Chrisayers)
 ~~<i class="fa-brands fa-twitter"></i> Twitter: @Chris_L_Ayers~~
 
-<!-- Quick intro — I'm Chris, a Senior Software Engineer at Microsoft. I spend a lot of time thinking about how developers can build more secure applications without needing a PhD in cybersecurity. -->
+<!-- Quick intro — I'm Chris, a Principal Software Engineer at Microsoft. I spend a lot of time thinking about how developers can build more secure applications without needing a PhD in cybersecurity. -->
 
 ---
 
@@ -646,31 +646,25 @@ def login():
 ## Tamper-Evident Logging (T1070 Prevention)
 
 ```csharp
-// T1070 Prevention: Tamper-evident logging with hash chains
-public class SecureLogger
-{
-    private string _lastHash = "genesis";
-    public void LogSecurityEvent(string technique, string details)
-    {
-        var logEntry = new SecurityLogEntry {
-            Timestamp = DateTime.UtcNow,
-            Technique = technique,
-            Details = SanitizeInput(details),      // Sanitize input
-            PreviousHash = _lastHash
-        };
-        // Cryptographic hash chain
-        logEntry.Hash = ComputeHash(
-            $"{logEntry.Timestamp}{logEntry.Technique}{logEntry.Details}{_lastHash}");
-        _lastHash = logEntry.Hash;
-        WriteToImmutableStore(logEntry);            // Immutable storage
-        await SendToSIEM(logEntry);                 // External SIEM
-    }
-    private string SanitizeInput(string input) =>
-        Regex.Replace(input ?? "", @"[\r\n\t\f]", "_");
-}
+// T1070 Prevention: Ship logs to immutable external storage
+builder.Logging.AddOpenTelemetry(otel => {
+    otel.AddOtlpExporter();                        // OpenTelemetry export
+});
+builder.Services.AddApplicationInsightsTelemetry(); // Azure Monitor
+
+// Sanitize before logging — prevent log injection
+logger.LogWarning("Failed login for user: {User}",
+    Regex.Replace(username ?? "", @"[\r\n\t\f]", "_"));
 ```
 
-<!-- The solution is tamper-evident logging. We sanitize input to remove newlines, use cryptographic hash chains so any modification is detectable, write to immutable storage like Azure Append Blobs or AWS CloudTrail, and send copies to an external SIEM. If an attacker modifies one log entry, the hash chain breaks and we know immediately. -->
+```python
+# Python: structured logging → Azure Monitor / Log Analytics
+from opentelemetry import trace
+from azure.monitor.opentelemetry import configure_azure_monitor
+configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
+```
+
+<!-- The real solution is: don't own the log storage. Ship structured logs via OpenTelemetry to Azure Monitor Log Analytics or Application Insights. The logs land in an immutable workspace you query with KQL — attackers can't tamper with what they can't reach. Sanitize inputs before logging to prevent injection, and use structured logging so fields aren't interpolated into raw strings. -->
 
 ---
 
@@ -701,12 +695,13 @@ public class SecureLogger
 
 ## Supply Chain Attack Examples
 
-- **NPM**: `event-stream` package (2018) - 8M downloads, Bitcoin wallet stealer
+- **NPM**: `event-stream` (2018) - 8M downloads, Bitcoin wallet stealer
+- **NPM**: Shai Hulud worm (2025) - self-replicating via `postinstall` scripts
 - **PyPI**: Typosquatting attacks - `urllib3` vs `urllib4`  
 - **NuGet**: Dependency confusion - internal vs public packages
 - **Docker**: Compromised base images with embedded malware
 
-<!-- The event-stream incident is a masterclass in supply chain attacks. A maintainer handed off a popular package to a new contributor who added a Bitcoin-stealing payload. 8 million weekly downloads. Typosquatting creates packages with similar names hoping for typos. Dependency confusion exploits the gap between public and private registries. -->
+<!-- The event-stream incident is a masterclass — a maintainer handed off a popular package to a new contributor who added a Bitcoin-stealing payload. Shai Hulud is even scarier: a proof-of-concept npm worm that propagates by hijacking publish tokens and injecting postinstall scripts into every package the compromised developer maintains. It spreads automatically — no social engineering needed after initial infection. Typosquatting creates packages with similar names hoping for typos. Dependency confusion exploits the gap between public and private registries. -->
 
 ---
 
@@ -761,35 +756,24 @@ dotnet nuget verify MyPackage.1.0.0.nupkg  # Package signature verification
 
 ---
 
-## Package Integrity Validation
+## SBOMs & Lock Files (T1195.001 Prevention)
 
-```python
-# T1195.001 Prevention: Package integrity validation
-import hashlib, json
+```bash
+# Lock files — pin exact versions + hashes
+npm ci                                    # Install from lockfile exactly
+pip install --require-hashes -r req.txt   # Verify hashes on install
+dotnet restore --locked-mode              # Fail if lockfile doesn't match
 
-class PackageValidator:
-    def __init__(self, lockfile_path):
-        with open(lockfile_path) as f:
-            self.lockfile = json.load(f)
-    def validate_package(self, package_name, package_file):
-        expected = self.lockfile['packages'][package_name]['integrity']
-        actual = self.compute_hash(package_file)
-        if actual != expected:
-            self.log_security_event('T1195.001', {
-                'package': package_name,
-                'expected': expected, 'actual': actual,
-                'alert': 'Package integrity violation detected'
-            })
-            return False
-        return True
-    def compute_hash(self, package_file):
-        hasher = hashlib.sha512()
-        with open(package_file, 'rb') as f:
-            hasher.update(f.read())
-        return f"sha512-{hasher.hexdigest()}"
+# SBOMs — know what's in your software
+syft . -o spdx-json > sbom.json           # Generate SBOM with Syft
+dotnet CycloneDX /path/to/project.csproj  # .NET SBOM generation
+npm sbom --sbom-format cyclonedx          # NPM native SBOM support
+
+# Scan SBOMs for known vulnerabilities
+grype sbom:./sbom.json                    # Scan SBOM against CVE databases
 ```
 
-<!-- This validator goes further — it computes the SHA-512 hash of every downloaded package and compares it against the lockfile's recorded hash. If someone tampers with a package on the registry, the hash won't match and the install is blocked. This is exactly how --require-hashes works under the hood. -->
+<!-- Lock files are your first defense — they pin exact versions with cryptographic hashes so no one can swap a package without detection. SBOMs go further: they're a complete inventory of every component in your software. When a new CVE drops, you can instantly answer "are we affected?" by scanning your SBOM instead of auditing source. Tools like Syft, CycloneDX, and Grype make this practical. Run SBOM generation in CI and scan on every build. -->
 
 ---
 
@@ -909,14 +893,14 @@ class ExfiltrationDetector {
 
 | Application Feature | ATT&CK Techniques | Risk Level |
 |---------------------|------------------|------------|
-| User Login | T1078, T1110, T1566 | High |
-| Password Reset | T1566, T1078 | High |
-| Session Management | T1185, T1098 | High |
-| File Upload | T1505.003, T1190 | High |
-| API Endpoints | T1087, T1046, T1213 | Medium |
-| Data Export | T1567, T1020, T1030 | High |
-| Logging System | T1070, T1027 | Medium |
-| Dependencies | T1195, T1195.001 | Medium |
+| User Login | T1078 Valid Accounts, T1110 Brute Force, T1566 Phishing | High |
+| Password Reset | T1566 Phishing, T1078 Valid Accounts | High |
+| Session Management | T1185 Browser Session Hijacking, T1098 Account Manipulation | High |
+| File Upload | T1505.003 Web Shell, T1190 Exploit Public-Facing App | High |
+| API Endpoints | T1087 Account Discovery, T1046 Network Scanning | Medium |
+| Data Export | T1567 Exfil Over Web, T1020 Automated Exfil | High |
+| Logging System | T1070 Indicator Removal, T1027 Obfuscation | Medium |
+| Dependencies | T1195 Supply Chain, T1195.001 Compromise Dependencies | Medium |
 
 <!-- This table is a cheat sheet. For every feature in your application, you can look up which ATT&CK techniques are relevant. User login maps to credential attacks. File upload maps to web shells. Data export maps to exfiltration. Use this as a starting point for your threat model — customize it for your specific application. -->
 
