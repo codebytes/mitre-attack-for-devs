@@ -176,9 +176,38 @@ h2 { color: #00ff88; }
 
 ## The Kill Chain: Expectation vs Reality
 
-![center w:1050 h:500](./img/expect-vs-reality.svg)
+![center w:1000 h:480](./img/expect-vs-reality.svg)
 
 <!-- This is the core insight of the talk. Defenders build straight-line defenses — firewall, IDS, patch management. But attackers zigzag, loop back, escalate, discover new targets, and escalate again. ATT&CK captures this messy reality that a linear kill chain model misses. -->
+
+---
+
+## Real World: SolarWinds (2020)
+
+<div class="columns">
+<div>
+
+### The Crooked Line in Action
+1. 📦 **T1195.002** — Backdoor in signed update
+2. ⚙️ **T1059** — SUNBURST DLL executes
+3. 🔐 **T1552** — Golden SAML credential theft
+4. 🕸️ **T1071** — C2 via DNS blending
+5. 📤 **T1041** — Data exfil over C2 channel
+
+</div>
+<div>
+
+### Impact
+- **18,000** orgs installed backdoor
+- **9 months** undetected
+- US Treasury, DHS, Fortune 500 breached
+
+> Your **build pipeline** is an attack surface. Signed ≠ Safe.
+
+</div>
+</div>
+
+<!-- SolarWinds is the poster child for why developers need ATT&CK. The attackers compromised the build system — not the source code — so code reviews missed it entirely. The malicious DLL was signed with SolarWinds' own certificate. 18,000 organizations installed it. It was undetected for 9 months. This is what a real crooked line looks like: supply chain to execution to credential theft to exfiltration, with defense evasion at every step. -->
 
 ---
 
@@ -559,34 +588,17 @@ async function getDbConnection() {
 
 ---
 
-## Secrets Scanner Implementation
+## Automate Secret Detection (T1552 Prevention)
 
-```python
-# T1552 Prevention: Automated secrets detection
-import re
+- **GitHub Secret Scanning** — automatically detects tokens, keys, and credentials in your repos
+- **GitHub Push Protection** — blocks pushes containing secrets _before_ they reach the repo
+- **Partner patterns** — 200+ token types from AWS, Azure, GCP, Stripe, npm, etc.
+- **Custom patterns** — define regex for your own internal secrets
+- **Pre-commit hooks** — tools like `gitleaks` and `trufflehog` catch secrets locally
 
-class SecretsScanner:
-    patterns = [
-        (r'password\s*=\s*["\'][^"\']{8,}["\']', 'Hardcoded Password'),
-        (r'api[_-]?key\s*[=:]\s*["\'][^"\']{16,}["\']', 'API Key'),
-        (r'sk-[a-zA-Z0-9]{32,}', 'Secret Key'),
-        (r'-----BEGIN [A-Z ]+-----', 'Private Key')
-    ]
-    def scan_file(self, filepath):
-        violations = []
-        with open(filepath, 'r') as f:
-            content = f.read()
-            for pattern, desc in self.patterns:
-                for match in re.finditer(pattern, content, re.IGNORECASE):
-                    violations.append({
-                        'file': filepath,
-                        'line': content[:match.start()].count('\n') + 1,
-                        'type': desc, 'technique': 'T1552'
-                    })
-        return violations
-```
+> 💡 Enable **Secret Scanning** + **Push Protection** in your GitHub repo settings today. It's free for public repos.
 
-<!-- Automate your secret scanning! Run this in CI/CD pipelines and as pre-commit hooks. It catches common patterns like hardcoded passwords, API keys, and private keys before they ever reach version control. Tools like GitHub Advanced Security, GitLeaks, and truffleHog do this at enterprise scale. -->
+<!-- Don't build your own scanner — use GitHub's built-in secret scanning. It covers 200+ partner patterns and blocks pushes before secrets ever hit version control. For private repos, GitHub Advanced Security adds custom patterns and organization-wide coverage. Combined with pre-commit hooks, you get defense in depth for credential leaks. -->
 
 ---
 
@@ -695,6 +707,35 @@ public class SecureLogger
 - **Docker**: Compromised base images with embedded malware
 
 <!-- The event-stream incident is a masterclass in supply chain attacks. A maintainer handed off a popular package to a new contributor who added a Bitcoin-stealing payload. 8 million weekly downloads. Typosquatting creates packages with similar names hoping for typos. Dependency confusion exploits the gap between public and private registries. -->
+
+---
+
+## Case Study: XZ Utils Backdoor (CVE-2024-3094)
+
+<div class="columns">
+<div>
+
+### 🕵️ The 2-Year Long Con
+1. **2021**: "Jia Tan" submits first patch
+2. **2022**: Sock puppets pressure maintainer
+3. **2023**: Becomes co-maintainer
+4. **2024**: Backdoor in tarballs only
+5. **Mar 29**: Found by accident
+
+</div>
+<div>
+
+### 🎯 ATT&CK Techniques
+- **T1195.001** — Supply chain compromise
+- **T1098** — Maintainer takeover
+- **T1027** — Obfuscation (not in git!)
+- **T1059** — RCE via SSHd · CVSS 10.0
+- 💡 Caught: SSH was **500ms slower**
+
+</div>
+</div>
+
+<!-- This is the most sophisticated supply chain attack in open source history. A state-sponsored actor spent TWO YEARS building trust, contributing legitimate patches, then socially engineering their way to co-maintainer. The backdoor was only in the release tarballs, not the git repo — bypassing all code review. It was caught by sheer luck when Andres Freund noticed SSH performance degradation while debugging something unrelated. -->
 
 ---
 
@@ -850,12 +891,6 @@ class ExfiltrationDetector {
 
 ---
 
-# DEMOS
-
-<!-- Let's see some of these concepts in action with live demos. -->
-
----
-
 # <!-- fit --> Practical Implementation
 
 <!-- Now let's talk about how to actually bring all of this into your development workflow. Theory is great, but what do you do on Monday morning? -->
@@ -1006,6 +1041,45 @@ class ExfiltrationDetector {
 - **Foundation** for expanding coverage
 
 <!-- Don't be overwhelmed by 200+ techniques. Start with these three: authentication monitoring catches credential abuse, session security prevents hijacking, and data access anomalies catch collection and exfiltration. These three techniques appear in almost every major breach. Master these, then expand. -->
+
+---
+
+## How it started vs How it's going
+
+<div class="columns">
+<div>
+
+### How it started 😎
+```
+
+// TODO: add authentication later
+// TODO: fix SQL injection
+// TODO: rotate this API key
+// TODO: add rate limiting
+// TODO: validate file uploads
+// TODO: check dependencies
+```
+
+</div>
+<div>
+
+### How it's going 😱
+```
+
+[CRITICAL] T1190 - SQLi in production
+[CRITICAL] T1552 - API key on GitHub
+[CRITICAL] T1110 - 50K login attempts/hr
+[CRITICAL] T1505 - Web shell detected
+[CRITICAL] T1195 - Malicious dependency
+[CRITICAL] T1567 - 200GB exfiltrated
+```
+
+</div>
+</div>
+
+> Every "TODO: fix later" is an attacker's "TODO: exploit now"
+
+<!-- This is a joke but also very real. Every security TODO in your backlog is a technique an attacker can exploit. The difference between the left and right columns is just time. ATT&CK helps you prioritize which TODOs to fix first based on real adversary behavior. -->
 
 ---
 
