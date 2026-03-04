@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8f9fa"/>
+      <stop offset="100%" stop-color="#e9ecef"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#bg)"/>
+
+  <!-- ========== TOP HALF: What Defenders Expect ========== -->
+  <text x="640" y="60" font-family="Arial,sans-serif" font-size="22" fill="#2d6a4f" text-anchor="middle" font-weight="bold">What Defenders Expect</text>
+
+  <!-- Straight arrow path with neat boxes -->
+  <g transform="translate(65,85)" filter="url(#shadow)">
+    <rect x="0" y="0" width="130" height="50" rx="8" fill="#2d6a4f"/>
+    <text x="65" y="30" font-family="Arial,sans-serif" font-size="13" fill="white" text-anchor="middle">Recon</text>
+
+    <rect x="175" y="0" width="130" height="50" rx="8" fill="#2d6a4f"/>
+    <text x="240" y="30" font-family="Arial,sans-serif" font-size="13" fill="white" text-anchor="middle">Initial Access</text>
+
+    <rect x="350" y="0" width="130" height="50" rx="8" fill="#2d6a4f"/>
+    <text x="415" y="30" font-family="Arial,sans-serif" font-size="13" fill="white" text-anchor="middle">Execution</text>
+
+    <rect x="525" y="0" width="130" height="50" rx="8" fill="#2d6a4f"/>
+    <text x="590" y="30" font-family="Arial,sans-serif" font-size="13" fill="white" text-anchor="middle">Escalation</text>
+
+    <rect x="700" y="0" width="130" height="50" rx="8" fill="#2d6a4f"/>
+    <text x="765" y="30" font-family="Arial,sans-serif" font-size="13" fill="white" text-anchor="middle">Exfiltration</text>
+
+    <rect x="875" y="0" width="130" height="50" rx="8" fill="#2d6a4f"/>
+    <text x="940" y="30" font-family="Arial,sans-serif" font-size="13" fill="white" text-anchor="middle">Impact</text>
+
+    <!-- Straight arrows -->
+    <g stroke="#2d6a4f" stroke-width="3" fill="#2d6a4f">
+      <line x1="130" y1="25" x2="170" y2="25"/>
+      <polygon points="170,20 175,25 170,30"/>
+      <line x1="305" y1="25" x2="345" y2="25"/>
+      <polygon points="345,20 350,25 345,30"/>
+      <line x1="480" y1="25" x2="520" y2="25"/>
+      <polygon points="520,20 525,25 520,30"/>
+      <line x1="655" y1="25" x2="695" y2="25"/>
+      <polygon points="695,20 700,25 695,30"/>
+      <line x1="830" y1="25" x2="870" y2="25"/>
+      <polygon points="870,20 875,25 870,30"/>
+    </g>
+  </g>
+
+  <!-- Smug defender -->
+  <text x="1120" y="125" font-family="Arial,sans-serif" font-size="55">😎</text>
+  <text x="1145" y="160" font-family="Arial,sans-serif" font-size="12" fill="#2d6a4f" text-anchor="middle" font-style="italic">"We got this"</text>
+
+  <!-- Firewall icon blocking the straight line -->
+  <g transform="translate(1060,88)">
+    <rect x="0" y="0" width="50" height="50" rx="6" fill="#40916c" opacity="0.3"/>
+    <text x="25" y="35" font-family="Arial,sans-serif" font-size="28" text-anchor="middle">🛡️</text>
+  </g>
+
+  <!-- Divider -->
+  <line x1="80" y1="200" x2="1200" y2="200" stroke="#aaa" stroke-width="1.5" stroke-dasharray="8,4"/>
+
+  <!-- ========== BOTTOM HALF: What Actually Happens ========== -->
+  <text x="640" y="245" font-family="Arial,sans-serif" font-size="22" fill="#c1121f" text-anchor="middle" font-weight="bold">What Actually Happens</text>
+
+  <!-- Chaotic attack path -->
+  <g transform="translate(40,265)">
+    <!-- Scattered boxes at different heights -->
+    <rect x="0" y="80" width="110" height="45" rx="8" fill="#c1121f" filter="url(#shadow)"/>
+    <text x="55" y="107" font-family="Arial,sans-serif" font-size="12" fill="white" text-anchor="middle">Recon</text>
+
+    <rect x="150" y="25" width="110" height="45" rx="8" fill="#c1121f" filter="url(#shadow)"/>
+    <text x="205" y="52" font-family="Arial,sans-serif" font-size="12" fill="white" text-anchor="middle">Phishing</text>
+
+    <rect x="300" y="120" width="110" height="45" rx="8" fill="#e36414" filter="url(#shadow)"/>
+    <text x="355" y="147" font-family="Arial,sans-serif" font-size="12" fill="white" text-anchor="middle">Persistence</text>
+
+    <rect x="340" y="5" width="110" height="45" rx="8" fill="#c1121f" filter="url(#shadow)"/>
+    <text x="395" y="32" font-family="Arial,sans-serif" font-size="12" fill="white" text-anchor="middle">Priv Esc</text>
+
+    <rect x="490" y="140" width="110" height="45" rx="8" fill="#e36414" filter="url(#shadow)"/>
+    <text x="545" y="167" font-family="Arial,sans-serif" font-size="12" fill="white" text-anchor="middle">Discovery</text>
+
+    <rect x="510" y="35" width="110" height="45" rx="8" fill="#c1121f" filter="url(#shadow)"/>
+    <text x="565" y="62" font-family="Arial,sans-serif" font-size="12" fill="white" text-anchor="middle">Lateral Mov.</text>
+
+    <rect x="660" y="100" width="110" height="45" rx="8" fill="#e36414" filter="url(#shadow)"/>
+    <text x="715" y="127" font-family="Arial,sans-serif" font-size="12" fill="white" text-anchor="middle">More Recon</text>
+
+    <rect x="700" y="-5" width="120" height="45" rx="8" fill="#c1121f" filter="url(#shadow)"/>
+    <text x="760" y="22" font-family="Arial,sans-serif" font-size="12" fill="white" text-anchor="middle">Escalate Again</text>
+
+    <rect x="840" y="60" width="110" height="45" rx="8" fill="#c1121f" filter="url(#shadow)"/>
+    <text x="895" y="87" font-family="Arial,sans-serif" font-size="12" fill="white" text-anchor="middle">Exfil Data</text>
+
+    <rect x="970" y="120" width="120" height="45" rx="8" fill="#780000" filter="url(#shadow)"/>
+    <text x="1030" y="148" font-family="Arial,sans-serif" font-size="13" fill="white" text-anchor="middle">💀 Ransomware</text>
+
+    <!-- Chaotic arrows -->
+    <g stroke="#c1121f" stroke-width="2.5" fill="none" stroke-linecap="round">
+      <path d="M 110,100 C 130,85 140,60 150,50"/>
+      <path d="M 260,50 C 280,80 290,125 300,132"/>
+      <path d="M 310,120 C 320,75 340,45 340,30"/>
+      <path d="M 410,140 C 430,160 470,165 490,160"/>
+      <path d="M 450,28 C 470,35 490,45 510,50"/>
+      <path d="M 600,160 C 620,140 640,130 660,120"/>
+      <path d="M 620,58 C 650,35 680,20 700,17"/>
+      <path d="M 770,100 C 790,85 810,75 840,75"/>
+      <path d="M 820,18 C 835,30 840,50 845,60"/>
+      <path d="M 950,82 C 960,100 965,115 970,130"/>
+    </g>
+
+    <!-- Loop-back arrows (attackers go backward!) -->
+    <g stroke="#ffaa00" stroke-width="2.5" fill="none" stroke-dasharray="6,3">
+      <path d="M 660,140 C 600,210 430,220 370,165"/>
+      <path d="M 770,140 C 720,200 580,200 540,165"/>
+    </g>
+
+    <!-- Loop labels -->
+    <text x="500" y="235" font-family="Arial,sans-serif" font-size="13" fill="#e36414" text-anchor="middle" font-weight="bold">↻ attackers loop back constantly</text>
+  </g>
+
+  <!-- Panicked defender -->
+  <text x="1125" y="400" font-family="Arial,sans-serif" font-size="55">😱</text>
+  <text x="1150" y="435" font-family="Arial,sans-serif" font-size="12" fill="#c1121f" text-anchor="middle" font-style="italic">"Wait, what?!"</text>
+
+  <!-- Bypassed firewall -->
+  <g transform="translate(1070,345)">
+    <rect x="0" y="0" width="50" height="50" rx="6" fill="#c1121f" opacity="0.2"/>
+    <text x="25" y="35" font-family="Arial,sans-serif" font-size="28" text-anchor="middle">🔓</text>
+  </g>
+
+  <!-- Bottom punchline -->
+  <rect x="240" y="650" width="800" height="50" rx="25" fill="#1a1a2e"/>
+  <text x="640" y="681" font-family="Arial,sans-serif" font-size="18" fill="#00ff88" text-anchor="middle" font-weight="bold">ATT&amp;CK maps the crooked line. OWASP maps the straight one.</text>
+</svg>
