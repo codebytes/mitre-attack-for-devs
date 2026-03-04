@@ -1,9 +1,0 @@
-/* custom-gaia.css */
-/* @theme custom-gaia */
-
-@import 'gaia';
-
-section {
-  /* Override default background */
-  background: #fff;
-}
