@@ -1,6 +1,6 @@
 # MITRE ATT&CK for Developers — Beyond OWASP
 
-This repository contains the slide deck, demos, and additional resources for the "MITRE ATT&CK for Developers — Beyond OWASP" talk by Chris Ayers, Senior Software Engineer at Microsoft. The talk bridges the gap between threat intelligence and practical development, showing how to apply adversarial thinking to your code.
+This repository contains the slide deck, demos, and additional resources for the "MITRE ATT&CK for Developers — Beyond OWASP" talk by Chris Ayers, Principal Software Engineer at Microsoft. The talk bridges the gap between threat intelligence and practical development, showing how to apply adversarial thinking to your code.
 
 ## Slides
 
