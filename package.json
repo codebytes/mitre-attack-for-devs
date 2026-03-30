@@ -1,0 +1,6 @@
+{
+  "name": "mitre-attack-for-devs",
+  "version": "1.0.0",
+  "description": "MITRE ATT&CK for Developers - presentation slides and samples",
+  "private": true
+}
