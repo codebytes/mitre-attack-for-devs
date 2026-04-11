@@ -1,0 +1,428 @@
+/* custom-mitre-attack.css */
+/* @theme custom-mitre-attack */
+
+/*
+ * MITRE ATT&CK-inspired Marp theme
+ * Design tokens extracted from https://attack.mitre.org/
+ *
+ * Color Palette:
+ *   Primary Red:   #c64337 (nav, accents, links)
+ *   Dark Navy:     #0b2338 (footer, dark sections)
+ *   Body Text:     #39434c (readable dark gray)
+ *   Heading Text:  #231f20 (near-black)
+ *   Link Blue:     #4f7cac (technique references)
+ *   Light BG:      #f2f2f2 (subtle section backgrounds)
+ *   Salmon Accent: #edb0a4 (warm accent, highlights)
+ *   White:         #ffffff (default slide bg)
+ */
+
+@import 'default';
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css');
+
+:root {
+  --mitre-red: #c64337;
+  --mitre-red-hover: #da574b;
+  --mitre-navy: #0b2338;
+  --mitre-dark: #231f20;
+  --mitre-text: #39434c;
+  --mitre-link: #3d6d99;
+  --mitre-salmon: #edb0a4;
+  --mitre-light: #f2f2f2;
+  --mitre-white: #ffffff;
+  --mitre-code-bg: #1e293b;
+  --mitre-table-header: #0b2338;
+  --mitre-border: #d4d4d3;
+}
+
+/* ─── Base Section ─── */
+section {
+  background: var(--mitre-white);
+  color: var(--mitre-text);
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 28px;
+  padding: 40px 60px 70px 60px;
+  line-height: 1.5;
+  border-top: 4px solid var(--mitre-red);
+}
+
+/* ─── Headings ─── */
+section h1 {
+  color: var(--mitre-dark);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 1.8em;
+  border-bottom: 3px solid var(--mitre-red);
+  padding-bottom: 0.2em;
+  margin-bottom: 0.5em;
+}
+
+section h2 {
+  color: var(--mitre-dark);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 1.5em;
+  border-bottom: 2px solid var(--mitre-salmon);
+  padding-bottom: 0.15em;
+  margin-bottom: 0.4em;
+}
+
+section h3 {
+  color: var(--mitre-red);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 1.15em;
+  margin-bottom: 0.3em;
+}
+
+section h4, section h5, section h6 {
+  color: var(--mitre-text);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+}
+
+/* ─── Fit headings (title slides) ─── */
+section h1[data-auto-scaling="fitted"],
+section h1:only-child {
+  border-bottom: none;
+}
+
+/* ─── Links ─── */
+section a {
+  color: var(--mitre-link);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+section a:hover {
+  color: var(--mitre-red);
+  border-bottom-color: var(--mitre-red);
+}
+
+/* ─── Lists ─── */
+section ul, section ol {
+  margin: 0.3em 0;
+}
+
+section li {
+  margin: 0.15em 0;
+  line-height: 1.45;
+}
+
+section li strong {
+  color: var(--mitre-dark);
+}
+
+/* ─── Blockquotes ─── */
+section blockquote {
+  border-left: 4px solid var(--mitre-red);
+  background: linear-gradient(135deg, rgba(198, 67, 55, 0.06), rgba(237, 176, 164, 0.08));
+  padding: 0.6em 1.2em;
+  margin: 0.6em 0;
+  font-style: italic;
+  color: var(--mitre-dark);
+  border-radius: 0 4px 4px 0;
+}
+
+section blockquote p {
+  margin: 0;
+}
+
+/* ─── Code Blocks ─── */
+section pre {
+  background: var(--mitre-code-bg);
+  border-radius: 6px;
+  border-left: 4px solid var(--mitre-red);
+  font-size: 0.55em;
+  line-height: 1.25;
+  margin: 0.4em 0;
+  box-shadow: 0 2px 8px rgba(11, 35, 56, 0.15);
+}
+
+section pre code {
+  font-family: 'Roboto Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
+  padding: 0.5em 0.8em;
+  color: #e2e8f0;
+}
+
+section code {
+  font-family: 'Roboto Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
+  background: rgba(237, 176, 164, 0.2);
+  color: #8b1a0e;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+section pre code {
+  background: transparent;
+  color: #e2e8f0;
+  padding: 0.5em 0.8em;
+}
+
+/* ─── Tables ─── */
+section table {
+  font-size: 0.78em;
+  line-height: 1.35;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.4em 0;
+}
+
+section th {
+  background: var(--mitre-table-header);
+  color: var(--mitre-white);
+  text-align: left;
+  padding: 8px 10px;
+  font-weight: 500;
+  font-size: 0.95em;
+  border-bottom: 2px solid var(--mitre-red);
+}
+
+section td {
+  padding: 6px 10px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--mitre-border);
+}
+
+section tr:nth-child(even) td {
+  background: var(--mitre-light);
+}
+
+section tr:hover td {
+  background: rgba(198, 67, 55, 0.05);
+}
+
+/* ─── Images ─── */
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+
+/* ─── Grid Layouts ─── */
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
+.columns3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+/* ─── Footer / Pagination ─── */
+section::after {
+  color: var(--mitre-text);
+  font-size: 0.55em;
+  opacity: 0.7;
+}
+
+footer {
+  color: var(--mitre-text) !important;
+  font-size: 0.5em !important;
+  opacity: 0.6;
+}
+
+header {
+  color: var(--mitre-red);
+  font-weight: 500;
+}
+
+/* ─── Social Icons ─── */
+.fa-twitter { color: #1da1f2; }
+.fa-mastodon { color: #6364ff; }
+.fa-linkedin { color: #0077b5; }
+.fa-window-maximize { color: var(--mitre-link); }
+.fa-bluesky { color: #0085ff; }
+.fa-github { color: var(--mitre-dark); }
+
+/* ─── SVG / Mermaid ─── */
+svg[id^="mermaid-"] {
+  max-width: 960px;
+  max-height: 540px;
+}
+
+/* ─── Lead / Invert Slide Variants ─── */
+section.lead {
+  background: linear-gradient(135deg, var(--mitre-navy) 0%, #162d44 50%, var(--mitre-navy) 100%);
+  color: var(--mitre-white);
+  text-align: center;
+  border-top: 4px solid var(--mitre-red);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+section.lead h1,
+section.lead h2 {
+  color: var(--mitre-white);
+  border-bottom-color: var(--mitre-red);
+}
+
+section.lead h2 {
+  color: var(--mitre-salmon);
+}
+
+section.invert {
+  background: var(--mitre-navy);
+  color: #cbd5e1;
+  border-top-color: var(--mitre-red);
+}
+
+section.invert h1,
+section.invert h2,
+section.invert h3 {
+  color: var(--mitre-white);
+}
+
+section.invert h2 {
+  border-bottom-color: var(--mitre-red);
+}
+
+section.invert a {
+  color: var(--mitre-salmon);
+}
+
+section.invert code {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--mitre-salmon);
+}
+
+section.invert th {
+  background: rgba(198, 67, 55, 0.9);
+}
+
+section.invert td {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+section.invert tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ─── Strikethrough for deprecated items ─── */
+section del {
+  opacity: 0.5;
+}
+
+/* ─── Emphasis & Strong ─── */
+section strong {
+  color: var(--mitre-dark);
+  font-weight: 700;
+}
+
+section em {
+  color: var(--mitre-red);
+  font-style: italic;
+}
+
+/* ─── Horizontal Rule (slide dividers) ─── */
+section hr {
+  border: none;
+  border-top: 2px solid var(--mitre-salmon);
+  margin: 1em 0;
+}
+
+/* ─── Dark Code Syntax Highlighting ─── */
+/* Override GitHub Prettylights light-theme vars for dark code backgrounds */
+section pre,
+section pre code {
+  --color-prettylights-syntax-comment: #8b949e;
+  --color-prettylights-syntax-constant: #79c0ff;
+  --color-prettylights-syntax-entity: #d2a8ff;
+  --color-prettylights-syntax-entity-tag: #7ee787;
+  --color-prettylights-syntax-keyword: #ff7b72;
+  --color-prettylights-syntax-string: #a5d6ff;
+  --color-prettylights-syntax-variable: #ffa198;
+  --color-prettylights-syntax-storage-modifier-import: #c9d1d9;
+  --color-prettylights-syntax-markup-heading: #1f6feb;
+  --color-prettylights-syntax-markup-list: #f2cc60;
+  --color-prettylights-syntax-markup-italic: #c9d1d9;
+  --color-prettylights-syntax-markup-bold: #c9d1d9;
+  --color-prettylights-syntax-markup-inserted-text: #aff5b4;
+  --color-prettylights-syntax-markup-inserted-bg: #033a16;
+  --color-prettylights-syntax-markup-deleted-text: #ffdcd7;
+  --color-prettylights-syntax-markup-deleted-bg: #67060c;
+  --color-prettylights-syntax-string-regexp: #7ee787;
+  --color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
+  --color-prettylights-syntax-meta-diff-range: #d2a8ff;
+  --color-prettylights-syntax-brackethighlighter-angle: #8b949e;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
+  --fgColor-default: #c9d1d9;
+  --bgColor-default: var(--mitre-code-bg);
+}
+
+section pre code .hljs-comment,
+section pre code .hljs-quote {
+  color: #8b949e;
+}
+
+section pre code .hljs-keyword,
+section pre code .hljs-selector-tag,
+section pre code .hljs-addition {
+  color: #ff7b72;
+}
+
+section pre code .hljs-number,
+section pre code .hljs-string,
+section pre code .hljs-meta .hljs-meta-string,
+section pre code .hljs-literal,
+section pre code .hljs-doctag,
+section pre code .hljs-regexp {
+  color: #a5d6ff;
+}
+
+section pre code .hljs-title,
+section pre code .hljs-section,
+section pre code .hljs-name,
+section pre code .hljs-selector-id,
+section pre code .hljs-selector-class {
+  color: #d2a8ff;
+}
+
+section pre code .hljs-attribute,
+section pre code .hljs-attr,
+section pre code .hljs-variable,
+section pre code .hljs-template-variable,
+section pre code .hljs-class .hljs-title,
+section pre code .hljs-type {
+  color: #ffa657;
+}
+
+section pre code .hljs-symbol,
+section pre code .hljs-bullet,
+section pre code .hljs-subst,
+section pre code .hljs-meta,
+section pre code .hljs-meta .hljs-keyword,
+section pre code .hljs-selector-attr,
+section pre code .hljs-selector-pseudo,
+section pre code .hljs-link {
+  color: #79c0ff;
+}
+
+section pre code .hljs-built_in,
+section pre code .hljs-deletion {
+  color: #ffa198;
+}
+
+section pre code .hljs-params {
+  color: #c9d1d9;
+}
+
+section pre code .hljs-formula {
+  color: #8b949e;
+}
+
+section pre code .hljs-property {
+  color: #79c0ff;
+}
+
+/* ─── Inline Code Contrast Fix ─── */
+section code {
+  color: #8b1a0e;
+  background: rgba(237, 176, 164, 0.2);
+}

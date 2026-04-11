@@ -1,6 +1,6 @@
 ---
 marp: true
-theme: custom-default
+theme: custom-mitre-attack
 paginate: true
 footer: '@Chris_L_Ayers - https://chris-ayers.com'
 ---
@@ -41,14 +41,15 @@ h2 { color: #00ff88; }
 
 ## Agenda
 
-- The Security Challenge for Developers
-- Understanding OWASP vs MITRE ATT&CK
-- ATT&CK Framework Deep Dive
-- 7 Critical Technique Categories
-- Practical Implementation Strategies
-- Building ATT&CK-Aware Applications
+- The Security Challenge & OWASP vs MITRE ATT&CK
+- Thinking Like an Attacker — Real-World Kill Chains
+- 7 Technique Deep Dives with Code:
+  - Initial Access · Execution · Persistence
+  - Credential Access · Defense Evasion
+  - Supply Chain · Collection & Exfiltration
+- Practical Implementation & Getting Started
 
-<!-- Here's our roadmap. We'll start with the problem, compare two major frameworks, then dive deep into real attack techniques with code examples. By the end, you'll have practical patterns you can use tomorrow. -->
+<!-- Here's our roadmap. We'll start with the problem, compare two major frameworks, then dive deep into seven technique categories with real code examples — vulnerable and defended. By the end, you'll have practical patterns you can use tomorrow. -->
 
 ---
 
@@ -110,7 +111,7 @@ h2 { color: #00ff88; }
 
 ![center](./img/14-attack-tactics.drawio.png)
 
-<!-- This is the kill chain — the crooked line from our title slide. Notice how it's grouped: Pre-Attack for reconnaissance, Get In for initial compromise, Stay In for maintaining access, and Act for achieving objectives. Attackers don't always go linearly — they loop back, skip steps, and adapt. -->
+<!-- This is the kill chain — the crooked line from our title slide. Notice how it's grouped: Pre-Attack for reconnaissance, Get In for initial compromise, Stay In for maintaining access, and Act for achieving objectives. Attackers don't always go linearly — they loop back, skip steps, and adapt. Today we'll focus on the seven tactics most relevant to developers: Initial Access, Execution, Persistence, Credential Access, Defense Evasion, Supply Chain (which maps to multiple tactics), and Collection/Exfiltration. Tactics like Lateral Movement and Privilege Escalation are critical but typically fall more to infrastructure and platform teams — we'll touch on where they intersect with your code. -->
 
 ---
 
@@ -217,7 +218,7 @@ h2 { color: #00ff88; }
 
 ---
 
-## Attacker Techniques
+## How Attackers Get In
 
 | Technique ID | Name | Description |
 |--------------|------|-------------|
@@ -302,7 +303,7 @@ class CredentialStuffingDetector {
 
 ---
 
-## Attacker Techniques
+## How Attackers Run Code
 
 | Technique ID | Name | Description |
 |--------------|------|-------------|
@@ -395,7 +396,7 @@ def process_data():
 
 ---
 
-## Attacker Techniques
+## How Attackers Stay In
 
 | Technique ID | Name | Description |
 |--------------|------|-------------|
@@ -498,7 +499,7 @@ public class FileUploadValidator {
 
 ---
 
-## Attacker Techniques
+## How Attackers Steal Credentials
 
 | Technique ID | Name | Description |
 |--------------|------|-------------|
@@ -510,6 +511,10 @@ public class FileUploadValidator {
 
 ---
 
+<style scoped>
+pre { font-size: 0.48em; line-height: 1.15; margin: 0.2em 0; }
+</style>
+
 ## Bad Secrets Management - All Languages
 
 ```python
@@ -520,9 +525,8 @@ API_KEY = "sk-1234567890abcdef"  # In source code
 
 ```csharp
 // C# - BAD: T1552 vulnerability  
-public class Config
-{
-    public static string ConnectionString = "Server=.;Database=MyApp;User Id=sa;Password=MyPassword123;";  // Hardcoded
+public class Config {
+    public static string ConnectionString = "Server=.;Database=MyApp;User Id=sa;Password=MyPassword123;";
     public static string ApiKey = "Bearer abc123def456";  // In source code
 }
 ```
@@ -608,7 +612,7 @@ async function getDbConnection() {
 
 ---
 
-## Attacker Techniques
+## How Attackers Hide
 
 | Technique ID | Name | Description |
 |--------------|------|-------------|
@@ -682,7 +686,7 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 
 ---
 
-## Attacker Techniques
+## How Attackers Poison Your Dependencies
 
 | Technique ID | Name | Description |
 |--------------|------|-------------|
@@ -734,46 +738,64 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 
 ---
 
-## Dependency Verification - All Ecosystems
+## Case Study: Axios NPM Compromise (2026)
 
-```bash
-# NPM - T1195.001 Prevention
-npm audit --audit-level high
-npm ci --only=production  # Use lockfile exactly
-npm install --package-lock-only  # Generate lockfile without install
+<div class="columns">
+<div>
 
-# Python - T1195.001 Prevention  
-pip install --require-hashes -r requirements.txt
-pip-audit  # Vulnerability scanning
-bandit -r .  # Security static analysis
+### 📦 The 3-Hour Window
+1. **Mar 31**: Maintainer account compromised via RAT malware
+2. `axios@1.14.1` + `axios@0.30.4` published
+3. Hidden dep: `plain-crypto-js@4.2.1`
+4. `postinstall` downloads **cross-platform RAT**
+5. Targets secrets: cloud keys, SSH, API tokens
 
-# .NET - T1195.001 Prevention
-dotnet list package --vulnerable --include-transitive
-dotnet nuget verify MyPackage.1.0.0.nupkg  # Package signature verification
-```
+</div>
+<div>
 
-<!-- Every ecosystem has tools for this. npm audit, pip-audit, and dotnet list --vulnerable are your first line of defense. Use lockfiles religiously — npm ci uses the exact lockfile, and pip's --require-hashes verifies every package against known checksums. Run these in CI/CD to catch issues before deployment. -->
+### 🎯 ATT&CK Techniques
+- **T1195.001** — Compromised npm package
+- **T1078** — Hijacked maintainer credentials
+- **T1059** — RAT via postinstall script
+- **T1552** — Credential harvesting
+- 🇰🇵 Attributed to **Sapphire Sleet** (DPRK)
+- 💥 **100M+ weekly downloads** exposed
+
+</div>
+</div>
+
+<!-- The Axios attack in March 2026 hit the most popular HTTP client in JavaScript — over 100 million weekly downloads. Attackers compromised a maintainer's account using social engineering and RAT malware, then published two poisoned versions. The hidden dependency ran a postinstall script that downloaded a platform-specific RAT targeting secrets on Windows, macOS, and Linux. It was live for only 3 hours but potentially exposed millions of CI/CD pipelines and dev environments. The attribution to North Korea's Sapphire Sleet group shows how nation-states target the open source supply chain. -->
 
 ---
 
-## SBOMs & Lock Files (T1195.001 Prevention)
+<style scoped>
+pre { font-size: 0.48em; line-height: 1.15; margin: 0.2em 0; }
+</style>
+
+## Dependency Security Toolkit (T1195.001 Prevention)
+
+```bash
+# Audit & verify — run in CI/CD
+npm audit --audit-level high              # NPM vulnerability scan
+pip-audit && bandit -r .                  # Python vuln scan + SAST
+dotnet list package --vulnerable --include-transitive  # .NET vuln scan
+```
 
 ```bash
 # Lock files — pin exact versions + hashes
-npm ci                                    # Install from lockfile exactly
+npm ci --only=production                  # Install from lockfile exactly
 pip install --require-hashes -r req.txt   # Verify hashes on install
 dotnet restore --locked-mode              # Fail if lockfile doesn't match
-
-# SBOMs — know what's in your software
-syft . -o spdx-json > sbom.json           # Generate SBOM with Syft
-dotnet CycloneDX /path/to/project.csproj  # .NET SBOM generation
-npm sbom --sbom-format cyclonedx          # NPM native SBOM support
-
-# Scan SBOMs for known vulnerabilities
-grype sbom:./sbom.json                    # Scan SBOM against CVE databases
 ```
 
-<!-- Lock files are your first defense — they pin exact versions with cryptographic hashes so no one can swap a package without detection. SBOMs go further: they're a complete inventory of every component in your software. When a new CVE drops, you can instantly answer "are we affected?" by scanning your SBOM instead of auditing source. Tools like Syft, CycloneDX, and Grype make this practical. Run SBOM generation in CI and scan on every build. -->
+```bash
+# SBOMs — know what's in your software
+syft . -o spdx-json > sbom.json           # Generate SBOM with Syft
+npm sbom --sbom-format cyclonedx           # NPM native SBOM support
+grype sbom:./sbom.json                     # Scan SBOM against CVE databases
+```
+
+<!-- Three layers of defense: First, audit every dependency for known vulnerabilities in CI. Second, use lockfiles with cryptographic hashes so no one can swap a package without detection. Third, generate SBOMs — a complete inventory of every component — so when a new CVE drops you can instantly answer "are we affected?" Run all three as gates in your CI/CD pipeline. -->
 
 ---
 
@@ -791,7 +813,7 @@ grype sbom:./sbom.json                    # Scan SBOM against CVE databases
 
 ---
 
-## Attacker Techniques
+## How Attackers Steal Your Data
 
 | Technique ID | Name | Description |
 |--------------|------|-------------|
@@ -800,6 +822,34 @@ grype sbom:./sbom.json                    # Scan SBOM against CVE databases
 | T1020 | Automated Exfiltration | Scripted data theft |
 
 <!-- T1213 is bulk data harvesting — think SELECT * FROM customers. T1567 uses legitimate cloud services like Dropbox or Google Drive to exfiltrate data, making it hard to distinguish from normal traffic. T1020 automates the process with scripts that systematically extract and transfer data. -->
+
+---
+
+## Real World: The Exfiltration Playbook
+
+<div class="columns">
+<div>
+
+### 🏥 Anthem Breach (2015)
+- **T1213** — Queried 78.8M patient records
+- **T1020** — Automated extraction over weeks
+- **T1071** — Exfil disguised as normal HTTP
+- 💥 Largest healthcare breach in US history
+
+</div>
+<div>
+
+### 🔑 LastPass Breach (2022)
+- **T1528** — Stole cloud storage access tokens
+- **T1213** — Accessed encrypted vault backups
+- **T1567** — Exfiltrated via cloud storage API
+- 💥 25M+ users' vault data stolen
+- 💡 Attacker targeted **a developer's home PC**
+
+</div>
+</div>
+
+<!-- Exfiltration is often the quietest phase because attackers want to avoid detection. Anthem's attackers queried 78.8 million records over weeks, blending with normal database traffic. LastPass is especially relevant for developers — the attacker compromised a DevOps engineer's personal machine to steal cloud storage credentials, then used legitimate cloud APIs to download vault backups. The data was encrypted, but the attacker had the keys. Both cases show why anomaly detection on data access patterns is critical — you need to catch the unusual query before 78 million records walk out the door. -->
 
 ---
 
@@ -932,22 +982,7 @@ class ExfiltrationDetector {
 
 ![center](./img/owasp-attack-integration.drawio.png)
 
-<!-- This is how OWASP and ATT&CK work together in practice. OWASP gives you secure coding practices, vulnerability testing, and security reviews. ATT&CK adds behavioral monitoring, technique correlation, and threat hunting. Together, you get: Secure by Design, Monitor by Behavior, and Respond by Intelligence. -->
-
----
-
-## Integration Points
-
-| Tool/Practice | OWASP Integration | ATT&CK Integration |
-|---------------|------------------|-------------------|
-| SAST/DAST | Vulnerability scanning | Code pattern analysis for technique enablers |
-| SIEM/Logging | Security event logging | ATT&CK technique ID correlation |
-| Threat Modeling | Risk assessment | Adversary technique mapping |
-| Code Review | Vulnerability checklist | Technique resistance validation |
-| Penetration Testing | Vulnerability exploitation | Technique simulation |
-| Incident Response | Vulnerability remediation | ATT&CK-based investigation |
-
-<!-- For every tool and practice you already use, there's both an OWASP and ATT&CK angle. Your SAST scanner finds vulnerabilities (OWASP) and also identifies code patterns that enable specific techniques (ATT&CK). Your penetration tests can exploit vulnerabilities AND simulate real adversary technique chains. Leverage what you already have. -->
+<!-- This is how OWASP and ATT&CK work together in practice. OWASP gives you secure coding practices, vulnerability testing, and security reviews. ATT&CK adds behavioral monitoring, technique correlation, and threat hunting. Together, you get: Secure by Design, Monitor by Behavior, and Respond by Intelligence. Your existing tools — SAST, SIEM, code reviews, pen tests — all have both an OWASP angle (find vulnerabilities) and an ATT&CK angle (detect technique patterns). Leverage what you already have. -->
 
 ---
 
@@ -984,30 +1019,32 @@ class ExfiltrationDetector {
 
 ---
 
-## Team Adoption Strategies
+## Team Adoption & Tooling
 
-- **Training**: ATT&CK workshops for development teams
-- **Process**: Include technique IDs in security requirements  
-- **Tools**: Use ATT&CK Navigator for coverage visualization
+<div class="columns">
+<div>
+
+### Adoption Strategies
+- **Training**: ATT&CK workshops for dev teams
+- **Process**: Technique IDs in security requirements
 - **Culture**: "Red team thinking" in design reviews
-- **Metrics**: Track technique coverage and detection rates
-- **Collaboration**: Regular sync between dev and security teams
+- **Metrics**: Track technique coverage rates
+- **Collaboration**: Regular dev ↔ security syncs
 
-<!-- Security culture is as important as security code. Train your team on ATT&CK, include technique IDs in your Jira tickets, use the ATT&CK Navigator for visual coverage maps, and encourage "red team thinking" in design reviews. Ask: "If I were an attacker, how would I abuse this feature?" -->
+</div>
+<div>
 
----
+### ATT&CK Navigator
+- **Tool**: [attack-navigator](https://mitre-attack.github.io/attack-navigator/)
+- Visualize technique coverage and gaps
+- Color-code: 🟢 defended / 🟡 partial / 🔴 gap
+- Communicate risk to stakeholders
+- Plan security improvements
 
-## ATT&CK Navigator
+</div>
+</div>
 
-- **Tool**: [mitre-attack.github.io/attack-navigator/](https://mitre-attack.github.io/attack-navigator/)
-- **Purpose**: Visualize technique coverage and gaps
-- **Use Cases**: 
-  - Map application defenses to techniques
-  - Track security control effectiveness
-  - Plan security improvements
-  - Communicate risk to stakeholders
-
-<!-- The ATT&CK Navigator is a free, interactive tool for visualizing your coverage. Color-code techniques green for defended, yellow for partially covered, and red for gaps. It's incredibly powerful for communicating with stakeholders — a visual heat map of your security posture is worth a thousand bullet points. -->
+<!-- Security culture is as important as security code. Train your team on ATT&CK, include technique IDs in your Jira tickets, and encourage "red team thinking" in design reviews. The ATT&CK Navigator is a free tool for visualizing your coverage — a visual heat map of your security posture is worth a thousand bullet points. Ask: "If I were an attacker, how would I abuse this feature?" -->
 
 ---
 
