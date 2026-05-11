@@ -209,3 +209,67 @@ The "Acronym Convention for Developer-Security Decks" decision has been applied.
 **Status:** Applied to slides/Slides.md
 
 The "Supply-Chain Case Study Narrative Arc" decision has been applied. Added 3 new slides: "The Supply-Chain Attack Arc" narrative table (line 709), "Case Study: Notepad++ Update Hijack (2025)" with Chrysalis campaign facts and ATT&CK T-IDs (line 724), "Log4Shell (2021) — Dependency-Trust Failure, Not Compromise" with first-visible SBOM expansion (line 813). Section intro speaker note updated to distinguish Log4Shell from supply-chain compromise. Marp HTML build validated clean.
+
+## 2026-05-11 — Fantasy/Medieval Meme Slides (Graphical)
+
+### Decision: Add 8 Fantasy/Medieval Meme Slides (Text-Only)
+
+**Date:** 2026-05-11  
+**Author:** mcmanus  
+**Type:** content addition  
+**Status:** applied for review
+
+Applied all 8 researched text-only fantasy/medieval meme candidates to `slides/Slides.md`:
+
+1. One Does Not Simply Patch Production
+2. You Shall Not Pass
+3. SNEAK 100: Living Off the Land
+4. Deployment Security Alignment Chart
+5. I Cast Fireball at the Input Field
+6. Roll Initiative: When the Alert Is Real
+7. I Used to Ship Secrets Like That
+8. Fus Ro Dah: When One Bad Input Moves the Whole Stack
+
+**Constraints followed:**
+- Every new meme slide uses `<!-- _class: parchment -->`.
+- No embedded images or external image URLs.
+- Existing meme slides left in place.
+- Each new slide includes a visible ATT&CK lens callout and speaker note.
+
+**Placement rationale:** Meme slides placed near their teaching context. Batch intentionally over-includes candidates; final deck pacing should be pruned after Chris reviews which jokes land.
+
+### Decision: Graphical Meme Images Applied (Stance Reversal)
+
+**Date:** 2026-05-11  
+**Author:** mcmanus  
+**Type:** content addition (stance reversal)  
+**Status:** applied for review
+
+**STANCE REVERSAL:**  
+Chris reversed the earlier text-only meme constraint and confirmed fair-use applicability for standard Imgflip/Know Your Meme templates. Applied a graphical image layer to all 11 meme slides in `slides/Slides.md`: the 3 existing memes and the 8 newly added fantasy/medieval candidates.
+
+**Images added to `slides/img/memes/`:**
+- `drake.jpg` — Secrets Management: A Choice (existing retrofit)
+- `galaxy-brain.jpg` — Detection Maturity: A Brief Evolution (existing retrofit)
+- `how-it-started.jpg` — How it started vs How it's going (existing retrofit)
+- `alignment-chart.jpg` — Deployment Security Alignment Chart (new, generated 3x3 grid)
+- `you-shall-not-pass.jpg` — You Shall Not Pass (new, Imgflip)
+- `cast-fireball.jpg` — I Cast Fireball at the Input Field (new, Imgflip)
+- `fus-ro-dah.jpg` — Fus Ro Dah: When One Bad Input Moves the Whole Stack (new, Know Your Meme)
+- `arrow-in-the-knee.jpg` — I Used to Ship Secrets Like That (new, Imgflip)
+- `sneak-100.jpg` — SNEAK 100: Living Off the Land (new, Imgflip)
+- `one-does-not-simply.jpg` — One Does Not Simply Patch Production (new, Imgflip)
+- `roll-initiative.jpg` — Roll Initiative: When the Alert Is Real (new, closest Imgflip D&D visual)
+
+**Sourcing and layout:**
+- Canonical Imgflip templates used where available.
+- `fus-ro-dah.jpg` uses Know Your Meme reference because Imgflip result was not clean.
+- `alignment-chart.jpg` generated as clean 3x3 alignment-grid template.
+- `roll-initiative.jpg` uses closest Imgflip D&D dice/Nat 1 visual.
+- Each meme slide includes image plus existing teaching content, ATT&CK lens where present/appropriate, and speaker note.
+- Existing meme slides retrofitted rather than removed.
+- All images embedded via Marp `<div class="columns">` or `![center w:60%]` patterns while preserving `parchment` class.
+
+**Deck impact:** `slides/Slides.md` 1294 → 1534 lines. Marp validation: pass (exit 0).
+
+**Rationale for reversal:** Fair-use exemption confirmed for educational deck use of standard meme templates. Graphical memes substantially improve audience engagement and humor landing without sacrificing technical content, MITRE mappings, or code examples.

