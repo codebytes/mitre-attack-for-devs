@@ -93,3 +93,20 @@
 ### 2026-05-11 — Current visual register for fantasy/medieval review
 
 `slides/Slides.md` currently uses the `custom-techorama` theme: dark navy/blue section dividers, white content slides, DS Wallau display headings, gold/orange accents, and crisp corporate conference styling. Visuals are mostly technical diagrams, code samples, presenter/mascot imagery, and MITRE/security architecture graphics; fantasy additions should remain accent-level so they do not fight the SOC/red-team/developer-talk tone or reduce code/matrix readability.
+
+### 2026-05-11 — Medieval accent layer applied to Techorama theme
+
+**Theme hooks added:** appended `section.parchment`, `section.quest`, and `.battlement-rule` to `slides/themes/custom-techorama.css`.
+
+**Design rationale:**
+- `parchment` keeps the standard readable content-slide posture and adds only a warm gold/orange wash, inset gold frame, and heading accents for callouts or Defense in Depth.
+- `quest` is a darker transition-slide treatment using the existing navy→blue Techorama gradient, DS Wallau display heading, gold underline, and a low-opacity castle-gate watermark.
+- `.battlement-rule` is a tiny CSS-only crenellated divider utility for optional framing; it does not touch code block styling.
+
+**Self-created SVG assets:** all are simple geometric silhouettes in `slides/themes/techorama/`, `viewBox="0 0 100 100"`, single-color via `currentColor`, no raster images or external font dependencies.
+- `castle-gate.svg` — 309 bytes
+- `tower.svg` — 238 bytes
+- `shield.svg` — 253 bytes
+- `scroll.svg` — 380 bytes
+
+**Validation:** `slides/techorama-sample.md` was not present in this checkout, so the requested sample command could not produce an output file. Validated the same theme path with a minimal stdin Marp deck containing `quest`, `parchment`, and a code block; HTML render passed to `slides/validation-artifacts/techorama-medieval-check.html` with exit code 0.

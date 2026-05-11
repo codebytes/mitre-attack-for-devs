@@ -1,12 +1,9 @@
 {
   "defaultModel": "gpt-5.5",
-  "agentModelOverrides": {
-    "keyser": "claude-opus-4.7-xhigh"
-  },
+  "agentModelOverrides": {},
   "notes": {
-    "defaultModel": "All team members default to GPT-5.5 unless overridden.",
-    "keyser": "Lead/Architect uses Claude Opus 4.7 Extra-High reasoning for architecture and review work.",
+    "defaultModel": "All team members use GPT-5.5. No per-agent overrides.",
     "set_by": "Chris Ayers",
-    "set_at": "2026-05-11T12:06:31-04:00"
+    "set_at": "2026-05-11T17:19:13-04:00"
   }
 }

@@ -48,6 +48,18 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ---
 
+<!-- _class: parchment -->
+
+## Castle-Defense Lens
+
+> Throughout this talk, we'll borrow a castle-defense lens to keep the attacker chain easy to picture — gates, keys, tunnels, treasuries.
+>
+> The metaphor is here to help, not to replace ATT&CK terminology.
+
+<!-- Quick permission slip for the audience: the medieval language is a mental model, not a costume. We keep the ATT&CK terms precise and use the castle lens only where it makes movement and layered defense easier to picture. -->
+
+---
+
 ## The Security Challenge
 
 - **Growing attack surface**: APIs, microservices, cloud infrastructure
@@ -168,7 +180,7 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 # Let's Think Like Attackers
 
-<!-- Now we shift gears. For the next section, I want you to put on a black hoodie — metaphorically. We're going to look at real code through the eyes of an attacker and then see how to defend it. -->
+<!-- Now we shift gears. For the next section, I want you to put on a black hoodie — metaphorically. We're going to look at real code through the eyes of an attacker and then see how to defend it. Think of this as walking the castle perimeter before the attackers do: where are the gates, shadows, and blind corners? -->
 
 ---
 
@@ -205,7 +217,7 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 </div>
 </div>
 
-<!-- SolarWinds is the poster child for why developers need ATT&CK. The attackers compromised the build system — not the source code — so code reviews missed it entirely. The malicious DLL was signed with SolarWinds' own certificate. 18,000 organizations installed it. It was undetected for 9 months. This is what a real crooked line looks like: supply chain to execution to credential theft to exfiltration, with defense evasion at every step. -->
+<!-- SolarWinds is the poster child for why developers need ATT&CK. The attackers compromised the build system — not the source code — so code reviews missed it entirely. The malicious DLL was signed with SolarWinds' own certificate. 18,000 organizations installed it. It was undetected for 9 months. This is what a real crooked line looks like: supply chain to execution to credential theft to exfiltration, with defense evasion at every step. Medieval version: the king's own master smith forging the assassin's blade and stamping it with the royal seal. Nobody questions a sword with the right stamp. -->
 
 ---
 
@@ -213,7 +225,7 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 # Initial Access & Credential Attacks
 
-<!-- This is where every attack begins — getting that first foothold. Whether it's exploiting a web vulnerability, stealing credentials, or phishing, the attacker needs a way in. -->
+<!-- This is where every attack begins — getting that first foothold. Whether it's exploiting a web vulnerability, stealing credentials, or phishing, the attacker needs a way in. Think: which gates exist, who holds the keys, and who's allowed to walk past the guards without being asked. -->
 
 ---
 
@@ -300,7 +312,7 @@ class CredentialStuffingDetector {
 
 # Execution & Code Injection
 
-<!-- Once attackers get in, they need to execute code. This section covers how they run malicious commands through your application. -->
+<!-- Once attackers get in, they need to execute code. This section covers how they run malicious commands through your application. Once they're past the wall, they need to set something off inside; this is when an attacker plants the charge. -->
 
 ---
 
@@ -395,7 +407,7 @@ def process_data():
 
 # Persistence & Session Hijacking
 
-<!-- Attackers don't want to re-exploit every time. Once they're in, they want to stay in. This is where persistence techniques come in — and session hijacking is one of the most common web-specific methods. -->
+<!-- Attackers don't want to re-exploit every time. Once they're in, they want to stay in. This is where persistence techniques come in — and session hijacking is one of the most common web-specific methods. Now they want to come back tomorrow without storming the gate again — a trapdoor under the rug. -->
 
 ---
 
@@ -500,7 +512,7 @@ public class FileUploadValidator {
 
 # Credential Access & Secrets
 
-<!-- Credentials are the keys to the kingdom. Attackers know that developers often leave secrets lying around in code, config files, and environment variables. Let's look at the wrong way and the right way. -->
+<!-- Credentials are the keys to the kingdom. Attackers know that developers often leave secrets lying around in code, config files, and environment variables. Let's look at the wrong way and the right way. If the gate failed, the next move is the steward's chamber — keys, signets, anything that opens a door later. -->
 
 ---
 
@@ -513,6 +525,20 @@ public class FileUploadValidator {
 | T1528 | Steal Application Access Token | API tokens, OAuth tokens |
 
 <!-- T1552 is huge — hardcoded credentials in source code are found in almost every codebase audit. T1555 targets credential stores like browser password managers. T1528 is about stealing OAuth tokens and API keys from running applications. All three are preventable with proper secrets management. -->
+
+---
+
+<!-- _class: parchment -->
+
+## Secrets Management: A Choice
+
+| ❌ Drake disapproves | ✅ Drake approves |
+|---|---|
+| `const apiKey = "sk-prod-...";` | `DefaultAzureCredential()` |
+| `.env` committed to git | Managed Identity + Key Vault |
+| Rotating secrets manually every 90 days | Role-Based Access Control (RBAC) + automatic token issuance |
+
+<!-- This is the Drake format without the image. The teaching point is simple: credentials in code create T1552 exposure, while identity-based access and scoped authorization remove static secrets from the application path. -->
 
 ---
 
@@ -615,7 +641,7 @@ async function getDbConnection() {
 
 # Defense Evasion & Log Tampering
 
-<!-- This is the sneaky stuff. Once attackers are in, they don't want to be detected. They'll tamper with logs, obfuscate their tools, and masquerade as legitimate processes. If your logging can be manipulated, your incident response is blind. -->
+<!-- This is the sneaky stuff. Once attackers are in, they don't want to be detected. They'll tamper with logs, obfuscate their tools, and masquerade as legitimate processes. If your logging can be manipulated, your incident response is blind. Every keep has a scribe writing the chronicle; the attacker just needs them to write the wrong words. -->
 
 ---
 
@@ -691,7 +717,7 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 
 # Supply Chain Compromise
 
-<!-- This is the technique that keeps security teams up at night. Why attack your code when they can attack the code you depend on? SolarWinds, Shai-Hulud, and the event-stream incident showed how devastating supply-chain compromises can be — and Log4Shell showed how a trusted library's own critical flaw can be just as catastrophic. We'll distinguish two failure modes: supply-chain compromise versus dependency-trust failure. -->
+<!-- This is the technique that keeps security teams up at night. Why attack your code when they can attack the code you depend on? SolarWinds, Shai-Hulud, and the event-stream incident showed how devastating supply-chain compromises can be — and Log4Shell showed how a trusted library's own critical flaw can be just as catastrophic. We'll distinguish two failure modes: supply-chain compromise versus dependency-trust failure. Why scale the wall when you can poison the caravan the keep already trusts? -->
 
 ---
 
@@ -883,7 +909,7 @@ grype sbom:./sbom.json                     # Scan SBOM against CVE databases
 
 # Collection & Exfiltration
 
-<!-- This is the endgame for many attacks. The attacker has gotten in, escalated privileges, and moved laterally. Now they want the data. How do they collect it, and how do they get it out without being noticed? -->
+<!-- This is the endgame for many attacks. The attacker has gotten in, escalated privileges, and moved laterally. Now they want the data. How do they collect it, and how do they get it out without being noticed? The treasure is in the strongroom; the trick is getting it out without anyone noticing the wagons leaving. -->
 
 ---
 
@@ -1003,7 +1029,7 @@ class ExfiltrationDetector {
 
 # Practical Implementation
 
-<!-- Now let's talk about how to actually bring all of this into your development workflow. Theory is great, but what do you do on Monday morning? -->
+<!-- Now let's talk about how to actually bring all of this into your development workflow. Theory is great, but what do you do on Monday morning? This is where the castle map becomes the maintenance plan: which walls do we inspect, instrument, and reinforce first? -->
 
 ---
 
@@ -1046,11 +1072,41 @@ class ExfiltrationDetector {
 
 ---
 
+<!-- _class: parchment -->
+
+## Detection Maturity: A Brief Evolution
+
+- 🧠 Grep the logs for `"error"`
+- 🧠✨ Alert on failed login spikes
+- 🧠✨✨ Correlate technique IDs across systems with Security Information and Event Management (SIEM) + ATT&CK tags
+- 🧠✨✨✨ Behavioral analytics — the captain who notices the new guard limping the wrong way
+
+<!-- This is the galaxy-brain format. The joke teaches the maturity curve: raw logs are useful, alerts are better, technique correlation gives shared language, and behavior analytics catches attacker movement that simple rules miss. -->
+
+---
+
+<!-- _class: parchment -->
+
 ## Defense in Depth Architecture
+
+<div class="columns">
+<div>
 
 ![center](./img/defense-in-depth.drawio.png)
 
-<!-- Defense in depth means every layer has its own security controls. Input validation stops injection, authentication verifies identity, authorization controls access, behavioral analytics detects anomalies, threat intelligence provides context, and automated blocking responds in real-time. An attacker has to bypass ALL of these layers. -->
+</div>
+<div>
+
+### Concentric Walls
+- **Outer bailey**: WAF, rate limits, network controls
+- **Inner bailey**: authentication, RBAC, session controls
+- **Keep**: input validation, authorization, business rules
+- **Strongroom**: secrets management, encryption, data access monitoring
+
+</div>
+</div>
+
+<!-- Defense in depth means every layer has its own security controls. The outer bailey blocks noisy T1190 and T1110 attempts, the inner bailey limits stolen-key damage from T1078, the keep catches injection and business-logic abuse, and the strongroom protects secrets and data even after earlier walls fail. The point is not one perfect wall; it is forcing the attacker to beat independent controls at every layer while your detection has more chances to see them. -->
 
 ---
 
@@ -1078,7 +1134,7 @@ class ExfiltrationDetector {
 ### Phase 2: Detection
 - Anomaly detection for high-risk techniques
 - Automated response workflows
-- Security Information and Event Management (SIEM) integration
+- SIEM integration
 
 </div>
 <div>
@@ -1176,7 +1232,7 @@ class ExfiltrationDetector {
 
 > Every "TODO: fix later" is an attacker's "TODO: exploit now"
 
-<!-- This is a joke but also very real. Every security TODO in your backlog is a technique an attacker can exploit. The difference between the left and right columns is just time. ATT&CK helps you prioritize which TODOs to fix first based on real adversary behavior. -->
+<!-- This is a joke but also very real. Every security TODO in your backlog is a technique an attacker can exploit. The difference between the left and right columns is just time. ATT&CK helps you prioritize which TODOs to fix first based on real adversary behavior. Medieval engineers also thought one tall wall was enough, right up until someone found the servant's door. -->
 
 ---
 
@@ -1184,7 +1240,7 @@ class ExfiltrationDetector {
 
 # Key Takeaways
 
-<!-- Let's wrap up with the key messages I want you to take away from this talk. -->
+<!-- Let's wrap up with the key messages I want you to take away from this talk. Leave with a map of the gates, keys, tunnels, watchtowers, and strongrooms your code needs to defend. -->
 
 ---
 

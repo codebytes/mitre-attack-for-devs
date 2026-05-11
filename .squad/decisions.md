@@ -117,6 +117,25 @@ Use a threaded medieval/castle-defense motif sparingly: section intro notes, tac
 
 **Rationale:** The deck is a developer security talk, not a fantasy talk. Medieval metaphors work when they clarify attacker movement and layered defense (gates, disguises, keys, tunnels, couriers, treasure rooms), but they will hurt credibility if they replace precise MITRE ATT&CK terminology or intrude into code examples.
 
+#### Applied: Medieval Content Layer
+
+**Date Applied:** 2026-05-11  
+**Status:** Applied to `slides/Slides.md`
+
+The Medieval Motif Content Guidelines decision has been applied as a content layer. Added a `parchment` Castle-Defense Lens framing slide after the Agenda, medieval transition lines to section-divider speaker notes only, and reframed Defense in Depth as concentric walls while preserving diagrams, security controls, ATT&CK IDs, CVE/CVSS facts, case-study content, code blocks, and the supply-chain narrative arc. Marp HTML validation passed.
+
+
+### Decision: Dev-Audience Meme Addition
+
+**Date:** 2026-05-11  
+**Author:** mcmanus  
+**Type:** content addition  
+**Status:** Applied
+
+Add a small number of developer-audience meme slides as text-format humor only, avoiding image assets and external image URLs. Applied two `parchment` meme slides in `slides/Slides.md`: Drake-style **Secrets Management: A Choice** after **How Attackers Steal Credentials**, and galaxy-brain-style **Detection Maturity: A Brief Evolution** after **Building Detection Into Code**. The existing **How it started vs How it's going** slide remains the third meme format.
+
+**Constraints:** Keep memes out of code-sample slides, MITRE technique listings, and factual case-study slides.
+
 ### Decision: Supply-Chain Case Study Narrative Arc
 
 **Date:** 2026-05-11  
@@ -153,6 +172,13 @@ Keep `custom-techorama` as the base visual system and add a small medieval/fanta
 - Do not alter MITRE matrix/architecture diagrams.
 
 **Rationale:** The deck is code-heavy and technical; readability must stay dominant. Section dividers are natural places for playful visual metaphors without cluttering code slides.
+
+#### Applied: Medieval Visual Accent Layer
+
+**Date Applied:** 2026-05-11  
+**Status:** Applied to `slides/themes/custom-techorama.css` and `slides/themes/techorama/`
+
+The Fantasy/Medieval Theme Accent Layer decision has been applied as an append-only extension over the Techorama base theme. Added `section.parchment`, `section.quest`, and `.battlement-rule` hooks, plus self-created `castle-gate.svg`, `tower.svg`, `shield.svg`, and `scroll.svg` silhouettes. No Techorama design tokens or existing base/title/section/lead/invert/code styles were changed.
 
 ### Decision: Apply Techorama Theme to Live MITRE ATT&CK Deck
 
