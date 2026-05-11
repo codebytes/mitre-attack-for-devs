@@ -1,24 +1,19 @@
 ---
 marp: true
-theme: custom-mitre-attack
+theme: custom-techorama
 paginate: true
 footer: '@Chris_L_Ayers - https://chris-ayers.com'
 ---
 
 <!-- _footer: 'https://github.com/codebytes/mitre-attack-for-devs' -->
 
-![bg](./img/crooked-line-bg.svg)
-
-<style scoped>
-h1, h2 { color: #ffffff; text-shadow: 0 0 20px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.7); }
-h2 { color: #00ff88; }
-</style>
+<!-- _class: title -->
 
 # <!-- fit --> MITRE ATT&CK for Developers
 
 ## <!-- fit --> The Crooked Line: How Attackers Really Operate
 
-<!-- Attackers don't follow a straight line. They zigzag, backtrack, pivot, and adapt. This talk explores how the MITRE ATT&CK framework maps these crooked paths — and what developers can do to straighten out their defenses. The background illustrates the contrast: the dashed line is the path defenders expect, and the red crooked line is how attacks actually unfold across tactics like reconnaissance, lateral movement, and exfiltration. -->
+<!-- Attackers don't follow a straight line. They zigzag, backtrack, pivot, and adapt. This talk explores how the MITRE ATT&CK framework maps these crooked paths — and what developers can do to straighten out their defenses. The crooked-line metaphor frames the talk: defenders often expect a straight path, while attackers zigzag, backtrack, and pivot across tactics like reconnaissance, lateral movement, and exfiltration. -->
 
 ---
 
@@ -169,7 +164,9 @@ h2 { color: #00ff88; }
 
 ---
 
-# <!-- fit --> Let's Think Like Attackers
+<!-- _class: section -->
+
+# Let's Think Like Attackers
 
 <!-- Now we shift gears. For the next section, I want you to put on a black hoodie — metaphorically. We're going to look at real code through the eyes of an attacker and then see how to defend it. -->
 
@@ -212,7 +209,9 @@ h2 { color: #00ff88; }
 
 ---
 
-# <!-- fit --> Initial Access & Credential Attacks
+<!-- _class: section -->
+
+# Initial Access & Credential Attacks
 
 <!-- This is where every attack begins — getting that first foothold. Whether it's exploiting a web vulnerability, stealing credentials, or phishing, the attacker needs a way in. -->
 
@@ -297,7 +296,9 @@ class CredentialStuffingDetector {
 
 ---
 
-# <!-- fit --> Execution & Code Injection
+<!-- _class: section -->
+
+# Execution & Code Injection
 
 <!-- Once attackers get in, they need to execute code. This section covers how they run malicious commands through your application. -->
 
@@ -390,7 +391,9 @@ def process_data():
 
 ---
 
-# <!-- fit --> Persistence & Session Hijacking
+<!-- _class: section -->
+
+# Persistence & Session Hijacking
 
 <!-- Attackers don't want to re-exploit every time. Once they're in, they want to stay in. This is where persistence techniques come in — and session hijacking is one of the most common web-specific methods. -->
 
@@ -493,7 +496,9 @@ public class FileUploadValidator {
 
 ---
 
-# <!-- fit --> Credential Access & Secrets
+<!-- _class: section -->
+
+# Credential Access & Secrets
 
 <!-- Credentials are the keys to the kingdom. Attackers know that developers often leave secrets lying around in code, config files, and environment variables. Let's look at the wrong way and the right way. -->
 
@@ -606,7 +611,9 @@ async function getDbConnection() {
 
 ---
 
-# <!-- fit --> Defense Evasion & Log Tampering
+<!-- _class: section -->
+
+# Defense Evasion & Log Tampering
 
 <!-- This is the sneaky stuff. Once attackers are in, they don't want to be detected. They'll tamper with logs, obfuscate their tools, and masquerade as legitimate processes. If your logging can be manipulated, your incident response is blind. -->
 
@@ -680,7 +687,9 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 
 ---
 
-# <!-- fit --> Supply Chain Compromise
+<!-- _class: section -->
+
+# Supply Chain Compromise
 
 <!-- This is the technique that keeps security teams up at night. Why attack your code when they can attack the code you depend on? SolarWinds, Log4Shell, and the event-stream incident all showed how devastating supply chain attacks can be. -->
 
@@ -807,7 +816,9 @@ grype sbom:./sbom.json                     # Scan SBOM against CVE databases
 
 ---
 
-# <!-- fit --> Collection & Exfiltration
+<!-- _class: section -->
+
+# Collection & Exfiltration
 
 <!-- This is the endgame for many attacks. The attacker has gotten in, escalated privileges, and moved laterally. Now they want the data. How do they collect it, and how do they get it out without being noticed? -->
 
@@ -925,7 +936,9 @@ class ExfiltrationDetector {
 
 ---
 
-# <!-- fit --> Practical Implementation
+<!-- _class: section -->
+
+# Practical Implementation
 
 <!-- Now let's talk about how to actually bring all of this into your development workflow. Theory is great, but what do you do on Monday morning? -->
 
@@ -1104,7 +1117,9 @@ class ExfiltrationDetector {
 
 ---
 
-# <!-- fit --> Key Takeaways
+<!-- _class: section -->
+
+# Key Takeaways
 
 <!-- Let's wrap up with the key messages I want you to take away from this talk. -->
 

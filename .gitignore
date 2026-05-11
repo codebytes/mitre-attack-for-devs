@@ -349,3 +349,22 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 slides/output.html
+.squad/orchestration-log/
+.squad/log/
+.squad/decisions/inbox/
+.squad/sessions/
+.squad-workstream
+
+# Marp theme validation diagnostics (PDF/PNG/logs from validation runs)
+validation-artifacts/
+
+# Local noise
+.DS_Store
+.playwright-cli/
+
+# Generated slide exports
+slides/Slides.html
+slides/Slides.pdf
+
+# Stale Squad template dump (active templates live in .squad/templates/)
+.squad-templates/

@@ -1,0 +1,40 @@
+{
+  "agents": {
+    "keyser": {
+      "created_at": "2026-05-11T15:55:39.681Z",
+      "persistent_name": "Keyser",
+      "universe": "The Usual Suspects",
+      "status": "active"
+    },
+    "mcmanus": {
+      "created_at": "2026-05-11T15:55:39.681Z",
+      "persistent_name": "McManus",
+      "universe": "The Usual Suspects",
+      "status": "active"
+    },
+    "fenster": {
+      "created_at": "2026-05-11T15:55:39.681Z",
+      "persistent_name": "Fenster",
+      "universe": "The Usual Suspects",
+      "status": "active"
+    },
+    "verbal": {
+      "created_at": "2026-05-11T15:55:39.681Z",
+      "persistent_name": "Verbal",
+      "universe": "The Usual Suspects",
+      "status": "active"
+    },
+    "scribe": {
+      "created_at": "2026-05-11T15:55:39.681Z",
+      "persistent_name": "Scribe",
+      "universe": "The Usual Suspects",
+      "status": "active"
+    },
+    "ralph": {
+      "created_at": "2026-05-11T15:55:39.681Z",
+      "persistent_name": "Ralph",
+      "universe": "The Usual Suspects",
+      "status": "active"
+    }
+  }
+}
