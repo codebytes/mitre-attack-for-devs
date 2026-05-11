@@ -48,18 +48,6 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ---
 
-<!-- _class: parchment -->
-
-## Castle-Defense Lens
-
-> Throughout this talk, we'll borrow a castle-defense lens to keep the attacker chain easy to picture — gates, keys, tunnels, treasuries.
->
-> The metaphor is here to help, not to replace ATT&CK terminology.
-
-<!-- Quick permission slip for the audience: the medieval language is a mental model, not a costume. We keep the ATT&CK terms precise and use the castle lens only where it makes movement and layered defense easier to picture. -->
-
----
-
 ## The Security Challenge
 
 - **Growing attack surface**: APIs, microservices, cloud infrastructure
@@ -146,6 +134,16 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 </div>
 
 <!-- Side by side, you can see the difference. OWASP says "your SQL query is injectable." ATT&CK says "an attacker will exploit your public-facing application, escalate privileges, move laterally, and exfiltrate data." Both views are essential — one prevents the hole, the other detects the intruder. -->
+
+---
+
+<!-- _class: parchment -->
+
+## Why Not Both?
+
+![center w:55%](./img/memes/why-not-both.jpg)
+
+<!-- The setup for the next slide. OWASP versus ATT&CK sounds like a choice: vulnerabilities or adversary behavior, prevention or detection. The punchline is both — OWASP helps prevent the bug, ATT&CK helps detect what attackers do when prevention is not enough. -->
 
 ---
 
