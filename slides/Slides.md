@@ -141,7 +141,7 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ## Why Not Both?
 
-![center w:55%](./img/memes/why-not-both.jpg)
+![center w:65%](./img/memes/why-not-both.jpg)
 
 <!-- The setup for the next slide. OWASP versus ATT&CK sounds like a choice: vulnerabilities or adversary behavior, prevention or detection. The punchline is both — OWASP helps prevent the bug, ATT&CK helps detect what attackers do when prevention is not enough. -->
 
