@@ -169,3 +169,17 @@ The live MITRE ATT&CK presentation at `slides/Slides.md` now uses `theme: custom
 - Existing scoped `pre` font-size adjustments on dense code slides remain valid with Techorama's dark code block styling.
 
 **Validation:** HTML build, PDF build (with `--browser-timeout 90`), and PNG build for all 68 slides passed. Playwright font validation passed for DS Wallau.
+
+#### Applied: Acronym Convention
+
+**Date Applied:** 2026-05-11  
+**Status:** Applied to slides/Slides.md
+
+The "Acronym Convention for Developer-Security Decks" decision has been applied. Expanded acronyms on first visible-content use: C2 (line 192), RCE (line 740), CVSS (line 740), RAT (line 756), SIEM (line 1018), SBOM (line 832). Marp HTML build validated clean.
+
+#### Applied: Supply-Chain Narrative Arc
+
+**Date Applied:** 2026-05-11  
+**Status:** Applied to slides/Slides.md
+
+The "Supply-Chain Case Study Narrative Arc" decision has been applied. Added 3 new slides: "The Supply-Chain Attack Arc" narrative table (line 709), "Case Study: Notepad++ Update Hijack (2025)" with Chrysalis campaign facts and ATT&CK T-IDs (line 724), "Log4Shell (2021) — Dependency-Trust Failure, Not Compromise" with first-visible SBOM expansion (line 813). Section intro speaker note updated to distinguish Log4Shell from supply-chain compromise. Marp HTML build validated clean.

