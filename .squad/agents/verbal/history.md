@@ -134,3 +134,45 @@
 - Renamed 17 extracted `.potx` images from generic `image{N}.{png,jpg}` to descriptive kebab-case names based on visual content (e.g., `knight-on-horse-gray.png`, `techorama-logo-2026-medieval.png`, `robot-knight-mascot.png`, `brand-fonts-reference.png`).
 - Prefixed Techorama-branded assets with `techorama-`; kept generic medieval artwork unprefixed for reuse flexibility.
 - Pre-existing tracked files (`logo.png`, `title-bg.png`, `content-bg.png`, `footer-strip.jpg`, `title-graphic.png`, SVGs) were untouched.
+
+### 2026-05-12 — Redundant table cleanup pattern
+
+**Pattern:** When an image already contains a visual data table (e.g., a 3×3 alignment chart grid), do not duplicate the same table as parallel text content on the slide.
+
+**Fix applied:** Removed the text-format 3×3 alignment table from the "Deployment Security Alignment Chart" meme slide. The image `alignment-chart.jpg` (1200×900) already renders the Lawful/Neutral/Chaotic × Good/Neutral/Evil grid baked into the visual. Duplicating this as a Markdown table on the right side of the `<div class="columns">` layout created visual clutter and caused cutoff issues.
+
+**Result:** Single-column slide with centered image at `![h:540 center]`, title above, ATT&CK lens caption below. Marp validation: exit code 0. Slide count: 79 (unchanged). Image fits cleanly within 1280×720 bounds without cutoff.
+
+**Lesson for future slides:** If an image is the primary teaching content and contains detailed data/text, let it dominate the slide without parallel text tables. Reserve slide real estate for callouts, captions, or speaker notes instead.
+
+### 2026-05-12 — PIL image regeneration for clipped meme fix
+
+**Problem:** `slides/img/memes/alignment-chart.jpg` had left-margin clipping — the "N" in "NEUTRAL" row header was cut off at the pixel level.
+
+**Fix approach:**
+1. Sample bg/text colors from the broken source using PIL `getpixel()` before overwriting.
+2. Regenerate the entire image from scratch with PIL, using adequate left margin (140px) for row labels.
+3. Save generation script to `slides/themes/scripts/generate-alignment-chart.py` for future maintenance.
+
+**Sampled colors:** Background RGB(248,242,222), Text/Border RGB(40,28,13).
+**Fonts used:** Impact (`/System/Library/Fonts/Supplemental/Impact.ttf`) for bold, Helvetica (`/System/Library/Fonts/Helvetica.ttc`) for body.
+**Final layout:** 1200×900 canvas, 140px left margin, 346×246px cells, 3px borders.
+
+**Reusable pattern:** For any clipped-label meme image, sample colors from the source, then regenerate via PIL with proper margins rather than attempting pixel-level repairs.
+
+### 2026-05-12 — Alignment chart re-rendered with Techorama brand fonts
+
+**Task:** Replace Impact + Helvetica system fonts in `slides/img/memes/alignment-chart.jpg` with bundled Techorama brand fonts.
+
+**Font mapping applied:**
+- **Internal title & column/row headers:** Alegreya Sans Bold (30pt for headers, 42pt for title)
+- **Cell role names:** Alegreya Sans Bold (30pt, all caps)
+- **Cell taglines:** Alegreya Sans Italic (18pt, lowercase for supporting text feel)
+
+**Script location:** `slides/themes/scripts/generate-alignment-chart.py` (updated to load TTFs from `slides/themes/fonts/`)
+
+**Finding:** Alegreya Sans is more open/spacious than Impact, so point sizes were reduced slightly (42→38 for title had spacing room; headers/roles stayed at 30pt with good legibility). No text overflow occurred in the 1200×900 canvas with 140px left margin. NEUTRAL row label renders fully.
+
+**Verification:** All 9 cells readable, title fits, "NEUTRAL" row label fully visible, cell taglines don't overflow.
+
+**Reusable pattern:** For PIL-generated meme images, always use bundled TTF fonts from `slides/themes/fonts/` rather than system fonts. Specify point sizes conservatively and test overflow before deployment.

