@@ -1,0 +1,9 @@
+{
+  "defaultModel": "gpt-5.5",
+  "agentModelOverrides": {},
+  "notes": {
+    "defaultModel": "All team members use GPT-5.5. No per-agent overrides.",
+    "set_by": "Chris Ayers",
+    "set_at": "2026-05-11T17:19:13-04:00"
+  }
+}

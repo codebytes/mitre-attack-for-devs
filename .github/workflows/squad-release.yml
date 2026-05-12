@@ -11,16 +11,25 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
 
       - name: Run tests
-        run: node --test test/*.test.js
+        run: node --test test/*.test.cjs
+
+      - name: Validate version consistency
+        run: |
+          VERSION=$(node -e "console.log(require('./package.json').version)")
+          if ! grep -q "## \[$VERSION\]" CHANGELOG.md 2>/dev/null; then
+            echo "::error::Version $VERSION not found in CHANGELOG.md — update CHANGELOG.md before release"
+            exit 1
+          fi
+          echo "✅ Version $VERSION validated in CHANGELOG.md"
 
       - name: Read version from package.json
         id: version
