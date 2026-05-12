@@ -110,3 +110,27 @@
 - `scroll.svg` — 380 bytes
 
 **Validation:** `slides/techorama-sample.md` was not present in this checkout, so the requested sample command could not produce an output file. Validated the same theme path with a minimal stdin Marp deck containing `quest`, `parchment`, and a code block; HTML render passed to `slides/validation-artifacts/techorama-medieval-check.html` with exit code 0.
+
+### 2026-05-11 — POTX image extraction technique
+
+- `.potx` files are ZIP archives; Office image assets can be copied directly from `ppt/media/` (and any other `*/media/` dirs such as `xl/media/`) without touching XML/layout/theme parts.
+- Preserve canonical Office names (`image1.png`, etc.); watch for EMF/WMF vectors because Marp/HTML may need PNG/SVG conversion before use.
+
+### 2026-05-11 — EMF→PNG conversion for Techorama assets
+
+- Target assets: `slides/themes/techorama/image5.emf` (7.4 MB) and `slides/themes/techorama/image14.emf` (82 MB), extracted from the Techorama `.potx`.
+- macOS conversion finding: LibreOffice headless and `libemf2svg`/`rsvg-convert` could open the EMFs but emitted blank white/transparent PNGs because the useful content was stored as EMF+ embedded bitmap records.
+- Working path: extracted the embedded EMF+ bitmap payloads with Python/Pillow and wrote optimized PNGs.
+- Final PNGs: `image5.png` — 1884×1023, 205 KB; `image14.png` — 4424×4822, 724 KB. `image14.png` stayed under 10 MB, so no downscaling was needed.
+- Deleted the original `.emf` files after valid PNG output was confirmed with `file` and `magick identify`.
+
+### 2026-05-12 — Techorama brand font wiring
+
+- Alegreya Sans body fonts were bundled from the upstream Alegreya Sans GitHub TTF source after the Google Fonts ZIP endpoint returned non-ZIP content; the family is SIL OFL and only Light/Regular/Italic/Medium/Bold/BoldItalic are included to keep deck weight reasonable.
+- Dreamhour is commercial and was not found locally, so the theme uses `local('Dreamhour')` with bundled SIL OFL UnifrakturMaguntia as the open-source blackletter fallback for logo/wordmark helpers.
+
+### 2026-05-12 — POTX image rename cleanup
+
+- Renamed 17 extracted `.potx` images from generic `image{N}.{png,jpg}` to descriptive kebab-case names based on visual content (e.g., `knight-on-horse-gray.png`, `techorama-logo-2026-medieval.png`, `robot-knight-mascot.png`, `brand-fonts-reference.png`).
+- Prefixed Techorama-branded assets with `techorama-`; kept generic medieval artwork unprefixed for reuse flexibility.
+- Pre-existing tracked files (`logo.png`, `title-bg.png`, `content-bg.png`, `footer-strip.jpg`, `title-graphic.png`, SVGs) were untouched.

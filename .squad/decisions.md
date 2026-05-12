@@ -273,3 +273,26 @@ Chris reversed the earlier text-only meme constraint and confirmed fair-use appl
 **Deck impact:** `slides/Slides.md` 1294 → 1534 lines. Marp validation: pass (exit 0).
 
 **Rationale for reversal:** Fair-use exemption confirmed for educational deck use of standard meme templates. Graphical memes substantially improve audience engagement and humor landing without sacrificing technical content, MITRE mappings, or code examples.
+
+## 2026-05-12 — Techorama Brand Typography
+
+### Decision: Techorama Brand Font Stack
+
+**Date:** 2026-05-12  
+**Author:** verbal  
+**Type:** theme / typography  
+**Status:** applied
+
+Apply the Techorama 2026 brand font stack in `slides/themes/custom-techorama.css`:
+
+- **Logo / wordmark:** `Dreamhour` when installed locally; bundled `UnifrakturMaguntia` fallback; then `DS Wallau`; then serif.
+- **Titles / headings:** existing `DS Wallau` and `DS Wallau OsF` files remain authoritative and unchanged.
+- **Body:** bundled `Alegreya Sans` first, then `Aptos`, `Segoe UI`, `system-ui`, `sans-serif`.
+- **Code:** existing Cascadia Code monospace stack remains unchanged.
+
+**Rationale:** The official Techorama 2026 brand spec calls for Dreamhour for the logo, DS Wallau for titles, and Alegreya Sans for body copy. Dreamhour is commercial, so the deck should not bundle a third-party copy unless Chris supplies a licensed local font file. The CSS therefore prefers `local('Dreamhour')` and uses the SIL OFL `UnifrakturMaguntia` blackletter font as a bundled visual fallback.
+
+**Files modified:**
+- `slides/themes/custom-techorama.css`
+- `slides/themes/fonts/AlegreyaSans-*.ttf` (6 weights, SIL OFL licensed, bundled locally)
+- `slides/themes/fonts/UnifrakturMaguntia-Book.ttf` (SIL OFL licensed, bundled locally)

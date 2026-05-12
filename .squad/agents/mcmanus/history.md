@@ -26,3 +26,4 @@
 **2026-05-11T20:10:00-04:00 | Drake meme crop** – Cropped `slides/img/memes/drake.jpg` from 1200×1200 to 611×1200 using Python PIL intelligent right-edge detection (found colored content at x=601, cropped to x=611). Method: automatic pixel scanning. Marp validation: clean (exit 0). Slide markdown unchanged (`![bg left:20%]` layout handles aspect ratio change).
 2026-05-11T20:05:38-04:00 - cast-fireball.jpg updated via ImageMagick-style PIL overlay on existing image; final dimensions 660x1001; Marp validation exit 0.
 - 2026-05-11: Added `FIREBALL` to `slides/img/memes/cast-fireball.jpg` with Python PIL using macOS Impact 72pt, 5px black stroke, centered at y=750 under the original `I CAST` caption.
+- 2026-05-12: Techorama 2026 brand fonts (Alegreya Sans + UnifrakturMaguntia) and 17 theme images now bundled and wired in custom-techorama.css; slide deck visual infrastructure stable for content iteration.
