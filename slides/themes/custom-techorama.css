@@ -48,6 +48,79 @@
   font-style: normal;
 }
 
+/* ─── Techorama Brand Font Faces ─── */
+@font-face {
+  font-family: 'Alegreya Sans';
+  src: url('themes/fonts/AlegreyaSans-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  src: url('themes/fonts/AlegreyaSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  src: url('themes/fonts/AlegreyaSans-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  src: url('themes/fonts/AlegreyaSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  src: url('themes/fonts/AlegreyaSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  src: url('themes/fonts/AlegreyaSans-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'UnifrakturMaguntia';
+  src: url('themes/fonts/UnifrakturMaguntia-Book.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+ * <!-- NOTE: Dreamhour is the brand-correct Techorama logo font. It is
+ * commercial, so this theme prefers a locally installed Dreamhour and falls
+ * back to bundled SIL OFL UnifrakturMaguntia when Dreamhour is unavailable. -->
+ */
+@font-face {
+  font-family: 'Dreamhour';
+  src:
+    local('Dreamhour'),
+    local('Dreamhour Regular'),
+    url('themes/fonts/UnifrakturMaguntia-Book.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ─── Design Tokens ─── */
 :root {
   --techo-navy:       #0E2841;
@@ -71,7 +144,7 @@
 section {
   background: var(--techo-white);
   color: var(--techo-text);
-  font-family: 'Aptos', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Alegreya Sans', 'Aptos', 'Segoe UI', system-ui, sans-serif;
   font-size: 28px;
   padding: 50px 64px 80px 64px;
   line-height: 1.5;
@@ -113,6 +186,15 @@ section h3 {
 section h4, section h5, section h6 {
   color: var(--techo-text);
   font-size: 1em;
+}
+
+/* ─── Logo / Brand Wordmark Helpers ─── */
+section .logo,
+section.logo,
+section[data-marp-fitting] h1.logo {
+  font-family: 'Dreamhour', 'UnifrakturMaguntia', 'DS Wallau', serif;
+  font-weight: normal;
+  letter-spacing: 0.01em;
 }
 
 /* ─── Links ─── */

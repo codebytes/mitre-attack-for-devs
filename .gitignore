@@ -368,3 +368,4 @@ slides/Slides.pdf
 
 # Stale Squad template dump (active templates live in .squad/templates/)
 .squad-templates/
+slides/output/

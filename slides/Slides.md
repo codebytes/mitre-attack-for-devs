@@ -34,20 +34,6 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ---
 
-## Agenda
-
-- The Security Challenge & OWASP vs MITRE ATT&CK
-- Thinking Like an Attacker — Real-World Kill Chains
-- 7 Technique Deep Dives with Code:
-  - Initial Access · Execution · Persistence
-  - Credential Access · Defense Evasion
-  - Supply Chain · Collection & Exfiltration
-- Practical Implementation & Getting Started
-
-<!-- Here's our roadmap. We'll start with the problem, compare two major frameworks, then dive deep into seven technique categories with real code examples — vulnerable and defended. By the end, you'll have practical patterns you can use tomorrow. -->
-
----
-
 ## The Security Challenge
 
 - **Growing attack surface**: APIs, microservices, cloud infrastructure
