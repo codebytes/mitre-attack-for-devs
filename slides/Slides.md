@@ -269,23 +269,20 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 </div>
 <div>
 
-The gate is not a vibe. It is a control surface.
+**Every request needs an explicit answer. No token? No entry.**
 
-- No token? **401.**
-- Wrong role? **403.**
-- Weird payload? **Rejected**
-- Too many tries? **Rate-limited, logged.**
-- Valid account from impossible travel? **Challenge it.**
-
-**ATT&CK lens:** 
-- T1078 valid accounts
-- T1110 brute force
-- T1190 exposed app exploitation
+| Attacker move | Gate response | Technique |
+|---|---|---|
+| No valid token | **401** | T1078 valid accounts |
+| Wrong role | **403** | T1078 privilege abuse |
+| Repeated failures | **Rate-limit + log** | T1110 brute force |
+| Injected payload | **Reject** | T1190 app exploitation |
+| Impossible travel | **Challenge MFA** | T1078 account takeover |
 
 </div>
 </div>
 
-<!-- Speaker note: This is where the medieval frame earns its keep: gates are useful because they force explicit decisions. Every ambiguous pass becomes an attack path. -->
+<!-- Speaker note: Gandalf doesn't negotiate — he decides. Your app should too. Each row is a "You Shall Not Pass" moment: attacker tries something, your code has an explicit answer. Three ATT&CK techniques cover the real initial-access surface — valid-account abuse (T1078), credential brute-force (T1110), and exposed-app exploitation (T1190). Missing any one of these rows is an open gate. -->
 ---
 
 ## Vulnerable Code: SQL Injection (T1190)
