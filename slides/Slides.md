@@ -14,11 +14,11 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ![bg fill](./themes/techorama/medieval-pattern-dark.png)
 
-# <!-- fit --> MITRE ATT&CK for Developers
+# MITRE ATT&CK for Developers
 
 ## <!-- fit --> The Crooked Line: How Attackers Really Operate
 
-### Chris Ayers
+## Chris Ayers
 
 <!-- Attackers don't follow a straight line. They zigzag, backtrack, pivot, and adapt. This talk explores how the MITRE ATT&CK framework maps these crooked paths — and what developers can do to straighten out their defenses. The crooked-line metaphor frames the talk: defenders often expect a straight path, while attackers zigzag, backtrack, and pivot across tactics like reconnaissance, lateral movement, and exfiltration. -->
 
@@ -28,7 +28,7 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ## Chris Ayers
 
-### Principal Software Engineer<br>Azure CXP AzRel<br>Microsoft
+### Principal Software Engineer<br>Azure EngOps AzRel<br>Microsoft
 
 <i class="fa-brands fa-bluesky"></i> BlueSky: [@chris-ayers.com](https://bsky.app/profile/chris-ayers.com)
 <i class="fa-brands fa-linkedin"></i> LinkedIn: - [chris\-l\-ayers](https://linkedin.com/in/chris-l-ayers/)
@@ -176,6 +176,8 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 # Let's Think Like Attackers
 
+![bg right:30% fit](./themes/techorama/knight-on-horse-gray.png)
+
 <!-- Now we shift gears. For the next section, I want you to put on a black hoodie — metaphorically. We're going to look at real code through the eyes of an attacker and then see how to defend it. Think of this as walking the castle perimeter before the attackers do: where are the gates, shadows, and blind corners? -->
 
 ---
@@ -221,9 +223,13 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ## Deployment Security Alignment Chart
 
-![bg right:70% fit](./img/memes/alignment-chart.jpg)
+![bg right:60% fit](./img/memes/alignment-chart.jpg)
 
-**ATT&CK lens:** When deployment hygiene fails — T1195 (Supply Chain), T1078 (Valid Accounts), T1505 (Server Software Component)
+**ATT&CK lens:** 
+
+- T1195 (Supply Chain)
+- T1078 (Valid Accounts)
+- T1505 (Server Software Component)
 
 <!-- SolarWinds is what happens when deployment hygiene fails at nation-state scale. Alignment charts work because everyone recognizes the grid — and the lesson lands: process alone is not security. Lawful Good behavior on the left builds the gates, logs, and rollback paths that turn supply-chain and credential abuse from a quiet 9-month dwell into a noisy 9-minute alert. The Chaotic Evil row on the right — debug doors left open, chmod 777 as "teamwork" — is how attackers turn a SolarWinds-style foothold into full compromise. -->
 
@@ -232,6 +238,8 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 <!-- _class: section -->
 
 # Initial Access & Credential Attacks
+
+![bg opacity:.2](./themes/techorama/castle-skyline-silhouette.png)
 
 <!-- This is where every attack begins — getting that first foothold. Whether it's exploiting a web vulnerability, stealing credentials, or phishing, the attacker needs a way in. Think: which gates exist, who holds the keys, and who's allowed to walk past the guards without being asked. -->
 
@@ -468,6 +476,8 @@ def process_data():
 
 # Persistence & Session Hijacking
 
+![bg opacity:.2](./themes/techorama/fleur-de-lis-pattern-dark.jpg)
+
 <!-- Attackers don't want to re-exploit every time. Once they're in, they want to stay in. This is where persistence techniques come in — and session hijacking is one of the most common web-specific methods. Now they want to come back tomorrow without storming the gate again — a trapdoor under the rug. -->
 
 ---
@@ -572,6 +582,8 @@ public class FileUploadValidator {
 <!-- _class: section -->
 
 # Credential Access & Secrets
+
+![bg opacity:.15](./themes/techorama/stone-wall-texture-dark.jpg)
 
 <!-- Credentials are the keys to the kingdom. Attackers know that developers often leave secrets lying around in code, config files, and environment variables. Let's look at the wrong way and the right way. If the gate failed, the next move is the steward's chamber — keys, signets, anything that opens a door later. -->
 
@@ -713,6 +725,8 @@ var connStr = (await client.GetSecretAsync("db-connection")).Value.Value;
 
 # Defense Evasion & Log Tampering
 
+![bg opacity:.2](./themes/techorama/stone-wall-texture-dark.jpg)
+
 <!-- This is the sneaky stuff. Once attackers are in, they don't want to be detected. They'll tamper with logs, obfuscate their tools, and masquerade as legitimate processes. If your logging can be manipulated, your incident response is blind. Every keep has a scribe writing the chronicle; the attacker just needs them to write the wrong words. -->
 
 ---
@@ -741,9 +755,9 @@ var connStr = (await client.GetSecretAsync("db-connection")).Value.Value;
 <div>
 
 **ATT&CK lens:** 
-  -T1059 command execution
-  -T1070 log tampering
-  -T1071 C2
+  - T1059 command execution
+  - T1070 log tampering
+  - T1071 C2
 
 </div>
 </div>
@@ -810,6 +824,8 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 <!-- _class: section -->
 
 # Supply Chain Compromise
+
+![bg opacity:.2](./themes/techorama/techorama-hero-medieval.png)
 
 <!-- This is the technique that keeps security teams up at night. Why attack your code when they can attack the code you depend on? SolarWinds, Shai-Hulud, and the event-stream incident showed how devastating supply-chain compromises can be — and Log4Shell showed how a trusted library's own critical flaw can be just as catastrophic. We'll distinguish two failure modes: supply-chain compromise versus dependency-trust failure. Why scale the wall when you can poison the caravan the keep already trusts? -->
 
@@ -1032,6 +1048,8 @@ grype sbom:./sbom.json                     # Scan SBOM against CVE databases
 
 # Collection & Exfiltration
 
+![bg opacity:.2](./themes/techorama/castle-skyline-silhouette.png)
+
 <!-- This is the endgame for many attacks. The attacker has gotten in, escalated privileges, and moved laterally. Now they want the data. How do they collect it, and how do they get it out without being noticed? The treasure is in the strongroom; the trick is getting it out without anyone noticing the wagons leaving. -->
 
 ---
@@ -1240,7 +1258,7 @@ class ExfiltrationDetector {
 ### Phase 2: Detection
 - Anomaly detection for high-risk techniques
 - Automated response workflows
-- SIEM integration
+- Security Information and Event Management (SIEM) integration
 
 </div>
 <div>
@@ -1353,6 +1371,8 @@ Team:  ...roll initiative
 
 ## Key Takeaways
 
+![bg opacity:.4](./themes/techorama/celtic-border-gold.png)
+
 - ✅ **OWASP + ATT&CK = Complete Security** - Prevention + Detection
 - ✅ **Think Like an Attacker** - Understand adversary behavior patterns
 - ✅ **Build Detection Into Code** - Monitoring isn't just ops responsibility
@@ -1361,6 +1381,30 @@ Team:  ...roll initiative
 - ✅ **Start Small, Iterate** - Pick 3 techniques and expand coverage
 
 <!-- Wrapping up. Leave with a map of the gates, keys, tunnels, watchtowers, and strongrooms your code needs to defend. If you remember nothing else: OWASP and ATT&CK are complementary, not competing. Think like an attacker to build better defenses. Detection is a developer responsibility, not just ops. Tag your security events with ATT&CK IDs. Use behavioral analytics. And start with three techniques — don't try to cover everything at once. -->
+
+---
+
+# Questions?
+
+![bg left](./img/owl.png)
+
+<!-- Thank you! I'm happy to take questions. If we run out of time, catch me in the hallway or reach out on BlueSky or LinkedIn. -->
+
+---
+
+# Tell Me How I Did
+
+- **What landed?** 
+- **Where go deeper?** 
+- **What to trim?** 
+
+
+![bg right](./themes/techorama/mitre_attck_for_developers-qr-code.png)
+
+
+
+<!-- Your feedback shapes the next chapter of this deck. Scan that scroll if you're willing to share what worked, what didn't, and where you'd like me to focus next time. -->
+
 
 ---
 
@@ -1391,32 +1435,3 @@ Team:  ...roll initiative
 </div>
 
 <!-- Here are resources to continue your journey. The ATT&CK framework site and Navigator are your primary tools. D3FEND is MITRE's companion project that maps defensive countermeasures to techniques. And please reach out — I love talking about this stuff. -->
-
----
-
-# Questions?
-
-![bg right](./img/owl.png)
-
-<!-- Thank you! I'm happy to take questions. If we run out of time, catch me in the hallway or reach out on BlueSky or LinkedIn. -->
-
----
-
-<div class="columns">
-<div>
-
-# Tell Me How I Did
-
-- **What landed?** 
-- **Where go deeper?** 
-- **What to trim?** 
-
-</div>
-<div>
-
-![w:380](./themes/techorama/mitre_attck_for_developers-qr-code.png)
-
-</div>
-</div>
-
-<!-- Your feedback shapes the next chapter of this deck. Scan that scroll if you're willing to share what worked, what didn't, and where you'd like me to focus next time. -->

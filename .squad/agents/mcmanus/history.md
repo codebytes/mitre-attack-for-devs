@@ -29,3 +29,24 @@
 - 2026-05-12: Techorama 2026 brand fonts (Alegreya Sans + UnifrakturMaguntia) and 17 theme images now bundled and wired in custom-techorama.css; slide deck visual infrastructure stable for content iteration.
 - 2026-05-12: Added closing SpreaView session-review QR slide after final "Questions?" slide. Two-column layout (LEFT: 3 bulleted feedback questions, RIGHT: QR image at w:380). Heading "Tell Me How I Did" avoids duplicating image captions. Speaker note uses first-person Chris voice asking for feedback to shape next iteration. QR image path: `./themes/techorama/mitre_attck_for_developers-qr-code.png` (1024×1024, pre-branded with SpreaView logo/caption). Marp validation: pass (exit 0). QR reference count in HTML: 1.
 - 2026-05-12: Executed Keyser's approved compaction pass (3 surgical cuts, final revision). **(1) CUT 1:** Deleted section-divider `# Key Takeaways` slide, merged its medieval imagery speaker note ("Leave with a map of gates, keys, tunnels, watchtowers, and strongrooms…") into the existing `## Key Takeaways` content slide (H2). Speaker note now: "Wrapping up. Leave with a map… If you remember nothing else…" **(2) CUT 2 (FINAL):** Merged `## Why Not Both?` meme slide with `## Why Both?` content into single slide using `![bg right]` pattern: title + quote + 4 bullets (Complementary approaches, Real-world attacks, Defense in depth, Complete coverage) with original colon separators preserved. Speaker note combines both: "The setup IS the punchline… SolarWinds was supply chain compromise…" **(3) CUT 3:** Deleted `## Fus Ro Dah` blast-radius slide, appended its teaching point to `## I Cast Fireball at the Input Field` speaker note: "The blast radius matters: one unchecked input inherits API process privileges…" Slide deck: 82 → 79. Marp validation: pass (exit 0).
+
+---
+
+## 2026-05-12 — Team Notice: Canonical Section Divider Opacity Lock & Reviewer Protocol
+
+**To mcmanus (and fenster):** During Keyser's imagery placement review, the team discovered three opacity-modifier regressions when encoding Marp `![bg opacity:X]` syntax. A canonical opacity reference table has been locked in decisions.md and must be treated as authoritative:
+
+| Slide | Bg Image | Opacity |
+|---|---|---|
+| Let's Think Like Attackers | `knight-on-horse-gray.png` | `bg right:30% fit` |
+| Initial Access & Credential Attacks | `castle-skyline-silhouette.png` | `.2` |
+| Persistence & Session Hijacking | `fleur-de-lis-pattern-dark.jpg` | `.2` |
+| Credential Access & Secrets | `stone-wall-texture-dark.jpg` | `.15` |
+| Defense Evasion & Log Tampering | `stone-wall-texture-dark.jpg` | `.2` |
+| Supply Chain Compromise | `techorama-hero-medieval.png` | `.2` |
+| Collection & Exfiltration | `castle-skyline-silhouette.png` | `.2` |
+| Key Takeaways | `celtic-border-gold.png` | `.08` |
+
+**ACTION:** If you add or modify section-divider content or images in future passes, do NOT edit opacity values without updating the canonical table in decisions.md. Failing to do so will trigger regressions identical to what Keyser encountered.
+
+**PRECEDENT:** This project has now invoked its first Reviewer Rejection Lockout (2026-05-12). When an agent produces two consecutive identical regressions despite documentation, a second agent is assigned revision authority instead. Do not assume you will be asked to self-correct on high-stakes visual values like opacity; expect reassignment.
