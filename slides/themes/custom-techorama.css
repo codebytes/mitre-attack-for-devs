@@ -376,6 +376,17 @@ footer {
   font-size: 0.48em !important;
 }
 
+/* Keep footer text and pagination inside decorative full-slide frames. */
+section.framed footer {
+  left: 64px;
+  bottom: 48px;
+}
+
+section.framed::after {
+  right: 64px;
+  bottom: 48px;
+}
+
 header {
   color: var(--techo-blue);
   font-size: 0.5em;
@@ -403,7 +414,7 @@ svg[id^="mermaid-"] {
 section.title {
   background-color: var(--techo-navy);
   background-image:
-    url('themes/techorama/title-bg.png'),
+    url('themes/techorama/medieval-pattern-dark.png'),
     linear-gradient(160deg, var(--techo-navy) 0%, var(--techo-blue-dark) 100%);
   background-size: cover, cover;
   background-position: center, center;
@@ -479,6 +490,10 @@ section.section h2 {
 
 section.section p {
   color: rgba(255, 255, 255, 0.75);
+}
+
+section.section footer a {
+  color: inherit;
 }
 
 /* ─── Lead Slide (<!-- _class: lead -->) ─── */

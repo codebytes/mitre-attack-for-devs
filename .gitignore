@@ -363,6 +363,7 @@ validation-artifacts/
 .playwright-cli/
 
 # Generated slide exports
+/build/
 slides/Slides.html
 slides/Slides.pdf
 
