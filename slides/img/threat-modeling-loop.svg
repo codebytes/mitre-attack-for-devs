@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="400" viewBox="0 0 1120 400" role="img" aria-labelledby="title desc">
+  <title id="title">ATT&amp;CK-Informed Threat Modeling</title>
+  <desc id="desc">Identify Feature, Map to ATT&amp;CK Techniques, Assess Risk and Impact, Design Detections, Implement and Monitor, Test and Iterate. The iteration loop returns from Test and Iterate to Map to ATT&amp;CK Techniques.</desc>
+  <!-- Landscape rendering of the unchanged graph embedded in threat-modeling-loop.drawio.png. -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#000"/>
+    </marker>
+    <marker id="loop-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <g fill="none" stroke="#000" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)">
+    <path d="M 310 90 H 430"/>
+    <path d="M 690 90 H 810"/>
+    <path d="M 940 130 V 260"/>
+    <path d="M 810 300 H 690"/>
+    <path d="M 430 300 H 310"/>
+  </g>
+  <path d="M 180 260 V 205 H 560 V 130" fill="none" stroke="#b85450" stroke-width="2" stroke-dasharray="7 5" stroke-linejoin="round" marker-end="url(#loop-arrow)"/>
+  <g stroke-width="1.5">
+    <rect x="50" y="50" width="260" height="80" rx="8" fill="#dae8fc" stroke="#6c8ebf"/>
+    <rect x="430" y="50" width="260" height="80" rx="8" fill="#d5e8d4" stroke="#82b366"/>
+    <rect x="810" y="50" width="260" height="80" rx="8" fill="#fff2cc" stroke="#d6b656"/>
+    <rect x="810" y="260" width="260" height="80" rx="8" fill="#e1d5e7" stroke="#9673a6"/>
+    <rect x="430" y="260" width="260" height="80" rx="8" fill="#f8cecc" stroke="#b85450"/>
+    <rect x="50" y="260" width="260" height="80" rx="8" fill="#dae8fc" stroke="#6c8ebf"/>
+  </g>
+  <g font-family="Arial,sans-serif" font-size="24" font-weight="bold" fill="#000" text-anchor="middle" dominant-baseline="middle">
+    <text x="180" y="90">Identify Feature</text>
+    <text x="560" y="76"><tspan x="560">Map to ATT&amp;CK</tspan><tspan x="560" dy="28">Techniques</tspan></text>
+    <text x="940" y="76"><tspan x="940">Assess Risk</tspan><tspan x="940" dy="28">&amp; Impact</tspan></text>
+    <text x="940" y="300">Design Detections</text>
+    <text x="560" y="300">Implement &amp; Monitor</text>
+    <text x="180" y="300">Test &amp; Iterate</text>
+  </g>
+</svg>

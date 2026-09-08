@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="400" viewBox="0 0 1120 400" role="img" aria-labelledby="title desc">
+  <title id="title">Data Flow Monitoring</title>
+  <desc id="desc">User Request flows through Auth and Authorization and Data Access Monitor to Anomaly? Yes alerts and blocks; No executes the query. Bulk Transfer? and Rate Exceeded? each alert and block on Yes and continue on No, ending at Send Response.</desc>
+  <!-- Landscape rendering of the unchanged graph embedded in data-flow-monitoring.drawio.png. -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#000"/>
+    </marker>
+  </defs>
+  <g fill="none" stroke="#000" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)">
+    <path d="M 180 61 H 230"/>
+    <path d="M 440 61 H 490"/>
+    <path d="M 700 61 H 800"/>
+    <path d="M 880 116 V 182 H 685"/>
+    <path d="M 960 61 H 1060 V 302 H 1010"/>
+    <path d="M 820 302 H 740"/>
+    <path d="M 650 242 V 214"/>
+    <path d="M 560 302 H 460"/>
+    <path d="M 360 242 V 182 H 475"/>
+    <path d="M 260 302 H 230"/>
+  </g>
+  <g stroke-width="1.5">
+    <rect x="20" y="30" width="160" height="62" rx="8" fill="#dae8fc" stroke="#6c8ebf"/>
+    <rect x="230" y="30" width="210" height="62" rx="8" fill="#d5e8d4" stroke="#82b366"/>
+    <rect x="490" y="30" width="210" height="62" rx="8" fill="#d5e8d4" stroke="#82b366"/>
+    <path d="M 880 6 L 960 61 L 880 116 L 800 61 Z" fill="#fff2cc" stroke="#d6b656"/>
+    <rect x="475" y="150" width="210" height="64" rx="8" fill="#f8cecc" stroke="#b85450"/>
+    <rect x="820" y="270" width="190" height="64" rx="8" fill="#d5e8d4" stroke="#82b366"/>
+    <path d="M 650 242 L 740 302 L 650 362 L 560 302 Z" fill="#fff2cc" stroke="#d6b656"/>
+    <path d="M 360 242 L 460 302 L 360 362 L 260 302 Z" fill="#fff2cc" stroke="#d6b656"/>
+    <rect x="40" y="270" width="190" height="64" rx="8" fill="#dae8fc" stroke="#6c8ebf"/>
+  </g>
+  <g font-family="Arial,sans-serif" font-size="22" font-weight="bold" fill="#000" text-anchor="middle" dominant-baseline="middle">
+    <text x="100" y="61">User Request</text>
+    <text x="335" y="49"><tspan x="335">Auth &amp;</tspan><tspan x="335" dy="24">Authorization</tspan></text>
+    <text x="595" y="49"><tspan x="595">Data Access</tspan><tspan x="595" dy="24">Monitor</tspan></text>
+    <text x="880" y="61">Anomaly?</text>
+    <text x="580" y="182">Alert &amp; Block</text>
+    <text x="915" y="302">Execute Query</text>
+    <text x="650" y="290"><tspan x="650">Bulk</tspan><tspan x="650" dy="24">Transfer?</tspan></text>
+    <text x="360" y="290"><tspan x="360">Rate</tspan><tspan x="360" dy="24">Exceeded?</tspan></text>
+    <text x="135" y="302">Send Response</text>
+  </g>
+  <g font-family="Arial,sans-serif" font-size="20" font-weight="bold" fill="#000" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">
+    <text x="845" y="167">Yes</text>
+    <text x="1085" y="190">No</text>
+    <text x="685" y="236">Yes</text>
+    <text x="505" y="290">No</text>
+    <text x="390" y="169">Yes</text>
+    <text x="250" y="283">No</text>
+  </g>
+</svg>

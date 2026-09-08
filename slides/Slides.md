@@ -55,7 +55,7 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 </div>
 <div>
 
-![](./themes/techorama/princess-tower-window.png)
+![h:480 center](./themes/techorama/princess-tower-window.png)
 
 </div>
 </div>
@@ -184,7 +184,7 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ## The Kill Chain: Expectation vs Reality
 
-![center w:1000 h:480](./img/expect-vs-reality.svg)
+![center w:1152 h:500](./img/expect-vs-reality.svg)
 
 <!-- This is the core insight of the talk. Defenders build straight-line defenses — firewall, IDS, patch management. But attackers zigzag, loop back, escalate, discover new targets, and escalate again. ATT&CK captures this messy reality that a linear kill chain model misses. -->
 
@@ -694,7 +694,7 @@ var connStr = (await client.GetSecretAsync("db-connection")).Value.Value;
 <div class="columns">
 <div>
 
-![w:100%](./img/memes/arrow-in-the-knee.jpg)
+![h:480 center](./img/memes/arrow-in-the-knee.jpg)
 
 </div>
 <div>
@@ -746,7 +746,7 @@ var connStr = (await client.GetSecretAsync("db-connection")).Value.Value;
 <div class="columns">
 <div>
 
-![w:100%](./img/memes/sneak-100.jpg)
+![h:480 center](./img/memes/sneak-100.jpg)
 
 </div>
 <div>
@@ -1157,7 +1157,7 @@ class ExfiltrationDetector {
 
 ## Data Flow Monitoring
 
-![center h:480](./img/data-flow-monitoring.drawio.png)
+![center w:1120](./img/data-flow-monitoring.svg)
 
 <!-- Multiple checkpoints in the data flow. Authorization happens first, then anomaly detection checks the pattern, then bulk transfer detection checks the volume, and finally rate limiting checks the frequency. Any checkpoint can block the request and alert the security team. Layered defense for data protection. -->
 
@@ -1173,7 +1173,7 @@ class ExfiltrationDetector {
 
 ## ATT&CK-Informed Threat Modeling
 
-![center h:480](./img/threat-modeling-loop.drawio.png)
+![center w:1120](./img/threat-modeling-loop.svg)
 
 <!-- This is your threat modeling loop. For every feature, ask: what ATT&CK techniques could target this? Then design detections, implement them, and test. The loop is continuous — as new techniques are added to ATT&CK, revisit your features. This is a shift from reactive patching to proactive defense design. -->
 
@@ -1365,6 +1365,8 @@ Team:  ...roll initiative
 
 <!-- This is a joke but also very real. Every security TODO in your backlog is a technique an attacker can exploit. The difference between the left and right columns is just time. ATT&CK helps you prioritize which TODOs to fix first based on real adversary behavior. Medieval engineers also thought one tall wall was enough, right up until someone found the servant's door. -->
 ---
+
+<!-- _class: framed -->
 
 ## Key Takeaways
 
