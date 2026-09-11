@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-labelledby="title description">
+  <title id="title">Blue technical background</title>
+  <desc id="description">A dark blue gradient with subtle circuit paths and connected nodes, leaving a quiet area behind the presentation title.</desc>
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07192d"/>
+      <stop offset="0.55" stop-color="#0d2946"/>
+      <stop offset="1" stop-color="#153e61"/>
+    </linearGradient>
+    <radialGradient id="light" cx="100%" cy="15%" r="85%">
+      <stop offset="0" stop-color="#1685c2" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#1685c2" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#b8e5ff" opacity="0.08"/>
+    </pattern>
+    <linearGradient id="quiet" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#07192d" stop-opacity="0.7"/>
+      <stop offset="0.7" stop-color="#07192d" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#07192d" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#base)"/>
+  <rect width="1280" height="720" fill="url(#light)"/>
+  <rect width="1280" height="720" fill="url(#grid)"/>
+  <g fill="none" stroke="#62caff" stroke-width="2" opacity="0.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M850 0 V70 H1020 L1070 120 H1280"/>
+    <path d="M1020 0 V40 H1160 V190 L1210 240 H1280"/>
+    <path d="M730 720 V650 H890 L950 590 H1110 V510 L1170 450 H1280"/>
+    <path d="M970 720 V690 H1150 L1200 640 H1280"/>
+    <path d="M1080 300 H1190 L1240 350 H1280"/>
+  </g>
+  <g fill="#81d6ff" opacity="0.35">
+    <circle cx="1020" cy="70" r="4"/>
+    <circle cx="1160" cy="190" r="4"/>
+    <circle cx="890" cy="650" r="4"/>
+    <circle cx="1110" cy="510" r="4"/>
+    <circle cx="1150" cy="690" r="4"/>
+    <circle cx="1080" cy="300" r="4"/>
+  </g>
+  <rect width="1280" height="720" fill="url(#quiet)"/>
+</svg>
