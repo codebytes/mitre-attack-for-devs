@@ -20,6 +20,7 @@ This talk bridges the gap between threat intelligence and practical development,
 ## Contact
 
 **Chris Ayers**, Principal Software Engineer at Microsoft
+Azure EngOps AzRel
 
 [Blog](https://chris-ayers.com/) | [GitHub](https://github.com/codebytes) | [LinkedIn](https://linkedin.com/in/chris-l-ayers/) | [Bluesky](https://bsky.app/profile/chris-ayers.com) | [Mastodon](https://hachyderm.io/@Chrisayers)
 
