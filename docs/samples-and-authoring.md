@@ -78,8 +78,14 @@ This repository provides insights, code samples, and demonstrations for applying
 
 ## Code Samples
 
-The `samples/` directory contains educational code samples in three languages, each demonstrating attack techniques and corresponding defenses mapped to ATT&CK technique IDs:
+The `samples/` directory contains educational code samples in three languages, each demonstrating attack techniques and corresponding defenses mapped to ATT&CK technique IDs.
 
-- **[Python](../samples/python/)** — Credential stuffing detection, command injection, unsafe deserialization, tamper-evident logging, data access monitoring, secrets scanning
-- **[.NET/C#](../samples/dotnet/)** — Command injection, session security, tamper-evident logging, secrets management, web shell detection
-- **[JavaScript](../samples/javascript/)** — SQL injection, session security, credential stuffing detection, supply chain verification, data exfiltration detection, secrets detection
+The samples deliberately exclude controls that belong to an identity provider
+(credential stuffing, password spray, impossible travel) or to existing tooling
+(secret scanning, dependency advisories). Those techniques are worth monitoring,
+but reimplementing them inside one application produces a weaker control. Each
+language README documents that boundary.
+
+- **[Python](../samples/python/)** — Command injection, unsafe deserialization, bulk export limits, tamper-evident logging, data integrity
+- **[.NET/C#](../samples/dotnet/)** — Resource authorization, command injection, file upload validation, session security, tamper-evident logging, secrets management
+- **[JavaScript](../samples/javascript/)** — SQL injection, IdP risk signals and step-up, session security, export budgets, dependency policy, data integrity

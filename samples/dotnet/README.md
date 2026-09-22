@@ -1,325 +1,176 @@
-# MITRE ATT&CK for Developers - .NET/C# Code Samples
+# MITRE ATT&CK for Developers — .NET/C# Code Samples
 
-Educational code samples demonstrating common MITRE ATT&CK techniques and their defenses in .NET/C#.
+Educational samples demonstrating MITRE ATT&CK techniques and their defenses in
+ASP.NET Core.
 
-## ⚠️ Important Notice
+## ⚠️ Important notice
 
-These samples are for **educational purposes only**. They demonstrate both vulnerable and secure coding patterns to teach developers about security threats and defenses. Do not use the vulnerable examples in production code.
+These samples are for **educational purposes only**. They pair vulnerable patterns
+with their defended equivalents so both are recognisable. Do not ship the
+vulnerable examples.
+
+## Scope: what belongs in your code
+
+Credential stuffing, password spraying, impossible travel, device reputation and
+MFA belong to your **identity provider** — Microsoft Entra ID Protection sees
+sign-ins across every application and tenant, and a single service cannot match
+that context. Reimplementing those detections yields a weaker control that also
+locks out legitimate roaming users.
+
+Those techniques deserve **monitoring**, not reimplementation. These samples cover
+what the platform cannot do for you.
 
 ## Overview
 
-This collection contains 5 comprehensive code samples covering critical MITRE ATT&CK techniques:
-
 | File | ATT&CK Techniques | Description |
 |------|------------------|-------------|
-| `CommandInjection.cs` | T1059 | Command injection vulnerabilities and defenses |
-| `SessionSecurity.cs` | T1185, T1098, T1550.004 | Secure session management with fingerprinting |
-| `TamperEvidentLogger.cs` | T1070 | Tamper-evident logging using hash chains |
-| `SecretsManagement.cs` | T1552 | Secure secrets management patterns |
-| `WebShellDetection.cs` | T1505.003 | Web shell detection and file upload validation |
+| `ResourceAuthorization.cs` | T1078 | Object-level and tenant authorization |
+| `CommandInjection.cs` | T1059 | Command injection and safe process execution |
+| `FileUploadValidation.cs` | T1505.003 | Upload handling that cannot be executed |
+| `SessionSecurity.cs` | T1185, T1098, T1550.004 | Session rotation and revocation |
+| `TamperEvidentLogger.cs` | T1070 | Hash-chained, tamper-evident audit log |
+| `SecretsManagement.cs` | T1552 | Configuration providers and Key Vault |
 
-## Sample Details
+## Sample details
 
-### 1. CommandInjection.cs - T1059
+### 1. ResourceAuthorization.cs — T1078
 
-**Technique:** Command and Scripting Interpreter
+**The check no identity provider can make for you.** The IdP answers "is this a
+real user with a valid token?" It cannot answer "may *this* user read *this*
+record in *this* tenant," because only your application knows its object model.
 
-**What it demonstrates:**
-- ❌ Vulnerable patterns with shell command injection
-- ✅ Safe process execution without shell interpretation
-- ✅ Input validation with allowlists
-- ✅ Argument separation to prevent injection
-- ✅ Timeout enforcement and logging
-
-**Key defensive patterns:**
 ```csharp
-// Use ArgumentList instead of Arguments string
+var doc = await _documents.FindAsync(id);
+if (doc is null) return NotFound();
+
+var result = await _authorization.AuthorizeAsync(User, doc, DocumentOperations.Read);
+if (!result.Succeeded)
+{
+    _logger.LogWarning("[T1078] denied sub={Sub} doc={Doc}", subject, id);
+    return NotFound();   // same shape as a miss, so 403 isn't an oracle
+}
+```
+
+Key points:
+- Load the resource **before** the decision. `[Authorize]` runs before model
+  binding and cannot see the record, so object checks must be imperative.
+- Return `404` on denial so the status code does not confirm the id exists.
+- Make tenant isolation a hard boundary no role can override.
+- Log denials with the technique id — one is noise, a hundred is enumeration.
+
+### 2. CommandInjection.cs — T1059
+
+Vulnerable shell concatenation versus `ArgumentList` with `UseShellExecute = false`,
+plus host validation, an executable allowlist, and timeout enforcement.
+
+```csharp
 processInfo.ArgumentList.Add("-n");
 processInfo.ArgumentList.Add("4");
-processInfo.ArgumentList.Add(userInput); // Safe - treated as single argument
-
-// Never use shell execution
-UseShellExecute = false
+processInfo.ArgumentList.Add(userInput);   // one argument, never a program
+processInfo.UseShellExecute = false;
 ```
 
-### 2. SessionSecurity.cs - T1185, T1098, T1550.004
+### 3. FileUploadValidation.cs — T1505.003
 
-**Techniques:** 
-- T1185: Browser Session Hijacking
-- T1098: Account Manipulation
-- T1550.004: Web Session Cookie
+**Structural, not signature-based.** Scanning an upload for `eval(` or `<?php`
+fails both ways: binary PDFs and images contain those byte sequences, while any
+encoded payload passes. The durable control is making the storage location
+non-executable.
 
-**What it demonstrates:**
-- ✅ Session fingerprinting (IP + User-Agent hash)
-- ✅ Session rotation on privilege changes
-- ✅ Concurrent session detection and limits
-- ✅ Automatic session invalidation on suspicious activity
-- ✅ Cryptographically secure session IDs
-
-**Key defensive patterns:**
 ```csharp
-// Bind session to client characteristics
-var fingerprint = GenerateClientFingerprint(httpContext);
+if (!_allowed.Contains(ext))                return Reject("type not permitted");
+if (!await MatchesMagicBytesAsync(s, ext))  return Reject("content mismatch");
 
-// Rotate on privilege escalation (prevents session fixation)
-await RotateSessionOnPrivilegeChangeAsync(sessionId, "admin", httpContext);
-
-// Detect anomalies
-await DetectConcurrentSessionAnomaliesAsync(userId, session);
+var stored = $"{Guid.NewGuid():N}{ext}";                  // you name it
+var path = Path.Combine("/var/uploads", stored);          // outside web root
+File.SetUnixFileMode(path, UserRead | UserWrite | GroupRead);   // no execute
 ```
 
-### 3. TamperEvidentLogger.cs - T1070
+Serve downloads with `X-Content-Type-Options: nosniff` and
+`Content-Disposition: attachment`. For genuinely untrusted uploads, add a real
+malware scanner — a string search is not one.
 
-**Technique:** Indicator Removal on Host
+### 4. SessionSecurity.cs — T1185, T1098, T1550.004
 
-**What it demonstrates:**
-- ✅ Hash chain logging (blockchain-like structure)
-- ✅ Tamper detection through hash verification
-- ✅ Sequence number validation
-- ✅ Cryptographic proof of log integrity
-- ✅ Security event correlation with ATT&CK IDs
+Cryptographically random identifiers, rotation on privilege change to defeat
+fixation, concurrent session limits, and server-side revocation.
 
-**Key defensive patterns:**
+A stolen cookie (T1550.004) bypasses MFA entirely, because the session is already
+authenticated. That makes **revocation** more valuable than detecting how the
+cookie was taken: keep session state you can delete, and delete it on password
+change, privilege change, and reported compromise.
+
+`EnforceIpBinding` is available but defaults to non-strict. Blocking on IP change
+logs out mobile users who moved between towers while leaving an attacker on the
+same network unaffected.
+
+### 5. TamperEvidentLogger.cs — T1070
+
+Each entry carries the hash of its predecessor, so modification, deletion and
+reordering all break the chain detectably.
+
+The honest limitation: a hash chain proves the local log **was** altered. It does
+not prevent alteration, and an attacker with write access can rebuild the whole
+chain unless the tip hash is anchored somewhere they do not control. Ship entries
+to a SIEM or immutable storage; treat the chain as corroboration, not as the
+primary control.
+
+### 6. SecretsManagement.cs — T1552
+
+Hardcoded credentials versus `IConfiguration` providers, User Secrets for local
+development, Key Vault with `DefaultAzureCredential`, the Options pattern with
+startup validation, and log sanitization.
+
 ```csharp
-// Each entry includes hash of previous entry
-entry.PreviousHash = _lastHash;
-entry.Hash = ComputeEntryHash(entry);
-
-// Verification detects any tampering
-var result = logger.VerifyLogIntegrity();
-if (!result.IsValid)
-    Alert($"T1070 DETECTED: {result.Message}");
+var client = new SecretClient(new Uri(vaultUri), new DefaultAzureCredential());
 ```
 
-### 4. SecretsManagement.cs - T1552
-
-**Technique:** Unsecured Credentials
-
-**What it demonstrates:**
-- ❌ Hardcoded credentials (what NOT to do)
-- ❌ Secrets in configuration files
-- ✅ IConfiguration with secure providers
-- ✅ User Secrets for development
-- ✅ Azure Key Vault integration
-- ✅ Options pattern with validation
-- ✅ Safe error handling and logging
-
-**Key defensive patterns:**
-```csharp
-// Use configuration providers (no hardcoded secrets)
-var apiKey = _configuration["ApiKeys:Stripe"];
-
-// Azure Key Vault with Managed Identity
-var client = new SecretClient(
-    new Uri(keyVaultUrl), 
-    new DefaultAzureCredential());
-
-// Sanitize logs
-var masked = $"****{apiKey.Substring(apiKey.Length - 4)}";
-```
-
-### 5. WebShellDetection.cs - T1505.003
-
-**Technique:** Server Software Component: Web Shell
-
-**What it demonstrates:**
-- ✅ Multi-layer file upload validation
-- ✅ Extension allowlist (not blocklist)
-- ✅ File signature verification (magic bytes)
-- ✅ Content scanning for web shell signatures
-- ✅ Obfuscation pattern detection
-- ✅ Double extension detection
-- ✅ Secure file storage (renamed, outside web root)
-
-**Key defensive patterns:**
-```csharp
-// Validate file signature matches extension
-var signatureResult = await ValidateFileSignatureAsync(stream, extension);
-
-// Scan content for web shell patterns
-if (content.Contains("eval(") || content.Contains("shell_exec"))
-    return ValidationResult.Failed("Web shell detected");
-
-// Rename and store securely
-var randomFileName = $"{Guid.NewGuid()}{extension}";
-File.SetUnixFileMode(path, UserRead | UserWrite | GroupRead | OtherRead);
-```
+Prefer identity-based access directly to the downstream resource where it is
+supported; a vault you still have to read a password out of is a smaller win than
+not having a password at all.
 
 ## Requirements
 
 - .NET 8.0 or later
-- ASP.NET Core packages (for HTTP examples)
-- Azure.Security.KeyVault.Secrets (for Key Vault examples)
-- Azure.Identity (for Managed Identity)
+- ASP.NET Core shared framework
+- `Azure.Security.KeyVault.Secrets` and `Azure.Identity` for the Key Vault examples
 
-## Usage
-
-These are **educational samples**, not production libraries. To use them:
-
-1. **Review the code** - Read both vulnerable and defended examples
-2. **Understand the patterns** - Each file has detailed comments
-3. **Adapt for your needs** - Extract the defensive patterns you need
-4. **Test thoroughly** - Always test security controls
-
-### Example: Integrating Secure Session Management
-
-```csharp
-// In Program.cs or Startup.cs
-builder.Services.AddSingleton<SecureSessionManager>();
-builder.Services.Configure<SessionSecurityOptions>(options =>
-{
-    options.SessionTimeout = TimeSpan.FromMinutes(30);
-    options.MaxConcurrentSessions = 3;
-    options.EnforceIpBinding = true;
-});
-
-// In your controller
-private readonly SecureSessionManager _sessionManager;
-
-public async Task<IActionResult> Login(LoginModel model)
-{
-    if (await ValidateCredentials(model))
-    {
-        var session = await _sessionManager.CreateSessionAsync(
-            model.UserId, 
-            HttpContext);
-            
-        Response.Cookies.Append("SessionId", session.SessionId, new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.Strict
-        });
-        
-        return Ok();
-    }
-    return Unauthorized();
-}
-```
-
-### Example: Using Tamper-Evident Logger
-
-```csharp
-var logger = new TamperEvidentLogger("/var/log/security-audit.log");
-
-// Log security events with ATT&CK technique IDs
-await logger.WriteSecurityEventAsync(
-    technique: "T1059",
-    description: "Blocked command injection attempt",
-    severity: "HIGH",
-    userId: userId,
-    details: new Dictionary<string, object>
-    {
-        ["Command"] = suspiciousInput,
-        ["SourceIP"] = ipAddress
-    });
-
-// Verify integrity periodically
-var verification = logger.VerifyLogIntegrity();
-if (!verification.IsValid)
-{
-    // Alert security team
-    await NotifySecurityTeam($"Log tampering detected: {verification.Message}");
-}
-```
-
-## Testing the Samples
-
-Each file includes example usage. To test:
-
-```bash
-# Create a test project
-dotnet new console -n MitreAttackTests
-cd MitreAttackTests
-
-# Copy sample files
-cp ../CommandInjection.cs .
-cp ../SessionSecurity.cs .
-# ... etc
-
-# Add required packages
-dotnet add package Microsoft.AspNetCore.App
-dotnet add package Azure.Security.KeyVault.Secrets
-dotnet add package Azure.Identity
-
-# Create a test program
-# See individual files for example usage sections
-```
-
-## Security Considerations
-
-### For Production Use
-
-When adapting these patterns for production:
-
-1. **Defense in Depth** - Use multiple security layers
-2. **Principle of Least Privilege** - Minimize permissions
-3. **Secure Defaults** - Start with most restrictive settings
-4. **Logging and Monitoring** - Log security events to SIEM
-5. **Regular Updates** - Keep dependencies updated
-6. **Security Testing** - Include in CI/CD pipeline
-7. **Incident Response** - Have procedures for detected attacks
-
-### Additional Protections
-
-- **Web Application Firewall (WAF)** - CloudFlare, Azure WAF, AWS WAF
-- **Runtime Application Self-Protection (RASP)** - Contrast, Sqreen
-- **Static Analysis** - SonarQube, Checkmarx, Veracode
-- **Dependency Scanning** - Dependabot, Snyk, OWASP Dependency-Check
-- **Secret Scanning** - GitGuardian, TruffleHog, git-secrets
-
-## MITRE ATT&CK Mapping
+## MITRE ATT&CK mapping
 
 | Technique | Tactic | Sample File |
 |-----------|--------|-------------|
-| T1059 | Execution | CommandInjection.cs |
-| T1070 | Defense Evasion | TamperEvidentLogger.cs |
-| T1098 | Persistence | SessionSecurity.cs |
-| T1185 | Collection | SessionSecurity.cs |
-| T1505.003 | Persistence | WebShellDetection.cs |
-| T1550.004 | Defense Evasion | SessionSecurity.cs |
-| T1552 | Credential Access | SecretsManagement.cs |
+| T1059 | Execution | `CommandInjection.cs` |
+| T1070 | Defense Evasion | `TamperEvidentLogger.cs` |
+| T1078 | Defense Evasion / Persistence | `ResourceAuthorization.cs` |
+| T1098 | Persistence | `SessionSecurity.cs` |
+| T1185 | Collection | `SessionSecurity.cs` |
+| T1505.003 | Persistence | `FileUploadValidation.cs` |
+| T1550.004 | Defense Evasion | `SessionSecurity.cs` |
+| T1552 | Credential Access | `SecretsManagement.cs` |
 
-## Learning Resources
+### Configured, not coded
 
-### MITRE ATT&CK
-- [ATT&CK Framework](https://attack.mitre.org/)
-- [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/)
-- [ATT&CK for ICS](https://attack.mitre.org/matrices/ics/)
+| Technique | Name | Where it belongs |
+|-----------|------|------------------|
+| T1110.003 | Password Spraying | Entra ID Protection / your IdP |
+| T1110.004 | Credential Stuffing | Entra ID Protection / your IdP |
+| T1552 | Unsecured Credentials *(detection)* | GitHub Secret Scanning + Push Protection |
 
-### Secure Coding
-- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
-- [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/)
-- [CWE/SANS Top 25](https://cwe.mitre.org/top25/)
-- [Microsoft Security Development Lifecycle](https://www.microsoft.com/securityengineering/sdl)
+## Production considerations
 
-### .NET Security
-- [ASP.NET Core Security](https://docs.microsoft.com/aspnet/core/security/)
-- [Azure Security Best Practices](https://docs.microsoft.com/azure/security/)
-- [.NET Security Guidelines](https://docs.microsoft.com/dotnet/standard/security/)
+1. **Defense in depth** — no single control here is sufficient alone.
+2. **Least privilege** — scope the workload identity to exactly what it reads.
+3. **Shared state** — the in-memory dictionaries are for readability; real
+   deployments need a distributed cache or database.
+4. **Send events to a SIEM** — technique-tagged logs are only useful if something
+   correlates them.
+5. **Test the controls** — an authorization rule with no test is a rule that will
+   regress.
 
-## Contributing
+## Learning resources
 
-These samples are for educational use. If you find issues or want to suggest improvements:
-
-1. Ensure changes enhance educational value
-2. Maintain both vulnerable and defended examples
-3. Include detailed comments and ATT&CK technique IDs
-4. Test all code patterns
-5. Update documentation
-
-## License
-
-These educational samples are provided as-is for learning purposes. Adapt and modify as needed for your security training and development needs.
-
-## Acknowledgments
-
-- MITRE Corporation for the ATT&CK framework
-- OWASP for security guidance and resources
-- The .NET security community
-
----
-
-**Remember:** Security is a continuous process, not a destination. Stay informed about new threats and continuously improve your security posture.
-
-**Disclaimer:** These samples demonstrate security concepts for educational purposes. The vulnerable examples are intentionally insecure to illustrate attack patterns. Never use vulnerable patterns in production code.
+- [ATT&CK Framework](https://attack.mitre.org/) · [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/)
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/) · [OWASP Cheat Sheets](https://cheatsheetseries.owasp.org/)
+- [ASP.NET Core Security](https://learn.microsoft.com/aspnet/core/security/)
+- [Resource-based authorization](https://learn.microsoft.com/aspnet/core/security/authorization/resourcebased)
+- [Azure Key Vault](https://learn.microsoft.com/azure/key-vault/)

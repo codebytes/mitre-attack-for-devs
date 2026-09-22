@@ -1,211 +1,113 @@
-# MITRE ATT&CK for Developers - Python Code Samples
+# MITRE ATT&CK for Developers — Python Code Samples
 
-Educational code samples demonstrating common MITRE ATT&CK techniques and defensive measures. These samples are designed for security awareness training and show both vulnerable code patterns and secure implementations.
+Educational samples demonstrating MITRE ATT&CK techniques and the defenses that
+belong in application code.
 
-## ⚠️ Important Notice
+## ⚠️ Important notice
 
-**These samples are for educational purposes only.** They demonstrate security vulnerabilities and attack techniques to help developers understand threats and build better defenses. Do not use vulnerable code examples in production systems.
+**These samples are for educational purposes only.** They demonstrate
+vulnerabilities alongside their defenses so developers can recognise both. Do not
+use the vulnerable patterns in production.
 
-## Samples Overview
+## Scope: what belongs in your code
 
-### 1. `credential_stuffing_detection.py`
-**MITRE ATT&CK Technique:** T1110.004 - Credential Stuffing
+Credential stuffing, password spraying, impossible travel and device reputation
+are handled by your **identity provider**, which observes sign-ins across every
+application and tenant. A single application cannot see that context, so
+reimplementing those detections produces a weaker control that also generates
+false lockouts. Likewise, secret scanning is a solved problem — use GitHub Secret
+Scanning with Push Protection, Gitleaks, or TruffleHog.
 
-Demonstrates detection and prevention of credential stuffing attacks where attackers use leaked username/password pairs to gain unauthorized access.
+Those techniques are worth **monitoring**. They are not worth **rebuilding**.
+These samples cover what is left: the boundaries only your application can enforce.
 
-**Key Features:**
-- Rate limiting per IP and per account
-- Detection of automation patterns
-- Account lockout and IP blocking
-- Anomaly detection based on behavioral patterns
+## Samples
 
-**Run:**
-```bash
-python3 credential_stuffing_detection.py
-```
+### 1. `command_injection.py` — T1059
+Command and Scripting Interpreter. Vulnerable `os.system()` and `shell=True`
+versus `subprocess` with an argument list, plus input allowlisting and path
+traversal prevention.
 
-### 2. `command_injection.py`
-**MITRE ATT&CK Technique:** T1059 - Command and Scripting Interpreter
-
-Shows both vulnerable and secure implementations of command execution. Demonstrates how command injection works and how to prevent it.
-
-**Key Features:**
-- Vulnerable code using `os.system()` and `shell=True`
-- Secure code using subprocess with argument lists
-- Input validation and allowlisting
-- Attack simulation and defense demonstration
-
-**Run:**
 ```bash
 python3 command_injection.py
 ```
 
-### 3. `unsafe_deserialization.py`
-**MITRE ATT&CK Technique:** T1059.006 - Execution via Deserialization
+### 2. `unsafe_deserialization.py` — T1059.006
+Execution via deserialization. Shows why `pickle.loads()` on untrusted bytes is
+arbitrary code execution — the attacker's `__reduce__` runs during unpickling —
+and the JSON-plus-schema-validation alternative.
 
-Demonstrates how insecure deserialization (especially with pickle) can lead to arbitrary code execution, and shows safe alternatives using JSON with schema validation.
-
-**Key Features:**
-- Vulnerable pickle deserialization
-- Malicious payload demonstration
-- Safe JSON-based alternative
-- Schema validation and type checking
-
-**Run:**
 ```bash
 python3 unsafe_deserialization.py
 ```
 
-### 4. `tamper_evident_logging.py`
-**MITRE ATT&CK Technique:** T1070 - Indicator Removal on Host
+### 3. `bulk_export_guard.py` — T1213, T1567
+Data from Information Repositories and Exfiltration Over Web Service. A fixed,
+explainable export budget per role, decided *before* the query runs. Not an
+anomaly score: a limit derived from the real workflow is testable, reviewable, and
+can go in a runbook.
 
-Implements tamper-evident logging using cryptographic hash chains, making it detectable when logs are modified or deleted by attackers.
+```bash
+python3 bulk_export_guard.py
+```
 
-**Key Features:**
-- Cryptographic hash chains for log integrity
-- Detection of log tampering and deletion
-- Verification function to validate log chain
-- Export functionality for secure archival
+### 4. `tamper_evident_logging.py` — T1070
+Indicator Removal. A cryptographic hash chain makes edits, deletions and
+reordering detectable. Note the limitation documented in the module: a hash chain
+proves *that* the local log changed, it does not prevent the change. Shipping
+events off-host is what preserves the evidence.
 
-**Run:**
 ```bash
 python3 tamper_evident_logging.py
 ```
 
-### 5. `data_access_monitor.py`
-**MITRE ATT&CK Techniques:** 
-- T1213 - Data from Information Repositories
-- T1020 - Automated Exfiltration
+### 5. `data_integrity.py` — T1565
+Data Manipulation. HMAC record signatures, a signed audit trail, mass-modification
+detection and high-sensitivity field monitoring.
 
-Monitors data access patterns to detect anomalous behavior indicating data theft or exfiltration attempts.
-
-**Key Features:**
-- Baseline behavioral modeling
-- Volume and velocity anomaly detection
-- Time-based anomaly detection (unusual hours)
-- Sensitivity-based access monitoring
-- Rate limiting and alerting
-
-**Run:**
-```bash
-python3 data_access_monitor.py
-```
-
-### 6. `secrets_scanner.py`
-**MITRE ATT&CK Technique:** T1552 - Unsecured Credentials
-
-Scans source code and configuration files for hardcoded credentials, API keys, passwords, and other secrets that attackers commonly search for.
-
-**Key Features:**
-- Pattern-based detection of various credential types
-- Support for multiple file formats
-- Severity classification
-- False positive reduction
-- Detailed reporting
-
-**Run:**
-```bash
-python3 secrets_scanner.py
-```
-
-### 7. `auth_monitoring.py`
-**MITRE ATT&CK Technique:** T1078 - Valid Accounts
-
-Demonstrates authentication monitoring to detect misuse of valid credentials through behavioral analysis and anomaly detection.
-
-**Key Features:**
-- Impossible travel detection (geolocation anomalies)
-- Device fingerprint tracking
-- Behavioral baseline modeling
-- Privilege escalation monitoring
-- Risk-based step-up authentication
-- Anomalous resource access detection
-
-**Run:**
-```bash
-python3 auth_monitoring.py
-```
-
-### 8. `password_spray_detection.py`
-**MITRE ATT&CK Technique:** T1110.003 - Password Spraying
-
-Detects password spray attacks where attackers try one common password across many accounts to bypass per-account rate limiting.
-
-**Key Features:**
-- Cross-account password pattern detection
-- Distributed attack detection (multiple IPs)
-- Slow-and-low spray detection
-- IP reputation tracking
-- Progressive delays and lockouts
-- Spray velocity monitoring
-
-**Run:**
-```bash
-python3 password_spray_detection.py
-```
-
-### 9. `data_integrity.py`
-**MITRE ATT&CK Technique:** T1565 - Data Manipulation
-
-Implements data integrity verification to detect and prevent unauthorized data modifications using HMAC signatures and audit trails.
-
-**Key Features:**
-- HMAC-based record integrity verification
-- Tamper-evident audit trails
-- Mass modification detection
-- Field-level change tracking
-- High-sensitivity field monitoring
-- Change velocity analysis
-
-**Run:**
 ```bash
 python3 data_integrity.py
 ```
 
 ## Requirements
 
-All samples use **only Python standard library** - no external dependencies required. Compatible with Python 3.7+.
+Python 3.7+. Standard library only — no external dependencies.
 
-## Educational Use
+## MITRE ATT&CK techniques covered
 
-These samples are designed for:
-- Security awareness training
-- Developer education on secure coding
-- Conference talks and presentations
-- Understanding attacker techniques
-- Learning defensive programming patterns
+| Technique ID | Name | Sample File |
+|-------------|------|-------------|
+| T1059 | Command and Scripting Interpreter | `command_injection.py` |
+| T1059.006 | Execution via Deserialization | `unsafe_deserialization.py` |
+| T1213 | Data from Information Repositories | `bulk_export_guard.py` |
+| T1567 | Exfiltration Over Web Service | `bulk_export_guard.py` |
+| T1070 | Indicator Removal | `tamper_evident_logging.py` |
+| T1565 | Data Manipulation | `data_integrity.py` |
 
-## Key Takeaways
+### Monitored elsewhere, not reimplemented here
 
-### Defense-in-Depth Principles
-1. **Input Validation**: Always validate and sanitize user input
-2. **Least Privilege**: Run with minimum necessary permissions
-3. **Defense Monitoring**: Implement behavioral monitoring and anomaly detection
-4. **Secure Defaults**: Use safe APIs and configurations by default
-5. **Layered Security**: Don't rely on a single defensive measure
+| Technique ID | Name | Where it belongs |
+|-------------|------|------------------|
+| T1110.003 | Password Spraying | Identity provider |
+| T1110.004 | Credential Stuffing | Identity provider |
+| T1552 | Unsecured Credentials | Secret scanning + push protection |
 
-### Common Patterns
-- Use allowlists over denylists
-- Implement rate limiting and throttling
-- Log security-relevant events
-- Monitor for anomalous behavior
-- Use cryptographic verification where appropriate
+## Key takeaways
 
-## Additional Resources
+1. **Validate at the boundary.** Untrusted data must never reach a shell, a SQL
+   parser, or a deserializer with its structure intact.
+2. **Allowlist, never blocklist.** A blocklist has to be right every time; an
+   allowlist only has to name what you accept.
+3. **Bound the aggregate.** Individually-legal requests are what exfiltration
+   looks like from inside an application.
+4. **Decide before you execute.** Checking after the query runs means the data is
+   already in memory.
+5. **Log with technique IDs.** One denial is noise; a hundred is an attack, and
+   only structured events make that visible.
+
+## Additional resources
 
 - [MITRE ATT&CK Framework](https://attack.mitre.org/)
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [CWE (Common Weakness Enumeration)](https://cwe.mitre.org/)
 - [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)
-
-## License
-
-These educational samples are provided as-is for learning purposes.
-
-## Contributing
-
-These samples are part of the "MITRE ATT&CK for Developers" conference talk. For questions or improvements, please refer to the main repository.
-
----
-
-**Remember:** The best defense is understanding how attacks work and building security into your code from the start! 🛡️

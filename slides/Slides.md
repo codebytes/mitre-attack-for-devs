@@ -272,15 +272,48 @@ footer, footer a, section::after { color: #b9d9ef; }
 
 **Every request needs an explicit answer. No token? No entry.**
 
-| Attacker move | Application response | Technique |
+| Attacker move | Response | Who owns it |
 |---|---|---|
-| No valid token | **401** | T1078 valid accounts |
-| Wrong role | **403** | T1078 privilege abuse |
-| Repeated failures | **Rate-limit + log** | T1110 brute force |
-| Injected payload | **Reject** | T1190 app exploitation |
-| Impossible travel | **Challenge MFA** | T1078 account takeover |
+| No valid token | **401** | Framework / IdP |
+| Repeated failures | **Throttle + lock** | **Identity provider** |
+| Impossible travel | **Challenge MFA** | **Identity provider** |
+| Valid token, wrong record | **404** | **Your code** |
+| Valid token, bulk export | **Step-up or cap** | **Your code** |
+| Injected payload | **Reject** | **Your code** |
 
-<!-- Each attacker action needs an explicit application response. The examples cover valid-account abuse (T1078), credential brute-force (T1110), and exposed-app exploitation (T1190). No single response covers every technique; combine authentication, authorization, validation, and behavioral monitoring. -->
+<!-- Each attacker action needs an explicit response, but not every response is yours to write. The first three rows belong to the identity provider: it sees sign-ins across every application and tenant, so it detects brute force (T1110) and impossible travel far better than one application can. The last three rows are application code, because only your application knows its own object model, its export volumes, and its interpreters. Mixing these up is the common failure: teams rebuild login anomaly detection they already bought, and skip the authorization check nobody else can write for them. -->
+---
+
+<!-- _class: compact-columns -->
+
+## Don't Rebuild Your Identity Provider
+
+<div class="columns">
+<div>
+
+### 🪪 The IdP already does this
+- Credential stuffing and password spray (T1110)
+- Impossible travel and device reputation
+- MFA, step-up, and passwordless
+- Token issuance, refresh, revocation
+- Sign-in risk scoring across **all** apps
+
+</div>
+<div>
+
+### 🧑‍💻 Only your code can do this
+- **Object-level authorization** (T1078)
+- **Tenant isolation** on every query
+- **Export limits** on your data (T1213)
+- **Input boundaries** to interpreters (T1059, T1190)
+- **Business-meaningful audit events**
+
+</div>
+</div>
+
+> A homegrown copy of an IdP feature is strictly worse — and locks out real users.
+
+<!-- This slide exists because the most common mistake is building the wrong half. Re-implementing impossible-travel detection inside one application means reasoning from a single IP address with no cross-application context, and the usual result is blocking legitimate mobile users who moved between cell towers. Meanwhile the checks nobody else can write — does this subject own this record, is this tenant allowed to see this row, is this export proportionate — get skipped. Buy the left column. Write the right column. The next slides are all right-column code. -->
 ---
 
 <!-- _class: code-focus -->
@@ -327,23 +360,25 @@ def get_user():
 
 <!-- _class: code-focus -->
 
-## Credential Stuffing Detection (T1110.004)
+## Valid Accounts: Your Half of T1078
 
-**One IP, one five-minute window:**
+**The token is real. The question is what it may touch.**
 
-```javascript
-detectSuspiciousLogin({ ip }) {
-    const accounts = this.countAccountsFromIP(ip);
-    const attempts = this.getRateFromIP(ip);
-    if (accounts <= 10 && attempts <= 100) return false;
-    this.logTechnique("T1110.004", { ip, accounts, attempts });
-    return true;
+```csharp
+var doc = await _documents.FindAsync(id);
+if (doc is null) return NotFound();
+
+var result = await _authz.AuthorizeAsync(User, doc, Operations.Read);
+if (!result.Succeeded) {
+    _logger.LogWarning("[T1078] denied sub={Sub} doc={Doc}", subject, id);
+    return NotFound();   // same shape as a miss
 }
+return Ok(doc);
 ```
 
-**3 accounts / 8 attempts → normal. 12 accounts / 80 attempts → flag.**
+**Valid credentials + someone else's record = the breach.**
 
-<!-- Credential stuffing tries breached username/password pairs at scale. This is the detection-method excerpt; the helpers maintain distinct-account counts and failed-attempt counts over the same rolling five-minute window, including the latest attempt. The original two branches are combined without changing their >10-account or >100-attempt thresholds. Three accounts and eight failures do not flag; twelve accounts and eighty failures emit a T1110.004 event because the account threshold is crossed. The caller can then challenge or throttle. Thresholds are illustrative: tune for shared IPs, normal retry behavior, and false positives. Do not log attempted passwords. -->
+<!-- This is the check no identity provider can make for you, because only your application knows that this document belongs to that tenant. Three things to notice. First, the resource is loaded before the decision: an [Authorize] attribute runs before model binding and cannot see the record, so object-level checks have to be imperative. Second, the denial returns 404 rather than 403, so the response does not confirm that the id exists — otherwise the error code itself becomes an enumeration oracle. Third, the denial is logged with the technique id: one 403 is noise, but a hundred from one subject is an attack, and the SIEM can only see that pattern if you emit it. The handler behind AuthorizeAsync is where tenant isolation lives, and tenant should be a hard boundary that no role can override. -->
 
 ---
 
@@ -426,22 +461,22 @@ process.WaitForExit();
 
 ---
 
-## Unsafe Deserialization (T1203)
+## Unsafe Deserialization (T1059.006)
 
 ```python
-# VULNERABLE - Unsafe deserialization enables T1203
+# VULNERABLE - pickle.loads() on untrusted bytes is code execution
 import pickle
 @app.route('/api/data', methods=['POST'])
 def process_data():
-    obj = pickle.loads(request.data)  # Code execution risk!
+    obj = pickle.loads(request.data)  # Attacker's __reduce__ runs here
     return process_object(obj)
 
-# DEFENDED - Safe deserialization with JSON
+# DEFENDED - JSON cannot construct objects or call code
 import json
 @app.route('/api/data', methods=['POST'])  
 def process_data():
     try:
-        data = json.loads(request.data)  # T1203 Prevention
+        data = json.loads(request.data)
         if not validate_schema(data):
             return "Invalid data format", 400
         return process_object(data)
@@ -511,34 +546,31 @@ app.use(session({
 }));
 ```
 
-- **Validate client context**; challenge or revoke suspicious sessions.
-- **Regenerate the ID** after login or privilege changes.
+- **Regenerate the ID** after login and privilege changes.
+- **Revoke server-side**; short TTL is not revocation.
 
-<!-- Configuration and session validation are separate controls. A required, securely supplied signing secret addresses T1552; HTTPS-only, HttpOnly, and SameSite cookies reduce exposure. Rolling refresh extends expiry and does not rotate the session ID; use req.session.regenerate with error handling at authentication and privilege boundaries. The validation middleware, omitted here for readability, checks that a user exists, compares the stored fingerprint with generateFingerprint(req), and revokes or challenges on a meaningful mismatch before calling next. IP changes can be legitimate, so treat fingerprinting as a risk signal and tune it to the application. These controls reduce session-abuse risk associated with T1185; they do not make session theft impossible. -->
+<!-- Configuration and session invalidation are separate controls. A required, securely supplied signing secret addresses T1552; HTTPS-only, HttpOnly, and SameSite cookies reduce exposure. Rolling refresh extends expiry and does not rotate the session ID, so call req.session.regenerate with error handling at authentication and privilege boundaries to defeat fixation. Resist binding sessions to IP address: mobile clients change address constantly and the usual result is logging out real users while a hijacker on the same network is unaffected. The control that actually helps is server-side revocation — keep session state you can delete, and delete it on password change, privilege change, and reported compromise. A stolen cookie (T1550.004) bypasses MFA entirely because the session is already authenticated, so the ability to end that session on demand matters more than detecting how it was stolen. These controls reduce session-abuse risk associated with T1185; they do not make session theft impossible. -->
 
 ---
 
 <!-- _class: code-focus -->
 
-## Web Shell Detection (T1505.003)
-
-**Content-check excerpt, after the extension allowlist:**
+## Web Shells: Make Uploads Unexecutable (T1505.003)
 
 ```csharp
-using var reader = new StreamReader(file.OpenReadStream());
-var content = reader.ReadToEnd();
-foreach (var pattern in _suspiciousPatterns) {
-    if (!content.Contains(pattern, StringComparison.OrdinalIgnoreCase))
-        continue;
-    LogSecurityEvent("T1505.003", $"Suspicious marker: {pattern}");
-    return false;
-}
-return true;
+if (!_allowed.Contains(ext))              return Reject("type not permitted");
+if (!await MatchesMagicBytesAsync(s, ext)) return Reject("content mismatch");
+
+// You choose the name. You choose where it lands.
+var stored = $"{Guid.NewGuid():N}{ext}";
+var path = Path.Combine("/var/uploads", stored);   // outside the web root
+await file.CopyToAsync(File.Create(path));
+File.SetUnixFileMode(path, UserRead | UserWrite | GroupRead);  // no execute
 ```
 
-**Text signatures are a signal, not proof that an upload is safe.**
+**If the server can't execute it, the contents stop mattering.**
 
-<!-- This excerpt preserves the content-scanning loop; the extension validation and class setup move to the explanation. The original allowlist is .jpg, .png, .pdf, and .docx. The illustrative markers are eval(, exec(, system(, <?php, <%, <script, and cmd.exe. Reject and log a disallowed extension before reaching this loop. A marker match warrants investigation; a non-match does not prove safety. Use size limits, format-aware validation, malware scanning, and non-executable storage outside the web root. A text reader is not a complete validator for binary image or document formats, and polyglot or encoded content can evade simple signatures. -->
+<!-- The instinct is to scan the upload for eval(, <?php, or cmd.exe. That approach fails in both directions: reading a JPEG or PDF as UTF-8 text produces byte sequences that match those markers, so legitimate files are rejected, while any encoded, compressed, or differently-spelled payload sails through. Worse, a "clean" scan result creates false confidence. The durable control is structural. An extension allowlist is checked first, because a blocklist has to enumerate .php, .php5, .phtml, .asp, .aspx, .ashx, .jsp and be right every time. Magic bytes confirm the content matches the declared type, catching shell.php renamed to avatar.png. Then the file is stored under a name you generated, outside the web root, without execute permission — so no route, static-file handler, or path-traversal trick turns it into code. Serve it back with Content-Disposition: attachment and X-Content-Type-Options: nosniff. For genuinely untrusted uploads add a real malware scanner; a string search is not one. -->
 
 ---
 
@@ -1022,29 +1054,31 @@ grype sbom:./sbom.json
 
 <!-- _class: code-focus -->
 
-## Data Access Anomaly Detection
+## Bound the Export, Don't Score It (T1213)
 
 ```python
-def check_access_pattern(self, user_id, query, context):
-    baseline = self.get_user_baseline(user_id)
-    current = {"records_accessed": query.estimated_rows,
-               "tables_accessed": len(query.tables)}
-    score = self.calculate_anomaly_score(baseline, current)
-    if score > 0.8:
-        self.log_technique("T1213", {"user": user_id, "score": score})
-        return self.require_step_up_auth(user_id)
-    return True
+def authorize_export(self, subject, role, requested_rows):
+    policy = POLICIES[role]              # support: 500/request, 2000/hour
+    if requested_rows > policy.max_rows_per_request:
+        raise ExportDenied("request too large")
+
+    used = self._rolling_hour(subject)
+    if used + requested_rows > policy.max_rows_per_hour:
+        self.emit("T1567", subject, used, requested_rows)
+        raise ExportDenied("hourly budget exhausted")
+
+    return requested_rows        # decided BEFORE the query runs
 ```
 
-**Normal baseline → allow. Score above 0.8 → log + step-up authentication.**
+**A fixed limit you can defend beats a score nobody can debug.**
 
-<!-- This method excerpt keeps the decision visible; baseline storage and scoring move to the explanation. The illustrative score compares record and table counts with per-user means and standard deviations, caps each normalized deviation at 1, and takes the maximum. A real scorer needs minimum baseline history and a nonzero variance floor. Sensitivity classification and login time can add context but were not part of the original two-metric score. Full events can include sanitized query metadata, never raw sensitive query values. Threshold 0.8 is illustrative, not a universal boundary. Require a successful step-up before releasing the result, and define how legitimate bulk exports are handled. -->
+<!-- The earlier version of this slide computed an anomaly score and acted when it crossed 0.8. That reads well and is miserable in practice: during an incident nobody can explain why a number was 0.79, and tuning it is guesswork. A budget derived from the real workflow is testable, reviewable, and belongs in a runbook. If support genuinely needs 500 rows to do the job, 500 is the limit and anything larger is a question worth asking. Three details matter here. The decision happens before the query runs, because checking afterwards means the expensive query already executed and the data is one serialization bug from leaving. The hourly budget is the control that catches drip-feed extraction, where each individual request is authorized and reasonable — that aggregate is what T1567 describes. And production counters need shared atomic storage such as Redis INCR, since a per-process dictionary resets on deploy and is defeated by spreading calls across replicas. Give legitimate bulk work a reviewed path rather than raising the cap. -->
 
 ---
 
 <!-- _class: code-focus -->
 
-## API Rate Limiting with Exfil Detection
+## Rows Bound the Read. Bytes Bound the Leak. (T1567)
 
 ```javascript
 async checkDataTransfer(userId, requestSize, responseSize) {
@@ -1110,13 +1144,13 @@ async checkDataTransfer(userId, requestSize, responseSize) {
 
 ### Key Patterns:
 
-- **Behavioral Analytics**: Monitor user patterns vs baselines
+- **Authorization Checks**: Verify the subject against the specific object
 - **Technique Logging**: Tag events with ATT&CK IDs for correlation
-- **Adaptive Controls**: Risk-based authentication and authorization  
+- **Adaptive Controls**: Consume IdP risk signals; require step-up for high impact
 - **Honey Tokens**: Fake data/accounts to detect unauthorized access
 - **Immutable Auditing**: Tamper-evident logging and monitoring
 
-<!-- These are the five patterns we've seen throughout this talk. Behavioral analytics baseline normal behavior and flag anomalies. Technique logging uses ATT&CK IDs so your SIEM can correlate across systems. Adaptive controls increase security requirements when risk increases. Honey tokens are traps for attackers. Immutable auditing ensures your investigation data can't be tampered with. -->
+<!-- These are the five patterns we've seen throughout this talk. Authorization checks are first because they are the ones no platform provides for you: the subject is authenticated, the question is whether this object is theirs. Technique logging uses ATT&CK IDs so your SIEM can correlate across systems. Adaptive controls read the acr, amr, and risk claims the identity provider already issues and decide which of your operations demand a stronger credential — consuming the signal rather than recomputing it. Honey tokens are traps for attackers. Immutable auditing keeps investigation data trustworthy. -->
 
 ---
 
@@ -1234,18 +1268,18 @@ Team:  correlate, triage, contain
 
 ## Start Small - Pick Your Top 3
 
-### Recommendation for most applications:
-1. **T1078 (Valid Accounts)** - Authentication monitoring
-2. **T1185 (Session Hijacking)** - Session security  
-3. **T1213 (Data Collection)** - Data access anomalies
+### Start where only your code can help:
+1. **T1078 (Valid Accounts)** - Object + tenant authorization
+2. **T1213 (Data from Repositories)** - Export limits on your data
+3. **T1059 / T1190 (Injection)** - Input boundaries to interpreters
 
 ### Why these first:
-- **High impact** on most attack chains
+- **No vendor can do them for you**
 - **Relatively easy** to implement
 - **Immediate value** for detection
 - **Foundation** for expanding coverage
 
-<!-- Don't be overwhelmed by 200+ techniques. Start with these three: authentication monitoring catches credential abuse, session security prevents hijacking, and data access anomalies catch collection and exfiltration. These three techniques appear in almost every major breach. Master these, then expand. -->
+<!-- Deliberately not on this list: login anomaly detection, brute-force throttling, and session-hijack scoring. Configure those in the identity provider, which sees sign-ins across every application and does the job better than one service can. These three are the ones that stay broken until an application developer fixes them. Object and tenant authorization is the check nobody else can write, because only this codebase knows its data model. Export limits are the control that turns a valid session into a bounded one. Input boundaries stop untrusted data from reaching a shell, a SQL parser, or a deserializer. Master these, then expand coverage. -->
 
 ---
 
@@ -1280,10 +1314,10 @@ p { margin: 0.35em 0; }
 - ✅ **Think Like an Attacker** - Understand adversary behavior patterns
 - ✅ **Build Detection Into Code** - Monitoring isn't just ops responsibility
 - ✅ **Log ATT&CK Technique IDs** - Enable security team correlation
-- ✅ **Use Behavioral Analytics** - Go beyond simple rule-based detection
+- ✅ **Don't Rebuild Your IdP** - Configure what you bought, write what you own
 - ✅ **Start Small, Iterate** - Pick 3 techniques and expand coverage
 
-<!-- If you remember nothing else: OWASP and ATT&CK are complementary, not competing, and neither guarantees complete security. Identify likely attacker behavior, instrument the relevant signals, and define a response. Start with identity, sessions, and data access. Revisit the crooked-line visual: we do not need to predict every move to make that path harder and more observable. -->
+<!-- If you remember nothing else: OWASP and ATT&CK are complementary, not competing, and neither guarantees complete security. Identify likely attacker behavior, instrument the relevant signals, and define a response. Configure the identity provider for credential attacks, and spend your own effort on authorization, export limits, and input boundaries — the controls that stay broken until a developer fixes them. Revisit the crooked-line visual: we do not need to predict every move to make that path harder and more observable. -->
 
 ---
 
