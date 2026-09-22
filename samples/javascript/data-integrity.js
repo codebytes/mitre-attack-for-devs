@@ -50,6 +50,23 @@ class DataIntegrityManager {
   }
 
   /**
+   * Canonical JSON so that key order never changes the signature.
+   *
+   * Note: passing a sorted key array as JSON.stringify's second argument does
+   * NOT do this. That parameter is a replacer, and it only applies to the top
+   * level — nested object keys get filtered out entirely, silently corrupting
+   * the signature for any record with nested data.
+   */
+  canonicalize(value) {
+    if (value === null || typeof value !== 'object') return JSON.stringify(value);
+    if (Array.isArray(value)) return `[${value.map(v => this.canonicalize(v)).join(',')}]`;
+
+    const entries = Object.keys(value).sort()
+      .map(k => `${JSON.stringify(k)}:${this.canonicalize(value[k])}`);
+    return `{${entries.join(',')}}`;
+  }
+
+  /**
    * Compute HMAC signature for a record
    * @param {string} recordId - Record identifier
    * @param {object} data - Record data
@@ -58,10 +75,9 @@ class DataIntegrityManager {
   computeSignature(recordId, data) {
     const dataCopy = {...data};
     delete dataCopy._signature;
-    
-    const canonical = JSON.stringify(dataCopy, Object.keys(dataCopy).sort());
-    const message = `${recordId}:${canonical}`;
-    
+
+    const message = `${recordId}:${this.canonicalize(dataCopy)}`;
+
     return crypto.createHmac('sha256', this.secretKey)
       .update(message)
       .digest('hex');
@@ -105,11 +121,14 @@ class DataIntegrityManager {
     delete dataCopy._signature;
     
     const expectedSignature = this.computeSignature(recordId, dataCopy);
-    
-    const isValid = crypto.timingSafeEqual(
-      Buffer.from(storedSignature),
-      Buffer.from(expectedSignature)
-    );
+
+    // timingSafeEqual throws a RangeError when the buffers differ in length,
+    // so an attacker who truncates the signature crashes the request handler
+    // instead of failing verification. Compare lengths first.
+    const stored = Buffer.from(storedSignature, 'utf8');
+    const expected = Buffer.from(expectedSignature, 'utf8');
+    const isValid = stored.length === expected.length
+      && crypto.timingSafeEqual(stored, expected);
 
     if (!isValid) {
       console.log(`❌ Signature mismatch for record ${recordId}`);

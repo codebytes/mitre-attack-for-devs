@@ -230,15 +230,21 @@ class SecureSessionManager {
       return null;
     }
 
-    // Defense 2: Detect session hijacking via fingerprint validation
+    // Defense 2: Detect reuse of a session from a different client context.
+    //
+    // Deliberately NOT blocking on IP change. Mobile clients change address
+    // whenever they move between cell towers or on/off Wi-Fi, so an IP-binding
+    // rule logs out real users constantly while an attacker on the same network
+    // is unaffected. Treat it as a signal to record, not a reason to reject.
     const currentFingerprint = this.createFingerprint(req);
-    const hijackScore = this.detectHijacking(session.fingerprint, currentFingerprint);
-    
-    if (hijackScore > 0.5) {
-      console.log('🛡️  BLOCKED: Possible session hijacking detected!');
-      console.log(`    Hijack confidence: ${(hijackScore * 100).toFixed(1)}%`);
-      
-      // Invalidate all user sessions on hijack detection
+    if (currentFingerprint.ipAddress !== session.fingerprint.ipAddress) {
+      console.log('ℹ️  Client IP changed — recorded as a signal, not blocked');
+    }
+
+    // A User-Agent change mid-session is far less common for a legitimate
+    // client and is a stronger indicator of a replayed cookie (T1550.004).
+    if (currentFingerprint.userAgent !== session.fingerprint.userAgent) {
+      console.log('🛡️  BLOCKED: User-Agent changed mid-session');
       this.store.deleteUserSessions(session.userId);
       return null;
     }
@@ -534,8 +540,8 @@ if (require.main === module) {
 
   console.log('\n' + '='.repeat(80));
   console.log('Demo complete. Key defenses implemented:');
-  console.log('  ✅ Session fingerprinting (IP + User-Agent)');
-  console.log('  ✅ Hijacking detection with suspicion scoring');
+  console.log('  ✅ Server-side revocation (the control that actually stops reuse)');
+  console.log('  ℹ️  IP change recorded as a signal, not a block (mobile clients roam)');
   console.log('  ✅ Automatic session rotation');
   console.log('  ✅ Concurrent session limits');
   console.log('  ✅ Session timeout and expiration');
