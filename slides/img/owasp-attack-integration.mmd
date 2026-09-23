@@ -1,0 +1,36 @@
+---
+config:
+  htmlLabels: false
+  fontFamily: Arial, sans-serif
+  deterministicIds: true
+  deterministicIDSeed: owasp-attack-integration
+  themeVariables:
+    fontFamily: Arial, sans-serif
+    fontSize: 24px
+    lineColor: '#34495e'
+  flowchart:
+    htmlLabels: false
+    curve: linear
+    nodeSpacing: 28
+    rankSpacing: 28
+    padding: 18
+    wrappingWidth: 280
+---
+flowchart TB
+    accTitle: OWASP and ATT&CK in one engineering workflow
+    accDescr: OWASP weaknesses and secure-coding guidance combine with ATT&CK adversary behaviors and threat scenarios in one engineering workflow. The workflow produces preventive controls and tests, detection through app events and correlation, and practiced containment and recovery.
+    owasp["OWASP<br/>Secure coding guidance"] --> workflow["Shared workflow"]
+    attack["ATT&CK<br/>Adversary behaviors"] --> workflow
+    workflow --> prevent["PREVENT<br/>Controls + tests"]
+    workflow --> detect["DETECT<br/>Events + correlation"]
+    workflow --> respond["RESPOND<br/>Contain + recover"]
+    classDef input fill:#dae8fc,stroke:#6c8ebf,color:#17212b,stroke-width:2px
+    classDef shared fill:#e1d5e7,stroke:#9673a6,color:#17212b,stroke-width:2px
+    classDef prevention fill:#d5e8d4,stroke:#82b366,color:#17212b,stroke-width:2px
+    classDef detection fill:#fff2cc,stroke:#d6b656,color:#17212b,stroke-width:2px
+    classDef response fill:#f8cecc,stroke:#b85450,color:#17212b,stroke-width:2px
+    class owasp,attack input
+    class workflow shared
+    class prevent prevention
+    class detect detection
+    class respond response

@@ -1,0 +1,38 @@
+---
+config:
+  htmlLabels: false
+  fontFamily: Arial, sans-serif
+  deterministicIds: true
+  deterministicIDSeed: audit-evidence
+  themeVariables:
+    fontFamily: Arial, sans-serif
+    fontSize: 24px
+    lineColor: '#34495e'
+    clusterBkg: '#f5f7fa'
+    clusterBorder: '#6c8ebf'
+  flowchart:
+    htmlLabels: false
+    curve: linear
+    nodeSpacing: 30
+    rankSpacing: 36
+    padding: 18
+    wrappingWidth: 280
+---
+flowchart LR
+    accTitle: Protected audit storage and SIEM
+    accDescr: The application sends typed audit events to a remote collector. Under a separate administrative boundary, the collector forwards evidence to a retention-protected archive and a SIEM that correlates events and detects delivery gaps. The application cannot change archive retention or delete evidence.
+    app["Application<br/>typed audit events"]
+    subgraph protected["Separate administrative boundary"]
+        collector["Remote collector<br/>authenticated delivery"]
+        archive["Protected archive<br/>retention / WORM"]
+        siem["SIEM<br/>correlation + gaps"]
+        collector --> archive
+        collector --> siem
+    end
+    app --> collector
+    classDef source fill:#dae8fc,stroke:#6c8ebf,color:#17212b,stroke-width:2px
+    classDef transport fill:#d5e8d4,stroke:#82b366,color:#17212b,stroke-width:2px
+    classDef evidence fill:#e1d5e7,stroke:#9673a6,color:#17212b,stroke-width:2px
+    class app source
+    class collector transport
+    class archive,siem evidence
