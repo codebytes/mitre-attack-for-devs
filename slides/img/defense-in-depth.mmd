@@ -1,0 +1,30 @@
+---
+config:
+  htmlLabels: false
+  fontFamily: Arial, sans-serif
+  deterministicIds: true
+  deterministicIDSeed: defense-in-depth
+  themeVariables:
+    fontFamily: Arial, sans-serif
+    fontSize: 24px
+    lineColor: '#34495e'
+  flowchart:
+    htmlLabels: false
+    curve: linear
+    rankSpacing: 32
+    padding: 24
+    wrappingWidth: 280
+---
+flowchart LR
+    accTitle: Prevention, detection, and response controls
+    accDescr: Prevention combines validated identity, object and tenant policy, safe input handling, and export limits. Detection combines application audit events with identity-provider and endpoint signals in a SIEM. Response stops exports, revokes application sessions, contains workloads, and preserves evidence.
+    prevent["PREVENT<br/>Validate identity<br/>Object + tenant policy<br/>Bound inputs + exports"]
+    detect["DETECT<br/>App audit events<br/>IdP + endpoint signals<br/>SIEM correlation"]
+    respond["RESPOND<br/>Stop exports<br/>Revoke app sessions<br/>Contain + recover"]
+    prevent --> detect --> respond
+    classDef prevention fill:#d5e8d4,stroke:#82b366,color:#17212b,stroke-width:2px
+    classDef detection fill:#fff2cc,stroke:#d6b656,color:#17212b,stroke-width:2px
+    classDef response fill:#dae8fc,stroke:#6c8ebf,color:#17212b,stroke-width:2px
+    class prevent prevention
+    class detect detection
+    class respond response

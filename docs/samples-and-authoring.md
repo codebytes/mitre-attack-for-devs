@@ -65,6 +65,13 @@ rendered review, inspect every slide, and compare the PDF for clipping and foote
 overlap. Keep review artifacts out of source control. The Pages workflow invokes
 Marp CLI directly; shared skills are authoring tools, not a CI deployment gate.
 
+The data-flow, audit-evidence, defense-in-depth, and OWASP/ATT&CK integration
+diagrams have `.mmd` sources beside their static `.svg` outputs in `slides/img/`.
+Regenerate them with the installed `marp-visuals` skill's `render-mermaid.mjs`,
+following its dependency and browser setup instructions. The deck uses the SVGs
+directly; it needs no runtime Mermaid script or diagram generation in CI. Keep
+the original embedded draw.io PNG sources intact when changing these replacements.
+
 ## Repository Content
 
 This repository provides insights, code samples, and demonstrations for applying the MITRE ATT&CK framework to application development. Topics covered include:

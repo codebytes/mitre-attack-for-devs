@@ -1,0 +1,35 @@
+---
+config:
+  htmlLabels: false
+  fontFamily: Arial, sans-serif
+  deterministicIds: true
+  deterministicIDSeed: data-flow-monitoring
+  themeVariables:
+    fontFamily: Arial, sans-serif
+    fontSize: 24px
+    lineColor: '#34495e'
+  flowchart:
+    htmlLabels: false
+    curve: linear
+    nodeSpacing: 30
+    rankSpacing: 28
+    padding: 16
+    wrappingWidth: 280
+---
+flowchart LR
+    accTitle: Row and byte reservation boundaries
+    accDescr: After tenant and resource authorization, reserve the row budget before the bounded query. Serialize the result and reserve its actual bytes before sending. Either refusal leads to denial and an audit event, with no payload released.
+    auth["Authorize<br/>tenant + object"] --> rows{"Reserve<br/>rows?"}
+    rows -->|Yes| query["Query + LIMIT<br/>serialize body"]
+    query --> bytes{"Reserve<br/>bytes?"}
+    bytes -->|Yes| send["Send<br/>body"]
+    rows -->|No| deny["Deny + audit<br/>no payload"]
+    bytes -->|No| deny
+    classDef boundary fill:#dae8fc,stroke:#6c8ebf,color:#17212b,stroke-width:2px
+    classDef work fill:#d5e8d4,stroke:#82b366,color:#17212b,stroke-width:2px
+    classDef decision fill:#fff2cc,stroke:#d6b656,color:#17212b,stroke-width:2px
+    classDef denied fill:#f8cecc,stroke:#b85450,color:#17212b,stroke-width:2px
+    class auth,send boundary
+    class query work
+    class rows,bytes decision
+    class deny denied
