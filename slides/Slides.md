@@ -36,11 +36,24 @@ section.code-focus pre {
 section { color: #f4f9ff; }
 h1, h2 { color: #f4f9ff; }
 footer, footer a, section::after { color: #b9d9ef; }
+.cas-brand {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+  font-size: 0.85em;
+}
+.cas-brand img { display: block; }
 </style>
 
 ![bg](./img/title-background.svg)
 
 <!-- _footer: 'https://github.com/codebytes/mitre-attack-for-devs' -->
+
+<div class="cas-brand">
+<img src="./img/cas-2026/cas-logo.jpeg" width="180" alt="The Cloud & AI Summit (CAS)">
+<strong>The Cloud & AI Summit 2026</strong>
+</div>
 
 # MITRE ATT&CK for Developers
 
@@ -49,6 +62,21 @@ footer, footer a, section::after { color: #b9d9ef; }
 ## Chris Ayers
 
 <!-- Attackers don't follow a straight line. They zigzag, backtrack, pivot, and adapt. This talk explores how the MITRE ATT&CK framework maps these crooked paths — and what developers can do to straighten out their defenses. The crooked-line metaphor frames the talk: defenders often expect a straight path, while attackers zigzag, backtrack, and pivot across tactics like reconnaissance, lateral movement, and exfiltration. -->
+
+---
+
+<!-- _footer: "" -->
+<!-- _paginate: false -->
+
+![bg fit CAS 2026 sponsors: Anders, ArchitectNow, Microsoft, SyllogisTeks, Covenant Technology Partners, MiTek, Oakwood, Silika, StratoLens, and Kepler](./img/cas-2026/cas-2026-sponsors.png)
+
+<!--
+Thank the Cloud & AI Summit 2026 sponsors using the official September 25 artwork.
+Premium exhibitors: Anders, ArchitectNow, and Microsoft.
+Exhibitors: SyllogisTeks, Covenant Technology Partners, MiTek, Oakwood, Silika, and StratoLens.
+Experience sponsor: Kepler.
+Keep the full image visible, including its event details, website, and hashtag.
+-->
 
 ---
 
@@ -65,6 +93,35 @@ footer, footer a, section::after { color: #b9d9ef; }
 <i class="fa-brands fa-mastodon"></i> Mastodon: [@Chrisayers@hachyderm.io](https://hachyderm.io/@Chrisayers)
 
 <!-- Quick intro — I'm Chris, a Principal Software Engineer at Microsoft. I spend a lot of time thinking about how developers can build more secure applications without needing a PhD in cybersecurity. -->
+
+---
+
+<div class="columns">
+<div>
+
+![w:220 The Cloud & AI Summit (CAS)](./img/cas-2026/cas-logo.jpeg)
+
+# Your Feedback Matters
+
+**MITRE ATT&CK for Developers**
+
+Scan now and keep the link.
+Rate the session after the talk.
+
+</div>
+<div>
+
+[![w:430 center QR code for MITRE ATT&CK for Developers session feedback](./img/cas-2026/mitre-att-ck-for-developers-feedback-qr-1172519.png)](https://www.cloudandaisummit.com/content/sessionfeedback/1172519)
+
+</div>
+</div>
+
+[cloudandaisummit.com/content/sessionfeedback/1172519](https://www.cloudandaisummit.com/content/sessionfeedback/1172519)
+
+<!--
+Give attendees a moment to scan and save the session-specific feedback link.
+Ask them to submit feedback after the talk; show this QR code again near the end.
+-->
 
 ---
 
@@ -1324,13 +1381,35 @@ p { margin: 0.35em 0; }
 
 ---
 
-# Tell Me How I Did
+<div class="columns">
+<div>
+
+![w:220 The Cloud & AI Summit (CAS)](./img/cas-2026/cas-logo.jpeg)
+
+# Rate This Session
 
 - **What landed?**
 - **Where should I go deeper?**
 - **What should I trim?**
 
+</div>
+<div>
+
+[![w:430 center QR code for MITRE ATT&CK for Developers session feedback](./img/cas-2026/mitre-att-ck-for-developers-feedback-qr-1172519.png)](https://www.cloudandaisummit.com/content/sessionfeedback/1172519)
+
+</div>
+</div>
+
+[cloudandaisummit.com/content/sessionfeedback/1172519](https://www.cloudandaisummit.com/content/sessionfeedback/1172519)
+
 <!-- Your feedback shapes the next revision of this deck. Share what worked, what didn't, and where you'd like me to focus next time, either in person or through the contact links on the next slide. -->
+
+<!--
+Pause so attendees can scan and rate this session.
+The QR code and clickable link use the same session-specific URL shown near the opening.
+Advance to the closing resources and contact links after the feedback reminder.
+-->
+
 ---
 
 <div class="columns">
