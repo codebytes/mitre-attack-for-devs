@@ -36,6 +36,21 @@ produced the PDF. Reruns refresh the temporary workflow artifact but create a ne
 release version rather than overwriting an existing release. Deployment and
 release permissions are scoped to their respective jobs; the build is read-only.
 
+## CAS 2026 Branding
+
+The Cloud & AI Summit edition keeps the existing `custom-default` theme and
+technical content. The title carries the CAS logo, the official sponsor artwork
+is slide 2, and session-feedback slides appear after the speaker introduction
+and before the closing resource links.
+
+The supplied CAS logo, September 25, 2026 sponsor artwork, and session-specific
+feedback QR code are stored in `slides/img/cas-2026/`. Keep the sponsor image
+uncropped, with its footer and hashtag visible and no slide-number overlay.
+Both feedback slides use
+[the MITRE ATT&CK for Developers feedback form](https://www.cloudandaisummit.com/content/sessionfeedback/1172519),
+matching the QR code's destination. No PowerPoint font binaries or generated
+template CSS are needed; the deck retains its existing typography.
+
 ## Shared Agent Skills
 
 Use the reusable skills from [codebytes/skills](https://github.com/codebytes/skills)
