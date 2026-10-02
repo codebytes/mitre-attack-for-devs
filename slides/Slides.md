@@ -61,6 +61,8 @@ footer, footer a, section::after { color: #b9d9ef; }
 
 ## Chris Ayers
 
+Principal Software Engineer, Microsoft
+
 <!-- Attackers don't follow a straight line. They zigzag, backtrack, pivot, and adapt. This talk explores how the MITRE ATT&CK framework maps these crooked paths — and what developers can do to straighten out their defenses. The crooked-line metaphor frames the talk: defenders often expect a straight path, while attackers zigzag, backtrack, and pivot across tactics like reconnaissance, lateral movement, and exfiltration. -->
 
 ---
