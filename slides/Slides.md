@@ -2,6 +2,7 @@
 marp: true
 theme: custom-default
 paginate: true
+transition: fade 250ms
 footer: 'Chris Ayers - https://chris-ayers.com'
 ---
 
@@ -49,6 +50,25 @@ footer, footer a, section::after { color: #b9d9ef; }
 ## Chris Ayers
 
 Principal Software Engineer, Microsoft
+
+<svg class="title-path" viewBox="0 0 1280 720" aria-hidden="true">
+<defs><filter id="tp-glow" x="-5%" y="-30%" width="110%" height="160%"><feGaussianBlur stdDeviation="3" result="glow"/><feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<g class="mo-fade"><line class="tp-expected" x1="78" y1="600" x2="1170" y2="600"/></g>
+<path class="tp-route mo-draw" style="--dur:2.6s;--d:0.4s;--ease:linear" pathLength="1" filter="url(#tp-glow)" d="M 78 600 L 210 556 L 318 640 L 436 568 L 372 616 L 560 646 L 690 558 L 800 634 L 738 590 L 930 560 L 1040 640 L 1170 590"/>
+<circle class="tp-node mo-pop" style="--d:0.40s" cx="78" cy="600" r="5"/>
+<circle class="tp-node mo-pop" style="--d:0.64s" cx="210" cy="556" r="5"/>
+<circle class="tp-node mo-pop" style="--d:0.87s" cx="318" cy="640" r="5"/>
+<circle class="tp-node mo-pop" style="--d:1.11s" cx="436" cy="568" r="5"/>
+<circle class="tp-node mo-pop" style="--d:1.24s" cx="372" cy="616" r="5"/>
+<circle class="tp-node mo-pop" style="--d:1.57s" cx="560" cy="646" r="5"/>
+<circle class="tp-node mo-pop" style="--d:1.84s" cx="690" cy="558" r="5"/>
+<circle class="tp-node mo-pop" style="--d:2.07s" cx="800" cy="634" r="5"/>
+<circle class="tp-node mo-pop" style="--d:2.20s" cx="738" cy="590" r="5"/>
+<circle class="tp-node mo-pop" style="--d:2.53s" cx="930" cy="560" r="5"/>
+<circle class="tp-node mo-pop" style="--d:2.76s" cx="1040" cy="640" r="5"/>
+<circle class="tp-ping mo-ping" style="--d:3.00s" cx="1170" cy="590" r="9"/>
+<circle class="tp-target mo-pop" style="--d:3.00s" cx="1170" cy="590" r="8"/>
+</svg>
 
 <!-- Attackers don't follow a straight line. They zigzag, backtrack, pivot, and adapt. This talk explores how the MITRE ATT&CK framework maps these crooked paths — and what developers can do to straighten out their defenses. The crooked-line metaphor frames the talk: defenders often expect a straight path, while attackers zigzag, backtrack, and pivot across tactics like reconnaissance, lateral movement, and exfiltration. -->
 
@@ -174,6 +194,8 @@ Principal Software Engineer, Microsoft
 
 ---
 
+<!-- _transition: breach -->
+
 ## Mapping OWASP to ATT&CK
 
 | OWASP Category | ATT&CK Techniques |
@@ -194,15 +216,60 @@ Principal Software Engineer, Microsoft
 
 ---
 
+<!-- _transition: fade 1300ms -->
+
 ## The Kill Chain: Expectation vs Reality
 
-![center h:470](./img/expect-vs-reality.svg)
+<div class="kc-board" role="img" aria-label="What defenders expect: a straight line from Recon to Initial Access, Execution, Escalation, Exfiltration, and Impact, ending at a firewall.">
+<svg class="kc-art" viewBox="0 0 1280 580" aria-hidden="true"><g stroke="#2d6a4f" stroke-width="3" fill="#2d6a4f"><line x1="195" y1="290" x2="235" y2="290"/><polygon points="235,285 240,290 235,295"/><line x1="370" y1="290" x2="410" y2="290"/><polygon points="410,285 415,290 410,295"/><line x1="545" y1="290" x2="585" y2="290"/><polygon points="585,285 590,290 585,295"/><line x1="720" y1="290" x2="760" y2="290"/><polygon points="760,285 765,290 760,295"/><line x1="895" y1="290" x2="935" y2="290"/><polygon points="935,285 940,290 935,295"/></g></svg>
+<div class="kc-heading kc-morph-heading" style="--y:218">What Defenders Expect</div>
+<div class="kc-node kc-recon" style="--x:65;--y:265">Recon</div>
+<div class="kc-node kc-access" style="--x:240;--y:265">Initial Access</div>
+<div class="kc-node" style="--x:415;--y:265">Execution</div>
+<div class="kc-node kc-escalation" style="--x:590;--y:265">Escalation</div>
+<div class="kc-node kc-exfil" style="--x:765;--y:265">Exfiltration</div>
+<div class="kc-node kc-impact" style="--x:940;--y:265">Impact</div>
+<div class="kc-guard kc-morph-guard" style="--x:1060;--y:268">🛡️</div>
+<div class="kc-defender kc-morph-defender" style="--x:1071;--y:258">😎<span>"We got this"</span></div>
+</div>
+
+<!-- Set up the expectation first: defenders often picture a neat, linear kill chain from reconnaissance to impact, stopped at the perimeter. Advance and the same steps break out of line. -->
+
+---
+
+## The Kill Chain: Expectation vs Reality
+
+<div class="kc-board" role="img" aria-label="The expected path moves from reconnaissance to impact. The observed path branches and loops through persistence, discovery, escalation, and data theft. OWASP informs secure development; ATT&amp;CK models adversary behavior.">
+<svg class="kc-art" viewBox="0 0 1280 580" aria-hidden="true"><g stroke="#2d6a4f" stroke-width="3" fill="#2d6a4f"><line x1="195" y1="110" x2="235" y2="110"/><polygon points="235,105 240,110 235,115"/><line x1="370" y1="110" x2="410" y2="110"/><polygon points="410,105 415,110 410,115"/><line x1="545" y1="110" x2="585" y2="110"/><polygon points="585,105 590,110 585,115"/><line x1="720" y1="110" x2="760" y2="110"/><polygon points="760,105 765,110 760,115"/><line x1="895" y1="110" x2="935" y2="110"/><polygon points="935,105 940,110 935,115"/></g><line x1="80" y1="200" x2="1200" y2="200" stroke="#aaa" stroke-width="1.5" stroke-dasharray="8,4"/><g transform="translate(40,265)"><g stroke="#c1121f" stroke-width="2.5" fill="none" stroke-linecap="round"><path class="mo-draw" pathLength="1" style="--d:1.10s" d="M 110,100 C 130,85 140,60 150,50"/><path class="mo-draw" pathLength="1" style="--d:1.22s" d="M 260,50 C 280,80 290,125 300,132"/><path class="mo-draw" pathLength="1" style="--d:1.34s" d="M 310,120 C 320,75 340,45 340,30"/><path class="mo-draw" pathLength="1" style="--d:1.46s" d="M 410,140 C 430,160 470,165 490,160"/><path class="mo-draw" pathLength="1" style="--d:1.58s" d="M 450,28 C 470,35 490,45 510,50"/><path class="mo-draw" pathLength="1" style="--d:1.70s" d="M 600,160 C 620,140 640,130 660,120"/><path class="mo-draw" pathLength="1" style="--d:1.82s" d="M 620,58 C 650,35 680,20 700,17"/><path class="mo-draw" pathLength="1" style="--d:1.94s" d="M 770,100 C 790,85 810,75 840,75"/><path class="mo-draw" pathLength="1" style="--d:2.06s" d="M 820,18 C 835,30 840,50 845,60"/><path class="mo-draw" pathLength="1" style="--d:2.18s" d="M 950,82 C 960,100 965,115 970,130"/></g><g class="mo-fade" style="--d:2.45s" stroke="#ffaa00" stroke-width="2.5" fill="none" stroke-dasharray="6,3"><path d="M 660,140 C 600,210 430,220 370,165"/><path d="M 770,140 C 720,200 580,200 545,185"/></g><text class="mo-fade" style="--d:2.45s" x="500" y="235" font-size="18" fill="#e36414" text-anchor="middle" font-weight="bold">↻ attackers loop back constantly</text></g><g class="mo-rise" style="--d:2.8s"><rect x="180" y="525" width="920" height="45" rx="22" fill="#1a1a2e"/><text x="640" y="554" font-size="22" fill="#00ff88" text-anchor="middle" font-weight="bold">OWASP informs secure code. ATT&amp;CK models attacker behavior.</text></g></svg>
+<div class="kc-heading kc-morph-heading" style="--y:38">What Defenders Expect</div>
+<div class="kc-node" style="--x:65;--y:85">Recon</div>
+<div class="kc-node" style="--x:240;--y:85">Initial Access</div>
+<div class="kc-node" style="--x:415;--y:85">Execution</div>
+<div class="kc-node" style="--x:590;--y:85">Escalation</div>
+<div class="kc-node" style="--x:765;--y:85">Exfiltration</div>
+<div class="kc-node" style="--x:940;--y:85">Impact</div>
+<div class="kc-guard" style="--x:1060;--y:88">🛡️</div>
+<div class="kc-defender" style="--x:1071;--y:76">😎<span>"We got this"</span></div>
+<div class="kc-heading kc-heading-actual" style="--y:223">What Actually Happens</div>
+<div class="kc-node kc-actual kc-recon" style="--x:40;--y:345">Recon</div>
+<div class="kc-node kc-actual kc-access" style="--x:190;--y:290">Phishing</div>
+<div class="kc-node kc-actual kc-detour mo-pop" style="--x:340;--y:385;--d:1.4s">Persistence</div>
+<div class="kc-node kc-actual kc-escalation" style="--x:380;--y:270">Priv Esc</div>
+<div class="kc-node kc-actual kc-detour mo-pop" style="--x:530;--y:405;--d:1.66s">Discovery</div>
+<div class="kc-node kc-actual mo-pop" style="--x:550;--y:300;--fs:18;--d:1.78s">Lateral Mov.</div>
+<div class="kc-node kc-actual kc-detour mo-pop" style="--x:700;--y:365;--fs:18;--d:1.9s">More Recon</div>
+<div class="kc-node kc-actual mo-pop" style="--x:740;--y:260;--w:120;--fs:18;--d:2.02s">Escalate Again</div>
+<div class="kc-node kc-actual kc-exfil" style="--x:880;--y:325">Exfil Data</div>
+<div class="kc-node kc-actual kc-ransom kc-impact" style="--x:1010;--y:385;--w:120;--fs:16">💀 Ransomware</div>
+<div class="kc-guard kc-guard-open kc-morph-guard" style="--x:1070;--y:345">🔓</div>
+<div class="kc-defender kc-defender-alarm kc-morph-defender" style="--x:1097;--y:351">😱<span>"Wait, what?!"</span></div>
+</div>
 
 <!-- This is the core insight of the talk. Defenders build straight-line defenses — firewall, IDS, patch management. But attackers zigzag, loop back, escalate, discover new targets, and escalate again. ATT&CK captures this messy reality that a linear kill chain model misses. -->
 
 ---
 
-<!-- _class: compact-columns -->
+<!-- _class: compact-columns step-cascade -->
 
 ## Real World: SolarWinds (2020)
 
@@ -232,6 +299,8 @@ Principal Software Engineer, Microsoft
 <!-- SolarWinds illustrates why developers need ATT&CK. The build compromise placed malicious code in signed updates; a valid signature identifies the signer but does not prove safe behavior. These are examples from the broader campaign, not a mandatory sequence followed at every victim. Loading the SUNBURST DLL is execution, but is not by itself T1059, which specifically concerns command and scripting interpreters. SUNBURST used DNS signaling and subsequently HTTP communication. Golden SAML is token forgery (T1606.002), distinct from the prerequisite theft of a token-signing private key (T1552.004). Up to 18,000 customers received affected updates; that is not the number subjected to every follow-on technique. Sources: https://attack.mitre.org/software/S0559/ and https://attack.mitre.org/techniques/T1606/002/. -->
 
 ---
+
+<!-- _transition: breach -->
 
 ## Deployment Security Practices
 
@@ -359,6 +428,8 @@ def get_user():
 
 ---
 
+<!-- _transition: breach -->
+
 <!-- _class: code-focus -->
 
 ## Valid Accounts: Your Half of T1078
@@ -462,6 +533,8 @@ process.WaitForExit();
 
 ---
 
+<!-- _transition: breach -->
+
 <!-- _class: code-focus -->
 
 ## Unsafe Deserialization (CWE-502 / T1190)
@@ -550,6 +623,8 @@ app.use(session({
 <!-- This configures an established session library rather than inventing a session manager. Validate that SESSION_SECRET is securely supplied at startup; sessionStore is an appropriately configured shared production store, not Express's default MemoryStore. Rolling refresh extends idle expiry, not the session identifier; use req.session.regenerate with error handling at authentication and privilege boundaries. Configure an absolute lifetime as well. Choose SameSite settings with the actual OIDC redirect and CSRF flow in mind; Strict is not a blanket setting for every authentication cookie. An IP change alone does not establish theft. Wire supported password-change, account-disable, privilege-change, and compromise responses to app-session invalidation. IdP revocation alone may not end this local session. Replaying a stolen cookie (T1550.004) can avoid repeating the original MFA challenge, so test effective revocation and any step-up requirements. These controls reduce risk; they do not guarantee prevention of every replay or browser compromise. -->
 
 ---
+
+<!-- _transition: breach -->
 
 <!-- _class: code-focus -->
 
@@ -673,6 +748,8 @@ var connStr = (await client.GetSecretAsync("db-connection")).Value.Value;
 
 ---
 
+<!-- _transition: breach -->
+
 ## I Used to Ship Secrets Like That
 
 > "We'll remove the secret before production."
@@ -711,15 +788,13 @@ var connStr = (await client.GetSecretAsync("db-connection")).Value.Value;
 
 ## Living Off the Land: Correlate the Signals
 
-```text
-evidence.log
+<pre class="soc-log"><code>evidence.log
 
-02:13:07  > powershell.exe spawned by svc_build
-02:13:42  > curl POST 48 MB -> 185.220.x.x
-02:18:55  > wevtutil cl Security; App; System
+<span class="soc-line mo-type" style="--d:0.3s;--n:47">02:13:07  &gt; powershell.exe spawned by svc_build</span>
+<span class="soc-line mo-type" style="--d:1.2s;--n:42">02:13:42  &gt; curl POST 48 MB -&gt; 185.220.x.x</span>
+<span class="soc-line mo-type" style="--d:2.1s;--n:45">02:18:55  &gt; wevtutil cl Security; App; System</span>
 
-[!] alert correlation: ATTACK CHAIN DETECTED
-```
+<span class="soc-line soc-alert" style="--d:3s">[!] alert correlation: ATTACK CHAIN DETECTED</span></code></pre>
 
 **ATT&CK lens:** 
   - T1059 command execution
@@ -771,6 +846,8 @@ logger.warning(json.dumps(event))
 <!-- The IdP can report a sign-in; the application can explain which resource and operation were denied and why. identity is the validated authentication context, resource/operation/reason come from server-side policy, and request_id is a server-generated correlation identifier, not a session credential. Configure this audit logger with a message-only line formatter or an equivalent JSON sink; json.dumps escapes embedded control characters so one event remains one JSON record. A real sink should enforce field/size limits, access controls, and explicit delivery-failure handling. Join these events with IdP and platform telemetry; if tagging T1213 as a collection hypothesis, distinguish that analytic context from a confirmed attack. Exporting telemetry does not create cryptographic integrity or immutability. Remote storage, retention/deletion permissions, protected integrity evidence, and missing-event alerts are separate controls shown next. -->
 
 ---
+
+<!-- _transition: breach -->
 
 ## Preserve Evidence Outside the App
 
@@ -854,7 +931,7 @@ th:nth-child(4) { width: 27%; }
 
 ---
 
-<!-- _class: compact-columns -->
+<!-- _class: compact-columns step-cascade -->
 
 ## Case Study: XZ Utils Backdoor (CVE-2024-3094)
 
@@ -885,7 +962,7 @@ th:nth-child(4) { width: 27%; }
 
 ---
 
-<!-- _class: compact-columns -->
+<!-- _class: compact-columns step-cascade -->
 
 ## Case Study: Notepad++ Update Hijack (2025)
 
@@ -917,7 +994,7 @@ th:nth-child(4) { width: 27%; }
 
 ---
 
-<!-- _class: compact-columns -->
+<!-- _class: compact-columns step-cascade -->
 
 ## Case Study: Axios NPM Compromise (2026)
 
@@ -992,6 +1069,8 @@ grype sbom:./sbom.json
 <!-- Three complementary controls, not proof of safe dependencies. npm audit, pip-audit, and dotnet's vulnerable-package listing check known advisories; Bandit analyzes Python code. Lockfiles and hashes reproduce selected bytes, including malicious bytes if an approved release is compromised. npm ci --ignore-scripts disables dependency lifecycle scripts during installation; --omit=dev is appropriate for a production dependency install, not every build/test job. Packages needing native builds require a narrowly reviewed build path, not blanket script re-enablement. npm audit signatures verifies supported registry signatures and provenance attestations; validate their source/build identity against your policy rather than treating a valid signature as a malware verdict. Use least-privileged isolated runners without production credentials for every ecosystem, including Python source builds. Syft writes the SBOM consumed by Grype; npm sbom --sbom-format cyclonedx is an alternative inventory command. Sources: https://docs.npmjs.com/cli/v11/commands/npm-ci/ and https://docs.npmjs.com/cli/v11/commands/npm-audit/. -->
 
 ---
+
+<!-- _transition: breach -->
 
 ## From Supply-Chain Compromise to Data Theft
 
@@ -1096,6 +1175,8 @@ reserveBytes(key, bytes) {
 
 ---
 
+<!-- _transition: breach -->
+
 ## Data Flow Monitoring
 
 ![center w:1120 Row and byte reservation boundaries](./img/data-flow-monitoring.svg)
@@ -1112,7 +1193,27 @@ reserveBytes(key, bytes) {
 
 ## ATT&CK-Informed Threat Modeling
 
-![center w:1120](./img/threat-modeling-loop.svg)
+<div class="tm-loop">
+<img src="./img/threat-modeling-loop.svg" alt="ATT&amp;CK-informed threat modeling loop: Identify Feature, Map to ATT&amp;CK Techniques, Assess Risk and Impact, Design Detections, Implement and Monitor, and Test and Iterate, which loops back to mapping techniques.">
+<svg viewBox="0 0 1120 400" aria-hidden="true">
+<defs><filter id="tm-glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5" result="glow"/><feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<rect class="tm-ring mo-flash" style="--d:0.2s;stroke:#6c8ebf" x="44" y="44" width="272" height="92" rx="13"/>
+<rect class="tm-ring mo-flash" style="--d:0.75s;stroke:#82b366" x="424" y="44" width="272" height="92" rx="13"/>
+<rect class="tm-ring mo-flash" style="--d:1.3s;stroke:#d6b656" x="804" y="44" width="272" height="92" rx="13"/>
+<rect class="tm-ring mo-flash" style="--d:1.85s;stroke:#9673a6" x="804" y="254" width="272" height="92" rx="13"/>
+<rect class="tm-ring mo-flash" style="--d:2.4s;stroke:#b85450" x="424" y="254" width="272" height="92" rx="13"/>
+<rect class="tm-ring mo-flash" style="--d:2.95s;stroke:#6c8ebf" x="44" y="254" width="272" height="92" rx="13"/>
+<rect class="tm-ring mo-flash" style="--d:3.95s;stroke:#82b366" x="424" y="44" width="272" height="92" rx="13"/>
+<g filter="url(#tm-glow)">
+<path class="tm-pulse mo-travel" style="--d:0.45s" pathLength="1" d="M 310 90 H 430"/>
+<path class="tm-pulse mo-travel" style="--d:1s" pathLength="1" d="M 690 90 H 810"/>
+<path class="tm-pulse mo-travel" style="--d:1.55s" pathLength="1" d="M 940 130 V 260"/>
+<path class="tm-pulse mo-travel" style="--d:2.1s" pathLength="1" d="M 810 300 H 690"/>
+<path class="tm-pulse mo-travel" style="--d:2.65s" pathLength="1" d="M 430 300 H 310"/>
+<path class="tm-pulse tm-pulse-loop mo-travel" style="--d:3.2s;--dur:0.8s;--dash:0.12" pathLength="1" d="M 180 260 V 205 H 560 V 130"/>
+</g>
+</svg>
+</div>
 
 <!-- This is your threat modeling loop. For every feature, ask: what ATT&CK techniques could target this? Then design detections, implement them, and test. The loop is continuous — as new techniques are added to ATT&CK, revisit your features. This is a shift from reactive patching to proactive defense design. -->
 
@@ -1208,14 +1309,14 @@ reserveBytes(key, bytes) {
 
 ---
 
+<!-- _class: response-cascade -->
+
 ## When the Alert Is Real
 
-```text
-SIEM:  T1071 beacon pattern from build agent
-IdP:   risky sign-in signal for the same identity
-API:   30x normal export volume
-Team:  correlate, triage, contain
-```
+<pre class="soc-log"><code><span class="soc-line mo-type" style="--d:0.2s;--n:44">SIEM:  T1071 beacon pattern from build agent</span>
+<span class="soc-line mo-type" style="--d:0.9s;--n:49">IdP:   risky sign-in signal for the same identity</span>
+<span class="soc-line mo-type" style="--d:1.6s;--n:31">API:   30x normal export volume</span>
+<span class="soc-line soc-team mo-fade" style="--d:2.3s">Team:  correlate, triage, contain</span></code></pre>
 
 | Step | Action |
 |---|---|

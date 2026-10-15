@@ -2,6 +2,7 @@
 /* @theme custom-default */
 
 @import 'default';
+@import 'crooked-line-motion';
 
 .columns {
   display: grid;

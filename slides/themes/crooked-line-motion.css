@@ -1,0 +1,324 @@
+/* @theme crooked-line-motion */
+
+/*
+ * Motion layer for "MITRE ATT&CK for Developers", imported by custom-default.
+ *
+ * Marp CLI 4.5's bespoke HTML restarts every CSS animation on a slide when the
+ * slide becomes active, so these effects replay on each visit without any
+ * JavaScript. Keep three rules when adding motion:
+ *   1. The un-animated style is the finished slide. Keyframes describe only the
+ *      entrance, so print/PDF and reduced-motion views stay complete.
+ *   2. Animate only on screen with no reduced-motion preference.
+ *   3. Every effect settles within five seconds and never loops (WCAG 2.2.2).
+ *
+ * Utility classes take timing from inline custom properties:
+ *   --d (delay), --dur (duration), --ease (.mo-draw easing), and --n
+ *   (characters, for .mo-type). .mo-draw needs pathLength="1" on its SVG path.
+ * Animations hold their final keyframe, so put .mo-fade/.mo-pop on a wrapper
+ * when the element itself has a partial opacity.
+ */
+
+@keyframes mo-draw {
+  from { stroke-dasharray: 1 2; stroke-dashoffset: 1.02; }
+  to { stroke-dasharray: 1 2; stroke-dashoffset: 0; }
+}
+@keyframes mo-pop {
+  from { opacity: 0; transform: scale(0.4); }
+  70% { opacity: 1; transform: scale(1.08); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes mo-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes mo-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes mo-flash {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes mo-travel {
+  from { opacity: 1; stroke-dasharray: var(--dash, 0.3) 2; stroke-dashoffset: var(--dash, 0.3); }
+  to { opacity: 1; stroke-dasharray: var(--dash, 0.3) 2; stroke-dashoffset: -1; }
+}
+@keyframes mo-type {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0); }
+}
+@keyframes mo-step {
+  from { opacity: 0; transform: translateX(-28px); background-color: #ffebe900; }
+  55% { opacity: 1; transform: none; background-color: #ffebe9; }
+  to { opacity: 1; transform: none; background-color: #ffebe900; }
+}
+@keyframes mo-alarm {
+  0%, 100% { background-color: #ffebe9; box-shadow: 0 0 0 0.25em #ffebe9; }
+  50% { background-color: #ffc1c0; box-shadow: 0 0 0 0.25em #ffc1c0; }
+}
+@keyframes mo-ping {
+  from { opacity: 0.9; transform: scale(1); }
+  to { opacity: 0; transform: scale(3); }
+}
+
+section .mo-pop,
+section .mo-ping {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+section .mo-flash,
+section .mo-travel,
+section .mo-ping {
+  opacity: 0;
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  section .mo-draw { animation: mo-draw var(--dur, 0.3s) var(--d, 0s) var(--ease, ease-out) both; }
+  section .mo-pop { animation: mo-pop var(--dur, 0.35s) var(--d, 0s) ease-out both; }
+  section .mo-fade { animation: mo-fade var(--dur, 0.45s) var(--d, 0s) ease-out both; }
+  section .mo-rise { animation: mo-rise var(--dur, 0.45s) var(--d, 0s) ease-out both; }
+  section .mo-flash { animation: mo-flash var(--dur, 0.7s) var(--d, 0s) ease-out; }
+  section .mo-travel { animation: mo-travel var(--dur, 0.35s) var(--d, 0s) linear; }
+  section .mo-ping { animation: mo-ping var(--dur, 1s) var(--d, 0s) ease-out; }
+  section .mo-type { animation: mo-type var(--dur, 0.7s) steps(var(--n, 40), end) var(--d, 0s) both; }
+}
+
+/* Breach: glitching bands reveal the next slide. Marp swaps in a fade for reduced motion. */
+@keyframes marp-incoming-transition-breach {
+  0% {
+    --marp-transition-duration: 650ms;
+    clip-path: polygon(0 12%, 100% 12%, 100% 12%, 0 12%, 0 47%, 100% 47%, 100% 47%, 0 47%, 0 81%, 100% 81%, 100% 81%, 0 81%);
+    transform: translateX(-3%);
+  }
+  18% {
+    clip-path: polygon(0 6%, 100% 6%, 100% 20%, 0 20%, 0 40%, 100% 40%, 100% 54%, 0 54%, 0 74%, 100% 74%, 100% 90%, 0 90%);
+    transform: translateX(2%);
+  }
+  36% {
+    clip-path: polygon(0 0, 100% 0, 100% 28%, 0 28%, 0 36%, 100% 36%, 100% 62%, 0 62%, 0 66%, 100% 66%, 100% 96%, 0 96%);
+    transform: translateX(-1.2%);
+  }
+  54% {
+    clip-path: polygon(0 0, 100% 0, 100% 36%, 0 36%, 0 32%, 100% 32%, 100% 70%, 0 70%, 0 62%, 100% 62%, 100% 100%, 0 100%);
+    transform: translateX(0.6%);
+  }
+  72%, 100% {
+    clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%, 0 30%, 100% 30%, 100% 72%, 0 72%, 0 60%, 100% 60%, 100% 100%, 0 100%);
+    transform: none;
+  }
+}
+@keyframes marp-outgoing-transition-breach {
+  0% { --marp-transition-duration: 650ms; transform: none; opacity: 1; }
+  15% { transform: translateX(2.5%); }
+  30% { transform: translateX(-2%); opacity: 1; }
+  50% { transform: translateX(1%); opacity: 0.6; }
+  100% { transform: none; opacity: 0; }
+}
+
+/* Title: the attacker's crooked route against the defender's straight line. */
+section .title-path {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+section .title-path .tp-expected {
+  fill: none;
+  stroke: #62caff;
+  stroke-width: 2;
+  stroke-dasharray: 6 9;
+  opacity: 0.45;
+}
+section .title-path .tp-route {
+  fill: none;
+  stroke: #ff5a5f;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+section .title-path .tp-node {
+  fill: #ffd2d3;
+  stroke: #ff5a5f;
+  stroke-width: 2;
+}
+section .title-path .tp-target { fill: #ff5a5f; }
+section .title-path .tp-ping {
+  fill: none;
+  stroke: #ff5a5f;
+  stroke-width: 2;
+}
+
+/*
+ * Kill chain: two complete keyframe slides. Shared kc-* names morph the
+ * expected steps into the observed path. Positions use the 1280x580 drawing
+ * grid of the original diagram, scaled by --u.
+ */
+section .kc-board {
+  --u: 0.8103px;
+  position: relative;
+  width: calc(1280 * var(--u));
+  height: calc(580 * var(--u));
+  margin: 0 auto;
+  background: linear-gradient(#f8f9fa, #e9ecef);
+  font-family: Arial, "Liberation Sans", Helvetica, sans-serif;
+  line-height: 1;
+}
+section .kc-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+section .kc-art text { font-family: inherit; }
+section .kc-node,
+section .kc-guard,
+section .kc-defender,
+section .kc-heading {
+  position: absolute;
+  left: calc(var(--x, 0) * var(--u));
+  top: calc(var(--y) * var(--u));
+}
+section .kc-node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--w, 130) * var(--u));
+  height: calc(var(--h, 50) * var(--u));
+  border-radius: calc(8 * var(--u));
+  background: var(--kc-fill, #2d6a4f);
+  box-shadow: calc(2 * var(--u)) calc(2 * var(--u)) calc(6 * var(--u)) rgb(0 0 0 / 15%);
+  color: #fff;
+  font-size: calc(var(--fs, 20) * var(--u));
+  white-space: nowrap;
+}
+section .kc-actual { --kc-fill: #c1121f; --w: 110; --h: 45; }
+section .kc-detour { --kc-fill: #e36414; }
+section .kc-ransom { --kc-fill: #780000; }
+section .kc-heading {
+  width: 100%;
+  color: #2d6a4f;
+  font-size: calc(26 * var(--u));
+  font-weight: 700;
+  text-align: center;
+}
+section .kc-heading-actual { color: #c1121f; }
+section .kc-guard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(50 * var(--u));
+  height: calc(50 * var(--u));
+  border-radius: calc(6 * var(--u));
+  background: rgb(64 145 108 / 30%);
+  font-size: calc(28 * var(--u));
+}
+section .kc-guard-open { background: rgb(193 18 31 / 20%); }
+section .kc-defender {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(10 * var(--u));
+  width: calc(150 * var(--u));
+  color: #2d6a4f;
+  font-size: calc(55 * var(--u));
+}
+section .kc-defender > span {
+  font-size: calc(18 * var(--u));
+  font-style: italic;
+}
+section .kc-defender-alarm {
+  gap: calc(29 * var(--u));
+  color: #c1121f;
+}
+section .kc-morph-heading { view-transition-name: kc-heading; }
+section .kc-recon { view-transition-name: kc-recon; }
+section .kc-access { view-transition-name: kc-access; }
+section .kc-escalation { view-transition-name: kc-escalation; }
+section .kc-exfil { view-transition-name: kc-exfil; }
+section .kc-impact { view-transition-name: kc-impact; }
+section .kc-morph-guard { view-transition-name: kc-guard; }
+section .kc-morph-defender { view-transition-name: kc-defender; }
+
+/* SOC evidence: lines arrive in time order, then the correlation alert sounds. */
+section pre.soc-log > code {
+  display: block;
+  padding: 0.3em 0.6em;
+}
+section .soc-line { display: inline-block; }
+section .soc-alert {
+  border-radius: 0.2em;
+  background-color: #ffebe9;
+  box-shadow: 0 0 0 0.25em #ffebe9;
+  color: #cf222e;
+  font-weight: 700;
+}
+section .soc-team {
+  color: #0969da;
+  font-weight: 700;
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  section .soc-alert {
+    animation:
+      mo-fade 0.15s var(--d, 0s) both,
+      mo-alarm 0.45s calc(var(--d, 0s) + 0.15s) 2 ease-in-out;
+  }
+
+  /* Case-study steps arrive in order, each briefly marked as it lands. */
+  section.step-cascade .columns > div:first-child ol > li { animation: mo-step 0.6s both; }
+  section.step-cascade .columns > div:first-child ol > li:nth-child(1) { animation-delay: 0.2s; }
+  section.step-cascade .columns > div:first-child ol > li:nth-child(2) { animation-delay: 0.55s; }
+  section.step-cascade .columns > div:first-child ol > li:nth-child(3) { animation-delay: 0.9s; }
+  section.step-cascade .columns > div:first-child ol > li:nth-child(4) { animation-delay: 1.25s; }
+  section.step-cascade .columns > div:first-child ol > li:nth-child(5) { animation-delay: 1.6s; }
+  section.step-cascade .columns > div:first-child ol > li:nth-child(6) { animation-delay: 1.95s; }
+
+  /* Response steps follow the signals that triggered them. */
+  section.response-cascade tbody tr { animation: mo-rise 0.4s both; }
+  section.response-cascade tbody tr:nth-child(1) { animation-delay: 2.8s; }
+  section.response-cascade tbody tr:nth-child(2) { animation-delay: 3.1s; }
+  section.response-cascade tbody tr:nth-child(3) { animation-delay: 3.4s; }
+  section.response-cascade tbody tr:nth-child(4) { animation-delay: 3.7s; }
+}
+
+/* Threat-modeling loop: an aria-hidden overlay on the unchanged diagram image. */
+section .tm-loop {
+  position: relative;
+  width: 1120px;
+  margin: 0 auto;
+}
+section .tm-loop > img {
+  display: block;
+  width: 100%;
+}
+section .tm-loop > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+section .tm-ring {
+  fill: none;
+  stroke-width: 5;
+}
+section .tm-pulse {
+  fill: none;
+  stroke: #0078d4;
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+section .tm-pulse-loop { stroke: #b85450; }
+
+@media print {
+  section *,
+  section *::before,
+  section *::after {
+    animation: none !important;
+  }
+}
