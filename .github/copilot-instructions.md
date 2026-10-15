@@ -41,6 +41,9 @@ assuming a local script path. Keep this file focused on talk-specific convention
 - Use HTML comments (`<!-- -->`) for speaker notes.
 - Preserve the talk's technical meaning, ATT&CK mappings, speaker notes, and
   existing visual identity when adjusting layouts.
+- Keep slide motion CSS-only in `slides/themes/crooked-line-motion.css`, and
+  follow the motion rules in `docs/samples-and-authoring.md`: finished static
+  state, reduced-motion gate, settle within five seconds, complete PDF pages.
 - Follow `marp-visuals` for Mermaid initialization when a deck contains inline
   diagrams; include the required Mermaid script once. Pre-rendered diagram
   images do not need a Mermaid runtime.

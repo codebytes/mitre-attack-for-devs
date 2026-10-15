@@ -65,6 +65,32 @@ rendered review, inspect every slide, and compare the PDF for clipping and foote
 overlap. Keep review artifacts out of source control. The Pages workflow invokes
 Marp CLI directly; shared skills are authoring tools, not a CI deployment gate.
 
+## Motion and Transitions
+
+The deck's motion lives in
+[slides/themes/crooked-line-motion.css](../slides/themes/crooked-line-motion.css),
+which `custom-default.css` imports. It is CSS only: Marp CLI's bespoke HTML
+restarts a slide's CSS animations whenever that slide becomes active.
+
+- **Transitions:** the front matter fades every slide boundary in 250 ms. The
+  slide *before* each section divider sets `<!-- _transition: breach -->`,
+  because a transition directive applies to the boundary after its slide.
+- **Kill-chain morph:** the two "Kill Chain: Expectation vs Reality" slides are
+  complete keyframes. Elements with matching `kc-*` classes share a
+  `view-transition-name`, so the expected steps morph into the observed path.
+  Each name must stay unique within a slide.
+- **Entrances:** `mo-*` utility classes read their delay (`--d`), duration
+  (`--dur`), and other timing from inline custom properties. The
+  `step-cascade` and `response-cascade` slide classes stagger list items and
+  table rows.
+
+When adding motion, keep the un-animated style as the finished slide, animate
+only inside `screen and (prefers-reduced-motion: no-preference)`, and let every
+effect settle within five seconds without looping. Marp reduces transitions to
+a fade for reduced-motion viewers, and the print path disables animation, so PDF
+pages stay complete. Morphing works best in current Chrome or Edge; other
+browsers still show every complete slide.
+
 The data-flow, audit-evidence, defense-in-depth, and OWASP/ATT&CK integration
 diagrams have `.mmd` sources beside their static `.svg` outputs in `slides/img/`.
 Regenerate them with the installed `marp-visuals` skill's `render-mermaid.mjs`,
