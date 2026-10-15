@@ -38,6 +38,11 @@ pre code {
   padding: 0.3em 0.6em;
 }
 
+/* Marp fenced code is inline, so side padding would indent only its first line. */
+pre[is="marp-pre"] > code {
+  padding-inline: 0;
+}
+
 table {
   font-size: 0.85em;
   line-height: 1.3;
