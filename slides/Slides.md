@@ -402,7 +402,7 @@ def get_user():
 # Attack: /users?id=1 OR 1=1--
 ```
 
-<!-- Classic SQL injection. The attacker passes "1 OR 1=1--" as the ID, which dumps the entire users table. This is the number one way attackers exploit public-facing applications. Simple string concatenation is all it takes to open the door. -->
+<!-- Classic SQL injection. The attacker passes "1 OR 1=1--" as the ID, which dumps the entire users table. Injection remains one of the most common ways to exploit public-facing applications. Simple string concatenation is all it takes to open the door. -->
 
 ---
 
@@ -416,15 +416,15 @@ def get_user():
     user_id = request.args.get('id', '')
     if not user_id.isdigit():
         return "Invalid input", 400
-    query = "SELECT * FROM users WHERE id = ?"
+    query = "SELECT id, display_name FROM users WHERE id = ?"
     cursor.execute(query, (user_id,))
-    user = cursor.fetchone()
-    if user is None:
+    row = cursor.fetchone()
+    if row is None:
         return "User not found", 404
-    return user
+    return {"id": row[0], "name": row[1]}
 ```
 
-<!-- Parameter binding keeps the identifier separate from the SQL program, addressing this T1190 injection path. Validation also handles a missing or malformed id. A consistent 404 for missing records is useful API behavior, but does not by itself prevent T1087 account discovery; authorization, rate limits, and response design still matter. Authentication and record-level authorization are omitted from this query-focused excerpt. -->
+<!-- Parameter binding keeps the identifier separate from the SQL program, addressing this T1190 injection path. Validation also handles a missing or malformed id. Return named fields rather than the raw row: it keeps columns such as password hashes out of the response, and Flask would read a returned tuple as body, status and headers. A consistent 404 for missing records is useful API behavior, but does not by itself prevent T1087 account discovery; authorization, rate limits, and response design still matter. Authentication and record-level authorization are omitted from this query-focused excerpt. -->
 
 ---
 
@@ -442,7 +442,8 @@ if (doc is null) return NotFound();
 
 var result = await _authz.AuthorizeAsync(User, doc, Operations.Read);
 if (!result.Succeeded) {
-    _logger.LogWarning("[T1078] denied sub={Sub} doc={Doc}", subject, id);
+    var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    _logger.LogWarning("[T1078] denied sub={Sub} doc={Doc}", sub, id);
     return NotFound();   // same shape as a miss
 }
 return Ok(doc);
@@ -450,7 +451,7 @@ return Ok(doc);
 
 **A valid token does not grant access to every record.**
 
-<!-- Scenario: an attacker with compromised valid credentials (T1078) probes records outside those credentials' authorization. Authentication middleware has already validated the principal; subject is taken from that principal, not a request header. Load the resource metadata, then ask the framework's authorization service to evaluate the app's tenant and object policy. [Authorize] alone cannot decide ownership of a resource that has not yet been loaded. Keep tenant isolation explicit even when roles or a policy service are used. The concealed 404 is an intentional policy here, so this response does not confirm whether an inaccessible id exists. Repeated denials are a signal to correlate, not automatic proof of an attack. Normal sharing can authorize a record owned by someone else; the relevant question is the policy, not ownership alone. -->
+<!-- Scenario: an attacker with compromised valid credentials (T1078) probes records outside those credentials' authorization. Authentication middleware has already validated the principal; the logged subject comes from that principal's claims, not a request header. Load the resource metadata, then ask the framework's authorization service to evaluate the app's tenant and object policy. [Authorize] alone cannot decide ownership of a resource that has not yet been loaded. Keep tenant isolation explicit even when roles or a policy service are used. The concealed 404 is an intentional policy here, so this response does not confirm whether an inaccessible id exists. Repeated denials are a signal to correlate, not automatic proof of an attack. Normal sharing can authorize a record owned by someone else; the relevant question is the policy, not ownership alone. -->
 
 ---
 
@@ -512,7 +513,7 @@ public IActionResult ProcessFile(string filename)
 
 <!-- _class: code-focus -->
 
-## Defended Code: Command Allowlisting
+## Defended Code: Parameterized Arguments
 
 ```csharp
 if (!IsValidFilename(filename))
@@ -720,7 +721,7 @@ from azure.identity import DefaultAzureCredential
 
 client = SecretClient("https://myvault.vault.azure.net",
                       DefaultAzureCredential())
-db_conn = client.get_secret("db-connection-string").value
+db_conn = client.get_secret("db-connection").value
 ```
 
 ```csharp
@@ -730,7 +731,7 @@ var client = new SecretClient(
 var connStr = (await client.GetSecretAsync("db-connection")).Value.Value;
 ```
 
-<!-- Workload identity removes the bootstrap credential from application code, reducing T1552 exposure; Key Vault stores a secret when the downstream service still needs one. DefaultAzureCredential can use developer credentials locally and managed identity in a configured Azure host. Provision the identity and grant narrowly scoped access, such as Key Vault Secrets User, separately. The code does not configure those permissions or rotate the database secret. Prefer direct identity-based access to the downstream service where supported. -->
+<!-- Workload identity removes the bootstrap credential from application code, reducing T1552 exposure; Key Vault stores a secret when the downstream service still needs one. DefaultAzureCredential can use developer credentials locally and managed identity in a configured Azure host; once deployed, Azure Identity guidance is to replace it with a specific credential such as ManagedIdentityCredential, so host environment variables cannot change which identity the app uses. Provision the identity and grant narrowly scoped access, such as Key Vault Secrets User, separately. The code does not configure those permissions or rotate the database secret. Prefer direct identity-based access to the downstream service where supported. Source: https://learn.microsoft.com/dotnet/azure/sdk/authentication/credential-chains#usage-guidance-for-defaultazurecredential. -->
 
 ---
 
@@ -1046,16 +1047,16 @@ th:nth-child(4) { width: 27%; }
 ## Dependency Controls for T1195.001
 
 ```bash
-# 1. Scan known vulnerabilities and application code
+# 1. Check dependencies against known advisories
 npm audit --audit-level high
-pip-audit && bandit -r .
+pip-audit -r requirements.txt
 dotnet list package --vulnerable --include-transitive
 ```
 
 ```bash
 # 2. Reproduce dependencies; restrict install-time code
 npm ci --omit=dev --ignore-scripts
-pip install --require-hashes -r req.txt
+pip install --require-hashes --only-binary :all: -r requirements.txt
 dotnet restore --locked-mode
 ```
 
@@ -1066,7 +1067,7 @@ syft . -o spdx-json > sbom.json
 grype sbom:./sbom.json
 ```
 
-<!-- Three complementary controls, not proof of safe dependencies. npm audit, pip-audit, and dotnet's vulnerable-package listing check known advisories; Bandit analyzes Python code. Lockfiles and hashes reproduce selected bytes, including malicious bytes if an approved release is compromised. npm ci --ignore-scripts disables dependency lifecycle scripts during installation; --omit=dev is appropriate for a production dependency install, not every build/test job. Packages needing native builds require a narrowly reviewed build path, not blanket script re-enablement. npm audit signatures verifies supported registry signatures and provenance attestations; validate their source/build identity against your policy rather than treating a valid signature as a malware verdict. Use least-privileged isolated runners without production credentials for every ecosystem, including Python source builds. Syft writes the SBOM consumed by Grype; npm sbom --sbom-format cyclonedx is an alternative inventory command. Sources: https://docs.npmjs.com/cli/v11/commands/npm-ci/ and https://docs.npmjs.com/cli/v11/commands/npm-audit/. -->
+<!-- Three complementary controls, not proof of safe dependencies. npm audit, pip-audit, and dotnet's vulnerable-package listing check known advisories; none can flag a malicious release that nobody has reported yet. Lockfiles and hashes reproduce selected bytes, including malicious bytes if an approved release is compromised. npm ci --ignore-scripts disables dependency lifecycle scripts during installation, and pip's --only-binary :all: refuses source distributions, whose builds run package code. --omit=dev is appropriate for a production dependency install, not every build/test job. Packages needing native builds require a narrowly reviewed build path, not blanket script re-enablement. npm audit signatures verifies supported registry signatures and provenance attestations; validate their source/build identity against your policy rather than treating a valid signature as a malware verdict. Use least-privileged isolated runners without production credentials for every ecosystem, including Python source builds. Syft writes the SBOM consumed by Grype; npm sbom --sbom-format cyclonedx is an alternative inventory command. Sources: https://docs.npmjs.com/cli/v11/commands/npm-ci/, https://docs.npmjs.com/cli/v11/commands/npm-audit/, and https://pip.pypa.io/en/stable/topics/secure-installs/. -->
 
 ---
 
@@ -1392,7 +1393,7 @@ p { margin: 0.35em 0; }
 
 | How it started 😎 | How it's going 😱 |
 |---|---|
-| `// TODO: add auth later` | `[CRITICAL] T1190 - SQLi in production` |
+| `// TODO: parameterize SQL` | `[CRITICAL] T1190 - SQLi in production` |
 | `// TODO: rotate this API key` | `[CRITICAL] T1552 - API key on GitHub` |
 | `// TODO: add rate limiting` | `[CRITICAL] T1110 - 50K login attempts/hr` |
 | `// TODO: check dependencies` | `[CRITICAL] T1195 - Malicious dependency` |
