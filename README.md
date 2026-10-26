@@ -12,6 +12,7 @@ This talk bridges the gap between threat intelligence and practical development,
 - [Samples and slide authoring guide](./docs/samples-and-authoring.md)
 - [MITRE ATT&CK Enterprise Matrix](https://attack.mitre.org/matrices/enterprise/)
 - [MITRE ATT&CK Techniques](https://attack.mitre.org/techniques/enterprise/)
+- [MITRE ATLAS — Threats to AI-enabled systems](https://atlas.mitre.org/)
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [MITRE D3FEND](https://d3fend.mitre.org/)
 - [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/)

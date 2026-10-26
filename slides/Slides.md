@@ -6,6 +6,33 @@ transition: fade 250ms
 footer: 'Chris Ayers - https://chris-ayers.com'
 ---
 
+<!-- _class: techorama-cover -->
+<!-- _footer: '' -->
+<!-- _paginate: skip -->
+
+<style scoped>
+section { color: #e0d3c3; text-align: center; padding: 46px 64px; }
+h1 { color: #f5eee2; font-family: Georgia, serif; font-size: 52px; line-height: 1.15; margin: 26px 0 12px; }
+h2 { color: #e0d3c3; font-size: 28px; line-height: 1.25; margin: 0 0 24px; }
+p { font-size: 24px; margin: 8px 0; }
+</style>
+
+![bg](./themes/techorama/medieval-pattern-dark.png)
+
+![w:360px center Techorama 2026 Medieval Edition](./themes/techorama/techorama-logo-2026-medieval.png)
+
+# MITRE ATT&CK for Developers
+
+## The Crooked Line: How Attackers Really Operate
+
+**Chris Ayers**
+
+Principal Software Engineer, Microsoft
+
+<!-- Welcome to Techorama 2026, Medieval Edition. This conference cover reuses the patterned background and official logo from the supplied speaker template. Georgia and the existing system-font stack substitute for the template's display fonts; no additional font binaries are bundled. The original title slide and all existing talk content follow unchanged. -->
+
+---
+
 <style>
 section.compact-columns .columns {
   font-size: 0.9em;
@@ -129,7 +156,25 @@ Principal Software Engineer, Microsoft
 
 ![w:1000px center](./img/mitre-ecosystem.drawio.png)
 
-<!-- ATT&CK isn't the only framework from MITRE. D3FEND maps defensive countermeasures, ATLAS covers AI/ML threats, and ENGAGE provides adversary engagement strategies. Together they form a comprehensive ecosystem. But ATT&CK is the foundation — and the most relevant for developers. -->
+<!-- ATT&CK isn't the only framework from MITRE. D3FEND maps defensive countermeasures, ATLAS covers threats to AI-enabled systems, and ENGAGE provides adversary engagement strategies. ATT&CK remains our foundation for application, identity, and infrastructure behavior. If your application uses AI, add ATLAS to that threat model rather than treating it as a replacement. -->
+
+---
+
+## MITRE ATLAS: When Your App Uses AI
+
+**Adversarial Threat Landscape for AI Systems**
+
+| ATLAS behavior | Developer-owned boundary |
+|---|---|
+| **LLM Prompt Injection** — AML.T0051 | Keep tool authorization outside the model |
+| **Poison Training Data** — AML.T0020 | Control dataset ingestion, access, and provenance |
+| **AI Supply Chain Compromise** — AML.T0010 | Verify model, dataset, and dependency origins |
+
+> Add **ATLAS** for AI-specific paths; keep **ATT&CK** for the surrounding system.
+
+[MITRE ATLAS knowledge base](https://atlas.mitre.org/)
+
+<!-- ATLAS extends the same adversary-informed approach to AI-enabled systems, including generative AI; it is not just a list of model bugs or a replacement for ATT&CK. Example: an agent retrieves a document containing malicious instructions (Indirect LLM Prompt Injection, AML.T0051.001) that try to make it export private data. Treat retrieved content and tool output as untrusted data. Enforce caller, tenant, resource, and tool permissions in application code or a policy service, outside the model; scope connector credentials and audit tool requests and policy decisions. Prompt filtering alone is not an authorization boundary. Poison Training Data (AML.T0020) concerns training datasets and labels, not every change to a retrieval corpus. AI Supply Chain Compromise (AML.T0010) includes AI software, models, data, and hardware. Provenance checks help establish origins but do not prove an artifact is safe. Use ATLAS IDs for AI-specific behavior and ATT&CK IDs for any evidenced account abuse, host execution, or data collection around it; do not force a one-to-one mapping. Sources: https://atlas.mitre.org/, https://atlas.mitre.org/techniques/AML.T0051, https://atlas.mitre.org/techniques/AML.T0051.001, https://atlas.mitre.org/techniques/AML.T0020, and https://atlas.mitre.org/techniques/AML.T0010. Technique names and IDs checked against MITRE's published data at https://github.com/mitre-atlas/atlas-data/blob/main/dist/ATLAS.yaml. -->
 
 ---
 
@@ -1027,6 +1072,109 @@ th:nth-child(4) { width: 27%; }
 
 ---
 
+<!-- _class: compact-columns -->
+
+## October 2026: PHP & Node.js
+
+**Advisory snapshot: 26 October 2026**
+
+<div class="columns">
+<div>
+
+### [PHP](https://www.php.net/ChangeLog-8.php) · 21–22 Oct
+- **CVE-2026-109618 / 109619**: memory corruption across worker lifecycle paths
+- **RCE** demonstrated; exposure varies by server interface and app/configuration
+- **Upgrade PHP + restart workers**
+
+</div>
+<div>
+
+### [Node.js](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases) · 21 Oct
+- **DNS + TLS hostname flaws**: validated names can differ from contacted endpoints
+- Also patches **Brotli** and updates **CA trust**
+- **Upgrade Node + rebuild images**
+
+</div>
+</div>
+
+> A vulnerable runtime is **not** a compromised publisher.
+
+<!-- These are disclosure and patch dates, not confirmed attack dates. PHP's two advisories were published on 21 October; the PHP changelog dates the fixed releases 22 October. CVE-2026-109618 concerns out-of-memory bailout corruption; CVE-2026-109619 concerns stale request-owned state retained by a worker. The PHP reports demonstrate unauthenticated RCE, but the paths and prerequisites differ: mod_php has application-independent paths, while demonstrated FPM exploitation depends on suitable application behavior. Do not imply that every PHP deployment is equally exploitable or that a WAF/configuration change completely fixes the problem. The first fixed supported releases are PHP 8.2.35, 8.3.36, 8.4.27, and 8.5.12. Upgrade to a current supported vendor-fixed build, restart all workers, and follow distribution backport guidance rather than comparing upstream version strings alone. Sources: https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w, https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp, and https://www.php.net/ChangeLog-8.php. -->
+
+<!-- Node.js's 21 October release fixes DNS NUL truncation (CVE-2026-105482) and TLS hostname-validation issues (CVE-2026-105483, CVE-2026-106069, CVE-2026-106072), among other issues. The common boundary problem is disagreement between the name an application validates and the name or endpoint subsequently resolved or authenticated. The release also patches the Brotli decoder and updates the CA bundle for eMudhra; the next two slides expand those distinct failure modes. First fixed Node.js releases are 22.23.4, 24.22.1, and 26.12.1; use current supported releases or vendor-fixed packages, including rebuilt and redeployed container images. These advisories establish vulnerabilities, not a confirmed in-the-wild campaign. Source: https://nodejs.org/en/blog/vulnerability/october-2026-security-releases. Snapshot checked 26 October 2026; recheck vendor advisories before presenting. -->
+
+---
+
+<!-- _class: compact-columns -->
+
+## Brotli: Compressed Input, Process Privileges
+
+[CVE-2026-111497](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases) · disclosed **21 Oct 2026**
+
+<div class="columns">
+<div>
+
+### The decoder failure
+- Untrusted compressed input reaches **`node:zlib`**
+- Invalid data becomes **"need more input"**
+- Repeated input overruns an **8-byte buffer**
+
+</div>
+<div>
+
+### The developer response
+- **Update Node**; rebuild and redeploy images
+- Find **decompression paths**, including dependencies
+- **Bound input/output**; isolate with least privilege
+
+</div>
+</div>
+
+> **Possible impact:** crash, memory disclosure, or RCE with the process's privileges.
+
+**First fixed:** `22.23.4` / `24.22.1` / `26.12.1`
+
+<!-- Brotli is a compression format, not an npm package compromise or command-injection technique. Node.js's bundled streaming decoder misclassified an invalid block switch as a temporary need for more input instead of a permanent format error. It then kept appending bytes to an eight-byte internal buffer, creating an out-of-bounds write. Malformed Brotli data must actually reach the node:zlib decoder through application code or a dependency; running a Node.js server or compressing responses alone does not establish that exposure. Inventory upload/import decoders and any fetched-content/dependency paths that invoke this decoder rather than assuming that every HTTP client or incoming request automatically uses Brotli. The advisory describes possible crashes, process-memory disclosure, and RCE, not a confirmed campaign or universal reliable exploit. A T1190 scenario requires exploitation through a public-facing application; RCE alone does not prove T1059 interpreter use. -->
+
+<!-- First fixed Node.js releases are 22.23.4, 24.22.1, and 26.12.1. These are historical first-fixed versions, not a recommendation to remain on them after newer supported security releases. Upgrade the runtime, rebuild and redeploy images, and verify the running process uses the fixed build; npm dependency updates alone do not replace a bundled native decoder. Input/output budgets and time limits reduce decompression-related resource abuse, while isolated least-privileged workers limit accessible files, credentials, and network destinations. Those controls do not repair the memory-safety flaw and are not substitutes for the runtime fix. Use malformed-input regression coverage without an exploit demonstration. Source: https://nodejs.org/en/blog/vulnerability/october-2026-security-releases. Snapshot checked 26 October 2026; recheck vendor guidance before presenting. -->
+
+---
+
+<!-- _class: compact-columns -->
+
+## eMudhra: Weak Keys, Broken Trust
+
+**17–20 Oct 2026** · advisory snapshot **26 Oct 2026**
+
+<div class="columns">
+<div>
+
+### How trust failed
+- **CA report:** wrap/unwrap produced weak keys
+- **Eight intermediate keys** could enable forged TLS certificates
+- **Revocation + root distrust** followed
+
+</div>
+<div>
+
+### What your app must do
+- **Refresh OS + bundled trust stores**
+- **Replace chains** under the distrusted root
+- **Keep TLS checks on**; plan CA failover
+
+</div>
+</div>
+
+> A browser fix does **not** update your backend's trust store.
+
+[eMudhra statement](https://emudhra.com/en/post/certificate-security-incident) · [Mozilla response](https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/)
+
+<!-- eMudhra's emSign certificate-key incident is distinct from both runtime vulnerabilities and malicious package publication. According to the CA, the eight intermediates were created on 30 April 2025 using certified HSMs; a wrap/unwrap step produced weak keys alongside the original strong ones, and the weak set was published. This is the CA's explanation, not an independently completed root-cause finding: it says the exact root cause remains under investigation. The hierarchy passed two audit cycles before discovery. Certified hardware and passed audits do not prove the resulting keys are safe. Mozilla received proof of compromised intermediate keys on 17 October 2026 at 20:06 UTC and completed OneCRL blocking by 22:59 UTC for standard Firefox configurations. eMudhra revoked the eight intermediates on 18 October; Mozilla's 20 October post describes additional Firefox releases and NSS root-store removal. -->
+
+<!-- Scope matters: the CA says none of the eight intermediates had issued certificates, its infrastructure was not compromised, and it knows of no prior exploitation. The ECC root was distrusted as a precaution; this is not theft of its root private key, compromise of every eMudhra hierarchy, or a breach of its separate e-signature services. Recoverable intermediate keys could support fraudulent certificate issuance; an attacker would also need to intercept a connection to use that for website impersonation. Browser protection does not automatically update every backend, runtime, container, appliance, or application-bundled trust store. Follow each client's vendor distrust update and verify the actual deployed trust path. Replace certificate chains under the distrusted root where applicable; the operational impact of root distrust extends beyond the eight unused intermediates. Never disable certificate or hostname validation to restore connectivity. Plan and rehearse certificate replacement through an alternate trusted CA, and test both rejection of distrusted chains and success of replacement chains. Sources: https://emudhra.com/en/post/certificate-security-incident and https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/. Snapshot checked 26 October 2026; recheck the evolving incident report before presenting. -->
+
+---
+
 ## Patching Is More Than Deploying
 
 > "It's just one CVE."
@@ -1039,7 +1187,7 @@ th:nth-child(4) { width: 27%; }
 
 **ATT&CK lens:** T1190 — Exploit Public-Facing Application
 
-<!-- Speaker note: The joke is that patching is not a button. For developers, the real work is asset inventory, safe rollout, compensating controls, and post-patch detection. -->
+<!-- Speaker note: The joke is that patching is not a button. For developers, the real work is asset inventory, safe rollout, compensating controls, and post-patch detection. The October examples extend that inventory beyond application packages: runtime fixes need worker restarts and rebuilt images, Brotli decoding must use the fixed runtime, and certificate distrust must reach embedded CA bundles. An updated lockfile or a browser-only fix does not prove those boundaries are repaired. -->
 ---
 
 <!-- _class: code-focus -->
@@ -1437,6 +1585,8 @@ p { margin: 0.35em 0; }
 <!-- Your feedback shapes the next revision of this deck. Share what worked, what didn't, and where you'd like me to focus next time, either in person or through the contact links on the next slide. -->
 ---
 
+<!-- _class: compact-columns -->
+
 <div class="columns">
 <div>
 
@@ -1445,6 +1595,7 @@ p { margin: 0.35em 0; }
 - **[MITRE ATT&CK Framework](https://attack.mitre.org/)** - Main knowledge base
 - **[ATT&CK Enterprise Matrix](https://attack.mitre.org/matrices/enterprise/)** - Technique matrix
 - **[ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/)** - Coverage visualization
+- **[MITRE ATLAS](https://atlas.mitre.org/)** - Threats to AI-enabled systems
 - **[OWASP Developer Guide](https://owasp.org/www-project-developer-guide/)** - Secure development
 - **[D3FEND](https://d3fend.mitre.org/)** - Defensive countermeasures
 
@@ -1462,4 +1613,30 @@ p { margin: 0.35em 0; }
 </div>
 </div>
 
-<!-- Here are resources to continue your journey. The ATT&CK framework site and Navigator are your primary tools. D3FEND is MITRE's companion project that maps defensive countermeasures to techniques. And please reach out — I love talking about this stuff. -->
+<!-- Here are resources to continue your journey. The ATT&CK framework site and Navigator are your primary tools; add ATLAS when threat-modeling AI-enabled features. D3FEND is MITRE's companion project that maps defensive countermeasures to techniques. The dated October 2026 examples link to their primary advisories in the slides and speaker notes; revisit those sources before reusing the snapshot. And please reach out — I love talking about this stuff. -->
+
+---
+
+<!-- _class: spreaview-review -->
+<!-- _footer: '' -->
+<!-- _paginate: skip -->
+<!-- _backgroundColor: #0d0d0f -->
+
+<style scoped>
+section { color: #f4f9ff; padding: 64px 48px; }
+h1 { color: #f4f9ff; font-size: 52px; line-height: 1.1; }
+p { font-size: 28px; line-height: 1.35; }
+a { color: #e7a7f7; text-decoration: underline; }
+</style>
+
+![bg right:52% fit](./img/spreaview-review.png)
+
+# Review My Session
+
+**MITRE ATT&CK for Developers**
+
+Scan the code to share your feedback.
+
+[Leave a review on SpreaView](https://spreaview.com/review/0FFUI0XO/DDUQJG5R)
+
+<!-- Leave this slide visible while attendees submit feedback. The supplied SpreaView artwork is included unchanged; its QR code resolves to https://spreaview.com/review/0FFUI0XO/DDUQJG5R. The text link provides the same destination for anyone viewing the HTML or PDF. The existing general-feedback and resources slides remain before this final session-review slide. -->
