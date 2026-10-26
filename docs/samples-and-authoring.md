@@ -65,6 +65,23 @@ rendered review, inspect every slide, and compare the PDF for clipping and foote
 overlap. Keep review artifacts out of source control. The Pages workflow invokes
 Marp CLI directly; shared skills are authoring tools, not a CI deployment gate.
 
+The October 2026 security snapshot is dated **26 October 2026**. It covers PHP
+and Node.js runtime fixes, with expanded Brotli and eMudhra case studies. Its
+speaker notes link to primary advisories and record first-fixed releases,
+exposure prerequisites, and the certificate incident's scope. Recheck those
+sources before presenting: disclosure is not proof of exploitation, an available
+update is not a deployed fix, and a vulnerable component is not necessarily a
+supply-chain compromise.
+
+The Techorama 2026 cover and final SpreaView review slide are additive bookends;
+keep the original title, feedback, resources, and technical slides intact. Their
+styles are slide-scoped, and `paginate: skip` preserves the existing slide
+numbers. The cover reuses the template-matched logo and background already in
+`slides/themes/techorama/`, without switching themes or adding font binaries.
+The supplied review artwork is `slides/img/spreaview-review.png`; preserve its
+QR destination and matching text link:
+https://spreaview.com/review/0FFUI0XO/DDUQJG5R.
+
 ## Motion and Transitions
 
 The deck's motion lives in
@@ -103,6 +120,7 @@ the original embedded draw.io PNG sources intact when changing these replacement
 This repository provides insights, code samples, and demonstrations for applying the MITRE ATT&CK framework to application development. Topics covered include:
 
 - Understanding the MITRE ATT&CK framework and its 14 tactics
+- Adding MITRE ATLAS when threat-modeling AI-enabled application features
 - How ATT&CK complements OWASP — vulnerabilities vs. adversary behavior
 - Practical code examples mapping ATT&CK techniques to real development scenarios
 - Detection and defense patterns for common attack techniques
