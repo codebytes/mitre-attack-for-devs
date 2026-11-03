@@ -6,6 +6,10 @@ This talk bridges the gap between threat intelligence and practical development,
 
 [View HTML slides](https://chris-ayers.com/mitre-attack-for-devs/) | [Download PDF](https://chris-ayers.com/mitre-attack-for-devs/Slides.pdf)
 
+## Recordings
+
+- [NDC Security 2026](https://www.youtube.com/watch?v=_5jXqKb85UQ)
+
 ## Resources
 
 - [Slide source](./slides/Slides.md)
